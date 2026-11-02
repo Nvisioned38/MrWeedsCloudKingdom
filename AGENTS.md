@@ -4,7 +4,7 @@ This file defines the operating rules for Codex and other coding agents working 
 
 ## Primary objective
 
-Continue development of **Mr. Weed's: Cloud Kingdom** from the verified Phase 1 baseline while preserving product intent, architecture quality, test coverage, and brand/story continuity.
+Continue development of **Mr. Weed's: Cloud Kingdom** from the newest verified state documented in `docs/CURRENT_STATE.md`, while preserving product intent, architecture quality, test coverage, and brand/story continuity.
 
 ## Source-of-truth order
 
@@ -12,11 +12,10 @@ Before modifying code, read in this order:
 
 1. `AGENTS.md`
 2. `docs/CURRENT_STATE.md`
-3. `docs/GAME_VISION.md`
-4. `docs/ROADMAP.md`
-5. `docs/ARCHITECTURE.md`
-6. `docs/BUILD_LOG.md`
-7. Existing code and tests
+3. `00_PROJECT_CHARTER.md`
+4. `01_GAME_DESIGN_BLUEPRINT.md`
+5. `02_TECHNICAL_ARCHITECTURE.md`
+6. Existing code, catalogs, and tests
 
 If documentation and implementation differ, do not silently guess. Prefer the newest verified implementation state, then update documentation to reflect reality unless the conflict materially changes product direction.
 
@@ -34,7 +33,7 @@ You are authorized to:
 - update documentation after each implementation unit
 - continue automatically to the next highest-priority unblocked roadmap item when verification passes
 
-Do **not** stop merely because a single feature or ticket is complete.
+Do **not** stop merely because a single feature or ticket is complete. Current owner instructions still bound this autonomy; the owner has paused new feature development after Phase 2A, so wait for an explicit instruction before starting Phase 2B.
 
 ## Mandatory implementation loop
 
@@ -49,7 +48,7 @@ For each implementation unit:
 7. Run broader regression tests when the change can affect shared systems.
 8. Fix regressions before continuing.
 9. Update `docs/CURRENT_STATE.md` when verified state changes.
-10. Append a concise entry to `docs/BUILD_LOG.md`.
+10. Append a concise entry to `docs/BUILD_LOG.md`; create that log when the first implementation entry is ready if it does not exist.
 11. Continue to the next highest-priority unblocked roadmap item.
 
 ## Stop and request human input only when
@@ -108,3 +107,9 @@ After a substantial run, report:
 - only genuine blockers requiring human input
 
 Do not ask for approval between ordinary implementation steps.
+
+## Owner-directed pause and synchronization
+
+The automatic continuation authorization above applies only while it remains consistent with the owner's current task. A direct owner instruction to pause new development, stop after a bounded task, or wait for further direction overrides automatic continuation. Do not start another roadmap phase after completing such a task.
+
+For source synchronization, treat the current authoritative working implementation as the source of truth for code, tests, assets, and project configuration. Reconcile existing repository control documents in place; preserve their useful charter and history while updating stale status claims to match verified implementation facts.

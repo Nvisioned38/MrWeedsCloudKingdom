@@ -1,0 +1,29 @@
+name: mr_weeds_cloud_kingdom
+description: "Offline Match-3 vertical slice for Mr. Weed's: Cloud Kingdom."
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.5.0 <4.0.0'
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flame: '>=1.38.0 <1.39.0'
+  shared_preferences: ^2.5.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - 03_CONTENT_CATALOG.json
+    - assets/data/levels_001_010.json
+    - assets/data/collectibles.json
+    - assets/data/world_nodes.json
+    - assets/data/characters.json
+    - assets/data/story_chapters.json

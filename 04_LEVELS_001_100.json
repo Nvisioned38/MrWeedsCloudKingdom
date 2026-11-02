@@ -1,0 +1,2734 @@
+{
+  "schema_version": 1,
+  "levels": [
+    {
+      "id": 1,
+      "chapter": 1,
+      "chapter_name": "Welcome to the Clouds",
+      "chapter_position": 1,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 29,
+      "objective": "clear_blockers",
+      "blockers": [],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "intro",
+      "rng_seed_policy": "level_1_seeded",
+      "reward": {
+        "coins": 100,
+        "stars_first_clear": 1,
+        "collection_xp": 6,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 2,
+      "chapter": 1,
+      "chapter_name": "Welcome to the Clouds",
+      "chapter_position": 2,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 29,
+      "objective": "drop_objects",
+      "blockers": [],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "intro",
+      "rng_seed_policy": "level_2_seeded",
+      "reward": {
+        "coins": 105,
+        "stars_first_clear": 1,
+        "collection_xp": 6,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 3,
+      "chapter": 1,
+      "chapter_name": "Welcome to the Clouds",
+      "chapter_position": 3,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 29,
+      "objective": "clear_cloud_zones",
+      "blockers": [],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "intro",
+      "rng_seed_policy": "level_3_seeded",
+      "reward": {
+        "coins": 110,
+        "stars_first_clear": 1,
+        "collection_xp": 6,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 4,
+      "chapter": 1,
+      "chapter_name": "Welcome to the Clouds",
+      "chapter_position": 4,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 28,
+      "objective": "score",
+      "blockers": [],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "intro",
+      "rng_seed_policy": "level_4_seeded",
+      "reward": {
+        "coins": 115,
+        "stars_first_clear": 1,
+        "collection_xp": 6,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 5,
+      "chapter": 1,
+      "chapter_name": "Welcome to the Clouds",
+      "chapter_position": 5,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 28,
+      "objective": "collect_tiles",
+      "blockers": [],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "intro",
+      "rng_seed_policy": "level_5_seeded",
+      "reward": {
+        "coins": 120,
+        "stars_first_clear": 1,
+        "collection_xp": 6,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 6,
+      "chapter": 1,
+      "chapter_name": "Welcome to the Clouds",
+      "chapter_position": 6,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 28,
+      "objective": "clear_blockers",
+      "blockers": [],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "intro",
+      "rng_seed_policy": "level_6_seeded",
+      "reward": {
+        "coins": 125,
+        "stars_first_clear": 1,
+        "collection_xp": 6,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 7,
+      "chapter": 1,
+      "chapter_name": "Welcome to the Clouds",
+      "chapter_position": 7,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 28,
+      "objective": "drop_objects",
+      "blockers": [],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "intro",
+      "rng_seed_policy": "level_7_seeded",
+      "reward": {
+        "coins": 130,
+        "stars_first_clear": 1,
+        "collection_xp": 6,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 8,
+      "chapter": 1,
+      "chapter_name": "Welcome to the Clouds",
+      "chapter_position": 8,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 27,
+      "objective": "clear_cloud_zones",
+      "blockers": [],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "intro",
+      "rng_seed_policy": "level_8_seeded",
+      "reward": {
+        "coins": 135,
+        "stars_first_clear": 1,
+        "collection_xp": 6,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 9,
+      "chapter": 1,
+      "chapter_name": "Welcome to the Clouds",
+      "chapter_position": 9,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 27,
+      "objective": "score",
+      "blockers": [],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "intro",
+      "rng_seed_policy": "level_9_seeded",
+      "reward": {
+        "coins": 140,
+        "stars_first_clear": 1,
+        "collection_xp": 6,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 10,
+      "chapter": 1,
+      "chapter_name": "Welcome to the Clouds",
+      "chapter_position": 10,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 29,
+      "objective": "multi_stage_boss",
+      "blockers": [],
+      "boss": true,
+      "tutorial": false,
+      "difficulty_band": "intro",
+      "rng_seed_policy": "level_10_seeded",
+      "reward": {
+        "coins": 145,
+        "stars_first_clear": 1,
+        "collection_xp": 6,
+        "key": false
+      },
+      "design_note": "Chapter finale. Combine learned mechanics and award a visible world milestone."
+    },
+    {
+      "id": 11,
+      "chapter": 2,
+      "chapter_name": "Kitchen Catastrophe",
+      "chapter_position": 1,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 28,
+      "objective": "drop_objects",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_11_seeded",
+      "reward": {
+        "coins": 115,
+        "stars_first_clear": 1,
+        "collection_xp": 7,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 12,
+      "chapter": 2,
+      "chapter_name": "Kitchen Catastrophe",
+      "chapter_position": 2,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 28,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_12_seeded",
+      "reward": {
+        "coins": 120,
+        "stars_first_clear": 1,
+        "collection_xp": 7,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 13,
+      "chapter": 2,
+      "chapter_name": "Kitchen Catastrophe",
+      "chapter_position": 3,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 28,
+      "objective": "score",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_13_seeded",
+      "reward": {
+        "coins": 125,
+        "stars_first_clear": 1,
+        "collection_xp": 7,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 14,
+      "chapter": 2,
+      "chapter_name": "Kitchen Catastrophe",
+      "chapter_position": 4,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 27,
+      "objective": "collect_tiles",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_14_seeded",
+      "reward": {
+        "coins": 130,
+        "stars_first_clear": 1,
+        "collection_xp": 7,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 15,
+      "chapter": 2,
+      "chapter_name": "Kitchen Catastrophe",
+      "chapter_position": 5,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 27,
+      "objective": "clear_blockers",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_15_seeded",
+      "reward": {
+        "coins": 135,
+        "stars_first_clear": 1,
+        "collection_xp": 7,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 16,
+      "chapter": 2,
+      "chapter_name": "Kitchen Catastrophe",
+      "chapter_position": 6,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 27,
+      "objective": "drop_objects",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_16_seeded",
+      "reward": {
+        "coins": 140,
+        "stars_first_clear": 1,
+        "collection_xp": 7,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 17,
+      "chapter": 2,
+      "chapter_name": "Kitchen Catastrophe",
+      "chapter_position": 7,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 27,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_17_seeded",
+      "reward": {
+        "coins": 145,
+        "stars_first_clear": 1,
+        "collection_xp": 7,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 18,
+      "chapter": 2,
+      "chapter_name": "Kitchen Catastrophe",
+      "chapter_position": 8,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 26,
+      "objective": "score",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_18_seeded",
+      "reward": {
+        "coins": 150,
+        "stars_first_clear": 1,
+        "collection_xp": 7,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 19,
+      "chapter": 2,
+      "chapter_name": "Kitchen Catastrophe",
+      "chapter_position": 9,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 26,
+      "objective": "collect_tiles",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_19_seeded",
+      "reward": {
+        "coins": 155,
+        "stars_first_clear": 1,
+        "collection_xp": 7,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 20,
+      "chapter": 2,
+      "chapter_name": "Kitchen Catastrophe",
+      "chapter_position": 10,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 28,
+      "objective": "multi_stage_boss",
+      "blockers": [
+        "crate"
+      ],
+      "boss": true,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_20_seeded",
+      "reward": {
+        "coins": 160,
+        "stars_first_clear": 1,
+        "collection_xp": 7,
+        "key": false
+      },
+      "design_note": "Chapter finale. Combine learned mechanics and award a visible world milestone."
+    },
+    {
+      "id": 21,
+      "chapter": 3,
+      "chapter_name": "The Missing Collection",
+      "chapter_position": 1,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 27,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_21_seeded",
+      "reward": {
+        "coins": 130,
+        "stars_first_clear": 1,
+        "collection_xp": 8,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 22,
+      "chapter": 3,
+      "chapter_name": "The Missing Collection",
+      "chapter_position": 2,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 27,
+      "objective": "score",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_22_seeded",
+      "reward": {
+        "coins": 135,
+        "stars_first_clear": 1,
+        "collection_xp": 8,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 23,
+      "chapter": 3,
+      "chapter_name": "The Missing Collection",
+      "chapter_position": 3,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 27,
+      "objective": "collect_tiles",
+      "blockers": [
+        "crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_23_seeded",
+      "reward": {
+        "coins": 140,
+        "stars_first_clear": 1,
+        "collection_xp": 8,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 24,
+      "chapter": 3,
+      "chapter_name": "The Missing Collection",
+      "chapter_position": 4,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 26,
+      "objective": "clear_blockers",
+      "blockers": [
+        "crate",
+        "reinforced_crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_24_seeded",
+      "reward": {
+        "coins": 145,
+        "stars_first_clear": 1,
+        "collection_xp": 8,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 25,
+      "chapter": 3,
+      "chapter_name": "The Missing Collection",
+      "chapter_position": 5,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 26,
+      "objective": "drop_objects",
+      "blockers": [
+        "crate",
+        "reinforced_crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "easy",
+      "rng_seed_policy": "level_25_seeded",
+      "reward": {
+        "coins": 150,
+        "stars_first_clear": 1,
+        "collection_xp": 8,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 26,
+      "chapter": 3,
+      "chapter_name": "The Missing Collection",
+      "chapter_position": 6,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 26,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "crate",
+        "reinforced_crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_26_seeded",
+      "reward": {
+        "coins": 155,
+        "stars_first_clear": 1,
+        "collection_xp": 8,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 27,
+      "chapter": 3,
+      "chapter_name": "The Missing Collection",
+      "chapter_position": 7,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 26,
+      "objective": "score",
+      "blockers": [
+        "crate",
+        "reinforced_crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_27_seeded",
+      "reward": {
+        "coins": 160,
+        "stars_first_clear": 1,
+        "collection_xp": 8,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 28,
+      "chapter": 3,
+      "chapter_name": "The Missing Collection",
+      "chapter_position": 8,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 25,
+      "objective": "collect_tiles",
+      "blockers": [
+        "crate",
+        "reinforced_crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_28_seeded",
+      "reward": {
+        "coins": 165,
+        "stars_first_clear": 1,
+        "collection_xp": 8,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 29,
+      "chapter": 3,
+      "chapter_name": "The Missing Collection",
+      "chapter_position": 9,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 25,
+      "objective": "clear_blockers",
+      "blockers": [
+        "crate",
+        "reinforced_crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_29_seeded",
+      "reward": {
+        "coins": 170,
+        "stars_first_clear": 1,
+        "collection_xp": 8,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 30,
+      "chapter": 3,
+      "chapter_name": "The Missing Collection",
+      "chapter_position": 10,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 27,
+      "objective": "multi_stage_boss",
+      "blockers": [
+        "crate",
+        "reinforced_crate"
+      ],
+      "boss": true,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_30_seeded",
+      "reward": {
+        "coins": 175,
+        "stars_first_clear": 1,
+        "collection_xp": 8,
+        "key": true
+      },
+      "design_note": "Chapter finale. Combine learned mechanics and award a visible world milestone."
+    },
+    {
+      "id": 31,
+      "chapter": 4,
+      "chapter_name": "Gallery in the Fog",
+      "chapter_position": 1,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 26,
+      "objective": "score",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_31_seeded",
+      "reward": {
+        "coins": 145,
+        "stars_first_clear": 1,
+        "collection_xp": 9,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 32,
+      "chapter": 4,
+      "chapter_name": "Gallery in the Fog",
+      "chapter_position": 2,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 26,
+      "objective": "collect_tiles",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_32_seeded",
+      "reward": {
+        "coins": 150,
+        "stars_first_clear": 1,
+        "collection_xp": 9,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 33,
+      "chapter": 4,
+      "chapter_name": "Gallery in the Fog",
+      "chapter_position": 3,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 26,
+      "objective": "clear_blockers",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_33_seeded",
+      "reward": {
+        "coins": 155,
+        "stars_first_clear": 1,
+        "collection_xp": 9,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 34,
+      "chapter": 4,
+      "chapter_name": "Gallery in the Fog",
+      "chapter_position": 4,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 25,
+      "objective": "drop_objects",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_34_seeded",
+      "reward": {
+        "coins": 160,
+        "stars_first_clear": 1,
+        "collection_xp": 9,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 35,
+      "chapter": 4,
+      "chapter_name": "Gallery in the Fog",
+      "chapter_position": 5,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 25,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_35_seeded",
+      "reward": {
+        "coins": 165,
+        "stars_first_clear": 1,
+        "collection_xp": 9,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 36,
+      "chapter": 4,
+      "chapter_name": "Gallery in the Fog",
+      "chapter_position": 6,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 25,
+      "objective": "score",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_36_seeded",
+      "reward": {
+        "coins": 170,
+        "stars_first_clear": 1,
+        "collection_xp": 9,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 37,
+      "chapter": 4,
+      "chapter_name": "Gallery in the Fog",
+      "chapter_position": 7,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 25,
+      "objective": "collect_tiles",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_37_seeded",
+      "reward": {
+        "coins": 175,
+        "stars_first_clear": 1,
+        "collection_xp": 9,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 38,
+      "chapter": 4,
+      "chapter_name": "Gallery in the Fog",
+      "chapter_position": 8,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 24,
+      "objective": "clear_blockers",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_38_seeded",
+      "reward": {
+        "coins": 180,
+        "stars_first_clear": 1,
+        "collection_xp": 9,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 39,
+      "chapter": 4,
+      "chapter_name": "Gallery in the Fog",
+      "chapter_position": 9,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 24,
+      "objective": "drop_objects",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_39_seeded",
+      "reward": {
+        "coins": 185,
+        "stars_first_clear": 1,
+        "collection_xp": 9,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 40,
+      "chapter": 4,
+      "chapter_name": "Gallery in the Fog",
+      "chapter_position": 10,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 26,
+      "objective": "multi_stage_boss",
+      "blockers": [
+        "fog"
+      ],
+      "boss": true,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_40_seeded",
+      "reward": {
+        "coins": 190,
+        "stars_first_clear": 1,
+        "collection_xp": 9,
+        "key": false
+      },
+      "design_note": "Chapter finale. Combine learned mechanics and award a visible world milestone."
+    },
+    {
+      "id": 41,
+      "chapter": 5,
+      "chapter_name": "Riff's Big Idea",
+      "chapter_position": 1,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 25,
+      "objective": "collect_tiles",
+      "blockers": [
+        "sticky_syrup"
+      ],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_41_seeded",
+      "reward": {
+        "coins": 160,
+        "stars_first_clear": 1,
+        "collection_xp": 10,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 42,
+      "chapter": 5,
+      "chapter_name": "Riff's Big Idea",
+      "chapter_position": 2,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 25,
+      "objective": "clear_blockers",
+      "blockers": [
+        "sticky_syrup"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_42_seeded",
+      "reward": {
+        "coins": 165,
+        "stars_first_clear": 1,
+        "collection_xp": 10,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 43,
+      "chapter": 5,
+      "chapter_name": "Riff's Big Idea",
+      "chapter_position": 3,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 25,
+      "objective": "drop_objects",
+      "blockers": [
+        "sticky_syrup"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_43_seeded",
+      "reward": {
+        "coins": 170,
+        "stars_first_clear": 1,
+        "collection_xp": 10,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 44,
+      "chapter": 5,
+      "chapter_name": "Riff's Big Idea",
+      "chapter_position": 4,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 24,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "sticky_syrup"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_44_seeded",
+      "reward": {
+        "coins": 175,
+        "stars_first_clear": 1,
+        "collection_xp": 10,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 45,
+      "chapter": 5,
+      "chapter_name": "Riff's Big Idea",
+      "chapter_position": 5,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 24,
+      "objective": "score",
+      "blockers": [
+        "sticky_syrup"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_45_seeded",
+      "reward": {
+        "coins": 180,
+        "stars_first_clear": 1,
+        "collection_xp": 10,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 46,
+      "chapter": 5,
+      "chapter_name": "Riff's Big Idea",
+      "chapter_position": 6,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 24,
+      "objective": "collect_tiles",
+      "blockers": [
+        "sticky_syrup"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_46_seeded",
+      "reward": {
+        "coins": 185,
+        "stars_first_clear": 1,
+        "collection_xp": 10,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 47,
+      "chapter": 5,
+      "chapter_name": "Riff's Big Idea",
+      "chapter_position": 7,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 24,
+      "objective": "clear_blockers",
+      "blockers": [
+        "sticky_syrup"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_47_seeded",
+      "reward": {
+        "coins": 190,
+        "stars_first_clear": 1,
+        "collection_xp": 10,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 48,
+      "chapter": 5,
+      "chapter_name": "Riff's Big Idea",
+      "chapter_position": 8,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 23,
+      "objective": "drop_objects",
+      "blockers": [
+        "sticky_syrup"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_48_seeded",
+      "reward": {
+        "coins": 195,
+        "stars_first_clear": 1,
+        "collection_xp": 10,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 49,
+      "chapter": 5,
+      "chapter_name": "Riff's Big Idea",
+      "chapter_position": 9,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 23,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "sticky_syrup"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_49_seeded",
+      "reward": {
+        "coins": 200,
+        "stars_first_clear": 1,
+        "collection_xp": 10,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 50,
+      "chapter": 5,
+      "chapter_name": "Riff's Big Idea",
+      "chapter_position": 10,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 25,
+      "objective": "multi_stage_boss",
+      "blockers": [
+        "sticky_syrup"
+      ],
+      "boss": true,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_50_seeded",
+      "reward": {
+        "coins": 205,
+        "stars_first_clear": 1,
+        "collection_xp": 10,
+        "key": false
+      },
+      "design_note": "Chapter finale. Combine learned mechanics and award a visible world milestone."
+    },
+    {
+      "id": 51,
+      "chapter": 6,
+      "chapter_name": "Basement Door",
+      "chapter_position": 1,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 24,
+      "objective": "clear_blockers",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_51_seeded",
+      "reward": {
+        "coins": 175,
+        "stars_first_clear": 1,
+        "collection_xp": 11,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 52,
+      "chapter": 6,
+      "chapter_name": "Basement Door",
+      "chapter_position": 2,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 24,
+      "objective": "drop_objects",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_52_seeded",
+      "reward": {
+        "coins": 180,
+        "stars_first_clear": 1,
+        "collection_xp": 11,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 53,
+      "chapter": 6,
+      "chapter_name": "Basement Door",
+      "chapter_position": 3,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 24,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_53_seeded",
+      "reward": {
+        "coins": 185,
+        "stars_first_clear": 1,
+        "collection_xp": 11,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 54,
+      "chapter": 6,
+      "chapter_name": "Basement Door",
+      "chapter_position": 4,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 23,
+      "objective": "score",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_54_seeded",
+      "reward": {
+        "coins": 190,
+        "stars_first_clear": 1,
+        "collection_xp": 11,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 55,
+      "chapter": 6,
+      "chapter_name": "Basement Door",
+      "chapter_position": 5,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 23,
+      "objective": "collect_tiles",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_55_seeded",
+      "reward": {
+        "coins": 195,
+        "stars_first_clear": 1,
+        "collection_xp": 11,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 56,
+      "chapter": 6,
+      "chapter_name": "Basement Door",
+      "chapter_position": 6,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 23,
+      "objective": "clear_blockers",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_56_seeded",
+      "reward": {
+        "coins": 200,
+        "stars_first_clear": 1,
+        "collection_xp": 11,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 57,
+      "chapter": 6,
+      "chapter_name": "Basement Door",
+      "chapter_position": 7,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 23,
+      "objective": "drop_objects",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_57_seeded",
+      "reward": {
+        "coins": 205,
+        "stars_first_clear": 1,
+        "collection_xp": 11,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 58,
+      "chapter": 6,
+      "chapter_name": "Basement Door",
+      "chapter_position": 8,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 22,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_58_seeded",
+      "reward": {
+        "coins": 210,
+        "stars_first_clear": 1,
+        "collection_xp": 11,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 59,
+      "chapter": 6,
+      "chapter_name": "Basement Door",
+      "chapter_position": 9,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 22,
+      "objective": "score",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_59_seeded",
+      "reward": {
+        "coins": 215,
+        "stars_first_clear": 1,
+        "collection_xp": 11,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 60,
+      "chapter": 6,
+      "chapter_name": "Basement Door",
+      "chapter_position": 10,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 24,
+      "objective": "multi_stage_boss",
+      "blockers": [
+        "chain"
+      ],
+      "boss": true,
+      "tutorial": false,
+      "difficulty_band": "medium",
+      "rng_seed_policy": "level_60_seeded",
+      "reward": {
+        "coins": 220,
+        "stars_first_clear": 1,
+        "collection_xp": 11,
+        "key": true
+      },
+      "design_note": "Chapter finale. Combine learned mechanics and award a visible world milestone."
+    },
+    {
+      "id": 61,
+      "chapter": 7,
+      "chapter_name": "Cloud Lab",
+      "chapter_position": 1,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 23,
+      "objective": "drop_objects",
+      "blockers": [
+        "ice"
+      ],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_61_seeded",
+      "reward": {
+        "coins": 190,
+        "stars_first_clear": 1,
+        "collection_xp": 12,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 62,
+      "chapter": 7,
+      "chapter_name": "Cloud Lab",
+      "chapter_position": 2,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 23,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "ice"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_62_seeded",
+      "reward": {
+        "coins": 195,
+        "stars_first_clear": 1,
+        "collection_xp": 12,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 63,
+      "chapter": 7,
+      "chapter_name": "Cloud Lab",
+      "chapter_position": 3,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 23,
+      "objective": "score",
+      "blockers": [
+        "ice"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_63_seeded",
+      "reward": {
+        "coins": 200,
+        "stars_first_clear": 1,
+        "collection_xp": 12,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 64,
+      "chapter": 7,
+      "chapter_name": "Cloud Lab",
+      "chapter_position": 4,
+      "board": {
+        "rows": 9,
+        "cols": 9
+      },
+      "tile_families": 5,
+      "move_limit": 22,
+      "objective": "collect_tiles",
+      "blockers": [
+        "ice",
+        "portal"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_64_seeded",
+      "reward": {
+        "coins": 205,
+        "stars_first_clear": 1,
+        "collection_xp": 12,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 65,
+      "chapter": 7,
+      "chapter_name": "Cloud Lab",
+      "chapter_position": 5,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 22,
+      "objective": "clear_blockers",
+      "blockers": [
+        "ice",
+        "portal"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_65_seeded",
+      "reward": {
+        "coins": 210,
+        "stars_first_clear": 1,
+        "collection_xp": 12,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 66,
+      "chapter": 7,
+      "chapter_name": "Cloud Lab",
+      "chapter_position": 6,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 22,
+      "objective": "drop_objects",
+      "blockers": [
+        "ice",
+        "portal"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_66_seeded",
+      "reward": {
+        "coins": 215,
+        "stars_first_clear": 1,
+        "collection_xp": 12,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 67,
+      "chapter": 7,
+      "chapter_name": "Cloud Lab",
+      "chapter_position": 7,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 22,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "ice",
+        "portal"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_67_seeded",
+      "reward": {
+        "coins": 220,
+        "stars_first_clear": 1,
+        "collection_xp": 12,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 68,
+      "chapter": 7,
+      "chapter_name": "Cloud Lab",
+      "chapter_position": 8,
+      "board": {
+        "rows": 9,
+        "cols": 9
+      },
+      "tile_families": 5,
+      "move_limit": 21,
+      "objective": "score",
+      "blockers": [
+        "ice",
+        "portal"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_68_seeded",
+      "reward": {
+        "coins": 225,
+        "stars_first_clear": 1,
+        "collection_xp": 12,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 69,
+      "chapter": 7,
+      "chapter_name": "Cloud Lab",
+      "chapter_position": 9,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 21,
+      "objective": "collect_tiles",
+      "blockers": [
+        "ice",
+        "portal"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_69_seeded",
+      "reward": {
+        "coins": 230,
+        "stars_first_clear": 1,
+        "collection_xp": 12,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 70,
+      "chapter": 7,
+      "chapter_name": "Cloud Lab",
+      "chapter_position": 10,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 23,
+      "objective": "multi_stage_boss",
+      "blockers": [
+        "ice",
+        "portal"
+      ],
+      "boss": true,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_70_seeded",
+      "reward": {
+        "coins": 235,
+        "stars_first_clear": 1,
+        "collection_xp": 12,
+        "key": false
+      },
+      "design_note": "Chapter finale. Combine learned mechanics and award a visible world milestone."
+    },
+    {
+      "id": 71,
+      "chapter": 8,
+      "chapter_name": "Festival Fever",
+      "chapter_position": 1,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 22,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_71_seeded",
+      "reward": {
+        "coins": 205,
+        "stars_first_clear": 1,
+        "collection_xp": 13,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 72,
+      "chapter": 8,
+      "chapter_name": "Festival Fever",
+      "chapter_position": 2,
+      "board": {
+        "rows": 9,
+        "cols": 9
+      },
+      "tile_families": 6,
+      "move_limit": 22,
+      "objective": "score",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_72_seeded",
+      "reward": {
+        "coins": 210,
+        "stars_first_clear": 1,
+        "collection_xp": 13,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 73,
+      "chapter": 8,
+      "chapter_name": "Festival Fever",
+      "chapter_position": 3,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 22,
+      "objective": "collect_tiles",
+      "blockers": [
+        "fog"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_73_seeded",
+      "reward": {
+        "coins": 215,
+        "stars_first_clear": 1,
+        "collection_xp": 13,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 74,
+      "chapter": 8,
+      "chapter_name": "Festival Fever",
+      "chapter_position": 4,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 21,
+      "objective": "clear_blockers",
+      "blockers": [
+        "fog",
+        "ice"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_74_seeded",
+      "reward": {
+        "coins": 220,
+        "stars_first_clear": 1,
+        "collection_xp": 13,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 75,
+      "chapter": 8,
+      "chapter_name": "Festival Fever",
+      "chapter_position": 5,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 6,
+      "move_limit": 21,
+      "objective": "drop_objects",
+      "blockers": [
+        "fog",
+        "ice"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_75_seeded",
+      "reward": {
+        "coins": 225,
+        "stars_first_clear": 1,
+        "collection_xp": 13,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 76,
+      "chapter": 8,
+      "chapter_name": "Festival Fever",
+      "chapter_position": 6,
+      "board": {
+        "rows": 9,
+        "cols": 9
+      },
+      "tile_families": 5,
+      "move_limit": 21,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "fog",
+        "ice"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_76_seeded",
+      "reward": {
+        "coins": 230,
+        "stars_first_clear": 1,
+        "collection_xp": 13,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 77,
+      "chapter": 8,
+      "chapter_name": "Festival Fever",
+      "chapter_position": 7,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 21,
+      "objective": "score",
+      "blockers": [
+        "fog",
+        "ice"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_77_seeded",
+      "reward": {
+        "coins": 235,
+        "stars_first_clear": 1,
+        "collection_xp": 13,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 78,
+      "chapter": 8,
+      "chapter_name": "Festival Fever",
+      "chapter_position": 8,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 6,
+      "move_limit": 20,
+      "objective": "collect_tiles",
+      "blockers": [
+        "fog",
+        "ice"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_78_seeded",
+      "reward": {
+        "coins": 240,
+        "stars_first_clear": 1,
+        "collection_xp": 13,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 79,
+      "chapter": 8,
+      "chapter_name": "Festival Fever",
+      "chapter_position": 9,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 20,
+      "objective": "clear_blockers",
+      "blockers": [
+        "fog",
+        "ice"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_79_seeded",
+      "reward": {
+        "coins": 245,
+        "stars_first_clear": 1,
+        "collection_xp": 13,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 80,
+      "chapter": 8,
+      "chapter_name": "Festival Fever",
+      "chapter_position": 10,
+      "board": {
+        "rows": 9,
+        "cols": 9
+      },
+      "tile_families": 5,
+      "move_limit": 22,
+      "objective": "multi_stage_boss",
+      "blockers": [
+        "fog",
+        "ice"
+      ],
+      "boss": true,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_80_seeded",
+      "reward": {
+        "coins": 250,
+        "stars_first_clear": 1,
+        "collection_xp": 13,
+        "key": false
+      },
+      "design_note": "Chapter finale. Combine learned mechanics and award a visible world milestone."
+    },
+    {
+      "id": 81,
+      "chapter": 9,
+      "chapter_name": "The Collector Calls",
+      "chapter_position": 1,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 6,
+      "move_limit": 21,
+      "objective": "score",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_81_seeded",
+      "reward": {
+        "coins": 220,
+        "stars_first_clear": 1,
+        "collection_xp": 14,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 82,
+      "chapter": 9,
+      "chapter_name": "The Collector Calls",
+      "chapter_position": 2,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 21,
+      "objective": "collect_tiles",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_82_seeded",
+      "reward": {
+        "coins": 225,
+        "stars_first_clear": 1,
+        "collection_xp": 14,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 83,
+      "chapter": 9,
+      "chapter_name": "The Collector Calls",
+      "chapter_position": 3,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 21,
+      "objective": "clear_blockers",
+      "blockers": [
+        "chain"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_83_seeded",
+      "reward": {
+        "coins": 230,
+        "stars_first_clear": 1,
+        "collection_xp": 14,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 84,
+      "chapter": 9,
+      "chapter_name": "The Collector Calls",
+      "chapter_position": 4,
+      "board": {
+        "rows": 9,
+        "cols": 9
+      },
+      "tile_families": 6,
+      "move_limit": 20,
+      "objective": "drop_objects",
+      "blockers": [
+        "chain",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_84_seeded",
+      "reward": {
+        "coins": 235,
+        "stars_first_clear": 1,
+        "collection_xp": 14,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 85,
+      "chapter": 9,
+      "chapter_name": "The Collector Calls",
+      "chapter_position": 5,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 20,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "chain",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_85_seeded",
+      "reward": {
+        "coins": 240,
+        "stars_first_clear": 1,
+        "collection_xp": 14,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 86,
+      "chapter": 9,
+      "chapter_name": "The Collector Calls",
+      "chapter_position": 6,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 20,
+      "objective": "score",
+      "blockers": [
+        "chain",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_86_seeded",
+      "reward": {
+        "coins": 245,
+        "stars_first_clear": 1,
+        "collection_xp": 14,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 87,
+      "chapter": 9,
+      "chapter_name": "The Collector Calls",
+      "chapter_position": 7,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 6,
+      "move_limit": 20,
+      "objective": "collect_tiles",
+      "blockers": [
+        "chain",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_87_seeded",
+      "reward": {
+        "coins": 250,
+        "stars_first_clear": 1,
+        "collection_xp": 14,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 88,
+      "chapter": 9,
+      "chapter_name": "The Collector Calls",
+      "chapter_position": 8,
+      "board": {
+        "rows": 9,
+        "cols": 9
+      },
+      "tile_families": 5,
+      "move_limit": 19,
+      "objective": "clear_blockers",
+      "blockers": [
+        "chain",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_88_seeded",
+      "reward": {
+        "coins": 255,
+        "stars_first_clear": 1,
+        "collection_xp": 14,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 89,
+      "chapter": 9,
+      "chapter_name": "The Collector Calls",
+      "chapter_position": 9,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 19,
+      "objective": "drop_objects",
+      "blockers": [
+        "chain",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_89_seeded",
+      "reward": {
+        "coins": 260,
+        "stars_first_clear": 1,
+        "collection_xp": 14,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 90,
+      "chapter": 9,
+      "chapter_name": "The Collector Calls",
+      "chapter_position": 10,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 6,
+      "move_limit": 21,
+      "objective": "multi_stage_boss",
+      "blockers": [
+        "chain",
+        "locked_display_case"
+      ],
+      "boss": true,
+      "tutorial": false,
+      "difficulty_band": "hard",
+      "rng_seed_policy": "level_90_seeded",
+      "reward": {
+        "coins": 265,
+        "stars_first_clear": 1,
+        "collection_xp": 14,
+        "key": true
+      },
+      "design_note": "Chapter finale. Combine learned mechanics and award a visible world milestone."
+    },
+    {
+      "id": 91,
+      "chapter": 10,
+      "chapter_name": "Kingdom Rising",
+      "chapter_position": 1,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 20,
+      "objective": "collect_tiles",
+      "blockers": [
+        "reinforced_crate"
+      ],
+      "boss": false,
+      "tutorial": true,
+      "difficulty_band": "finale",
+      "rng_seed_policy": "level_91_seeded",
+      "reward": {
+        "coins": 235,
+        "stars_first_clear": 1,
+        "collection_xp": 15,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 92,
+      "chapter": 10,
+      "chapter_name": "Kingdom Rising",
+      "chapter_position": 2,
+      "board": {
+        "rows": 9,
+        "cols": 9
+      },
+      "tile_families": 5,
+      "move_limit": 20,
+      "objective": "clear_blockers",
+      "blockers": [
+        "reinforced_crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "finale",
+      "rng_seed_policy": "level_92_seeded",
+      "reward": {
+        "coins": 240,
+        "stars_first_clear": 1,
+        "collection_xp": 15,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 93,
+      "chapter": 10,
+      "chapter_name": "Kingdom Rising",
+      "chapter_position": 3,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 6,
+      "move_limit": 20,
+      "objective": "drop_objects",
+      "blockers": [
+        "reinforced_crate"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "finale",
+      "rng_seed_policy": "level_93_seeded",
+      "reward": {
+        "coins": 245,
+        "stars_first_clear": 1,
+        "collection_xp": 15,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 94,
+      "chapter": 10,
+      "chapter_name": "Kingdom Rising",
+      "chapter_position": 4,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 19,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "reinforced_crate",
+        "fog",
+        "portal",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "finale",
+      "rng_seed_policy": "level_94_seeded",
+      "reward": {
+        "coins": 250,
+        "stars_first_clear": 1,
+        "collection_xp": 15,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 95,
+      "chapter": 10,
+      "chapter_name": "Kingdom Rising",
+      "chapter_position": 5,
+      "board": {
+        "rows": 7,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 19,
+      "objective": "score",
+      "blockers": [
+        "reinforced_crate",
+        "fog",
+        "portal",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "finale",
+      "rng_seed_policy": "level_95_seeded",
+      "reward": {
+        "coins": 255,
+        "stars_first_clear": 1,
+        "collection_xp": 15,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 96,
+      "chapter": 10,
+      "chapter_name": "Kingdom Rising",
+      "chapter_position": 6,
+      "board": {
+        "rows": 9,
+        "cols": 9
+      },
+      "tile_families": 6,
+      "move_limit": 19,
+      "objective": "collect_tiles",
+      "blockers": [
+        "reinforced_crate",
+        "fog",
+        "portal",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "finale",
+      "rng_seed_policy": "level_96_seeded",
+      "reward": {
+        "coins": 260,
+        "stars_first_clear": 1,
+        "collection_xp": 15,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 97,
+      "chapter": 10,
+      "chapter_name": "Kingdom Rising",
+      "chapter_position": 7,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 19,
+      "objective": "clear_blockers",
+      "blockers": [
+        "reinforced_crate",
+        "fog",
+        "portal",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "finale",
+      "rng_seed_policy": "level_97_seeded",
+      "reward": {
+        "coins": 265,
+        "stars_first_clear": 1,
+        "collection_xp": 15,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 98,
+      "chapter": 10,
+      "chapter_name": "Kingdom Rising",
+      "chapter_position": 8,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 5,
+      "move_limit": 18,
+      "objective": "drop_objects",
+      "blockers": [
+        "reinforced_crate",
+        "fog",
+        "portal",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "finale",
+      "rng_seed_policy": "level_98_seeded",
+      "reward": {
+        "coins": 270,
+        "stars_first_clear": 1,
+        "collection_xp": 15,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 99,
+      "chapter": 10,
+      "chapter_name": "Kingdom Rising",
+      "chapter_position": 9,
+      "board": {
+        "rows": 8,
+        "cols": 8
+      },
+      "tile_families": 6,
+      "move_limit": 18,
+      "objective": "clear_cloud_zones",
+      "blockers": [
+        "reinforced_crate",
+        "fog",
+        "portal",
+        "locked_display_case"
+      ],
+      "boss": false,
+      "tutorial": false,
+      "difficulty_band": "finale",
+      "rng_seed_policy": "level_99_seeded",
+      "reward": {
+        "coins": 275,
+        "stars_first_clear": 1,
+        "collection_xp": 15,
+        "key": false
+      },
+      "design_note": "Introduce or reinforce one concept; avoid stacking more than two unfamiliar mechanics."
+    },
+    {
+      "id": 100,
+      "chapter": 10,
+      "chapter_name": "Kingdom Rising",
+      "chapter_position": 10,
+      "board": {
+        "rows": 9,
+        "cols": 9
+      },
+      "tile_families": 5,
+      "move_limit": 20,
+      "objective": "multi_stage_boss",
+      "blockers": [
+        "reinforced_crate",
+        "fog",
+        "portal",
+        "locked_display_case"
+      ],
+      "boss": true,
+      "tutorial": false,
+      "difficulty_band": "finale",
+      "rng_seed_policy": "level_100_seeded",
+      "reward": {
+        "coins": 280,
+        "stars_first_clear": 1,
+        "collection_xp": 15,
+        "key": true
+      },
+      "design_note": "Chapter finale. Combine learned mechanics and award a visible world milestone."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "flags": [
+    {"id":"chapter_1_complete","description":"Chapter 1: Welcome to the Clouds is complete."},
+    {"id":"keefler_mystery_seen","description":"The player noticed a mysterious, unmarked workshop symbol."}
+  ],
+  "chapters": [
+    {"id":"chapter_1","title":"Welcome to the Clouds","synopsis":"Meet Mr. Weed, explore the Cloud House, and begin restoring the Kingdom.","completionFlag":"chapter_1_complete","characterIds":["mr_weed"],"playable":true,"beats":[
+      {"id":"first_arrival","lines":[
+        {"speakerId":"mr_weed","portraitAssetKey":"portrait_mr_weed","backgroundAssetKey":"room_cloud_house","text":"Well, look who made it through the clouds. I'm Mr. Weed, and this is the Cloud House."},
+        {"speakerId":"mr_weed","portraitAssetKey":"portrait_mr_weed","text":"It has seen sunnier days. The rooms are quiet, the shelves are bare, and the old Kingdom could use a little care."},
+        {"speakerId":"mr_weed","portraitAssetKey":"portrait_mr_weed","text":"Every puzzle you solve sends a little energy back through the clouds. Piece by piece, we can restore the house and the Kingdom around it."},
+        {"speakerId":"mr_weed","portraitAssetKey":"portrait_mr_weed","text":"Let's take a look around. There's plenty of room for new stories, new finds, and a brighter morning."}
+      ]}
+    ]},
+    {"id":"chapter_2","title":"Kitchen Catastrophe","synopsis":"Chef Blaze and a kitchen full of unexpected surprises are waiting in a future chapter.","completionFlag":"chapter_2_complete","characterIds":["chef_blaze"],"playable":false,"beats":[]},
+    {"id":"chapter_3","title":"The Missing Collection","synopsis":"A scattered collection hints at a mystery beyond the Cloud House.","completionFlag":"chapter_3_complete","characterIds":["the_collector"],"playable":false,"beats":[]}
+  ]
+}

@@ -1,0 +1,557 @@
+{
+  "schema_version": 1,
+  "working_title": "Mr. Weed's: Cloud Kingdom",
+  "currencies": [
+    {
+      "id": "coins",
+      "name": "Coins",
+      "purpose": "Normal upgrades, decor, low-tier boosters"
+    },
+    {
+      "id": "stars",
+      "name": "Stars",
+      "purpose": "Story restoration and world unlocks"
+    },
+    {
+      "id": "cloud_tokens",
+      "name": "Cloud Tokens",
+      "purpose": "Premium/rare cosmetics only"
+    },
+    {
+      "id": "keys",
+      "name": "Keys",
+      "purpose": "Secret rooms and milestone vaults"
+    }
+  ],
+  "areas": [
+    {
+      "id": "cloud_house",
+      "name": "Cloud House",
+      "launch": true
+    },
+    {
+      "id": "higher_art_gallery",
+      "name": "Higher Art Gallery",
+      "launch": true
+    },
+    {
+      "id": "festival_grounds",
+      "name": "Festival Grounds",
+      "launch": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "mr_weed",
+      "name": "Mr. Weed",
+      "role": "Guide and wildcard specialist"
+    },
+    {
+      "id": "chef_blaze",
+      "name": "Chef Blaze",
+      "role": "High Cuisine host"
+    },
+    {
+      "id": "dr_cloud",
+      "name": "Dr. Cloud",
+      "role": "Puzzle modifier specialist"
+    },
+    {
+      "id": "mona_chromatic",
+      "name": "Mona Chromatic",
+      "role": "Higher Art curator"
+    },
+    {
+      "id": "riff",
+      "name": "Riff",
+      "role": "Festival promoter"
+    },
+    {
+      "id": "collector",
+      "name": "The Collector",
+      "role": "Rare-set and secret-mission guide"
+    }
+  ],
+  "strains": [
+    {
+      "id": "bluebeary_pancakes",
+      "display_name": "BlueBEARy Pancakes",
+      "collection": "Windy City",
+      "class": "HYBRID",
+      "rarity": "Epic",
+      "puzzle_ability": "Start with one random blocker pre-damaged.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "soldier_field_haze",
+      "display_name": "Soldier Field Haze",
+      "collection": "Windy City",
+      "class": "INDICA",
+      "rarity": "Rare",
+      "puzzle_ability": "Adds +1 charge to the first Rocket created.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "bong_berry_blitz",
+      "display_name": "Bong Berry Blitz",
+      "collection": "Windy City",
+      "class": "SATIVA",
+      "rarity": "Rare",
+      "puzzle_ability": "First 5-match grants a small coin bonus.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "cortezs_curse",
+      "display_name": "Cortez's Curse",
+      "collection": "Ghost Ship",
+      "class": "HYBRID",
+      "rarity": "Epic",
+      "puzzle_ability": "First Fog tile revealed also reveals one neighbor.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "sugar_skull_sherbet",
+      "display_name": "Sugar Skull Sherbet",
+      "collection": "After Dark",
+      "class": "HYBRID",
+      "rarity": "Epic",
+      "puzzle_ability": "First Cloud Bomb has slightly larger objective credit.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "exotic_kush",
+      "display_name": "Exotic Kush",
+      "collection": "Velvet Vault",
+      "class": "INDICA",
+      "rarity": "Epic",
+      "puzzle_ability": "Begin with one random tile upgraded to a Rocket.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "blackberry_kush",
+      "display_name": "Blackberry Kush",
+      "collection": "Velvet Vault",
+      "class": "INDICA",
+      "rarity": "Rare",
+      "puzzle_ability": "Chain blockers take bonus damage once per level.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "baked_alien",
+      "display_name": "Baked Alien",
+      "collection": "Cosmic",
+      "class": "HYBRID",
+      "rarity": "Epic",
+      "puzzle_ability": "First cascade of 3+ grants a mystery drop chance.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "blue_walker",
+      "display_name": "Blue Walker",
+      "collection": "Cosmic",
+      "class": "INDICA",
+      "rarity": "Rare",
+      "puzzle_ability": "Adds score bonus to blue-family matches.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "avatar_og",
+      "display_name": "Avatar OG",
+      "collection": "Cosmic",
+      "class": "HYBRID",
+      "rarity": "Legendary",
+      "puzzle_ability": "Once per level converts a dead-board shuffle into a free Prism spawn.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "blue_slurpicana",
+      "display_name": "Blue Slurpicana",
+      "collection": "Frozen Treats",
+      "class": "SATIVA",
+      "rarity": "Rare",
+      "puzzle_ability": "Ice objective credit +1 on first break.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "cranberry_haze",
+      "display_name": "Cranberry Haze",
+      "collection": "Harvest",
+      "class": "SATIVA",
+      "rarity": "Common",
+      "puzzle_ability": "Small score bonus on target-tile objectives.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "creme_de_la_chem",
+      "display_name": "Creme de la Chem",
+      "collection": "Dessert Lab",
+      "class": "HYBRID",
+      "rarity": "Epic",
+      "puzzle_ability": "First special-piece combo gains bonus score.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "chocolate_mint",
+      "display_name": "Chocolate Mint",
+      "collection": "Dessert Lab",
+      "class": "INDICA",
+      "rarity": "Rare",
+      "puzzle_ability": "Reinforced Crates start with bonus score value.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "blueberry_pancakes",
+      "display_name": "Blueberry Pancakes",
+      "collection": "Breakfast Club",
+      "class": "HYBRID",
+      "rarity": "Common",
+      "puzzle_ability": "Small coin bonus for finishing with moves remaining.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "blueberry_diesel",
+      "display_name": "Blueberry Diesel",
+      "collection": "Road Trip",
+      "class": "HYBRID",
+      "rarity": "Rare",
+      "puzzle_ability": "Drop-object levels get one free column hint.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "biscotti",
+      "display_name": "Biscotti",
+      "collection": "Dessert Lab",
+      "class": "INDICA",
+      "rarity": "Common",
+      "puzzle_ability": "Small score bonus for 4-matches.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "uncle_snoop",
+      "display_name": "Uncle Snoop",
+      "collection": "Legends",
+      "class": "HYBRID",
+      "rarity": "Epic",
+      "puzzle_ability": "Once per level highlights a strong legal move after a delay.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "chimera",
+      "display_name": "Chimera",
+      "collection": "Mythic",
+      "class": "HYBRID",
+      "rarity": "Legendary",
+      "puzzle_ability": "First special + special combo adds one bonus move.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "purple_voodoo",
+      "display_name": "Purple Voodoo",
+      "collection": "After Dark",
+      "class": "INDICA",
+      "rarity": "Epic",
+      "puzzle_ability": "Fog and Chain objective credit bonus once per level.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "black_truffle",
+      "display_name": "Black Truffle",
+      "collection": "Velvet Vault",
+      "class": "INDICA",
+      "rarity": "Rare",
+      "puzzle_ability": "Small bonus to collection XP on first clear.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "cocoas_mintway",
+      "display_name": "Cocoas of the Mintway",
+      "collection": "Dessert Lab",
+      "class": "HYBRID",
+      "rarity": "Rare",
+      "puzzle_ability": "First T/L match grants bonus score.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "strawberry_safety",
+      "display_name": "Strawberry Safety",
+      "collection": "Road Trip",
+      "class": "SATIVA",
+      "rarity": "Common",
+      "puzzle_ability": "One failed swap per level is forgiven.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "green_cheese",
+      "display_name": "Green Cheese",
+      "collection": "Napalm",
+      "class": "HYBRID",
+      "rarity": "Rare",
+      "puzzle_ability": "Crate damage grants extra score.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "minute_man_og",
+      "display_name": "Minute Man OG",
+      "collection": "Napalm",
+      "class": "INDICA",
+      "rarity": "Epic",
+      "puzzle_ability": "First objective completed grants a coin bonus.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "mamba",
+      "display_name": "Mamba",
+      "collection": "Napalm",
+      "class": "SATIVA",
+      "rarity": "Epic",
+      "puzzle_ability": "First Rocket clears with bonus objective credit.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "ghosts_graveyard",
+      "display_name": "Ghosts in the Graveyard",
+      "collection": "After Dark",
+      "class": "HYBRID",
+      "rarity": "Epic",
+      "puzzle_ability": "Fog reveal chain can jump once.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "cloud_nine",
+      "display_name": "Cloud Nine",
+      "collection": "Cloud Classics",
+      "class": "HYBRID",
+      "rarity": "Rare",
+      "puzzle_ability": "Starts level with a small score head start.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "neon_nugget",
+      "display_name": "Neon Nugget",
+      "collection": "Neon Future",
+      "class": "SATIVA",
+      "rarity": "Rare",
+      "puzzle_ability": "Prism activations grant bonus score.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    },
+    {
+      "id": "basement_legend",
+      "display_name": "Basement Legend",
+      "collection": "Secret Set",
+      "class": "HYBRID",
+      "rarity": "Legendary",
+      "puzzle_ability": "Secret-room challenges gain one additional retry token.",
+      "evolution_stages": [
+        "Seedling",
+        "Bud",
+        "Frosted",
+        "Legendary"
+      ],
+      "medical_claims": null,
+      "cultivation_instructions": null
+    }
+  ]
+}

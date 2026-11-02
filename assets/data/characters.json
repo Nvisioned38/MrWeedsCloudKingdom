@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "characters": [
+    {"id":"mr_weed","displayName":"Mr. Weed","portraitAssetKey":"portrait_mr_weed","fullBodyAssetKey":"character_mr_weed","role":"Cloud House caretaker and guide","dialogueStyleKey":"warm_optimistic","knownByDefault":true},
+    {"id":"chef_blaze","displayName":"Chef Blaze","portraitAssetKey":"portrait_chef_blaze","fullBodyAssetKey":"character_chef_blaze","role":"A bold chef with a knack for kitchen experiments","dialogueStyleKey":"energetic_culinary","knownByDefault":false},
+    {"id":"dr_cloud","displayName":"Dr. Cloud","portraitAssetKey":"portrait_dr_cloud","fullBodyAssetKey":"character_dr_cloud","role":"Kingdom researcher and cloud-weather expert","dialogueStyleKey":"curious_precise","knownByDefault":false},
+    {"id":"mona_chromatic","displayName":"Mona Chromatic","portraitAssetKey":"portrait_mona_chromatic","fullBodyAssetKey":"character_mona_chromatic","role":"Color artist and keeper of the Higher Art Gallery","dialogueStyleKey":"expressive_visual","knownByDefault":false},
+    {"id":"riff","displayName":"Riff","portraitAssetKey":"portrait_riff","fullBodyAssetKey":"character_riff","role":"Traveling musician and festival organizer","dialogueStyleKey":"playful_rhythmic","knownByDefault":false},
+    {"id":"the_collector","displayName":"The Collector","portraitAssetKey":"portrait_collector","fullBodyAssetKey":"character_collector","role":"A careful archivist of rare finds","dialogueStyleKey":"measured_mysterious","knownByDefault":false}
+  ]
+}

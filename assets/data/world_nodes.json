@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "nodes": [
+    {"id":"cloud_house","title":"Cloud House","description":"The old house is ready for a fresh start. Puzzle progress brings the Kingdom back to life.","assetKey":"room_cloud_house","defaultState":"available"},
+    {"id":"lounge","title":"Lounge","description":"Restore the room and choose a style for its cozy cloud furniture.","assetKey":"room_lounge","defaultState":"locked","unlockAtLevel":10,"restoredWhen":"lounge_restored","customizedWhen":"lounge_style_selected"},
+    {"id":"kitchen","title":"Kitchen","description":"A future room for a culinary-sized puzzle of its own.","assetKey":"room_kitchen","defaultState":"locked"},
+    {"id":"higher_art_gallery","title":"Higher Art Gallery","description":"A gallery wing is planned for a future chapter.","assetKey":"room_art_gallery","defaultState":"locked"},
+    {"id":"secret_basement","title":"Secret Basement","description":"The stairs are sealed for now. Something faintly glints below.","assetKey":"room_basement","defaultState":"locked"},
+    {"id":"festival_grounds","title":"Festival Grounds","description":"The grounds will open when the Kingdom is ready to celebrate.","assetKey":"room_festival","defaultState":"locked"},
+    {"id":"unmarked_workshop","title":"Unmarked Workshop","description":"A tiny winged gear is carved into the stone. No name is written beneath it.","assetKey":"symbol_unknown_workshop","defaultState":"locked","hookFlag":"keefler_mystery_seen"}
+  ]
+}
