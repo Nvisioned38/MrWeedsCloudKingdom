@@ -43,7 +43,7 @@ void main() {
     story = StoryCatalog.fromJson(_decodeAsset(
         await rootBundle.loadString('assets/data/story_chapters.json')));
     final levelData = _decodeAsset(
-        await rootBundle.loadString('assets/data/levels_001_010.json'));
+        await rootBundle.loadString('assets/data/levels_001_030.json'));
     levels = (levelData['levels'] as List)
         .cast<Map<String, dynamic>>()
         .map(LevelSpec.fromJson)
@@ -121,7 +121,7 @@ void main() {
   });
 
   test('collection filters and name sort use catalog data', () {
-    expect(collection.cards, hasLength(10));
+    expect(collection.cards, hasLength(30));
     expect(
         collection.cards.map((card) => card.displayName),
         containsAll([
@@ -137,18 +137,24 @@ void main() {
           'Avatar OG',
         ]));
     final legendaries = collection.query(rarity: CollectibleRarity.legendary);
-    expect(legendaries.map((card) => card.displayName),
-        ['Baked Alien', 'Sugar Skull Sherbet']);
-    final mystic = collection.query(collectionId: 'mystic_garden');
-    expect(mystic.map((card) => card.displayName), [
-      'Avatar OG',
-      'Bong Berry Blitz',
-      "Cortez's Curse",
-      'Sugar Skull Sherbet',
-    ]);
+    expect(
+        legendaries.map((card) => card.displayName),
+        containsAll([
+          'Avatar OG',
+          'Basement Legend',
+          'Chimera',
+        ]));
+    final afterDark = collection.query(collectionId: 'after_dark');
+    expect(
+        afterDark.map((card) => card.displayName),
+        containsAll([
+          'Ghosts in the Graveyard',
+          'Purple Voodoo',
+          'Sugar Skull Sherbet',
+        ]));
   });
 
-  test('character and story catalogs expose Chapter 1 and two teasers', () {
+  test('character and story catalogs expose three playable chapters', () {
     expect(characters.characters, hasLength(6));
     final mrWeed = characters.byId('mr_weed')!;
     expect(mrWeed.displayName, 'Mr. Weed');
@@ -161,8 +167,11 @@ void main() {
       'The Missing Collection',
     ]);
     expect(story.chapters.first.playable, isTrue);
-    expect(
-        story.chapters.skip(1).every((chapter) => !chapter.playable), isTrue);
+    expect(story.chapters.skip(1).every((chapter) => chapter.playable), isTrue);
+    expect(story.chapters[1].unlockAtLevel, 11);
+    expect(story.chapters[1].completeAtLevel, 20);
+    expect(story.chapters[2].unlockAtLevel, 21);
+    expect(story.chapters[2].completeAtLevel, 30);
   });
 
   test('favorite and displayed collectible persist', () {
@@ -243,7 +252,8 @@ void main() {
     expect(find.text('BlueBEARy Pancakes'), findsOneWidget);
     await tester.tap(find.text('Collection'));
     await tester.pump();
-    expect(find.text('1 of 10 discovered · sorted by name'), findsOneWidget);
+    expect(find.text('1 of 30 discovered · 0 Collection XP · sorted by name'),
+        findsOneWidget);
     await tester.tap(find.text('Home'));
     await tester.pump();
     expect(progress.completedLevels, {5});

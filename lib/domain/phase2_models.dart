@@ -20,7 +20,7 @@ extension EvolutionStageLabel on EvolutionStage {
       };
 }
 
-enum WorldNodeState { locked, available, restored, customized }
+enum WorldNodeState { locked, available, restored, customized, preview }
 
 extension WorldNodeStateLabel on WorldNodeState {
   String get label => switch (this) {
@@ -28,6 +28,7 @@ extension WorldNodeStateLabel on WorldNodeState {
         WorldNodeState.available => 'Available',
         WorldNodeState.restored => 'Restored',
         WorldNodeState.customized => 'Customized',
+        WorldNodeState.preview => 'Preview',
       };
 }
 
@@ -38,6 +39,7 @@ class CollectibleCard {
     required this.collectionId,
     required this.collectionName,
     required this.rarity,
+    required this.strainClass,
     required this.category,
     required this.lore,
     required this.puzzleAbilityText,
@@ -46,6 +48,8 @@ class CollectibleCard {
     required this.unlocked,
     required this.favorite,
     required this.artAssetKey,
+    this.evolutionXp = 0,
+    this.equipped = false,
   });
 
   final String id;
@@ -53,6 +57,7 @@ class CollectibleCard {
   final String collectionId;
   final String collectionName;
   final CollectibleRarity rarity;
+  final String strainClass;
   final String category;
   final String lore;
   final String puzzleAbilityText;
@@ -61,6 +66,8 @@ class CollectibleCard {
   final bool unlocked;
   final bool favorite;
   final String artAssetKey;
+  final int evolutionXp;
+  final bool equipped;
 
   factory CollectibleCard.fromJson(Map<String, dynamic> json) =>
       CollectibleCard(
@@ -70,6 +77,7 @@ class CollectibleCard {
         collectionName: json['collectionName'] as String,
         rarity: CollectibleRarity.values
             .byName((json['rarity'] as String).toLowerCase()),
+        strainClass: json['class'] as String? ?? 'Hybrid',
         category: json['category'] as String,
         lore: json['lore'] as String,
         puzzleAbilityText: json['puzzleAbilityText'] as String,
@@ -79,6 +87,7 @@ class CollectibleCard {
         unlocked: json['unlocked'] as bool? ?? false,
         favorite: json['favorite'] as bool? ?? false,
         artAssetKey: json['artAssetKey'] as String,
+        evolutionXp: json['evolutionXp'] as int? ?? 0,
       );
 
   CollectibleCard withProgress({
@@ -86,6 +95,8 @@ class CollectibleCard {
     bool? discovered,
     bool? unlocked,
     bool? favorite,
+    int? evolutionXp,
+    bool? equipped,
   }) =>
       CollectibleCard(
         id: id,
@@ -93,6 +104,7 @@ class CollectibleCard {
         collectionId: collectionId,
         collectionName: collectionName,
         rarity: rarity,
+        strainClass: strainClass,
         category: category,
         lore: lore,
         puzzleAbilityText: puzzleAbilityText,
@@ -101,6 +113,8 @@ class CollectibleCard {
         unlocked: unlocked ?? this.unlocked,
         favorite: favorite ?? this.favorite,
         artAssetKey: artAssetKey,
+        evolutionXp: evolutionXp ?? this.evolutionXp,
+        equipped: equipped ?? this.equipped,
       );
 }
 
@@ -144,6 +158,7 @@ class WorldNodeDefinition {
     required this.assetKey,
     required this.defaultState,
     this.unlockAtLevel,
+    this.previewAtLevel,
     this.restoredWhen,
     this.customizedWhen,
     this.hookFlag,
@@ -155,6 +170,7 @@ class WorldNodeDefinition {
   final String assetKey;
   final WorldNodeState defaultState;
   final int? unlockAtLevel;
+  final int? previewAtLevel;
   final String? restoredWhen;
   final String? customizedWhen;
   final String? hookFlag;
@@ -168,6 +184,7 @@ class WorldNodeDefinition {
         defaultState: WorldNodeState.values
             .byName((json['defaultState'] as String).toLowerCase()),
         unlockAtLevel: json['unlockAtLevel'] as int?,
+        previewAtLevel: json['previewAtLevel'] as int?,
         restoredWhen: json['restoredWhen'] as String?,
         customizedWhen: json['customizedWhen'] as String?,
         hookFlag: json['hookFlag'] as String?,
@@ -267,12 +284,15 @@ class DialogueLine {
 }
 
 class StoryBeat {
-  const StoryBeat({required this.id, required this.lines});
+  const StoryBeat(
+      {required this.id, required this.lines, this.unlockAtLevel = 1});
   final String id;
   final List<DialogueLine> lines;
+  final int unlockAtLevel;
 
   factory StoryBeat.fromJson(Map<String, dynamic> json) => StoryBeat(
         id: json['id'] as String,
+        unlockAtLevel: json['unlockAtLevel'] as int? ?? 1,
         lines: (json['lines'] as List)
             .cast<Map<String, dynamic>>()
             .map(DialogueLine.fromJson)
@@ -289,6 +309,8 @@ class StoryChapter {
     required this.characterIds,
     required this.beats,
     required this.playable,
+    this.unlockAtLevel = 1,
+    this.completeAtLevel,
   });
 
   final String id;
@@ -298,6 +320,8 @@ class StoryChapter {
   final List<String> characterIds;
   final List<StoryBeat> beats;
   final bool playable;
+  final int unlockAtLevel;
+  final int? completeAtLevel;
 
   List<DialogueLine> get dialogue =>
       beats.expand((beat) => beat.lines).toList();
@@ -313,6 +337,8 @@ class StoryChapter {
             .map(StoryBeat.fromJson)
             .toList(growable: false),
         playable: json['playable'] as bool? ?? false,
+        unlockAtLevel: json['unlockAtLevel'] as int? ?? 1,
+        completeAtLevel: json['completeAtLevel'] as int?,
       );
 }
 

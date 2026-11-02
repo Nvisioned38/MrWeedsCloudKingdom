@@ -10,6 +10,8 @@ enum RocketDirection { horizontal, vertical }
 
 enum BlockerKind { crate, reinforcedCrate }
 
+enum PuzzlePerk { none, cloudNineScoreHeadstart }
+
 enum ObjectiveKind { score, collect, destroyBlockers, createSpecial }
 
 enum LevelOutcome { playing, won, lost }
@@ -28,12 +30,27 @@ class Cell {
 }
 
 class Piece {
-  const Piece(this.family, {this.special, this.direction});
+  const Piece(this.family,
+      {this.special,
+      this.direction,
+      this.stickySyrup = false,
+      this.fogged = false});
   final TileFamily family;
   final SpecialKind? special;
   final RocketDirection? direction;
+  final bool stickySyrup;
+  final bool fogged;
   Piece withSpecial(SpecialKind value, {RocketDirection? direction}) =>
-      Piece(family, special: value, direction: direction);
+      Piece(family,
+          special: value,
+          direction: direction,
+          stickySyrup: stickySyrup,
+          fogged: fogged);
+  Piece withConditions({bool? stickySyrup, bool? fogged}) => Piece(family,
+      special: special,
+      direction: direction,
+      stickySyrup: stickySyrup ?? this.stickySyrup,
+      fogged: fogged ?? this.fogged);
 }
 
 class BlockerState {
@@ -113,7 +130,16 @@ class LevelSpec {
       required this.objectives,
       required this.blockers,
       required this.coins,
-      this.tutorial});
+      this.tutorial,
+      this.chapter = 1,
+      this.chapterName = 'Welcome to the Clouds',
+      this.chapterPosition = 1,
+      this.collectionXp = 0,
+      this.keys = 0,
+      this.sourceObjectiveIntent,
+      this.isChapterFinale = false,
+      this.stickySyrupCells = const [],
+      this.fogCells = const []});
   final int id;
   final String name;
   final int seed;
@@ -122,6 +148,15 @@ class LevelSpec {
   final List<BlockerDefinition> blockers;
   final int coins;
   final String? tutorial;
+  final int chapter;
+  final String chapterName;
+  final int chapterPosition;
+  final int collectionXp;
+  final int keys;
+  final String? sourceObjectiveIntent;
+  final bool isChapterFinale;
+  final List<Cell> stickySyrupCells;
+  final List<Cell> fogCells;
 
   factory LevelSpec.fromJson(Map<String, dynamic> json) => LevelSpec(
         id: json['id'] as int,
@@ -141,8 +176,27 @@ class LevelSpec {
             .toList(growable: false),
         coins: json['coins'] as int,
         tutorial: json['tutorial'] as String?,
+        chapter: json['chapter'] as int? ?? 1,
+        chapterName: json['chapterName'] as String? ??
+            (json['chapter'] == 2
+                ? 'Kitchen Catastrophe'
+                : json['chapter'] == 3
+                    ? 'The Missing Collection'
+                    : 'Welcome to the Clouds'),
+        chapterPosition: json['chapterPosition'] as int? ?? 1,
+        collectionXp: json['collectionXp'] as int? ?? 0,
+        keys: json['keys'] as int? ?? 0,
+        sourceObjectiveIntent: json['sourceObjectiveIntent'] as String?,
+        isChapterFinale: json['isChapterFinale'] as bool? ?? false,
+        stickySyrupCells: _cellsFromJson(json['stickySyrup']),
+        fogCells: _cellsFromJson(json['fog']),
       );
 }
+
+List<Cell> _cellsFromJson(dynamic value) => (value as List? ?? const [])
+    .cast<Map<String, dynamic>>()
+    .map((entry) => Cell(entry['row'] as int, entry['col'] as int))
+    .toList(growable: false);
 
 class ObjectiveProgress {
   ObjectiveProgress(this.definition, [this.value = 0]);
@@ -224,7 +278,8 @@ class Match3Board {
       {required this.level,
       this.rows = 8,
       this.cols = 8,
-      List<List<Piece?>>? initialTiles})
+      List<List<Piece?>>? initialTiles,
+      this.puzzlePerk = PuzzlePerk.none})
       : _random = Random(level.seed) {
     _blockers = {
       for (final blocker in level.blockers)
@@ -240,6 +295,9 @@ class Match3Board {
     }
     if (initialTiles == null) {
       _fillInitialBoard();
+    }
+    _applyInitialTileConditions();
+    if (initialTiles == null) {
       if (!hasLegalMove) shuffleUntilPlayable();
     }
   }
@@ -248,17 +306,34 @@ class Match3Board {
   final int rows;
   final int cols;
   final Random _random;
+  final PuzzlePerk puzzlePerk;
   late List<List<Piece?>> _tiles;
   late Map<Cell, BlockerState> _blockers;
   int score = 0;
   int turns = 0;
+
+  void _applyInitialTileConditions() {
+    for (final cell in level.stickySyrupCells) {
+      final piece = _tiles[cell.row][cell.col];
+      if (piece != null) {
+        _tiles[cell.row][cell.col] = piece.withConditions(stickySyrup: true);
+      }
+    }
+    for (final cell in level.fogCells) {
+      final piece = _tiles[cell.row][cell.col];
+      if (piece != null) {
+        _tiles[cell.row][cell.col] = piece.withConditions(fogged: true);
+      }
+    }
+    if (puzzlePerk == PuzzlePerk.cloudNineScoreHeadstart) score = 150;
+  }
 
   Piece? at(int row, int col) => _tiles[row][col];
   BlockerState? blockerAt(int row, int col) => _blockers[Cell(row, col)];
   Map<Cell, BlockerState> get blockers =>
       {for (final e in _blockers.entries) e.key: e.value.copy()};
   String get fingerprint =>
-      '${_tiles.map((row) => row.map((p) => p == null ? '_' : '${p.family.index}:${p.special?.index ?? ''}:${p.direction?.index ?? ''}').join(',')).join('|')}#${_blockers.entries.map((e) => '${e.key.row},${e.key.col}:${e.value.kind.index}:${e.value.hp}').join(';')}';
+      '${_tiles.map((row) => row.map((p) => p == null ? '_' : '${p.family.index}:${p.special?.index ?? ''}:${p.direction?.index ?? ''}:${p.stickySyrup ? 's' : ''}${p.fogged ? 'f' : ''}').join(',')).join('|')}#${_blockers.entries.map((e) => '${e.key.row},${e.key.col}:${e.value.kind.index}:${e.value.hp}').join(';')}';
 
   void _fillInitialBoard() {
     for (var row = 0; row < rows; row++) {
@@ -330,7 +405,9 @@ class Match3Board {
         for (final next in [Cell(r, c + 1), Cell(r + 1, c)]) {
           if (!_inside(next) ||
               at(r, c) == null ||
-              at(next.row, next.col) == null) {
+              at(next.row, next.col) == null ||
+              at(r, c)!.stickySyrup ||
+              at(next.row, next.col)!.stickySyrup) {
             continue;
           }
           _swap(Cell(r, c), next);
@@ -350,7 +427,9 @@ class Match3Board {
         !_inside(b) ||
         (a.row - b.row).abs() + (a.col - b.col).abs() != 1 ||
         at(a.row, a.col) == null ||
-        at(b.row, b.col) == null) {
+        at(b.row, b.col) == null ||
+        at(a.row, a.col)!.stickySyrup ||
+        at(b.row, b.col)!.stickySyrup) {
       return TurnResult.rejected;
     }
     final scoreBefore = score;
@@ -428,6 +507,7 @@ class Match3Board {
       wave.addAll(specialCells);
       if (wave.isEmpty) break;
       specialCoverage.addAll(specialCells);
+      _resolveAdjacentTileConditions(wave, changed);
       _damageBlockers(analysis.cells, specialCoverage, destroyed, changed);
       var clearedTileCount = 0;
       for (final cell in wave) {
@@ -455,6 +535,27 @@ class Match3Board {
         destroyedBlockers: destroyed,
         cascadeCount: cascade,
         changedCells: changed);
+  }
+
+  void _resolveAdjacentTileConditions(
+      Set<Cell> clearedCells, Set<Cell> changed) {
+    for (final cleared in clearedCells) {
+      for (final neighbor in [
+        Cell(cleared.row - 1, cleared.col),
+        Cell(cleared.row + 1, cleared.col),
+        Cell(cleared.row, cleared.col - 1),
+        Cell(cleared.row, cleared.col + 1),
+      ]) {
+        if (!_inside(neighbor)) continue;
+        final piece = _tiles[neighbor.row][neighbor.col];
+        if (piece == null || (!piece.stickySyrup && !piece.fogged)) continue;
+        _tiles[neighbor.row][neighbor.col] = piece.withConditions(
+          stickySyrup: false,
+          fogged: false,
+        );
+        changed.add(neighbor);
+      }
+    }
   }
 
   Cell? _createMatchSpecial(_MatchAnalysis analysis, Cell a, Cell b,
@@ -548,12 +649,15 @@ class Match3Board {
     for (var c = 0; c < cols; c++) {
       var end = rows - 1;
       while (end >= 0) {
-        if (_blockers.containsKey(Cell(end, c))) {
+        if (_blockers.containsKey(Cell(end, c)) ||
+            (_tiles[end][c]?.stickySyrup ?? false)) {
           end--;
           continue;
         }
         var start = end;
-        while (start >= 0 && !_blockers.containsKey(Cell(start, c))) {
+        while (start >= 0 &&
+            !_blockers.containsKey(Cell(start, c)) &&
+            !(_tiles[start][c]?.stickySyrup ?? false)) {
           start--;
         }
         final top = start + 1;
@@ -578,7 +682,8 @@ class Match3Board {
     final pieces = <Piece>[];
     for (var r = 0; r < rows; r++) {
       for (var c = 0; c < cols; c++) {
-        if (!_blockers.containsKey(Cell(r, c))) {
+        if (!_blockers.containsKey(Cell(r, c)) &&
+            !(_tiles[r][c]?.stickySyrup ?? false)) {
           cells.add(Cell(r, c));
           pieces.add(_tiles[r][c]!);
         }
@@ -600,10 +705,15 @@ class Match3Board {
           Cell(row, col + 2),
           Cell(row + 1, col + 1)
         ];
-        if (patternCells.any(_blockers.containsKey)) continue;
+        if (patternCells.any((cell) =>
+            _blockers.containsKey(cell) ||
+            (_tiles[cell.row][cell.col]?.stickySyrup ?? false))) {
+          continue;
+        }
         for (var r = 0; r < rows; r++) {
           for (var c = 0; c < cols; c++) {
-            if (!_blockers.containsKey(Cell(r, c))) {
+            if (!_blockers.containsKey(Cell(r, c)) &&
+                !(_tiles[r][c]?.stickySyrup ?? false)) {
               _tiles[r][c] =
                   Piece(TileFamily.values[(r + c) % TileFamily.values.length]);
             }
@@ -633,9 +743,19 @@ class Match3Board {
 }
 
 class LevelSession {
-  LevelSession(this.level, {List<List<Piece?>>? initialTiles})
-      : board = Match3Board(level: level, initialTiles: initialTiles),
-        objectives = level.objectives.map((o) => ObjectiveProgress(o)).toList();
+  LevelSession(this.level,
+      {List<List<Piece?>>? initialTiles,
+      PuzzlePerk puzzlePerk = PuzzlePerk.none})
+      : board = Match3Board(
+            level: level, initialTiles: initialTiles, puzzlePerk: puzzlePerk),
+        objectives =
+            level.objectives.map((o) => ObjectiveProgress(o)).toList() {
+    for (final progress in objectives) {
+      if (progress.definition.kind == ObjectiveKind.score) {
+        progress.value = _minInt(progress.definition.target, board.score);
+      }
+    }
+  }
   final LevelSpec level;
   final Match3Board board;
   final List<ObjectiveProgress> objectives;
@@ -681,26 +801,45 @@ class RewardResult {
       {required this.firstClear,
       required this.coins,
       required this.stars,
-      required this.bestScore});
+      required this.bestScore,
+      this.collectionXp = 0,
+      this.keys = 0});
   final bool firstClear;
   final int coins;
   final int stars;
   final int bestScore;
+  final int collectionXp;
+  final int keys;
 }
 
 class ProgressState {
   ProgressState();
 
+  static const evolutionThresholds = <int>[10, 25, 50];
+  static const maxPlayableLevel = 30;
+  static const milestoneCardUnlocks = <int, String>{
+    5: 'bluebeary_pancakes',
+    10: 'cloud_nine',
+    15: 'soldier_field_haze',
+    20: 'cortezs_curse',
+    25: 'baked_alien',
+    30: 'basement_legend',
+  };
+
   final Set<int> completedLevels = {};
   final Map<int, int> bestScores = {};
   final Set<int> starLevelIds = {};
   int coins = 0;
+  int keys = 0;
+  int collectionXp = 0;
   String? loungeStyleId;
   bool loungeRestoredFlag = false;
   final Set<String> discoveredCollectibleIds = {};
   final Set<String> unlockedCollectibleIds = {};
   final Set<String> favoriteCollectibleIds = {};
   final Map<String, EvolutionStage> collectibleEvolutionStages = {};
+  final Map<String, int> collectibleXp = {};
+  String? equippedCollectibleId;
   String? displayedCollectibleId;
   final Set<String> storyFlags = {};
   final Set<String> completedChapterIds = {};
@@ -718,13 +857,74 @@ class ProgressState {
         ? 0
         : completedLevels.reduce((a, b) => a > b ? a : b);
     final next = latest + 1;
-    return next > 10 ? 10 : next;
+    return next > maxPlayableLevel ? maxPlayableLevel : next;
+  }
+
+  void resetForNewGame() {
+    completedLevels.clear();
+    bestScores.clear();
+    starLevelIds.clear();
+    coins = 0;
+    keys = 0;
+    collectionXp = 0;
+    loungeStyleId = null;
+    loungeRestoredFlag = false;
+    discoveredCollectibleIds.clear();
+    unlockedCollectibleIds.clear();
+    favoriteCollectibleIds.clear();
+    collectibleEvolutionStages.clear();
+    collectibleXp.clear();
+    equippedCollectibleId = null;
+    displayedCollectibleId = null;
+    storyFlags.clear();
+    completedChapterIds.clear();
+    worldNodeStates.clear();
+    settings
+      ..clear()
+      ..addAll({
+        'reducedMotion': false,
+        'haptics': true,
+        'sound': true,
+        'music': true,
+      });
   }
 
   void unlockCollectible(String id) {
     discoveredCollectibleIds.add(id);
     unlockedCollectibleIds.add(id);
     collectibleEvolutionStages.putIfAbsent(id, () => EvolutionStage.seedling);
+    collectibleXp.putIfAbsent(id, () => 0);
+  }
+
+  static EvolutionStage evolutionStageForXp(int xp) {
+    if (xp >= evolutionThresholds[2]) return EvolutionStage.legendary;
+    if (xp >= evolutionThresholds[1]) return EvolutionStage.frosted;
+    if (xp >= evolutionThresholds[0]) return EvolutionStage.bud;
+    return EvolutionStage.seedling;
+  }
+
+  static int? nextEvolutionThreshold(EvolutionStage stage) => switch (stage) {
+        EvolutionStage.seedling => evolutionThresholds[0],
+        EvolutionStage.bud => evolutionThresholds[1],
+        EvolutionStage.frosted => evolutionThresholds[2],
+        EvolutionStage.legendary => null,
+      };
+
+  void awardCollectionXp(int amount) {
+    if (amount <= 0) return;
+    collectionXp += amount;
+    final recipient = equippedCollectibleId ??
+        (unlockedCollectibleIds.toList()..sort()).firstOrNull;
+    if (recipient == null) return;
+    final cardXp = (collectibleXp[recipient] ?? 0) + amount;
+    collectibleXp[recipient] = cardXp;
+    collectibleEvolutionStages[recipient] = evolutionStageForXp(cardXp);
+  }
+
+  bool equipCollectible(String? id) {
+    if (id != null && !unlockedCollectibleIds.contains(id)) return false;
+    equippedCollectibleId = id;
+    return true;
   }
 
   void toggleFavorite(String id) {
@@ -746,6 +946,10 @@ class ProgressState {
     if (node.restoredWhen == 'lounge_restored' && loungeRestored) {
       return WorldNodeState.restored;
     }
+    if (node.previewAtLevel != null &&
+        completedLevels.contains(node.previewAtLevel)) {
+      return WorldNodeState.preview;
+    }
     final saved = worldNodeStates[node.id];
     if (saved != null && saved != WorldNodeState.locked) return saved;
     if (node.unlockAtLevel != null &&
@@ -765,12 +969,27 @@ class ProgressState {
     if (first) {
       coins += level.coins;
       starLevelIds.add(level.id);
+      keys += level.keys;
+      final unlockId = milestoneCardUnlocks[level.id];
+      if (unlockId != null) unlockCollectible(unlockId);
+      awardCollectionXp(level.collectionXp);
+      if (level.id == 20) {
+        setWorldNodeState('kitchen', WorldNodeState.available);
+        storyFlags.add('kitchen_opened');
+      } else if (level.id == 30) {
+        setWorldNodeState('higher_art_gallery', WorldNodeState.preview);
+        storyFlags
+          ..add('gallery_preview_seen')
+          ..add('collection_case_clue');
+      }
     }
     return RewardResult(
         firstClear: first,
         coins: first ? level.coins : 0,
         stars: first ? 1 : 0,
-        bestScore: best);
+        bestScore: best,
+        collectionXp: first ? level.collectionXp : 0,
+        keys: first ? level.keys : 0);
   }
 
   int recordBestScore(LevelSpec level, int score) {
@@ -781,10 +1000,14 @@ class ProgressState {
   }
 
   Map<String, dynamic> toJson() => {
-        'schema': 2,
+        'schema': 3,
         'completed': completedLevels.toList()..sort(),
         'best': {for (final e in bestScores.entries) '${e.key}': e.value},
         'coins': coins,
+        'keys': keys,
+        'collectionXp': collectionXp,
+        'collectibleXp': Map<String, int>.of(collectibleXp),
+        'equippedCollectibleId': equippedCollectibleId,
         'stars': starLevelIds.toList()..sort(),
         'loungeStyleId': loungeStyleId,
         'loungeRestored': loungeRestored,
@@ -813,11 +1036,15 @@ class ProgressState {
     state.bestScores.addAll((json['best'] as Map? ?? {}).map(
         (key, value) => MapEntry(int.parse(key.toString()), value as int)));
     state.coins = json['coins'] as int? ?? 0;
+    state.keys = json['keys'] as int? ?? 0;
+    state.collectionXp = json['collectionXp'] as int? ?? 0;
     state.loungeStyleId = json['loungeStyleId'] as String?;
     state.loungeRestoredFlag =
         (json['loungeRestored'] as bool?) ?? (state.loungeStyleId != null);
-    if (state.completedLevels.contains(5)) {
-      state.unlockCollectible('bluebeary_pancakes');
+    for (final entry in milestoneCardUnlocks.entries) {
+      if (state.completedLevels.contains(entry.key)) {
+        state.unlockCollectible(entry.value);
+      }
     }
     state.discoveredCollectibleIds.addAll(
         (json['discoveredCollectibles'] as List? ?? const []).cast<String>());
@@ -829,6 +1056,19 @@ class ProgressState {
         (json['collectibleEvolution'] as Map? ?? const {}).map((key, value) =>
             MapEntry(key.toString(),
                 EvolutionStage.values.byName(value.toString()))));
+    state.collectibleXp.addAll((json['collectibleXp'] as Map? ?? const {})
+        .map((key, value) => MapEntry(key.toString(), value as int)));
+    for (final entry in state.collectibleXp.entries) {
+      if (state.unlockedCollectibleIds.contains(entry.key)) {
+        state.collectibleEvolutionStages[entry.key] =
+            evolutionStageForXp(entry.value);
+      }
+    }
+    final equippedId = json['equippedCollectibleId'] as String?;
+    if (equippedId != null &&
+        state.unlockedCollectibleIds.contains(equippedId)) {
+      state.equippedCollectibleId = equippedId;
+    }
     state.displayedCollectibleId = json['displayedCollectibleId'] as String?;
     state.storyFlags
         .addAll((json['storyFlags'] as List? ?? const []).cast<String>());

@@ -1,0 +1,1686 @@
+{
+  "schema_version": 2,
+  "levels": [
+    {
+      "id": 1,
+      "name": "First Puff",
+      "seed": 1001,
+      "moves": 18,
+      "objectives": [
+        {
+          "type": "score",
+          "target": 800
+        }
+      ],
+      "blockers": [],
+      "coins": 100,
+      "tutorial": "basic_swap_match",
+      "collectionXp": 6,
+      "keys": 0
+    },
+    {
+      "id": 2,
+      "name": "Keep It Rolling",
+      "seed": 1002,
+      "moves": 20,
+      "objectives": [
+        {
+          "type": "collect",
+          "family": "cloud",
+          "target": 12
+        }
+      ],
+      "blockers": [],
+      "coins": 110,
+      "tutorial": "objective_counter",
+      "collectionXp": 6,
+      "keys": 0
+    },
+    {
+      "id": 3,
+      "name": "Four Is More",
+      "seed": 1003,
+      "moves": 20,
+      "objectives": [
+        {
+          "type": "create_special",
+          "special": "rocket",
+          "target": 1
+        },
+        {
+          "type": "score",
+          "target": 1200
+        }
+      ],
+      "blockers": [],
+      "coins": 120,
+      "tutorial": "four_match_rocket",
+      "collectionXp": 6,
+      "keys": 0
+    },
+    {
+      "id": 4,
+      "name": "Prism Break",
+      "seed": 1004,
+      "moves": 22,
+      "objectives": [
+        {
+          "type": "create_special",
+          "special": "prism",
+          "target": 1
+        },
+        {
+          "type": "collect",
+          "family": "moon",
+          "target": 15
+        }
+      ],
+      "blockers": [],
+      "coins": 130,
+      "tutorial": "five_match_prism",
+      "collectionXp": 6,
+      "keys": 0
+    },
+    {
+      "id": 5,
+      "name": "Crate Expectations",
+      "seed": 1005,
+      "moves": 22,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 6
+        }
+      ],
+      "blockers": [
+        {
+          "row": 2,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "crate"
+        }
+      ],
+      "coins": 140,
+      "tutorial": "crate_one_hit",
+      "collectionXp": 6,
+      "keys": 0
+    },
+    {
+      "id": 6,
+      "name": "Boxed In",
+      "seed": 1006,
+      "moves": 24,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 8
+        },
+        {
+          "type": "collect",
+          "family": "leaf",
+          "target": 14
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        }
+      ],
+      "coins": 150,
+      "tutorial": null,
+      "collectionXp": 6,
+      "keys": 0
+    },
+    {
+      "id": 7,
+      "name": "Double Packed",
+      "seed": 1007,
+      "moves": 25,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "reinforced_crate",
+          "target": 6
+        }
+      ],
+      "blockers": [
+        {
+          "row": 2,
+          "col": 2,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "reinforced_crate"
+        }
+      ],
+      "coins": 165,
+      "tutorial": null,
+      "collectionXp": 6,
+      "keys": 0
+    },
+    {
+      "id": 8,
+      "name": "Cloud Bomb",
+      "seed": 1008,
+      "moves": 26,
+      "objectives": [
+        {
+          "type": "create_special",
+          "special": "cloud_bomb",
+          "target": 1
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 4
+        }
+      ],
+      "blockers": [
+        {
+          "row": 2,
+          "col": 1,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "type": "crate"
+        }
+      ],
+      "coins": 180,
+      "tutorial": "t_l_cloud_bomb",
+      "collectionXp": 6,
+      "keys": 0
+    },
+    {
+      "id": 9,
+      "name": "Combo Session",
+      "seed": 1009,
+      "moves": 27,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 4
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "reinforced_crate",
+          "target": 4
+        },
+        {
+          "type": "score",
+          "target": 2500
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "reinforced_crate"
+        }
+      ],
+      "coins": 200,
+      "tutorial": null,
+      "collectionXp": 6,
+      "keys": 0
+    },
+    {
+      "id": 10,
+      "name": "Lounge Rescue",
+      "seed": 1010,
+      "moves": 30,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 6
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "reinforced_crate",
+          "target": 6
+        },
+        {
+          "type": "score",
+          "target": 3500
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "type": "reinforced_crate"
+        }
+      ],
+      "coins": 250,
+      "tutorial": null,
+      "collectionXp": 6,
+      "keys": 0
+    },
+    {
+      "id": 11,
+      "name": "Pantry Patrol",
+      "chapter": 2,
+      "chapterName": "Kitchen Catastrophe",
+      "chapterPosition": 1,
+      "seed": 201011,
+      "moves": 28,
+      "objectives": [
+        {
+          "type": "collect",
+          "family": "cloud",
+          "target": 18
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 4
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        }
+      ],
+      "coins": 115,
+      "collectionXp": 7,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": "sticky_syrup_intro",
+      "sourceObjectiveIntent": "drop_objects"
+    },
+    {
+      "id": 12,
+      "name": "Steam and Sugar",
+      "chapter": 2,
+      "chapterName": "Kitchen Catastrophe",
+      "chapterPosition": 2,
+      "seed": 201012,
+      "moves": 28,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 4
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        }
+      ],
+      "coins": 120,
+      "collectionXp": 7,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "clear_cloud_zones"
+    },
+    {
+      "id": 13,
+      "name": "Quick Whisk",
+      "chapter": 2,
+      "chapterName": "Kitchen Catastrophe",
+      "chapterPosition": 3,
+      "seed": 201013,
+      "moves": 28,
+      "objectives": [
+        {
+          "type": "score",
+          "target": 2250
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 4
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        }
+      ],
+      "coins": 125,
+      "collectionXp": 7,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "score"
+    },
+    {
+      "id": 14,
+      "name": "Cloudy with a Chance of Crates",
+      "chapter": 2,
+      "chapterName": "Kitchen Catastrophe",
+      "chapterPosition": 4,
+      "seed": 201014,
+      "moves": 27,
+      "objectives": [
+        {
+          "type": "collect",
+          "family": "moon",
+          "target": 18
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 5
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        }
+      ],
+      "coins": 130,
+      "collectionXp": 7,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "collect_tiles"
+    },
+    {
+      "id": 15,
+      "name": "The Prep Table",
+      "chapter": 2,
+      "chapterName": "Kitchen Catastrophe",
+      "chapterPosition": 5,
+      "seed": 201015,
+      "moves": 27,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 6
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "crate"
+        }
+      ],
+      "coins": 135,
+      "collectionXp": 7,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "clear_blockers"
+    },
+    {
+      "id": 16,
+      "name": "Mixing It Up",
+      "chapter": 2,
+      "chapterName": "Kitchen Catastrophe",
+      "chapterPosition": 6,
+      "seed": 201016,
+      "moves": 27,
+      "objectives": [
+        {
+          "type": "collect",
+          "family": "cloud",
+          "target": 19
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 5
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        }
+      ],
+      "coins": 140,
+      "collectionXp": 7,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "drop_objects"
+    },
+    {
+      "id": 17,
+      "name": "Pantry Pivot",
+      "chapter": 2,
+      "chapterName": "Kitchen Catastrophe",
+      "chapterPosition": 7,
+      "seed": 201017,
+      "moves": 27,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 6
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "crate"
+        }
+      ],
+      "coins": 145,
+      "collectionXp": 7,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "clear_cloud_zones"
+    },
+    {
+      "id": 18,
+      "name": "One More Pinch",
+      "chapter": 2,
+      "chapterName": "Kitchen Catastrophe",
+      "chapterPosition": 8,
+      "seed": 201018,
+      "moves": 26,
+      "objectives": [
+        {
+          "type": "score",
+          "target": 2625
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 5
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        }
+      ],
+      "coins": 150,
+      "collectionXp": 7,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "score"
+    },
+    {
+      "id": 19,
+      "name": "The Big Bake",
+      "chapter": 2,
+      "chapterName": "Kitchen Catastrophe",
+      "chapterPosition": 9,
+      "seed": 201019,
+      "moves": 26,
+      "objectives": [
+        {
+          "type": "collect",
+          "family": "moon",
+          "target": 20
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 6
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "crate"
+        }
+      ],
+      "coins": 155,
+      "collectionXp": 7,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "collect_tiles"
+    },
+    {
+      "id": 20,
+      "name": "Kitchen Catastrophe",
+      "chapter": 2,
+      "chapterName": "Kitchen Catastrophe",
+      "chapterPosition": 10,
+      "seed": 201020,
+      "moves": 28,
+      "objectives": [
+        {
+          "type": "score",
+          "target": 3175
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 8
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "crate"
+        }
+      ],
+      "coins": 160,
+      "collectionXp": 7,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": true,
+      "tutorial": null,
+      "sourceObjectiveIntent": "multi_stage_boss"
+    },
+    {
+      "id": 21,
+      "name": "Missing Pieces",
+      "chapter": 3,
+      "chapterName": "The Missing Collection",
+      "chapterPosition": 1,
+      "seed": 201021,
+      "moves": 27,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 4
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        }
+      ],
+      "coins": 130,
+      "collectionXp": 8,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": "chapter_3_collection_clue",
+      "sourceObjectiveIntent": "clear_cloud_zones"
+    },
+    {
+      "id": 22,
+      "name": "A CollectorÃ¢â‚¬â„¢s Clue",
+      "chapter": 3,
+      "chapterName": "The Missing Collection",
+      "chapterPosition": 2,
+      "seed": 201022,
+      "moves": 27,
+      "objectives": [
+        {
+          "type": "score",
+          "target": 3325
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 5
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        }
+      ],
+      "coins": 135,
+      "collectionXp": 8,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "score"
+    },
+    {
+      "id": 23,
+      "name": "Shelf Shuffle",
+      "chapter": 3,
+      "chapterName": "The Missing Collection",
+      "chapterPosition": 3,
+      "seed": 201023,
+      "moves": 27,
+      "objectives": [
+        {
+          "type": "collect",
+          "family": "sun",
+          "target": 21
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 4
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        }
+      ],
+      "coins": 140,
+      "collectionXp": 8,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "collect_tiles"
+    },
+    {
+      "id": 24,
+      "name": "Case Closed",
+      "chapter": 3,
+      "chapterName": "The Missing Collection",
+      "chapterPosition": 4,
+      "seed": 201024,
+      "moves": 26,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 5
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "reinforced_crate",
+          "target": 2
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "reinforced_crate"
+        }
+      ],
+      "coins": 145,
+      "collectionXp": 8,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "clear_blockers"
+    },
+    {
+      "id": 25,
+      "name": "Display Trouble",
+      "chapter": 3,
+      "chapterName": "The Missing Collection",
+      "chapterPosition": 5,
+      "seed": 201025,
+      "moves": 26,
+      "objectives": [
+        {
+          "type": "collect",
+          "family": "star",
+          "target": 21
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 6
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "reinforced_crate",
+          "target": 2
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "reinforced_crate"
+        }
+      ],
+      "coins": 150,
+      "collectionXp": 8,
+      "keys": 0,
+      "difficulty": "easy",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "drop_objects"
+    },
+    {
+      "id": 26,
+      "name": "Lost Labels",
+      "chapter": 3,
+      "chapterName": "The Missing Collection",
+      "chapterPosition": 6,
+      "seed": 201026,
+      "moves": 26,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 6
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "reinforced_crate",
+          "target": 2
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "reinforced_crate"
+        }
+      ],
+      "coins": 155,
+      "collectionXp": 8,
+      "keys": 0,
+      "difficulty": "medium",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "clear_cloud_zones"
+    },
+    {
+      "id": 27,
+      "name": "The Empty Frame",
+      "chapter": 3,
+      "chapterName": "The Missing Collection",
+      "chapterPosition": 7,
+      "seed": 201027,
+      "moves": 26,
+      "objectives": [
+        {
+          "type": "score",
+          "target": 3700
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 6
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "reinforced_crate",
+          "target": 2
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "reinforced_crate"
+        }
+      ],
+      "coins": 160,
+      "collectionXp": 8,
+      "keys": 0,
+      "difficulty": "medium",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "score"
+    },
+    {
+      "id": 28,
+      "name": "A Trail of Stars",
+      "chapter": 3,
+      "chapterName": "The Missing Collection",
+      "chapterPosition": 8,
+      "seed": 201028,
+      "moves": 25,
+      "objectives": [
+        {
+          "type": "collect",
+          "family": "sun",
+          "target": 22
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 7
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "reinforced_crate",
+          "target": 3
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "reinforced_crate"
+        }
+      ],
+      "coins": 165,
+      "collectionXp": 8,
+      "keys": 0,
+      "difficulty": "medium",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "collect_tiles"
+    },
+    {
+      "id": 29,
+      "name": "Last Piece Found",
+      "chapter": 3,
+      "chapterName": "The Missing Collection",
+      "chapterPosition": 9,
+      "seed": 201029,
+      "moves": 25,
+      "objectives": [
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 7
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "reinforced_crate",
+          "target": 3
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "reinforced_crate"
+        }
+      ],
+      "coins": 170,
+      "collectionXp": 8,
+      "keys": 0,
+      "difficulty": "medium",
+      "isChapterFinale": false,
+      "tutorial": null,
+      "sourceObjectiveIntent": "clear_blockers"
+    },
+    {
+      "id": 30,
+      "name": "The Gallery Glimpse",
+      "chapter": 3,
+      "chapterName": "The Missing Collection",
+      "chapterPosition": 10,
+      "seed": 201030,
+      "moves": 27,
+      "objectives": [
+        {
+          "type": "score",
+          "target": 3925
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "crate",
+          "target": 8
+        },
+        {
+          "type": "destroy_blockers",
+          "blocker": "reinforced_crate",
+          "target": 4
+        }
+      ],
+      "blockers": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "crate"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "crate"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "crate"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "reinforced_crate"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "reinforced_crate"
+        }
+      ],
+      "coins": 175,
+      "collectionXp": 8,
+      "keys": 1,
+      "difficulty": "medium",
+      "isChapterFinale": true,
+      "tutorial": null,
+      "sourceObjectiveIntent": "multi_stage_boss"
+    }
+  ]
+}
