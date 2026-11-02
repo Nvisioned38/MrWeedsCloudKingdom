@@ -12,12 +12,23 @@ Before modifying code, read in this order:
 
 1. `AGENTS.md`
 2. `docs/CURRENT_STATE.md`
-3. `00_PROJECT_CHARTER.md`
-4. `01_GAME_DESIGN_BLUEPRINT.md`
-5. `02_TECHNICAL_ARCHITECTURE.md`
-6. Existing code, catalogs, and tests
+3. `docs/ROADMAP.md`
+4. The current approved phase execution specification
+5. `00_PROJECT_CHARTER.md`
+6. `01_GAME_DESIGN_BLUEPRINT.md`
+7. `02_TECHNICAL_ARCHITECTURE.md`
+8. Existing code, catalogs, and tests
+9. `docs/BUILD_LOG.md` for checkpoint history
 
 If documentation and implementation differ, do not silently guess. Prefer the newest verified implementation state, then update documentation to reflect reality unless the conflict materially changes product direction.
+
+## Current execution directive
+
+**Phase 2B is authorized.**
+
+Execute `06_CODEX_PHASE_2B_PROGRESSION_STORY_BUILD_PROMPT.md` from the synchronized Phase 2A baseline recorded in `docs/CURRENT_STATE.md` and `docs/BUILD_LOG.md`.
+
+Work through the entire Phase 2B specification without requesting approval between ordinary engineering steps. Do not begin Phase 2C automatically unless `docs/ROADMAP.md` or a newer direct owner instruction explicitly authorizes it.
 
 ## Autonomy granted
 
@@ -31,9 +42,9 @@ You are authorized to:
 - run Flutter, Dart, Flame, and repository tooling
 - add or update tests for changed behavior
 - update documentation after each implementation unit
-- continue automatically to the next highest-priority unblocked roadmap item when verification passes
+- continue automatically to the next highest-priority unblocked item within the currently approved phase when verification passes
 
-Do **not** stop merely because a single feature or ticket is complete. Current owner instructions still bound this autonomy; the owner has paused new feature development after Phase 2A, so wait for an explicit instruction before starting Phase 2B.
+Do **not** stop merely because a single feature or ticket is complete.
 
 ## Mandatory implementation loop
 
@@ -48,8 +59,9 @@ For each implementation unit:
 7. Run broader regression tests when the change can affect shared systems.
 8. Fix regressions before continuing.
 9. Update `docs/CURRENT_STATE.md` when verified state changes.
-10. Append a concise entry to `docs/BUILD_LOG.md`; create that log when the first implementation entry is ready if it does not exist.
-11. Continue to the next highest-priority unblocked roadmap item.
+10. Append a concise entry to `docs/BUILD_LOG.md` for meaningful verified checkpoints.
+11. Keep `docs/ROADMAP.md` status current.
+12. Continue to the next highest-priority unblocked item in the approved phase.
 
 ## Stop and request human input only when
 
@@ -68,33 +80,50 @@ Ordinary engineering decisions are **not** blockers.
 
 ## Repository safety rules
 
-- Do not replace the verified app with a freshly generated Flutter project if the expected source has not yet been pushed.
+- Do not replace the verified app with a freshly generated Flutter project.
 - Do not rewrite large working areas solely for stylistic preference.
 - Do not delete tests to make builds pass.
 - Do not weaken analysis/lint settings to hide failures unless an explicit architecture decision requires it.
 - Do not commit secrets, signing keys, tokens, or private credentials.
 - Preserve stable save-data identities and migration behavior unless a migration is explicitly designed and tested.
 - Preserve Android application ID `com.mrweeds.cloudkingdom` unless the owner explicitly changes it.
+- Treat `1a96490a0843b9181f28d5ff7d39a41afea7a16e` as the synchronized Phase 2A engineering baseline, not as disposable scaffolding.
 
 ## Quality gate
 
-A roadmap item is not complete until applicable checks pass. The verified Phase 1 baseline previously passed:
+A roadmap item is not complete until applicable checks pass. Maintain or improve the existing gate:
 
 - `flutter pub get`
 - formatting
 - static analysis with no issues
 - Flutter automated tests
 - catalog validation
-- save-data round-trip verification
-- debug build verification
+- save-data migration/round-trip verification
+- debug build verification when supported by the environment
 
-When source is present, maintain or improve this gate.
+Phase-specific verification requirements in the current execution specification are additive to this gate.
 
 ## Product guardrails
 
 Cloud Kingdom is a casual game and story world, not a cannabis commerce application. Gameplay may use Mr. Weed's fictionalized brand universe, strain-themed characters/cards, Cloud Cup/CannaTapper lore, humor, and fantasy elements, but implementation should preserve the intended entertainment/game framing.
 
-The Keefler Elves are an important future story arc. Their storyline should preserve the established premise that Mr. Weed saves the displaced original Keefler Elves, gives them a new home and purpose, and reveals their deeper connection to Cloud Cup/CannaTapper magic. The arc should be designed so it can naturally bridge into a possible standalone Keefler Elves spin-off game.
+Do not add real cannabis cultivation instructions, dosing instructions, unsupported medical claims, or commerce flows as part of normal game development.
+
+The Keefler Elves are an important future story arc. Their storyline should preserve the established premise that Mr. Weed saves the displaced original Keefler Elves, gives them a new home and purpose, and later reveals their deeper connection to Cloud Cup/CannaTapper magic. The arc should be designed so it can naturally bridge into a possible standalone Keefler Elves spin-off game.
+
+Until a later approved story phase explicitly authorizes the reveal, preserve the current mysterious workshop clues without naming the Keefler Elves or explaining their connection.
+
+## Visual/brand guardrails
+
+Final visual asset integration is a separate roadmap phase unless a current task explicitly includes it.
+
+When official branding assets are introduced:
+- do not redraw, restyle, recolor, or substitute the locked official Cloud Cup logo;
+- preserve the approved Mr. Weed character identity;
+- preserve approved Cloud Kingdom/Cloudcrafted Fantasy art direction when documented;
+- Cloud Cup smoke should remain white unless a specific asset direction explicitly says otherwise.
+
+Placeholder art is acceptable during systems phases when final approved assets are not yet available.
 
 ## Communication style for agent summaries
 
@@ -103,6 +132,7 @@ After a substantial run, report:
 - what was completed
 - verification performed and results
 - files/systems materially changed
+- current phase status
 - next roadmap item
 - only genuine blockers requiring human input
 
@@ -110,6 +140,6 @@ Do not ask for approval between ordinary implementation steps.
 
 ## Owner-directed pause and synchronization
 
-The automatic continuation authorization above applies only while it remains consistent with the owner's current task. A direct owner instruction to pause new development, stop after a bounded task, or wait for further direction overrides automatic continuation. Do not start another roadmap phase after completing such a task.
+The automatic continuation authorization above applies only while it remains consistent with the owner's current task and the roadmap's approved phase status. A direct owner instruction to pause new development, stop after a bounded task, or wait for further direction overrides automatic continuation.
 
-For source synchronization, treat the current authoritative working implementation as the source of truth for code, tests, assets, and project configuration. Reconcile existing repository control documents in place; preserve their useful charter and history while updating stale status claims to match verified implementation facts.
+When an approved phase is complete, do not cross into a later phase marked planned/unapproved. Continue cleanup, verification, documentation, and defect repair needed to satisfy the current phase gate, then report completion.
