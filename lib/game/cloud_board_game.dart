@@ -122,6 +122,33 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
   }
 
   void _drawPiece(Canvas canvas, Offset center, double size, Piece piece) {
+    if (piece.fogged) {
+      final fog = Paint()..color = const Color(0xffacbfd0);
+      canvas.drawCircle(center.translate(-size * .1, 0), size * .25, fog);
+      canvas.drawCircle(
+          center.translate(size * .1, size * .02), size * .27, fog);
+      canvas.drawCircle(center.translate(0, size * .12), size * .23, fog);
+      _drawLabel(canvas, '?', center, size * .4, const Color(0xff173d55),
+          bold: true);
+    } else {
+      _drawPieceIdentity(canvas, center, size, piece);
+    }
+    if (piece.stickySyrup) {
+      final syrupRect = Rect.fromCenter(
+          center: center.translate(0, size * .28),
+          width: size * .58,
+          height: size * .2);
+      canvas.drawRRect(
+          RRect.fromRectAndRadius(syrupRect, const Radius.circular(6)),
+          Paint()..color = const Color(0xffd78f32));
+      _drawLabel(canvas, 'STUCK', center.translate(0, size * .28), size * .12,
+          const Color(0xff271b12),
+          bold: true);
+    }
+  }
+
+  void _drawPieceIdentity(
+      Canvas canvas, Offset center, double size, Piece piece) {
     final paint = Paint()
       ..style = PaintingStyle.fill
       ..color = colors[piece.family.index];

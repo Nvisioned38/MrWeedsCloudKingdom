@@ -36,6 +36,8 @@ class _CollectionScreenState extends State<CollectionScreen> {
                   widget.progress.unlockedCollectibleIds.contains(card.id),
               favorite:
                   widget.progress.favoriteCollectibleIds.contains(card.id),
+              evolutionXp: widget.progress.collectibleXp[card.id] ?? 0,
+              equipped: widget.progress.equippedCollectibleId == card.id,
             ))
         .toList(growable: false);
   }
@@ -89,7 +91,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
-                '${widget.progress.unlockedCollectibleIds.length} of ${widget.catalog.cards.length} discovered · sorted by name'),
+                '${widget.progress.unlockedCollectibleIds.length} of ${widget.catalog.cards.length} discovered · ${widget.progress.collectionXp} Collection XP · sorted by name'),
           ),
         ),
         Expanded(
@@ -148,6 +150,8 @@ class _CollectibleDetailScreenState extends State<CollectibleDetailScreen> {
             widget.progress.unlockedCollectibleIds.contains(widget.card.id),
         favorite:
             widget.progress.favoriteCollectibleIds.contains(widget.card.id),
+        evolutionXp: widget.progress.collectibleXp[widget.card.id] ?? 0,
+        equipped: widget.progress.equippedCollectibleId == widget.card.id,
       );
 
   Future<void> _toggleFavorite() async {
@@ -164,6 +168,12 @@ class _CollectibleDetailScreenState extends State<CollectibleDetailScreen> {
           const SnackBar(content: Text('Displayed on the Collection Shelf.')));
       setState(() {});
     }
+  }
+
+  Future<void> _equipCard() async {
+    if (!widget.progress.equipCollectible(widget.card.id)) return;
+    await widget.persist();
+    if (mounted) setState(() {});
   }
 
   @override
@@ -191,7 +201,7 @@ class _CollectibleDetailScreenState extends State<CollectibleDetailScreen> {
         Text(card.unlocked ? card.displayName : 'Undiscovered',
             style: Theme.of(context).textTheme.headlineSmall),
         Text(
-            '${card.rarity.label} · ${card.collectionName} · ${card.category}'),
+            '${card.rarity.label} · ${card.collectionName} · ${card.category} · ${card.strainClass}'),
         const SizedBox(height: 10),
         Text(card.unlocked
             ? card.lore
@@ -200,8 +210,22 @@ class _CollectibleDetailScreenState extends State<CollectibleDetailScreen> {
         ListTile(
           contentPadding: EdgeInsets.zero,
           leading: const Icon(Icons.auto_awesome),
-          title: Text('Puzzle ability · ${card.evolutionStage.label}'),
-          subtitle: Text(card.puzzleAbilityText),
+          title: Text('Evolution · ${card.evolutionStage.label}'),
+          subtitle: Text(
+              '${card.evolutionXp} card XP${ProgressState.nextEvolutionThreshold(card.evolutionStage) == null ? ' · Evolution complete' : ' · ${ProgressState.nextEvolutionThreshold(card.evolutionStage)! - card.evolutionXp} XP to next stage'}'),
+        ),
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          leading:
+              Icon(card.equipped ? Icons.check_circle : Icons.auto_awesome),
+          title: Text(card.id == 'cloud_nine' && card.equipped
+              ? 'Active puzzle perk'
+              : 'Card ability'),
+          subtitle: Text(card.id == 'cloud_nine'
+              ? card.equipped
+                  ? 'Start each level with +150 score. This is the active Phase 2B perk.'
+                  : 'Equip this card to start each level with +150 score.'
+              : '${card.puzzleAbilityText} Other card abilities are catalog previews in this phase.'),
         ),
         const SizedBox(height: 8),
         Wrap(spacing: 10, runSpacing: 10, children: [
@@ -209,6 +233,11 @@ class _CollectibleDetailScreenState extends State<CollectibleDetailScreen> {
             onPressed: card.unlocked ? _toggleFavorite : null,
             icon: Icon(card.favorite ? Icons.favorite : Icons.favorite_border),
             label: Text(card.favorite ? 'Unfavorite' : 'Favorite'),
+          ),
+          FilledButton.icon(
+            onPressed: card.unlocked && !card.equipped ? _equipCard : null,
+            icon: Icon(card.equipped ? Icons.check : Icons.bolt),
+            label: Text(card.equipped ? 'Equipped' : 'Equip'),
           ),
           FilledButton.icon(
             onPressed: card.unlocked ? _displayOnShelf : null,
@@ -246,13 +275,21 @@ class StoryScreen extends StatelessWidget {
         const SizedBox(height: 8),
         ...catalog.chapters.map((chapter) {
           final complete = progress.completedChapterIds.contains(chapter.id);
-          final enabled = chapter.playable;
+          final enabled = chapter.playable &&
+              progress.unlockedThrough >= chapter.unlockAtLevel;
+          final availableBeats = chapter.beats
+              .where((beat) => progress.unlockedThrough >= beat.unlockAtLevel)
+              .toList(growable: false);
+          final canComplete = chapter.completeAtLevel == null ||
+              progress.completedLevels.contains(chapter.completeAtLevel);
           return Card(
             child: ListTile(
               leading: Icon(enabled ? Icons.menu_book : Icons.lock_outline,
                   color: complete ? const Color(0xffffd36e) : null),
               title: Text(chapter.title),
-              subtitle: Text(chapter.synopsis),
+              subtitle: Text(enabled
+                  ? '${chapter.synopsis}\n${availableBeats.length} of ${chapter.beats.length} story beats available'
+                  : '${chapter.synopsis}\nUnlocks at Level ${chapter.unlockAtLevel}'),
               trailing: complete ? const Icon(Icons.check_circle) : null,
               enabled: enabled,
               onTap: enabled
@@ -261,11 +298,28 @@ class StoryScreen extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (_) => ChapterDialogPage(
                                 chapter: chapter,
+                                beats: availableBeats,
                                 characters: characters,
+                                canComplete: canComplete,
                                 onComplete: () async {
-                                  progress.completedChapterIds.add(chapter.id);
-                                  progress.storyFlags
-                                      .add(chapter.completionFlag);
+                                  progress.storyFlags.addAll(availableBeats
+                                      .map((beat) => 'story_${beat.id}_seen'));
+                                  if (chapter.id == 'chapter_2' &&
+                                      availableBeats.isNotEmpty) {
+                                    progress.storyFlags
+                                        .add('character_chef_blaze_known');
+                                  }
+                                  if (chapter.id == 'chapter_3' &&
+                                      availableBeats.isNotEmpty) {
+                                    progress.storyFlags
+                                        .add('character_the_collector_known');
+                                  }
+                                  if (canComplete) {
+                                    progress.completedChapterIds
+                                        .add(chapter.id);
+                                    progress.storyFlags
+                                        .add(chapter.completionFlag);
+                                  }
                                   await persist();
                                 },
                               )))
@@ -301,12 +355,16 @@ class ChapterDialogPage extends StatelessWidget {
   const ChapterDialogPage({
     super.key,
     required this.chapter,
+    required this.beats,
     required this.characters,
+    required this.canComplete,
     required this.onComplete,
   });
 
   final StoryChapter chapter;
+  final List<StoryBeat> beats;
   final CharacterCatalog characters;
+  final bool canComplete;
   final Future<void> Function() onComplete;
 
   @override
@@ -315,7 +373,9 @@ class ChapterDialogPage extends StatelessWidget {
         body: SafeArea(
           child: DialogueOverlay(
             chapter: chapter,
+            beats: beats,
             characters: characters,
+            canComplete: canComplete,
             onComplete: () async {
               await onComplete();
               if (context.mounted) Navigator.pop(context);
@@ -329,12 +389,16 @@ class DialogueOverlay extends StatefulWidget {
   const DialogueOverlay({
     super.key,
     required this.chapter,
+    required this.beats,
     required this.characters,
+    required this.canComplete,
     required this.onComplete,
   });
 
   final StoryChapter chapter;
+  final List<StoryBeat> beats;
   final CharacterCatalog characters;
+  final bool canComplete;
   final Future<void> Function() onComplete;
 
   @override
@@ -344,7 +408,8 @@ class DialogueOverlay extends StatefulWidget {
 class _DialogueOverlayState extends State<DialogueOverlay> {
   int _lineIndex = 0;
 
-  List<DialogueLine> get _lines => widget.chapter.dialogue;
+  List<DialogueLine> get _lines =>
+      widget.beats.expand((beat) => beat.lines).toList(growable: false);
   DialogueLine get _line => _lines[_lineIndex];
 
   Future<void> _advance() async {
@@ -427,7 +492,9 @@ class _DialogueOverlayState extends State<DialogueOverlay> {
                         ? Icons.check
                         : Icons.arrow_forward),
                     label: Text(_lineIndex + 1 == _lines.length
-                        ? 'Complete Chapter'
+                        ? (widget.canComplete
+                            ? 'Complete Chapter'
+                            : 'Close Story')
                         : 'Continue'),
                   ),
                 ),

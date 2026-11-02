@@ -135,6 +135,16 @@ class CollectibleCardView extends StatelessWidget {
                     right: 8,
                     top: 8,
                     child: Icon(Icons.favorite, color: Colors.pinkAccent)),
+              if (card.equipped)
+                const Positioned(
+                  left: 6,
+                  top: 6,
+                  child: Chip(
+                    avatar: Icon(Icons.bolt, size: 14),
+                    label: Text('EQUIPPED'),
+                    visualDensity: VisualDensity.compact,
+                  ),
+                ),
             ]),
           ),
           Padding(
@@ -148,6 +158,9 @@ class CollectibleCardView extends StatelessWidget {
               const SizedBox(height: 3),
               Text(card.rarity.label,
                   style: TextStyle(color: accent, fontSize: 12)),
+              if (card.unlocked)
+                Text('${card.evolutionStage.label} · ${card.evolutionXp} XP',
+                    style: const TextStyle(fontSize: 11)),
             ]),
           ),
         ]),
@@ -178,7 +191,9 @@ class WorldNodeView extends StatelessWidget {
                 height: 68,
                 icon: state == WorldNodeState.locked
                     ? Icons.lock_outline
-                    : Icons.cloud),
+                    : state == WorldNodeState.preview
+                        ? Icons.visibility_outlined
+                        : Icons.cloud),
             const SizedBox(height: 4),
             Text(node.title,
                 maxLines: 1,

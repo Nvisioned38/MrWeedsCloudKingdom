@@ -1,92 +1,37 @@
 # Current State
 
-## Historical Phase 1 baseline
+## Historical verified baselines
 
-The original verified Phase 1 project state was recorded as complete before the later Phase 2A work. That gate used Flutter 3.47.7, Dart 3.13.5, Flame 1.38.2, Android application ID `com.mrweeds.cloudkingdom`, and 24 automated tests. It covered the authored ten-level catalog, blocker data, save-data round trips, static analysis, and a debug build.
+The original verified Phase 1 project state used Flutter 3.47.7, Dart 3.13.5, Flame 1.38.2, Android application ID `com.mrweeds.cloudkingdom`, and 24 automated tests. It covered the authored ten-level catalog, blocker data, save-data round trips, static analysis, and a debug build. Historical checkpoint: `718b4c9`.
 
-Historical Phase 1 checkpoint noted in project history: `718b4c9`.
+The complete local/Codex project was synchronized to GitHub as the Phase 2A baseline at `1a96490a0843b9181f28d5ff7d39a41afea7a16e`. That verified baseline passed 34 tests and `flutter analyze` with no issues. Its debug APK SHA-256 was `D444A1F4BBBBC8D75C1648E4164EE7D457DC714449753FD7E4CCE525B26A6059`.
 
-## Current synchronized implementation
+## Current implementation — Phase 2B
 
-The GitHub repository contains the complete current implementation imported from the owner's authoritative local/Codex project at synchronized baseline commit:
+Phase 2B progression and story systems are implemented and verified on top of the synchronized baseline.
 
-`1a96490a0843b9181f28d5ff7d39a41afea7a16e`
+- Flutter + Flame source, Android and web runner/configuration files, assets, tests, dependency manifests, and project documentation are retained in the repository.
+- Runtime level catalog now spans Levels 1–30. Levels 1–10 retain their authored behavior; Levels 11–20 are Chapter 2 and Levels 21–30 are Chapter 3. All levels use deterministic seeds and supported objectives. Any unsupported master-map intent is retained as source metadata while runtime goals use implemented mechanics.
+- Sticky Syrup prevents tile movement until an adjacent qualifying clear; Fog hides but preserves tile identity until an adjacent qualifying clear. Both states are rendered with non-color cues. Existing Crate and Reinforced Crate behavior remains supported.
+- All 30 stable collectible identities are represented. Collection XP is persisted, centralized thresholds drive Seedling → Bud → Frosted → Legendary, and one unlocked card can be equipped.
+- The active deterministic perk is Cloud Nine's +150 starting score. It is small, seed-independent, easy to communicate, and cannot make a board less solvable. Other ability copy remains informational.
+- Schema 2 saves migrate to schema 3, preserving prior progress and adding collection XP, per-card XP/evolution, equipped card, and Level 20/30 milestone state. New Game resets the new fields.
+- Chapters 2 and 3 are playable at their progression gates, featuring Chef Blaze and The Collector. Level 20 unlocks the Kitchen milestone; Level 30 awards its key/milestone and previews the Higher Art Gallery without marking the full Gallery complete.
+- The unmarked workshop and `keefler_mystery_seen` continuity remain. No Keefler Elves reveal or Cloud Cup/CannaTapper explanation was added.
 
-The app is an offline Flutter + Flame match-3 game and includes the verified Phase 2A world, collectible, character, and story foundation.
+## Phase 2B verification
 
-Included project content:
-
-- Flutter and Flame source in `lib/`, including the deterministic match-3 domain, game renderer, Phase 2 models, and presentation screens.
-- Android and web runner/configuration files, package manifests, lockfile, analyzer configuration, and Git ignore metadata.
-- Level, collectible, world-node, character, and story catalogs under `assets/data/`.
-- Existing automated test suite and project planning documents (`00_PROJECT_CHARTER.md` through `05_CODEX_PHASE_1_PROMPT.md`).
-- Repository management/control documents.
-
-Generated build outputs, dependency caches, machine-specific Android `local.properties`, and IDE metadata are excluded from version control. The verified local debug APK was left untouched during synchronization.
-
-## Phase 2A verified capability
-
-Phase 2A currently establishes:
-
-- Cloud House hub/exterior and navigation.
-- Lounge unlock/world state and customization flow.
-- Collection shelf, details, favorites, displayed-card state, and initial 10-card catalog.
-- Evolution metadata foundation, but not working XP-driven evolution gameplay yet.
-- Character catalog including Mr. Weed, Chef Blaze, The Collector, and other planned recurring characters.
-- Chapter 1 playable story foundation.
-- Chapter 2 and Chapter 3 present as non-playable teasers.
-- Unmarked workshop clue and persisted `keefler_mystery_seen` hook without an explicit Keefler reveal.
-- Save schema/migration foundation for Phase 2 state.
-- Detailed runtime Match-3 catalog currently loaded for Levels 1–10.
-- Crate and Reinforced Crate gameplay support.
-
-Several world nodes remain locked/teasers, art components remain lightweight placeholders, and collectible puzzle abilities are not broadly implemented.
-
-## Verification for synchronized source
-
-Run from the synchronized repository checkout on 2026-11-02:
+Verified from the synchronized GitHub checkout:
 
 - `flutter pub get` — passed.
-- `flutter test` — passed, all 34 tests.
+- Formatting — applied with `dart format lib test`.
 - `flutter analyze` — passed, no issues found.
+- `flutter test` — passed, all 43 tests.
+- `flutter build apk --debug` — passed; output: `build/app/outputs/flutter-apk/app-debug.apk`.
+- Save schema 2 → 3 migration, XP/evolution, equipment persistence/perk, New Game reset, 30-level catalog, blocker mechanics, and milestone progression are covered by regression tests.
 
-The authoritative local Phase 2A debug APK at `build/app/outputs/flutter-apk/app-debug.apk` had SHA-256:
+The Gradle build emitted an Android SDK XML version compatibility warning, but the debug APK completed successfully.
 
-`D444A1F4BBBBC8D75C1648E4164EE7D457DC714449753FD7E4CCE525B26A6059`
+## Current phase and next action
 
-before and after synchronization.
-
-## Current authorized phase
-
-**Phase 2B — Progression + Story Build is approved and ready to execute.**
-
-Execution specification:
-
-`06_CODEX_PHASE_2B_PROGRESSION_STORY_BUILD_PROMPT.md`
-
-Roadmap:
-
-`docs/ROADMAP.md`
-
-Build/checkpoint log:
-
-`docs/BUILD_LOG.md`
-
-Phase 2B has been authorized in `AGENTS.md`. At the time of this status update, no Phase 2B code implementation has yet been verified after the synchronized Phase 2A baseline.
-
-Primary Phase 2B targets are:
-
-- playable Levels 11–30;
-- playable Chapters 2–3;
-- Sticky Syrup and Fog engine support;
-- full 30-card launch collectible catalog;
-- persisted collection XP and working Seedling → Bud → Frosted → Legendary evolution;
-- one equipped card with one deterministic puzzle perk;
-- Kitchen milestone at Level 20;
-- Higher Art Gallery preview/mystery milestone at Level 30;
-- save migration and expanded regression coverage;
-- continued mystery continuity without explicit Keefler reveal.
-
-## Next engineering action
-
-A coding agent should pull the latest `main`, read `AGENTS.md`, then execute `06_CODEX_PHASE_2B_PROGRESSION_STORY_BUILD_PROMPT.md` through its full verification gate without routine approval requests.
+**Phase 2B — VERIFIED / COMPLETE.** The next roadmap item is Phase 2C — Visual identity + branded asset integration, which remains planned and is not authorized for autonomous implementation. Do not start Phase 2C until it is explicitly approved.

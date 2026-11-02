@@ -39,7 +39,7 @@ Authoritative synchronized baseline: `1a96490a0843b9181f28d5ff7d39a41afea7a16e`
 ## Current approved work
 
 ### Phase 2B — Progression + Story Build
-**Status: APPROVED / READY TO EXECUTE**
+**Status: VERIFIED / COMPLETE**
 
 Execution specification: `06_CODEX_PHASE_2B_PROGRESSION_STORY_BUILD_PROMPT.md`
 
@@ -56,7 +56,17 @@ Primary outcomes:
 10. Preserve subtle Keefler mystery continuity without explicit reveal.
 11. Full save migration and regression coverage.
 
-Phase 2B is complete only when its verification gate passes and `docs/CURRENT_STATE.md`/`docs/BUILD_LOG.md` are updated.
+Verified outcomes:
+- Runtime catalog expanded to Levels 1–30 while preserving Levels 1–10 behavior and adapting unsupported master-map objective intents to implemented mechanics.
+- Chapters 2 and 3 are playable at their progression milestones; Chef Blaze and The Collector story beats are included.
+- Sticky Syrup and Fog are deterministic domain mechanics with visible non-color UI cues; Crate and Reinforced Crate remain supported.
+- 30 collectible identities, persisted collection XP/evolution, one equipped collectible, and Cloud Nine's deterministic +150 starting-score perk are implemented.
+- Schema 2 saves migrate to schema 3, with New Game reset and persistence coverage.
+- Kitchen unlocks at Level 20; Level 30 records its reward and shows a Higher Art Gallery preview without claiming the full Gallery is complete.
+- Mystery continuity remains subtle; no Keefler reveal was introduced.
+- Verification: `flutter analyze` clean, all 43 Flutter tests pass, and Android debug APK build succeeds.
+
+Phase 2C remains planned and requires explicit authorization before implementation.
 
 ## Planned, not yet authorized for autonomous implementation
 

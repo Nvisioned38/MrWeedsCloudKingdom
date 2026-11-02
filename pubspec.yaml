@@ -22,7 +22,7 @@ flutter:
   uses-material-design: true
   assets:
     - 03_CONTENT_CATALOG.json
-    - assets/data/levels_001_010.json
+    - assets/data/levels_001_030.json
     - assets/data/collectibles.json
     - assets/data/world_nodes.json
     - assets/data/characters.json

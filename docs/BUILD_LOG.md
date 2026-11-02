@@ -53,3 +53,17 @@ This commit is the authoritative Phase 2A engineering baseline for subsequent wo
 Repository-native Phase 2B execution specification added as `06_CODEX_PHASE_2B_PROGRESSION_STORY_BUILD_PROMPT.md` and roadmap added at `docs/ROADMAP.md`.
 
 Phase 2B is authorized to execute from the synchronized baseline. Coding agents should append verified checkpoints below as implementation proceeds.
+
+## 2026-11-02 — Phase 2B verified complete
+
+Completed the approved progression/story slice from the synchronized Phase 2A baseline. The implementation extends the runtime catalog to Levels 1–30; makes Chapters 2 and 3 playable; adds deterministic Sticky Syrup and Fog mechanics; expands the collectible catalog to 30; and implements persisted collection XP/evolution, one equipped collectible, and a Cloud Nine +150 starting-score perk. Schema 2 saves migrate to schema 3. Level 20 unlocks the Kitchen milestone, and Level 30 awards its milestone/key and previews the Higher Art Gallery without presenting the full Gallery as complete. Existing Keefler mystery continuity is preserved without revealing the elves or their deeper connection.
+
+Verification from the synchronized checkout:
+- `flutter pub get` — passed.
+- `dart format lib test` — applied.
+- `flutter analyze` — passed, no issues found.
+- `flutter test` — passed, 43/43 tests.
+- `flutter build apk --debug` — passed; artifact at `build/app/outputs/flutter-apk/app-debug.apk`.
+- Schema migration, progression/evolution, equipment/perk behavior, New Game reset, levels, blockers, story gates, and milestones are covered by tests.
+
+The debug build logged an Android SDK XML version compatibility warning, then completed successfully. Phase 2C remains planned and unapproved; no work from that phase was started. See Git history for the implementation and documentation commits.

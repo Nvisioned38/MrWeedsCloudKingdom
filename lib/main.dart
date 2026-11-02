@@ -58,7 +58,7 @@ class _BootScreenState extends State<BootScreen> {
     if (saved != null) {
       final savedProgress = jsonDecode(saved) as Map<String, dynamic>;
       progress = ProgressState.fromJson(savedProgress);
-      shouldPersistMigration = (savedProgress['schema'] as num? ?? 0) < 2;
+      shouldPersistMigration = (savedProgress['schema'] as num? ?? 0) < 3;
     } else {
       final legacy = prefs.getString('cloud_kingdom_save_v1');
       if (legacy != null) {
@@ -82,7 +82,7 @@ class _BootScreenState extends State<BootScreen> {
       }
     }
     final dataFiles = await Future.wait([
-      rootBundle.loadString('assets/data/levels_001_010.json'),
+      rootBundle.loadString('assets/data/levels_001_030.json'),
       rootBundle.loadString('assets/data/collectibles.json'),
       rootBundle.loadString('assets/data/world_nodes.json'),
       rootBundle.loadString('assets/data/characters.json'),
@@ -124,28 +124,7 @@ class _BootScreenState extends State<BootScreen> {
         storyCatalog: storyCatalog,
         persist: persist,
         onNewGame: () async {
-          progress.completedLevels.clear();
-          progress.bestScores.clear();
-          progress.starLevelIds.clear();
-          progress.coins = 0;
-          progress.loungeStyleId = null;
-          progress.loungeRestoredFlag = false;
-          progress.discoveredCollectibleIds.clear();
-          progress.unlockedCollectibleIds.clear();
-          progress.favoriteCollectibleIds.clear();
-          progress.collectibleEvolutionStages.clear();
-          progress.displayedCollectibleId = null;
-          progress.storyFlags.clear();
-          progress.completedChapterIds.clear();
-          progress.worldNodeStates.clear();
-          progress.settings
-            ..clear()
-            ..addAll({
-              'reducedMotion': false,
-              'haptics': true,
-              'sound': true,
-              'music': true,
-            });
+          progress.resetForNewGame();
           await persist();
           if (mounted) setState(() {});
         });
@@ -385,6 +364,22 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
   }
 
+  Future<void> _showWorldMilestone(String title, String message) async {
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _homeTab() {
     final nodes = widget.worldCatalog.nodes
         .where((node) => node.id != 'unmarked_workshop')
@@ -428,8 +423,8 @@ class _HomeScreenState extends State<HomeScreen> {
               leading:
                   const Icon(Icons.play_circle_fill, color: Color(0xffffd36e)),
               title: Text(nextLevel.name),
-              subtitle:
-                  Text('Level ${nextLevel.id} · ${nextLevel.moves} moves'),
+              subtitle: Text(
+                  'Level ${nextLevel.id} · ${nextLevel.moves} moves${nextLevel.isChapterFinale ? ' · Chapter Finale' : ''}'),
               trailing: const Icon(Icons.arrow_forward),
               onTap: () => _playLevel(nextLevel),
             ),
@@ -465,7 +460,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         : node.id == 'lounge'
                             ? () => _openLounge(node)
-                            : null,
+                            : node.id == 'kitchen' &&
+                                    widget.progress.stateForWorldNode(node) ==
+                                        WorldNodeState.available
+                                ? () => _showWorldMilestone(
+                                      'Chef Blaze’s Kitchen',
+                                      'The Level 20 finale opened the Kitchen. Chef Blaze is ready for the next chapter of puzzle-sized culinary chaos.',
+                                    )
+                                : node.id == 'higher_art_gallery' &&
+                                        widget.progress
+                                                .stateForWorldNode(node) ==
+                                            WorldNodeState.preview
+                                    ? () => _showWorldMilestone(
+                                          'Higher Art Gallery Preview',
+                                          'The missing collection pieces reveal a gallery wing above the clouds. This is a preview; the rooms and full Gallery system remain closed for a later chapter.',
+                                        )
+                                    : null,
                   ),
                 ),
             ]),
@@ -513,7 +523,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   title: Text(level.name),
                   subtitle: Text(
-                      '${level.moves} moves • ${level.objectives.length} objective${level.objectives.length == 1 ? '' : 's'}'),
+                      '${level.isChapterFinale ? 'Chapter Finale · ' : ''}Chapter ${level.chapter} • ${level.moves} moves • ${level.objectives.length} objective${level.objectives.length == 1 ? '' : 's'}'),
                   trailing: Icon(isDone
                       ? Icons.check_circle
                       : isOpen
@@ -652,8 +662,13 @@ class PlayScreen extends StatefulWidget {
 }
 
 class _PlayScreenState extends State<PlayScreen> {
-  late final LevelSession session =
-      widget.initialSession ?? LevelSession(widget.level);
+  late final LevelSession session = widget.initialSession ??
+      LevelSession(
+        widget.level,
+        puzzlePerk: widget.progress.equippedCollectibleId == 'cloud_nine'
+            ? PuzzlePerk.cloudNineScoreHeadstart
+            : PuzzlePerk.none,
+      );
   late final CloudBoardGame game =
       CloudBoardGame(session: session, onTurn: _onTurn);
   bool _finished = false;
@@ -671,9 +686,6 @@ class _PlayScreenState extends State<PlayScreen> {
     if (session.outcome == LevelOutcome.won) {
       reward =
           widget.progress.grantFirstClear(widget.level, session.board.score);
-      if (widget.level.id == 5) {
-        widget.progress.unlockCollectible('bluebeary_pancakes');
-      }
     }
     await widget.persist();
     if (!mounted) return;
@@ -802,8 +814,11 @@ class ResultsScreen extends StatelessWidget {
                       Text('Level ${level.id} · score ${session.board.score}'),
                       if (won && reward != null)
                         Text(reward!.firstClear
-                            ? '+${reward!.coins} coins · +${reward!.stars} Star'
+                            ? '+${reward!.coins} coins · +${reward!.stars} Star · +${reward!.collectionXp} Collection XP${reward!.keys > 0 ? ' · +${reward!.keys} Key' : ''}'
                             : 'Replay complete · no duplicate first-clear reward'),
+                      if (won)
+                        Text(
+                            'Collection XP: ${progress.collectionXp} · Keys: ${progress.keys}'),
                       if (won)
                         Text(
                             'Best score ${reward?.bestScore ?? session.board.score}'),
