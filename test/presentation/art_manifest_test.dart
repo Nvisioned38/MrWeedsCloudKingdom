@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -42,9 +43,27 @@ void main() {
     expect(
       manifest.records
           .where((record) => record.state == ArtAssetState.integrated),
-      hasLength(10),
+      hasLength(11),
     );
     expect(manifest.records.where((record) => record.productionReady), isEmpty);
+
+    final portrait = manifest.records
+        .singleWhere((record) => record.key == 'portrait_mr_weed');
+    expect(portrait.state, ArtAssetState.integrated);
+    expect(portrait.approvalRowId, 'CS-001');
+    expect(portrait.designApprovalRowId, 'CH-001');
+    expect(portrait.sourceSha256, portrait.exportSha256);
+    expect(portrait.expectedWidth, 1254);
+    expect(portrait.expectedHeight, 1254);
+    final portraitData = await rootBundle.load(portrait.targetPath);
+    final codec = await ui.instantiateImageCodec(
+      portraitData.buffer.asUint8List(),
+    );
+    final frame = await codec.getNextFrame();
+    expect(frame.image.width, portrait.expectedWidth);
+    expect(frame.image.height, portrait.expectedHeight);
+    frame.image.dispose();
+    codec.dispose();
   });
 
   test('QA-approved art cannot be absent or missing from pubspec', () {

@@ -43,3 +43,8 @@ Cloudcrafted Fantasy, no crowns, no visible cannabis leaves outside Secret Basem
 Continue verified, unblocked P0 work without routine approvals. Commit logical units and push; let GitHub Actions build/check APK artifacts. Escalate only exact missing original sources, irreversible/dangerous changes, or legal/platform decisions. Never present an incomplete APK as the final polished V1.
 
 **Codex task:** [GitHub Issue #3](https://github.com/Nvisioned38/MrWeedsCloudKingdom/issues/3), with image availability tracked by [Issue #2](https://github.com/Nvisioned38/MrWeedsCloudKingdom/issues/2).
+# 2026-11-07 checkpoint — portrait integrated; source art gate remains
+
+Integrated the v10-approved standalone CS-001 Mr. Weed portrait, copied unchanged and rendered in the Story catalog. The tracking manifest now reports 11 integrated / 11 original received but pending / 58 missing assets. Detailed v10 row/source decisions for M3-001–015 are in `docs/V1_ART_EXPORT_MATRIX.md`.
+
+No standalone P0 tile, blocker, special, effect, or modular board/HUD production masters were present in the inspected workspace archive. The available M3 review, combo FX, Cloud Cup, Chef Blaze, and collection references are composites/screenshots with baked layout/content and remain unintegrated. Their approved design references do not authorize derived sprites. Continue when isolated approved originals are available; keep technical-preview status and Phase 3 out of scope.

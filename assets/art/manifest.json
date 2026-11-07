@@ -157,16 +157,19 @@
     {
       "key": "portrait_mr_weed",
       "targetPath": "assets/art/characters/mr_weed_portrait.png",
-      "variantType": "characterSheet",
-      "state": "originalReceived",
-      "approvalStatus": "character sheet; not a production portrait export",
-      "approvalRowId": null,
-      "sourceFile": "Game Art/Mr. Weed Cloud Cup Character Sheet.png",
-      "sourceSha256": "fa61f766be2cf837c1949ea2c5ea9255aa3f7b4b64b93bd967b2b09d4217173b",
+      "variantType": "portrait",
+      "state": "integrated",
+      "approvalStatus": "v10 CS-001 approved standalone portrait; matches CH-001 OK gesture and blank-shirt notes; copied byte-identically; final V1 QA pending",
+      "approvalRowId": "CS-001",
+      "designApprovalRowId": "CH-001",
+      "sourceFile": "Game Art/MW_img_CS-001b.png",
+      "sourceSha256": "803803526b9a94ae40915b4ae1fce974002d9d5406e18414043166ed7e6cce69",
       "sourceArchiveSha256": "4a1824f098c498ffeebdfa1c90ab697f039ecc06cccdecccee29216978935739",
-      "expectedWidth": 1536,
-      "expectedHeight": 1024,
-      "drawBounds": null
+      "exportSha256": "803803526b9a94ae40915b4ae1fce974002d9d5406e18414043166ed7e6cce69",
+      "exportOperation": "Copied approved transparent PNG unchanged",
+      "expectedWidth": 1254,
+      "expectedHeight": 1254,
+      "drawBounds": "transparent square portrait; centered in story dialogue and character catalog"
     },
     {
       "key": "character_mr_weed",

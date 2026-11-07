@@ -15,6 +15,7 @@ This checklist records current automated evidence and a limited Samsung screen s
 | 30-level catalogue and progression unaffected | PASS | Existing catalog and progression tests pass |
 | Save schema 3 upgrade/restart/reset/perk persisted | PASS | Phase 2B migration and round-trip tests pass; schema remains 3 |
 | Official logos and approved title treatment integrated | PASS | BR-005/006 alpha-bound exports verified pixel-exact to BR-001/002 masters; BR-003 v1 treatment copied unchanged; S24 title/app-shell rendering checked |
+| Approved Mr. Weed character portrait integrated | PASS | v10 CS-001 `MW_img_CS-001b.png` copied byte-identically; CH-001 OK-gesture/blank-shirt notes traced; S24 Story character catalog rendered it |
 | Core P0 Match-3 production tiles, blockers, specials and FX integrated | BLOCKED | v10 approves the concepts, but no isolated source sprites/modular exports were transferred; board remains an explicit technical renderer |
 | Cloud House, Lounge and Kitchen source artwork integrated | PASS | 7 intact originals; source hashes, dimensions and v10 approval row IDs in `assets/art/manifest.json`; Home screen rendered on S24 |
 | Home → Match-3 → Victory → Cloud House automated flow | PASS | New Game and controlled victory/reward widget tests pass |
@@ -24,7 +25,7 @@ This checklist records current automated evidence and a limited Samsung screen s
 | Shape cues, reduced-motion and haptics wiring | PASS | Distinct fallback silhouettes; legacy leaf identity is a green spiral-bloom Mystic Bloom; settings control animation/haptic behavior |
 | TalkBack, large-text, notches, background/resume device QA | NOT TESTED | Device is connected; these checks remain unrun |
 | Android debug APK built, filename and SHA-256 recorded | PASS | Local arm64 technical preview; SHA recorded below |
-| Samsung S24 Ultra install, launch and screen smoke | PASS | `adb install -r` updated in place; cold launch, title, Home and Level 3 8×8 board rendered; existing Level 3/210 coins/2 stars retained; no move made |
+| Samsung S24 Ultra install, launch and screen smoke | PASS | `adb install -r` updated in place; title, Home and Story character catalog rendered; existing Level 3/210 coins/2 stars remained visible; no move made |
 | Full S24 gameplay/reward/accessibility/performance QA | NOT TESTED | Only layout smoke was performed; no turn or win/reward was triggered |
 | Owner final visual sign-off against v10 workbook | BLOCKED | Workbook is read; full V1 art and manual QA gates remain open |
 | No generic placeholders on primary V1 path | BLOCKED | Exact logos and isolated Match-3 production sprites are not available |
@@ -36,6 +37,16 @@ This checklist records current automated evidence and a limited Samsung screen s
 - SHA-256: `33D2FBBD856ECD5E59BA00D7205424B9DC7196033D37ADC2C670DC204174A339`
 - APK produced: yes. Installed/updated on Samsung S24 Ultra: yes, with `adb install -r`; no uninstall or data clear. Cloud House reopened with prior Level 3, 210 coins and 2 stars. The game board was viewed but no turn was taken.
 - This is a **technical preview**, not a visually accepted V1 release candidate.
+
+## 2026-11-07 CS-001 portrait update
+
+- Source: v10-approved `Game Art/MW_img_CS-001b.png`; v10 workbook CS-001 and CH-001 identity notes.
+- Export: `assets/art/characters/mr_weed_portrait.png`, copied without pixel edits; 1254×1254 transparent PNG.
+- Verification: `flutter pub get`; `dart format lib test` (0 files changed); all 48 Flutter tests pass; `flutter analyze` clean; arm64 Android debug APK built.
+- APK: `C:\Users\LifeN\OneDrive\Desktop\Mr Weeds\App_Game\The Build\MrWeedsCloudKingdom_V1_Technical_Preview_arm64.apk`
+- SHA-256: `AED184E6BA0A234AA22B6A0B86ECED2D6BAE273837432C043A78B9204614FD1B`
+- Samsung S24 Ultra `R5CX156CZNF`: in-place install succeeded; title/Home/Story screens opened; the existing Level 3, 210 coins and 2 stars were visible; no move or story beat was taken. No Flutter/Android error logs were present in the checked buffers.
+- P0 Match-3 and modular HUD originals remain blocked; exact candidate artwork and rejected crop trials are recorded in `docs/V1_ART_EXPORT_MATRIX.md`. This remains a technical preview.
 
 ## Manual Samsung S24 Ultra pass
 

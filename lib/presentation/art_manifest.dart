@@ -33,9 +33,12 @@ class ArtAssetRecord {
     this.sourceSha256,
     this.sourceArchiveSha256,
     this.approvalRowId,
+    this.designApprovalRowId,
     this.expectedWidth,
     this.expectedHeight,
     this.drawBounds,
+    this.exportSha256,
+    this.exportOperation,
   });
 
   final String key;
@@ -47,9 +50,12 @@ class ArtAssetRecord {
   final String? sourceSha256;
   final String? sourceArchiveSha256;
   final String? approvalRowId;
+  final String? designApprovalRowId;
   final int? expectedWidth;
   final int? expectedHeight;
   final String? drawBounds;
+  final String? exportSha256;
+  final String? exportOperation;
 
   bool get productionReady => state == ArtAssetState.qaApproved;
 
@@ -65,9 +71,12 @@ class ArtAssetRecord {
         sourceSha256: json['sourceSha256'] as String?,
         sourceArchiveSha256: json['sourceArchiveSha256'] as String?,
         approvalRowId: json['approvalRowId'] as String?,
+        designApprovalRowId: json['designApprovalRowId'] as String?,
         expectedWidth: json['expectedWidth'] as int?,
         expectedHeight: json['expectedHeight'] as int?,
         drawBounds: json['drawBounds'] as String?,
+        exportSha256: json['exportSha256'] as String?,
+        exportOperation: json['exportOperation'] as String?,
       );
 }
 
