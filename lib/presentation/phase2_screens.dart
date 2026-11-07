@@ -277,8 +277,9 @@ class StoryScreen extends StatelessWidget {
           final complete = progress.completedChapterIds.contains(chapter.id);
           final enabled = chapter.playable &&
               progress.unlockedThrough >= chapter.unlockAtLevel;
+          final storyGate = progress.isStoryBeatAvailable;
           final availableBeats = chapter.beats
-              .where((beat) => progress.isStoryBeatAvailable(beat.unlockAtLevel))
+              .where((beat) => storyGate(beat.unlockAtLevel))
               .toList(growable: false);
           final canComplete = chapter.completeAtLevel == null ||
               progress.completedLevels.contains(chapter.completeAtLevel);
