@@ -219,7 +219,7 @@ void main() {
     expect(session.board.at(1, 2)!.fogged, isFalse);
   });
 
-  test('story beats unlock at milestones and the Chapter 3 finale after 30', () {
+  test('story finale is gated by Level 30 completion', () {
     final progress = ProgressState();
 
     expect(progress.isStoryBeatAvailable(11), isFalse);
