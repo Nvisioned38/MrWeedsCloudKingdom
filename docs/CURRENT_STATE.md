@@ -49,3 +49,13 @@ The owner has prioritized the first visually polished, playable Android V1 befor
 **Narrative scope:** retain Chapters 1–3 and subtle workshop mystery only. Troll betrayal, Lord Nave, Copycat Cloud Co., the Cloud Bottle, and Keefler Elves revelations remain later-game material.
 
 **Next action:** Codex pulls latest `main`, reads `AGENTS.md` and the Phase 2C files, fixes Issue #1, then implements all unblocked V1 art infrastructure with format/analyze/test/build checks. Final integration of a specific art asset waits for the original and v9 approval evidence, not for routine engineering approvals.
+
+## 2026-11-06 — Owner v9 tracker and art ZIP audit received
+
+The owner provided v9 (`Mr_Weeds_Cloud_Kingdom_Asset_Review_v9_Brand_and_V1_Priorities(1).xlsx`) and `Game Art.zip` to ChatGPT. Both were opened and audited; see `docs/V1_V9_ZIP_INTAKE_AUDIT.md`.
+
+Verified intake: **89 v9 asset records, 32 P0 records, 77 PNGs plus 3 nested ZIP packages**, and a curated **72-PNG V1 source-art set** prepared externally with hashes and filenames. Most P0 Match-3/UI assets are currently visible only in composite mockup boards; the archive contains isolated Mr. Weed pose candidates, room image masters, and several museum UI elements. The required exact **Mr. Weed's and Cloud Cup standalone canonical logos are missing** from this archive.
+
+The audited source-art files and original v9 workbook have **not yet been imported into this GitHub checkout or Codex workspace**. This remains a source-transfer/asset-export blocker, not a coding blocker. Do not mark the visuals integrated until production exports and tests confirm them.
+
+The latest **verified app code** and test gate remain the Phase 2B baseline, **43 tests**. No new Phase 2C APK, test run, or Samsung S24 Ultra verification is asserted by this intake.
