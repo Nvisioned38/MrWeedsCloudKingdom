@@ -67,3 +67,13 @@ Verification from the synchronized checkout:
 - Schema migration, progression/evolution, equipment/perk behavior, New Game reset, levels, blockers, story gates, and milestones are covered by tests.
 
 The debug build logged an Android SDK XML version compatibility warning, then completed successfully. Phase 2C remains planned and unapproved; no work from that phase was started. See Git history for the implementation and documentation commits.
+
+## 2026-11-06 — First polished Android V1 prioritized
+
+Planning/coordination only. The verified Phase 2B code head remains `10ca8a5b0bdcb086c294785544d40732a16ef524` with 43 tests and the previously recorded debug APK SHA. This entry records **no new code build or test**.
+
+The owner authorized Phase 2C with priority on original approved brand/game art, Match-3 presentation, Cloud House/Lounge/Kitchen, collection UI, Home → Match-3 → Victory → Cloud House, and an Android debug APK for Samsung S24 Ultra testing.
+
+Added `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md`, `docs/V1_ASSET_INTAKE.md`, `docs/V1_QA_CHECKLIST.md`; updated `AGENTS.md`, `docs/ROADMAP.md`, and `docs/CURRENT_STATE.md`. The v9 asset review workbook and original art bytes are not in the GitHub checkout; no artificial replacements are permitted.
+
+GitHub Issue #1 was still open at the handoff and is the first engineering fix. Remaining unblocked 2C work should proceed autonomously with verified incremental commits.
