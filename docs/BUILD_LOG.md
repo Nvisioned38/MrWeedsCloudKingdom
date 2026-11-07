@@ -77,3 +77,11 @@ The owner authorized Phase 2C with priority on original approved brand/game art,
 Added `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md`, `docs/V1_ASSET_INTAKE.md`, `docs/V1_QA_CHECKLIST.md`; updated `AGENTS.md`, `docs/ROADMAP.md`, and `docs/CURRENT_STATE.md`. The v9 asset review workbook and original art bytes are not in the GitHub checkout; no artificial replacements are permitted.
 
 GitHub Issue #1 was still open at the handoff and is the first engineering fix. Remaining unblocked 2C work should proceed autonomously with verified incremental commits.
+
+## 2026-11-06 — v9 + Game Art ZIP verified intake
+
+Read and audited the owner's full v9 tracker and original Game Art ZIP (77 PNG images and three nested archives). Full mapping and source-hash summary are at `docs/V1_V9_ZIP_INTAKE_AUDIT.md`. Created a separate v9-with-audit Excel workbook and curated V1-safe ZIP outside GitHub. **No source images or v9 workbook binary have yet been committed to GitHub.**
+
+Exact standalone Mr. Weed's and Cloud Cup logos remain missing. Most approved Match-3 icon/board designs still need individual transparent production exports. Later story reveal images are excluded from the curated V1 import set.
+
+Phase 2C implementation remains pending Codex pickup and original-art import. No new Flutter test, analyzer, APK build or device QA has been run in this intake step.
