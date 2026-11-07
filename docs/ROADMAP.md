@@ -66,32 +66,34 @@ Verified outcomes:
 - Mystery continuity remains subtle; no Keefler reveal was introduced.
 - Verification: `flutter analyze` clean, all 43 Flutter tests pass, and Android debug APK build succeeds.
 
-Phase 2C remains planned and requires explicit authorization before implementation.
+Phase 2B remains the latest verified game implementation. Phase 2C was explicitly prioritized for the first polished Android V1 on 2026-11-06.
 
-## Planned, not yet authorized for autonomous implementation
+## Current owner-authorized work
 
-### Phase 2C — Visual identity + branded asset integration
-**Status: PLANNED**
+### Phase 2C — First Polished Android Playable V1
+**Status: OWNER-AUTHORIZED / ENGINEERING READY / ORIGINAL ART DEPENDENCIES OPEN**
 
-Intent:
-- replace generic/placeholding presentation with approved Cloudcrafted Fantasy visual direction;
-- integrate official Mr. Weed's and Cloud Cup branding assets without restyling them;
-- establish the locked Match-3 visual style proof, tile language, board frame, UI chrome, and world-room art integration;
-- preserve white Cloud Cup smoke unless a specific asset direction says otherwise;
-- use the Lounge as the first locked environment reference.
+Execution specification: `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md`  
+Visual intake: `docs/V1_ASSET_INTAKE.md`  
+V1 QA gate: `docs/V1_QA_CHECKLIST.md`  
+Base implementation: `10ca8a5b0bdcb086c294785544d40732a16ef524`
 
-Do not begin automatically until this phase is explicitly marked approved.
+Priority order:
+1. **2C-0 Stability:** Fix GitHub Issue #1 (unreachable Chapter 3 closing beat), add regression coverage, rerun gates.
+2. **2C-1 Production art infrastructure:** Audit art keys/files, stable asset manifest, visible placeholder detection, theme/tile/HUD sprite architecture, accessibility and responsive rules. Can proceed without missing image originals.
+3. **2C-2 Approved P0 artwork integration:** Official logos, Cloud Kingdom title, Mr. Weed, approved Match-3 tiles/blockers/specials/FX/UI, Cloud House, Lounge and Kitchen **only using source originals approved in actual v9 tracker**.
+4. **2C-3 Collection and museum V1 UI:** Approved collection card framework, real runtime player state, collection shelf and optionally limited museum exhibit UI. Do not prematurely unlock the full Gallery.
+5. **2C-4 V1 Android validation:** Home → Match-3 → Victory → Cloud House flow, regression/performance/accessibility, debug APK + SHA, then Samsung S24 Ultra owner/device verification and visual sign-off.
 
-### Phase 3 — Expanded Kingdom systems
-**Status: PLANNED**
+**Visual priority:** replace generic Flutter placeholders on primary gameplay path before expansion. **Story freeze:** Chapters 1–3 only. The five Trolls are friendly in V1; no betrayal, Nave, Copycat Cloud Co., Cloud Bottle, or Keefler reveal. Keep the mystery hook subtle.
 
-Likely scope from the approved game blueprint includes:
-- Higher Art Gallery as a full collection museum area;
-- later Cloud House rooms and Secret Basement systems;
-- additional blockers/objectives and Levels 31+;
-- daily/weekly challenge framework;
-- first mini-game framework;
-- broader character/story progression;
-- future Keefler Elves story arc and workshop reveal at the appropriate narrative point.
+**Asset dependency:** GitHub currently has only `assets/data/`, not `assets/art/`. The v9 original workbook was not available in this repository at audit time. Do not fabricate art or sign-off; continue unblocked 2C-0/1 engineering and transparently flag integration blockers.
 
-Detailed implementation scope will be split into bounded verified phases before execution.
+**No expanded game scope:** no Levels 31+, no new chapter arcs, no new backend/commerce, no economy refactor, and no spoiler story additions. A build without all mandatory verified originals is a **technical preview**, not a polished V1 release candidate.
+
+## Future phases, not authorized for autonomous implementation
+
+### Phase 3 — Expanded Kingdom Systems
+**Status: PLANNED / DEFERRED UNTIL POLISHED V1 APPROVED**
+
+Later development may include Higher Art Gallery expansion, new rooms, more levels, mini-games, wider collections, and later-story revelations. Do not begin without separate explicit authorization.
