@@ -21,7 +21,7 @@ This checklist records the latest automated/local evidence. It does not claim Sa
 | Collection/equipment/evolution runtime states | PASS | Dynamic 30-card UI and progression tests pass; new collection art not yet approved/integrated |
 | V1 museum/shelf art states | BLOCKED | Supplement sources have pending new-file sign-off; full Gallery remains preview-only |
 | Story scope and spoiler firewall | PASS | Chapters 1–3 retained; no later-story content added |
-| Shape cues, reduced-motion and haptics wiring | PASS | Distinct fallback silhouettes; settings control animation/haptic behavior |
+| Shape cues, reduced-motion and haptics wiring | PASS | Distinct fallback silhouettes; legacy leaf identity is flower-shaped Mystic Bloom; settings control animation/haptic behavior |
 | TalkBack, large-text, notches, background/resume device QA | NOT TESTED | Requires authorized Android device |
 | Android debug APK built, filename and SHA-256 recorded | PASS | Local arm64 technical preview; SHA recorded below |
 | Samsung S24 Ultra install/launch/gameplay manually verified | BLOCKED | Device `R5CX156CZNF` is detected as `unauthorized` by ADB |
@@ -32,7 +32,7 @@ This checklist records the latest automated/local evidence. It does not claim Sa
 
 - Build: `flutter build apk --debug --target-platform android-arm64` — passed locally.
 - APK: `C:\Users\LifeN\OneDrive\Desktop\Mr Weeds\App_Game\The Build\MrWeedsCloudKingdom_V1_Technical_Preview_arm64.apk`
-- SHA-256: `615FB10066CDA99032088E7A242DE275A6A3E4463FC22EB23EE26DA81AA2C3A4`
+- SHA-256: `FEEEEC74227290089EAB57B56D82E3611375C7614A46C7B5FCAC12E8EC13DEA4`
 - APK produced: yes. Installed on Samsung S24 Ultra: no; ADB authorization is pending on the handset.
 - This is a **technical preview**, not a visually accepted V1 release candidate.
 

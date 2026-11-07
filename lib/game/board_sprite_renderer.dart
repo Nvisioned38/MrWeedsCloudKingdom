@@ -68,7 +68,9 @@ class CloudKingdomFallbackBoardRenderer implements BoardSpriteRenderer {
   void _drawIdentity(Canvas canvas, Offset center, double size, Piece piece) {
     final paint = Paint()
       ..style = PaintingStyle.fill
-      ..color = _colors[piece.family.index];
+      ..color = piece.family == TileFamily.leaf
+          ? const Color(0xffd28be0)
+          : _colors[piece.family.index];
     switch (piece.family) {
       case TileFamily.cloud:
         canvas.drawCircle(center, size * .3, paint);
@@ -78,16 +80,18 @@ class CloudKingdomFallbackBoardRenderer implements BoardSpriteRenderer {
             center.translate(size * .18, size * .03), size * .2, paint);
         break;
       case TileFamily.leaf:
-        for (var i = 0; i < 5; i++) {
-          final angle = -math.pi / 2 + i * 2 * math.pi / 5;
+        // Legacy save/domain identity maps to a clear Mystic Bloom flower.
+        // Do not expose the old leaf-shaped visual in gameplay.
+        for (var i = 0; i < 6; i++) {
+          final angle = -math.pi / 2 + i * 2 * math.pi / 6;
           canvas.drawCircle(
               center.translate(
-                  size * .2 * math.cos(angle), size * .2 * math.sin(angle)),
-              size * .14,
+                  size * .19 * math.cos(angle), size * .19 * math.sin(angle)),
+              size * .135,
               paint);
         }
         canvas.drawCircle(
-            center, size * .11, Paint()..color = const Color(0xfffff2ad));
+            center, size * .105, Paint()..color = const Color(0xffffd36e));
         break;
       case TileFamily.sun:
         final flame = Path()
