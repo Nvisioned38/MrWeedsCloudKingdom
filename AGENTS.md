@@ -27,9 +27,11 @@ If documentation and implementation differ, do not silently guess. Prefer the ne
 
 **Phase 2B is VERIFIED COMPLETE. Phase 2C V1 visual integration and Android playable polish are OWNER-AUTHORIZED.**
 
-The verified Phase 2C v10 branding baseline is `04aca22f3f1566f11ec935e914b6a73ebd58a5b5`. **Phase 2C-0 stability and Phase 2C-1 art infrastructure are complete. GitHub Issue #1 is fixed, tested and closed.** Do not repeat completed work.
+The current verified Phase 2C v10 technical-preview baseline is **`af00bbdf24d63897afb46882288194321a4ac674`**, with 48/48 passing Flutter tests, clean analyzer, and an arm64 debug APK installed in place on Samsung S24 Ultra. The v10 logos, title, seven environment/preview images, and approved Mr. Weed OK-gesture portrait are integrated. **Phase 2C-0 stability and 2C-1 art infrastructure are already complete.** Do not repeat that work.
 
-**CURRENT TASK:** Execute `docs/V1_NEXT_ART_SPRINT.md` with `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md`, `docs/V1_ASSET_INTAKE.md`, and `docs/V1_QA_CHECKLIST.md` as guardrails. Prioritize standalone approved P0 Match-3 sprites, modular board/HUD art and effects, then character and collection production assets, then full on-device Home → Match-3 → Victory → Cloud House testing.
+**IMMEDIATE, UNBLOCKED TASK:** Execute **GitHub Issue #5, isolated-save Android QA**, using `docs/V1_QA_CHECKLIST.md`. Test the Home → Match-3 → Victory → Rewards → Cloud House gameplay loop in an isolated emulator/test profile or dedicated test app-data environment, adding automated coverage without changing the owner's real S24 save (currently Level 3, 210 coins, 2 stars). Run formatting/analyzer/tests/APK, push verified results and update documentation.
+
+**PARALLEL ART DEPENDENCY:** **GitHub Issue #4** is the exact P0 standalone production export checklist for tiles, blockers, specials, board/HUD and FX. The approved v10 composite design sheets are not clean production sprites. If source originals are absent, document the exact dependency and do not make screenshot crops or substitute art; continue all other unblocked QA/engineering. See `docs/V1_ART_EXPORT_MATRIX.md` and `docs/V1_NEXT_ART_SPRINT.md`.
 
 **The owner's v10 Standalone Assets workbook supersedes v9.** Exact official BR-005/006 logo exports, BR-003 v1 title, and seven approved environment images are already integrated. Never overwrite their verified pixels with approximate lettering/art. The v10 workbook approves concepts but does not prove standalone sprites exist. Missing originals block that individual asset, not unrelated engineering work. Continue with a technical preview APK if source artwork is incomplete; do not claim final V1 visual acceptance prematurely.
 
