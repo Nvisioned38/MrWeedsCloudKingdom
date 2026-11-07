@@ -126,7 +126,7 @@ When official branding assets are introduced:
 - preserve approved Cloud Kingdom/Cloudcrafted Fantasy art direction when documented;
 - Cloud Cup smoke should remain white unless a specific asset direction explicitly says otherwise.
 
-**Source-image rule:** tracker v9: Brand and V1 Priorities controls final asset approvals, but its original workbook must be obtained before row-by-row sign-off can be asserted. The repository currently has no `assets/art/` files. Never replace a locked visual with generated approximations, assume reference mockups are production sprites, or claim a placeholder has passed final V1 QA.
+**Source-image rule:** tracker v9: Brand and V1 Priorities controls final approvals. The owner provided the original v9 workbook and Game Art ZIP to ChatGPT; the audit is recorded in `docs/V1_V9_ZIP_INTAKE_AUDIT.md`. **Binary originals and v9 workbook still require transfer into the Codex checkout before integration.** The repository currently has no actual production art files. Never replace a locked visual with generated approximations, assume reference mockups are production sprites, or claim a placeholder has passed final V1 QA.
 
 Cloudcrafted Fantasy is dimensional 2.5D with approved cloudglass/purple cloudstone/brass materials. **No crowns and no visible cannabis leaves outside the Secret Basement.** Preserve existing Dart internal identifiers and save data even when applying approved visual replacements (e.g. torch visual for rocket special, non-leaf art for legacy tile family). Canonical original Mr. Weed and Cloud Cup logos remain unchanged.
 
