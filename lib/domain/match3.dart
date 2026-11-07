@@ -860,6 +860,14 @@ class ProgressState {
     return next > maxPlayableLevel ? maxPlayableLevel : next;
   }
 
+  /// Story beats can occur after the final playable level without exposing
+  /// their dialogue before that level has actually been completed.
+  bool isStoryBeatAvailable(int unlockAtLevel) {
+    if (unlockedThrough >= unlockAtLevel) return true;
+    return unlockAtLevel == maxPlayableLevel + 1 &&
+        completedLevels.contains(maxPlayableLevel);
+  }
+
   void resetForNewGame() {
     completedLevels.clear();
     bestScores.clear();
