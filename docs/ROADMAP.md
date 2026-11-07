@@ -87,7 +87,7 @@ Priority order:
 
 **Visual priority:** replace generic Flutter placeholders on primary gameplay path before expansion. **Story freeze:** Chapters 1–3 only. The five Trolls are friendly in V1; no betrayal, Nave, Copycat Cloud Co., Cloud Bottle, or Keefler reveal. Keep the mystery hook subtle.
 
-**Asset dependency:** GitHub currently has only `assets/data/`, not `assets/art/`. The v9 original workbook was not available in this repository at audit time. Do not fabricate art or sign-off; continue unblocked 2C-0/1 engineering and transparently flag integration blockers.
+**Asset dependency:** The owner-supplied v9 workbook and 77-PNG ZIP were inspected in ChatGPT on 2026-11-06 and documented at `docs/V1_V9_ZIP_INTAKE_AUDIT.md`. They are **not yet transferred to GitHub/Codex**. The curated 72-PNG V1 package excludes later-story spoilers. Official standalone brand logos BR-001/002 remain missing. Do not fabricate art or sign-off; continue unblocked 2C-0/1 engineering and transparently flag integration blockers.
 
 **No expanded game scope:** no Levels 31+, no new chapter arcs, no new backend/commerce, no economy refactor, and no spoiler story additions. A build without all mandatory verified originals is a **technical preview**, not a polished V1 release candidate.
 
