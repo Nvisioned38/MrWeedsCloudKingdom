@@ -14,7 +14,7 @@ This checklist records current automated evidence and a limited Samsung screen s
 | Full Flutter test suite | PASS | 48 tests passed, including manifest, renderer, progression, migration, and widget regressions |
 | 30-level catalogue and progression unaffected | PASS | Existing catalog and progression tests pass |
 | Save schema 3 upgrade/restart/reset/perk persisted | PASS | Phase 2B migration and round-trip tests pass; schema remains 3 |
-| Official logo masters and approved title treatment integrated | PASS | BR-001/002 source PNGs copied byte-identically; BR-003 v1 treatment copied unchanged; S24 title/app-shell rendering checked; BR-005/006 separately named crops not supplied |
+| Official logos and approved title treatment integrated | PASS | BR-005/006 alpha-bound exports verified pixel-exact to BR-001/002 masters; BR-003 v1 treatment copied unchanged; S24 title/app-shell rendering checked |
 | Core P0 Match-3 production tiles, blockers, specials and FX integrated | BLOCKED | v10 approves the concepts, but no isolated source sprites/modular exports were transferred; board remains an explicit technical renderer |
 | Cloud House, Lounge and Kitchen source artwork integrated | PASS | 7 intact originals; source hashes, dimensions and v10 approval row IDs in `assets/art/manifest.json`; Home screen rendered on S24 |
 | Home → Match-3 → Victory → Cloud House automated flow | PASS | New Game and controlled victory/reward widget tests pass |
@@ -33,7 +33,7 @@ This checklist records current automated evidence and a limited Samsung screen s
 
 - Build: `flutter build apk --debug --target-platform android-arm64` — passed locally.
 - APK: `C:\Users\LifeN\OneDrive\Desktop\Mr Weeds\App_Game\The Build\MrWeedsCloudKingdom_V1_Technical_Preview_arm64.apk`
-- SHA-256: `DDF1678FD10B2FC93E07F558D55005BBE2CBD3F3A0E68A48FACF2AF6FE65EA82`
+- SHA-256: `33D2FBBD856ECD5E59BA00D7205424B9DC7196033D37ADC2C670DC204174A339`
 - APK produced: yes. Installed/updated on Samsung S24 Ultra: yes, with `adb install -r`; no uninstall or data clear. Cloud House reopened with prior Level 3, 210 coins and 2 stars. The game board was viewed but no turn was taken.
 - This is a **technical preview**, not a visually accepted V1 release candidate.
 
