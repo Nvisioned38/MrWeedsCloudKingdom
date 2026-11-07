@@ -235,13 +235,14 @@ void main() {
 
     progress.completedLevels.add(25);
     expect(progress.isStoryBeatAvailable(26), isTrue);
+    progress.completedLevels.add(29);
     expect(progress.isStoryBeatAvailable(31), isFalse);
 
     progress.completedLevels.add(30);
     expect(progress.unlockedThrough, 30);
     expect(progress.isStoryBeatAvailable(31), isTrue);
-    expect(ProgressState.fromJson(progress.toJson())
-        .isStoryBeatAvailable(31), isTrue);
+    final restored = ProgressState.fromJson(progress.toJson());
+    expect(restored.isStoryBeatAvailable(31), isTrue);
     expect(progress.isStoryBeatAvailable(32), isFalse);
   });
 
