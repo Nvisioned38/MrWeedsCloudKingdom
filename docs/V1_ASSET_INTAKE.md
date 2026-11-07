@@ -5,13 +5,13 @@
 - GitHub `main` at `10ca8a5b0bdcb086c294785544d40732a16ef524` includes `assets/data/` but **does not include `assets/art/`**.
 - `lib/presentation/art_registry.dart` contains intended relative PNG paths. They are placeholders for future imports, not existing file evidence.
 - `pubspec.yaml` lists data assets, **not** an `assets/art/` bundle.
-- The owner identifies tracker `v9: Brand and V1 Priorities` as current. The **v9 workbook itself is NOT in this repo and was not supplied as a readable original here**. Earlier trackers/notes are reference context only. Do **not** mark any v9 line as verified without seeing that exact workbook.
+- The owner **supplied and we inspected** the authoritative v9 workbook alongside Game Art ZIP in ChatGPT on 2026-11-06. **Original binaries have not yet been transferred to GitHub/Codex.** See `docs/V1_V9_ZIP_INTAKE_AUDIT.md` for source matches and exact hashes; older trackers do not override v9.
 - Approved art concepts/character sheets may still need separate exported transparent layers, correct slicing, resizing, and cropping before production use.
 
 ## Intake sequence
 
-1. Owner supplies the **actual v9 XLSX workbook** in the conversation or the repository. Preserve original workbook rather than creating a guessed reconstruction. Codex should compare P0/P1 decisions against the workbook, and create an asset ID → file/approval matrix.
-2. Owner supplies original exact logo/image masters in a named, shareable package or `assets/source_art/` folder; preserve unmodified source copies. Do not use screenshots from old chats as substitutes.
+1. The owner has already supplied the **actual v9 XLSX** in ChatGPT. Codex must import and read that unchanged workbook from the curated V1 art intake package, or another verified transfer, before production approval sign-off. The workbook is NOT yet in this GitHub checkout.
+2. Owner-supplied Game Art ZIP includes 77 PNG files and three nested ZIPs. A curated V1 intake package with 72 original PNG files and the v9 workbook has been prepared separately, but must still be transferred to Codex. The standalone official Mr. Weed's and Cloud Cup logos BR-001/002 were **not found** in the uploaded ZIP and must be supplied separately. Preserve unmodified source copies; do not use approximated lettering from art boards as substitutes.
 3. Codex builds/updates machine-readable `assets/art/manifest.json` with stable in-app art keys, approval row IDs, variants, actual source filename, target filename, expected dimensions/aspect/transparency, import readiness, SHA-256, and QA status.
 4. Process originals into game-ready exports in `assets/art/` while retaining source and approval traceability. Recompression/cropping of source is allowed only when it preserves the approved visible content and aspect/identity.
 5. Integrate only validated exports; test asset loading; request approval for any visible stylistic change.
