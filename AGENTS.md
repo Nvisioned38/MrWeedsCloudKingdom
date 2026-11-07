@@ -27,9 +27,11 @@ If documentation and implementation differ, do not silently guess. Prefer the ne
 
 **Phase 2B is VERIFIED COMPLETE. Phase 2C V1 visual integration and Android playable polish are OWNER-AUTHORIZED.**
 
-Start from verified Phase 2B commit `10ca8a5b0bdcb086c294785544d40732a16ef524`. Execute `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md` and use `docs/V1_ASSET_INTAKE.md` and `docs/V1_QA_CHECKLIST.md`.
+The verified Phase 2C v10 branding baseline is `04aca22f3f1566f11ec935e914b6a73ebd58a5b5`. **Phase 2C-0 stability and Phase 2C-1 art infrastructure are complete. GitHub Issue #1 is fixed, tested and closed.** Do not repeat completed work.
 
-**Immediately prioritize Phase 2C-0 (fix still-open GitHub Issue #1 and retest), then 2C-1 (audit, brand/theme/asset framework).** Move into approved P0/P1 art integration only when the real source files and the v9 tracker approval evidence are accessible; missing originals block those particular assets, not other engineering tasks. Deliver a technical preview APK if final artwork is missing, never claim final V1 visual acceptance without evidence.
+**CURRENT TASK:** Execute `docs/V1_NEXT_ART_SPRINT.md` with `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md`, `docs/V1_ASSET_INTAKE.md`, and `docs/V1_QA_CHECKLIST.md` as guardrails. Prioritize standalone approved P0 Match-3 sprites, modular board/HUD art and effects, then character and collection production assets, then full on-device Home → Match-3 → Victory → Cloud House testing.
+
+**The owner's v10 Standalone Assets workbook supersedes v9.** Exact official BR-005/006 logo exports, BR-003 v1 title, and seven approved environment images are already integrated. Never overwrite their verified pixels with approximate lettering/art. The v10 workbook approves concepts but does not prove standalone sprites exist. Missing originals block that individual asset, not unrelated engineering work. Continue with a technical preview APK if source artwork is incomplete; do not claim final V1 visual acceptance prematurely.
 
 No routine requests for ordinary engineering decisions. Work through all unblocked current-phase items with tests, incremental commits, updates to the build log/current state/roadmap, and a consolidated blockers report. Do **not** start Phase 3 or later story arcs.
 
