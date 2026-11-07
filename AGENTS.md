@@ -13,22 +13,25 @@ Before modifying code, read in this order:
 1. `AGENTS.md`
 2. `docs/CURRENT_STATE.md`
 3. `docs/ROADMAP.md`
-4. The current approved phase execution specification
-5. `00_PROJECT_CHARTER.md`
-6. `01_GAME_DESIGN_BLUEPRINT.md`
-7. `02_TECHNICAL_ARCHITECTURE.md`
-8. Existing code, catalogs, and tests
-9. `docs/BUILD_LOG.md` for checkpoint history
+4. The current approved phase execution specification (currently `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md`)
+5. `docs/V1_ASSET_INTAKE.md` and `docs/V1_QA_CHECKLIST.md`
+6. `00_PROJECT_CHARTER.md`
+7. `01_GAME_DESIGN_BLUEPRINT.md`
+8. `02_TECHNICAL_ARCHITECTURE.md`
+9. Existing code, catalogs, and tests
+10. `docs/BUILD_LOG.md` for checkpoint history
 
 If documentation and implementation differ, do not silently guess. Prefer the newest verified implementation state, then update documentation to reflect reality unless the conflict materially changes product direction.
 
 ## Current execution directive
 
-**Phase 2B is authorized.**
+**Phase 2B is VERIFIED COMPLETE. Phase 2C V1 visual integration and Android playable polish are OWNER-AUTHORIZED.**
 
-Execute `06_CODEX_PHASE_2B_PROGRESSION_STORY_BUILD_PROMPT.md` from the synchronized Phase 2A baseline recorded in `docs/CURRENT_STATE.md` and `docs/BUILD_LOG.md`.
+Start from verified Phase 2B commit `10ca8a5b0bdcb086c294785544d40732a16ef524`. Execute `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md` and use `docs/V1_ASSET_INTAKE.md` and `docs/V1_QA_CHECKLIST.md`.
 
-Work through the entire Phase 2B specification without requesting approval between ordinary engineering steps. Do not begin Phase 2C automatically unless `docs/ROADMAP.md` or a newer direct owner instruction explicitly authorizes it.
+**Immediately prioritize Phase 2C-0 (fix still-open GitHub Issue #1 and retest), then 2C-1 (audit, brand/theme/asset framework).** Move into approved P0/P1 art integration only when the real source files and the v9 tracker approval evidence are accessible; missing originals block those particular assets, not other engineering tasks. Deliver a technical preview APK if final artwork is missing, never claim final V1 visual acceptance without evidence.
+
+No routine requests for ordinary engineering decisions. Work through all unblocked current-phase items with tests, incremental commits, updates to the build log/current state/roadmap, and a consolidated blockers report. Do **not** start Phase 3 or later story arcs.
 
 ## Autonomy granted
 
@@ -123,7 +126,13 @@ When official branding assets are introduced:
 - preserve approved Cloud Kingdom/Cloudcrafted Fantasy art direction when documented;
 - Cloud Cup smoke should remain white unless a specific asset direction explicitly says otherwise.
 
-Placeholder art is acceptable during systems phases when final approved assets are not yet available.
+**Source-image rule:** tracker v9: Brand and V1 Priorities controls final asset approvals, but its original workbook must be obtained before row-by-row sign-off can be asserted. The repository currently has no `assets/art/` files. Never replace a locked visual with generated approximations, assume reference mockups are production sprites, or claim a placeholder has passed final V1 QA.
+
+Cloudcrafted Fantasy is dimensional 2.5D with approved cloudglass/purple cloudstone/brass materials. **No crowns and no visible cannabis leaves outside the Secret Basement.** Preserve existing Dart internal identifiers and save data even when applying approved visual replacements (e.g. torch visual for rocket special, non-leaf art for legacy tile family). Canonical original Mr. Weed and Cloud Cup logos remain unchanged.
+
+**Narrative firewall:** five Troll characters are friendly at this stage. Do not reveal betrayal, Lord Nave Von Elrekce, Copycat Cloud Co., the rival Cloud Bottle, or the Keefler Elves arc in V1. Preserve the unmarked-workshop teaser only.
+
+Placeholder art is acceptable only as an explicitly unfinished technical fallback during V1 preparation, never as a claimed approved production asset.
 
 ## Communication style for agent summaries
 
