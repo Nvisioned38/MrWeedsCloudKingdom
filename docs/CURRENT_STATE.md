@@ -35,3 +35,17 @@ The Gradle build emitted an Android SDK XML version compatibility warning, but t
 ## Current phase and next action
 
 **Phase 2B — VERIFIED / COMPLETE.** The next roadmap item is Phase 2C — Visual identity + branded asset integration, which remains planned and is not authorized for autonomous implementation. Do not start Phase 2C until it is explicitly approved.
+
+## 2026-11-06 Phase 2C coordination update (no new build verification claimed)
+
+The owner has prioritized the first visually polished, playable Android V1 before any expanded story chapters. **Phase 2C is authorized for engineering stabilization, infrastructure, and integration of available verified approved original art** per `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md`. The detailed V1 asset-intake and QA gate are `docs/V1_ASSET_INTAKE.md` and `docs/V1_QA_CHECKLIST.md`.
+
+**Latest verified *code* baseline remains `10ca8a5b0bdcb086c294785544d40732a16ef524`.** No Phase 2C implementation, new tests, original-art imports, device installation, or new Android APK has been verified by this documentation-only change.
+
+**Outstanding from code review:** GitHub Issue #1 is still OPEN: Chapter 3's final gallery dialogue beat is gated at Level 31 while the playable level path caps at 30. Fix this in 2C-0 before broad UI polish.
+
+**Artwork readiness:** `assets/` contains only `data/`; `assets/art/` masters/production exports are not present in GitHub. The user names a v9 `Brand and V1 Priorities` review tracker as the current approval authority, but its actual workbook is not in the repository; only earlier contextual notes can presently be consulted. Obtain v9 and the original approved image files before claiming any per-row approval and before visually integrating protected art. There is no authorization to redraw logos, Mr. Weed, characters, locked environments, tiles, or any original asset.
+
+**Narrative scope:** retain Chapters 1–3 and subtle workshop mystery only. Troll betrayal, Lord Nave, Copycat Cloud Co., the Cloud Bottle, and Keefler Elves revelations remain later-game material.
+
+**Next action:** Codex pulls latest `main`, reads `AGENTS.md` and the Phase 2C files, fixes Issue #1, then implements all unblocked V1 art infrastructure with format/analyze/test/build checks. Final integration of a specific art asset waits for the original and v9 approval evidence, not for routine engineering approvals.
