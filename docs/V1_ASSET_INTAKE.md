@@ -56,3 +56,7 @@ Use this table in Codex's closing report when any art is absent:
 If v9 is missing, leave `v9 Row ID` explicitly **unverified**, rather than inventing IDs or approvals.
 
 No image generation, visual reimagining, substitute AI faces, or third-party lookalike logos is authorized by this intake instruction.
+
+## 2026-11-06 additional Collection UI PNGs
+
+Seven further original PNGs were received and audited separately from the prior Game Art ZIP. See **`docs/V1_COLLECTION_UI_NOV06_SUPPLEMENT.md`** for exact SHA-256 hashes, v9 mapping, and dynamic UI restrictions. The new image versions remain pending new-file sign-off. A companion source ZIP and v9-preserving workbook addendum were prepared in the ChatGPT handoff but **not automatically transferred to GitHub or Codex**. Preserve static plaques/frames, render filters/counts/navigation/card states dynamically. Keep the Gallery preview gate intact.
