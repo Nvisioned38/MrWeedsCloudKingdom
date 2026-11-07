@@ -1,12 +1,16 @@
-/// Central mapping from stable content keys to replaceable art files.
-/// Entries are intentionally allowed to point to not-yet-created art; widgets
-/// use their fixed-size fallback when an image is absent.
+/// Stable presentation keys mapped to replaceable artwork files.
+///
+/// A path here says where artwork would render; approval and availability are
+/// recorded separately in `assets/art/manifest.json`.
 class ArtRegistry {
   ArtRegistry._();
 
   static const paths = <String, String>{
     'room_cloud_house': 'assets/art/rooms/cloud_house.png',
+    'room_cloud_house_damaged': 'assets/art/rooms/cloud_house_damaged.png',
     'room_lounge': 'assets/art/rooms/lounge.png',
+    'room_lounge_psychedelic': 'assets/art/rooms/lounge_psychedelic.png',
+    'room_lounge_retro_70s': 'assets/art/rooms/lounge_retro_70s.png',
     'room_kitchen': 'assets/art/rooms/kitchen.png',
     'room_art_gallery': 'assets/art/rooms/higher_art_gallery.png',
     'room_basement': 'assets/art/rooms/secret_basement.png',
@@ -25,6 +29,36 @@ class ArtRegistry {
     'character_riff': 'assets/art/characters/riff_full.png',
     'portrait_collector': 'assets/art/characters/collector_portrait.png',
     'character_collector': 'assets/art/characters/collector_full.png',
+    'brand_mr_weeds_logo': 'assets/art/brand/mr_weeds_logo.png',
+    'brand_cloud_cup_logo': 'assets/art/brand/cloud_cup_logo.png',
+    'brand_cloud_kingdom_title': 'assets/art/brand/cloud_kingdom_title.png',
+    'board_frame': 'assets/art/match3/board_frame.png',
+    'tile_cloud_puff': 'assets/art/match3/tiles/cloud_puff.png',
+    'tile_mystic_bloom': 'assets/art/match3/tiles/mystic_bloom.png',
+    'tile_ember_drop': 'assets/art/match3/tiles/ember_drop.png',
+    'tile_dream_crystal': 'assets/art/match3/tiles/dream_crystal.png',
+    'tile_golden_nugget': 'assets/art/match3/tiles/golden_nugget.png',
+    'blocker_crate': 'assets/art/match3/blockers/mw_crate.png',
+    'blocker_reinforced_crate':
+        'assets/art/match3/blockers/mw_reinforced_crate.png',
+    'blocker_sticky_syrup': 'assets/art/match3/blockers/sticky_syrup.png',
+    'blocker_fog': 'assets/art/match3/blockers/fog.png',
+    'special_rocket_torch': 'assets/art/match3/specials/torch.png',
+    'special_cloud_cup_vaporizer':
+        'assets/art/match3/specials/cloud_cup_vaporizer.png',
+    'special_prism': 'assets/art/match3/specials/prism.png',
+    'special_cloud_bomb': 'assets/art/match3/specials/cloud_bomb.png',
+    'fx_combo_cascade': 'assets/art/match3/effects/combo_cascade.png',
+    'ui_match3_hud': 'assets/art/match3/ui/hud.png',
+    'ui_objectives_panel': 'assets/art/match3/ui/objectives.png',
+    'ui_moves_counter': 'assets/art/match3/ui/moves_counter.png',
+    'ui_score_stars': 'assets/art/match3/ui/score_stars.png',
+    'ui_level_complete': 'assets/art/match3/ui/level_complete.png',
+    'ui_level_failed': 'assets/art/match3/ui/level_failed.png',
+    'ui_collection_card_frame': 'assets/art/collection/card_frame.png',
+    'ui_collection_filter': 'assets/art/collection/filter_bar.png',
+    'ui_collection_shelf': 'assets/art/collection/shelf.png',
+    'ui_collection_museum_preview': 'assets/art/collection/museum_preview.png',
     'card_bluebeary_pancakes': 'assets/art/cards/bluebeary_pancakes.png',
     'card_soldier_field_haze': 'assets/art/cards/soldier_field_haze.png',
     'card_bong_berry_blitz': 'assets/art/cards/bong_berry_blitz.png',
@@ -35,6 +69,26 @@ class ArtRegistry {
     'card_baked_alien': 'assets/art/cards/baked_alien.png',
     'card_blue_walker': 'assets/art/cards/blue_walker.png',
     'card_avatar_og': 'assets/art/cards/avatar_og.png',
+    'card_blue_slurpicana': 'assets/art/cards/blue_slurpicana.png',
+    'card_cranberry_haze': 'assets/art/cards/cranberry_haze.png',
+    'card_creme_de_la_chem': 'assets/art/cards/creme_de_la_chem.png',
+    'card_chocolate_mint': 'assets/art/cards/chocolate_mint.png',
+    'card_blueberry_pancakes': 'assets/art/cards/blueberry_pancakes.png',
+    'card_blueberry_diesel': 'assets/art/cards/blueberry_diesel.png',
+    'card_biscotti': 'assets/art/cards/biscotti.png',
+    'card_uncle_snoop': 'assets/art/cards/uncle_snoop.png',
+    'card_chimera': 'assets/art/cards/chimera.png',
+    'card_purple_voodoo': 'assets/art/cards/purple_voodoo.png',
+    'card_black_truffle': 'assets/art/cards/black_truffle.png',
+    'card_cocoas_mintway': 'assets/art/cards/cocoas_mintway.png',
+    'card_strawberry_safety': 'assets/art/cards/strawberry_safety.png',
+    'card_green_cheese': 'assets/art/cards/green_cheese.png',
+    'card_minute_man_og': 'assets/art/cards/minute_man_og.png',
+    'card_mamba': 'assets/art/cards/mamba.png',
+    'card_ghosts_graveyard': 'assets/art/cards/ghosts_graveyard.png',
+    'card_cloud_nine': 'assets/art/cards/cloud_nine.png',
+    'card_neon_nugget': 'assets/art/cards/neon_nugget.png',
+    'card_basement_legend': 'assets/art/cards/basement_legend.png',
   };
 
   static String? pathFor(String key) => paths[key];

@@ -27,3 +27,5 @@ flutter:
     - assets/data/world_nodes.json
     - assets/data/characters.json
     - assets/data/story_chapters.json
+    - assets/art/
+    - assets/art/rooms/

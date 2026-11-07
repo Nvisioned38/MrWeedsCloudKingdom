@@ -40,7 +40,7 @@ The Gradle build emitted an Android SDK XML version compatibility warning, but t
 
 The owner has prioritized the first visually polished, playable Android V1 before any expanded story chapters. **Phase 2C is authorized for engineering stabilization, infrastructure, and integration of available verified approved original art** per `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md`. The detailed V1 asset-intake and QA gate are `docs/V1_ASSET_INTAKE.md` and `docs/V1_QA_CHECKLIST.md`.
 
-**Latest verified *code* baseline remains `10ca8a5b0bdcb086c294785544d40732a16ef524`.** No Phase 2C implementation, new tests, original-art imports, device installation, or new Android APK has been verified by this documentation-only change.
+This entry is historical as of 2026-11-06. The later 2026-11-07 checkpoint below records subsequent verified work.
 
 **Outstanding from code review:** GitHub Issue #1 is still OPEN: Chapter 3's final gallery dialogue beat is gated at Level 31 while the playable level path caps at 30. Fix this in 2C-0 before broad UI polish.
 
@@ -58,4 +58,16 @@ Verified intake: **89 v9 asset records, 32 P0 records, 77 PNGs plus 3 nested ZIP
 
 The audited source-art files and original v9 workbook have **not yet been imported into this GitHub checkout or Codex workspace**. This remains a source-transfer/asset-export blocker, not a coding blocker. Do not mark the visuals integrated until production exports and tests confirm them.
 
-The latest **verified app code** and test gate remain the Phase 2B baseline, **43 tests**. No new Phase 2C APK, test run, or Samsung S24 Ultra verification is asserted by this intake.
+The latest **verified app code** and test gate at this date were the Phase 2B baseline, **43 tests**. This is a historical checkpoint; see the 2026-11-07 entry below.
+
+## 2026-11-07 — Phase 2C technical preview checkpoint
+
+Pulled latest `main` at `edcf151`; this upstream commit resolves GitHub Issue #1. The regression suite confirms the Chapter 3 finale dialogue remains unavailable until Level 30 is complete and becomes available after reload.
+
+Implemented the unblocked Phase 2C engineering slice: an 80-key art registry and validated, source-aware manifest; explicit pending/unavailable art states; renderer and effects-hook seams with distinct unfinished tile silhouettes; Cloud Kingdom theme and responsive/accessibility affordances; reduced-motion and haptics wiring; and use of available room artwork for Cloud House, Lounge, Kitchen and a Level-30-gated Gallery preview. Existing game catalog, save schema 3, save identifiers, and Chapter 1–3 narrative scope are preserved. No story spoilers were added.
+
+Seven original room/preview images were integrated as intact source copies, with their source filenames, hashes, dimensions and intake audit references recorded in `assets/art/manifest.json`. Their actual source archive was `Game Art.zip` (SHA-256 `4a1824f098c498ffeebdfa1c90ab697f039ecc06cccdecccee29216978935739`), which differs from the previously documented consolidated automation handoff package. The consolidated handoff ZIP and v9 workbook were not found in the accessible workspace. Archive candidates that could not be validated against v9 are recorded as pending and are not presented as canonical/approved production art.
+
+Verification: `flutter pub get` passed; formatting passed; `flutter analyze` reported no issues; all 48 Flutter tests passed; `git diff --check` passed; Android arm64 debug APK build passed. APK SHA-256: `615FB10066CDA99032088E7A242DE275A6A3E4463FC22EB23EE26DA81AA2C3A4`. It is a technical preview, not visual V1 sign-off. Samsung S24 Ultra `R5CX156CZNF` is detected by ADB as `unauthorized`, so installation and manual device QA remain unverified.
+
+Remaining V1 blockers: canonical standalone brand logos and isolated approved Match-3 production sprites/effects are unavailable; v9 workbook row-level approvals cannot be directly checked; Samsung device authorization and owner visual sign-off are pending. Phase 2C remains in progress. Phase 3 has not started.

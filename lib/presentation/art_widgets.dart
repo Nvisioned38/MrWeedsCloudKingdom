@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../domain/phase2_models.dart';
@@ -19,6 +20,8 @@ class ArtAssetSlot extends StatelessWidget {
     this.label,
     this.icon = Icons.auto_awesome,
     this.borderRadius = 18,
+    this.showArt = true,
+    this.fit = BoxFit.cover,
   });
 
   final String assetKey;
@@ -27,6 +30,8 @@ class ArtAssetSlot extends StatelessWidget {
   final String? label;
   final IconData icon;
   final double borderRadius;
+  final bool showArt;
+  final BoxFit fit;
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +54,11 @@ class ArtAssetSlot extends StatelessWidget {
                 child: Icon(icon,
                     size: height * .34, color: const Color(0xffffd36e))),
           ),
-          if (path != null)
+          if (path == null && showArt) _missingArt(context, height),
+          if (path != null && showArt)
             Image.asset(path,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const SizedBox.expand()),
+                fit: fit,
+                errorBuilder: (_, __, ___) => _missingArt(context, height)),
           if (label != null)
             Align(
               alignment: Alignment.bottomLeft,
@@ -71,6 +77,30 @@ class ArtAssetSlot extends StatelessWidget {
       ),
     );
   }
+
+  Widget _missingArt(BuildContext context, double height) => Tooltip(
+        message: kDebugMode ? 'Artwork pending' : 'Artwork unavailable',
+        child: ColoredBox(
+          color: const Color(0xff242c53),
+          child: Center(
+            child: height < 72
+                ? Icon(icon, size: height * .42, color: const Color(0xffffd36e))
+                : Column(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(icon,
+                        size: height * .28, color: const Color(0xffffd36e)),
+                    const SizedBox(height: 4),
+                    Text(
+                      kDebugMode ? 'ART PENDING' : 'ART UNAVAILABLE',
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: .5,
+                          ),
+                    ),
+                  ]),
+          ),
+        ),
+      );
 }
 
 class CharacterPortrait extends StatelessWidget {
@@ -124,7 +154,7 @@ class CollectibleCardView extends StatelessWidget {
               ArtAssetSlot(
                   assetKey: card.artAssetKey,
                   height: 170,
-                  icon: card.unlocked ? Icons.spa : Icons.lock,
+                  icon: card.unlocked ? Icons.auto_awesome : Icons.lock,
                   borderRadius: 0),
               if (!card.unlocked)
                 Container(
@@ -170,11 +200,17 @@ class CollectibleCardView extends StatelessWidget {
 }
 
 class WorldNodeView extends StatelessWidget {
-  const WorldNodeView(
-      {super.key, required this.node, required this.state, this.onTap});
+  const WorldNodeView({
+    super.key,
+    required this.node,
+    required this.state,
+    this.onTap,
+    this.displayAssetKey,
+  });
   final WorldNodeDefinition node;
   final WorldNodeState state;
   final VoidCallback? onTap;
+  final String? displayAssetKey;
 
   @override
   Widget build(BuildContext context) {
@@ -187,13 +223,17 @@ class WorldNodeView extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             ArtAssetSlot(
-                assetKey: node.assetKey,
+                assetKey: displayAssetKey ?? node.assetKey,
                 height: 68,
                 icon: state == WorldNodeState.locked
                     ? Icons.lock_outline
                     : state == WorldNodeState.preview
                         ? Icons.visibility_outlined
-                        : Icons.cloud),
+                        : Icons.cloud,
+                showArt: state != WorldNodeState.locked,
+                fit: state == WorldNodeState.preview
+                    ? BoxFit.contain
+                    : BoxFit.cover),
             const SizedBox(height: 4),
             Text(node.title,
                 maxLines: 1,
@@ -248,7 +288,7 @@ class CollectionShelf extends StatelessWidget {
                     assetKey: card!.artAssetKey,
                     height: 54,
                     width: 48,
-                    icon: Icons.spa,
+                    icon: Icons.auto_awesome,
                     borderRadius: 10),
               ] else
                 const Icon(Icons.add_circle_outline),
@@ -266,7 +306,11 @@ class RoomBackgroundSlot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Stack(fit: StackFit.expand, children: [
-        ArtAssetSlot(assetKey: assetKey, height: 300, icon: Icons.weekend),
+        ArtAssetSlot(
+            assetKey: assetKey,
+            height: 300,
+            icon: Icons.weekend,
+            borderRadius: 0),
         Container(color: Colors.black.withValues(alpha: .28)),
         child,
       ]);

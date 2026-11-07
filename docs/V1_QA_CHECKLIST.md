@@ -1,6 +1,6 @@
 # V1 Android QA and Release Gate
 
-This is a **working checklist**, not a claim that tests have run in the current Phase 2C session. Codex updates statuses with evidence at each checkpoint.
+This checklist records the latest automated/local evidence. It does not claim Samsung device QA or final visual approval.
 
 ## Status legend
 
@@ -8,23 +8,33 @@ This is a **working checklist**, not a claim that tests have run in the current 
 
 | Gate | Status | Evidence / commit / device |
 |---|---|---|
-| Resolve GitHub Issue #1 and regression for Level 30 Chapter 3 finale dialogue | NOT TESTED | |
-| Format clean | NOT TESTED | |
-| `flutter analyze` no issues | NOT TESTED | |
-| Existing 43 tests pass, plus all newly added tests | NOT TESTED | |
-| 30-level catalogue and progression unaffected | NOT TESTED | |
-| Save schema 3 upgrade/restart/reset/perk persisted | NOT TESTED | |
+| Resolve GitHub Issue #1 and regression for Level 30 Chapter 3 finale dialogue | PASS | Pulled `edcf151`; 29/30 and 30/30 story gate and save round-trip covered in tests |
+| Format clean | PASS | `dart format lib test` and `--set-exit-if-changed` |
+| `flutter analyze` no issues | PASS | Flutter 3.47.7, 2026-11-07 |
+| Full Flutter test suite | PASS | 48 tests passed, including manifest, renderer, progression, migration, and widget regressions |
+| 30-level catalogue and progression unaffected | PASS | Existing catalog and progression tests pass |
+| Save schema 3 upgrade/restart/reset/perk persisted | PASS | Phase 2B migration and round-trip tests pass; schema remains 3 |
 | Original official logos exactly integrated and visually correct | BLOCKED | Original sources missing from repo |
-| Core P0 Match-3 tiles, blockers, specials and FX integrated | BLOCKED | Original sources missing from repo |
-| Cloud House, Lounge and Kitchen originals integrated | BLOCKED | Original sources missing from repo |
-| Home → Match-3 → Victory → Cloud House flow polished and responsive | NOT TESTED | |
-| Collection/equipment/evolution and V1 museum/shelf states | NOT TESTED | |
-| Chapter 2/3 story visuals correct; no future spoilers | NOT TESTED | |
-| Accessible labels / shape cues / large text / reduced motion | NOT TESTED | |
-| Portrait notches and safe areas, scaling, background/resume | NOT TESTED | |
-| Android debug APK built, filename and SHA-256 recorded | NOT TESTED | |
-| Samsung S24 Ultra install/launch/gameplay manually verified | BLOCKED | Requires device session or owner's results |
-| Owner final visual sign-off against v9 workbook | BLOCKED | v9 original workbook and source masters required |
+| Core P0 Match-3 tiles, blockers, specials and FX integrated | BLOCKED | Only composite board/UI references are present; isolated source sprites and v9 evidence are missing |
+| Cloud House, Lounge and Kitchen source artwork integrated | PASS | 7 intact room/preview originals; source hashes, dimensions and audit references in `assets/art/manifest.json`; v9 workbook and device sign-off remain open |
+| Home → Match-3 → Victory → Cloud House automated flow | PASS | New Game and controlled victory/reward widget tests pass |
+| Collection/equipment/evolution runtime states | PASS | Dynamic 30-card UI and progression tests pass; new collection art not yet approved/integrated |
+| V1 museum/shelf art states | BLOCKED | Supplement sources have pending new-file sign-off; full Gallery remains preview-only |
+| Story scope and spoiler firewall | PASS | Chapters 1–3 retained; no later-story content added |
+| Shape cues, reduced-motion and haptics wiring | PASS | Distinct fallback silhouettes; settings control animation/haptic behavior |
+| TalkBack, large-text, notches, background/resume device QA | NOT TESTED | Requires authorized Android device |
+| Android debug APK built, filename and SHA-256 recorded | PASS | Local arm64 technical preview; SHA recorded below |
+| Samsung S24 Ultra install/launch/gameplay manually verified | BLOCKED | Device `R5CX156CZNF` is detected as `unauthorized` by ADB |
+| Owner final visual sign-off against v9 workbook | BLOCKED | v9 original workbook is not in the accessible workspace |
+| No generic placeholders on primary V1 path | BLOCKED | Exact logos and isolated Match-3 production sprites are not available |
+
+## 2026-11-07 local technical preview evidence
+
+- Build: `flutter build apk --debug --target-platform android-arm64` — passed locally.
+- APK: `C:\Users\LifeN\OneDrive\Desktop\Mr Weeds\App_Game\The Build\MrWeedsCloudKingdom_V1_Technical_Preview_arm64.apk`
+- SHA-256: `615FB10066CDA99032088E7A242DE275A6A3E4463FC22EB23EE26DA81AA2C3A4`
+- APK produced: yes. Installed on Samsung S24 Ultra: no; ADB authorization is pending on the handset.
+- This is a **technical preview**, not a visually accepted V1 release candidate.
 
 ## Manual Samsung S24 Ultra pass
 

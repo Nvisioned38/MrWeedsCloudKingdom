@@ -71,12 +71,12 @@ Phase 2B remains the latest verified game implementation. Phase 2C was explicitl
 ## Current owner-authorized work
 
 ### Phase 2C — First Polished Android Playable V1
-**Status: OWNER-AUTHORIZED / ENGINEERING READY / ORIGINAL ART DEPENDENCIES OPEN**
+**Status: IN PROGRESS / TECHNICAL PREVIEW BUILT / P0 ART + DEVICE GATE OPEN**
 
 Execution specification: `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md`  
 Visual intake: `docs/V1_ASSET_INTAKE.md`  
 V1 QA gate: `docs/V1_QA_CHECKLIST.md`  
-Base implementation: `10ca8a5b0bdcb086c294785544d40732a16ef524`
+Phase 2B baseline: `10ca8a5b0bdcb086c294785544d40732a16ef524`; latest pulled main includes Issue #1 fix `edcf151`.
 
 Priority order:
 1. **2C-0 Stability:** Fix GitHub Issue #1 (unreachable Chapter 3 closing beat), add regression coverage, rerun gates.
@@ -87,7 +87,9 @@ Priority order:
 
 **Visual priority:** replace generic Flutter placeholders on primary gameplay path before expansion. **Story freeze:** Chapters 1–3 only. The five Trolls are friendly in V1; no betrayal, Nave, Copycat Cloud Co., Cloud Bottle, or Keefler reveal. Keep the mystery hook subtle.
 
-**Asset dependency:** The owner-supplied v9 workbook and 77-PNG ZIP were inspected in ChatGPT on 2026-11-06 and documented at `docs/V1_V9_ZIP_INTAKE_AUDIT.md`. They are **not yet transferred to GitHub/Codex**. The curated 72-PNG V1 package excludes later-story spoilers. Official standalone brand logos BR-001/002 remain missing. Do not fabricate art or sign-off; continue unblocked 2C-0/1 engineering and transparently flag integration blockers.
+**Verified checkpoint (2026-11-07):** 2C-0 Issue #1 regression passes; 2C-1 registry, source-aware manifest, pending-art detection, theme and renderer seams are implemented. Seven intact room/preview originals are integrated with provenance. The located `Game Art.zip` has SHA-256 `4a1824f098c498ffeebdfa1c90ab697f039ecc06cccdecccee29216978935739`, not the documented consolidated handoff archive; the v9 workbook is not accessible. Forty-eight tests pass, analyzer is clean, and an arm64 debug technical preview APK is built. See `docs/V1_QA_CHECKLIST.md` and `docs/CURRENT_STATE.md` for evidence.
+
+Official standalone brand logos and isolated approved Match-3 production art remain missing. The Samsung device is currently unauthorized to ADB. Do not fabricate art or sign-off. Continue only unblocked Phase 2C work and keep the visual/device release gate open.
 
 **No expanded game scope:** no Levels 31+, no new chapter arcs, no new backend/commerce, no economy refactor, and no spoiler story additions. A build without all mandatory verified originals is a **technical preview**, not a polished V1 release candidate.
 

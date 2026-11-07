@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flame/game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'domain/match3.dart';
 import 'domain/phase2_models.dart';
 import 'game/cloud_board_game.dart';
+import 'presentation/art_manifest.dart';
 import 'presentation/art_widgets.dart';
+import 'presentation/cloud_kingdom_theme.dart';
 import 'presentation/phase2_screens.dart';
 
 const _saveKey = 'cloud_kingdom_progress_v2';
@@ -21,11 +25,7 @@ class CloudKingdomApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Mr. Weed's: Cloud Kingdom",
-        theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color(0xff55b4c8),
-                brightness: Brightness.dark),
-            useMaterial3: true),
+        theme: buildCloudKingdomTheme(),
         home: const BootScreen(),
       );
 }
@@ -87,6 +87,7 @@ class _BootScreenState extends State<BootScreen> {
       rootBundle.loadString('assets/data/world_nodes.json'),
       rootBundle.loadString('assets/data/characters.json'),
       rootBundle.loadString('assets/data/story_chapters.json'),
+      rootBundle.loadString('assets/art/manifest.json'),
     ]);
     final data = jsonDecode(dataFiles[0]) as Map<String, dynamic>;
     levels = (data['levels'] as List)
@@ -101,6 +102,15 @@ class _BootScreenState extends State<BootScreen> {
         jsonDecode(dataFiles[3]) as Map<String, dynamic>);
     storyCatalog =
         StoryCatalog.fromJson(jsonDecode(dataFiles[4]) as Map<String, dynamic>);
+    final artManifest = ArtManifest.decode(dataFiles[5]);
+    if (kDebugMode && artManifest.unavailableRuntimeArt.isNotEmpty) {
+      final pending = artManifest.unavailableRuntimeArt;
+      final sample = pending.take(12).map((record) => record.key).join(', ');
+      debugPrint(
+        '[V1 ART PENDING] ${pending.length} art references are not integrated; '
+        'first keys: $sample. See assets/art/manifest.json.',
+      );
+    }
     if (shouldPersistMigration) await persist();
     if (mounted) setState(() => ready = true);
   }
@@ -364,12 +374,32 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
   }
 
-  Future<void> _showWorldMilestone(String title, String message) async {
+  Future<void> _showWorldMilestone(String title, String message,
+      {String? assetKey}) async {
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(title),
-        content: Text(message),
+        content: Column(mainAxisSize: MainAxisSize.min, children: [
+          if (assetKey != null) ...[
+            SizedBox(
+              height: 170,
+              width: double.infinity,
+              child: ArtAssetSlot(
+                assetKey: assetKey,
+                height: 170,
+                icon: assetKey == 'room_kitchen'
+                    ? Icons.restaurant
+                    : Icons.visibility_outlined,
+                fit: assetKey == 'room_art_gallery'
+                    ? BoxFit.contain
+                    : BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
+          Text(message),
+        ]),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -393,11 +423,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ClipRRect(
             borderRadius: BorderRadius.circular(22),
             child: Stack(children: [
-              const ArtAssetSlot(
-                  assetKey: 'room_cloud_house',
+              ArtAssetSlot(
+                  assetKey: widget.progress.loungeRestorationUnlocked
+                      ? 'room_cloud_house'
+                      : 'room_cloud_house_damaged',
                   height: 150,
                   icon: Icons.home_work,
-                  label: 'CLOUD HOUSE EXTERIOR'),
+                  label: widget.progress.loungeRestorationUnlocked
+                      ? 'CLOUD HOUSE RESTORED'
+                      : 'CLOUD HOUSE'),
               Positioned(
                   right: 12,
                   top: 12,
@@ -450,6 +484,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: WorldNodeView(
                     node: node,
                     state: widget.progress.stateForWorldNode(node),
+                    displayAssetKey: node.id == 'lounge'
+                        ? _loungeAssetKey(widget.progress.loungeStyleId)
+                        : null,
                     onTap: node.id == 'cloud_house'
                         ? () {
                             final anchor = _levelPathKey.currentContext;
@@ -466,6 +503,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ? () => _showWorldMilestone(
                                       'Chef Blaze’s Kitchen',
                                       'The Level 20 finale opened the Kitchen. Chef Blaze is ready for the next chapter of puzzle-sized culinary chaos.',
+                                      assetKey: 'room_kitchen',
                                     )
                                 : node.id == 'higher_art_gallery' &&
                                         widget.progress
@@ -474,6 +512,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ? () => _showWorldMilestone(
                                           'Higher Art Gallery Preview',
                                           'The missing collection pieces reveal a gallery wing above the clouds. This is a preview; the rooms and full Gallery system remain closed for a later chapter.',
+                                          assetKey: 'room_art_gallery',
                                         )
                                     : null,
                   ),
@@ -612,7 +651,7 @@ class _LoungeRoomScreenState extends State<LoungeRoomScreen> {
           SizedBox(
             height: 230,
             child: RoomBackgroundSlot(
-              assetKey: 'room_lounge',
+              assetKey: _loungeAssetKey(widget.progress.loungeStyleId),
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
@@ -669,11 +708,17 @@ class _PlayScreenState extends State<PlayScreen> {
             ? PuzzlePerk.cloudNineScoreHeadstart
             : PuzzlePerk.none,
       );
-  late final CloudBoardGame game =
-      CloudBoardGame(session: session, onTurn: _onTurn);
+  late final CloudBoardGame game = CloudBoardGame(
+    session: session,
+    onTurn: _onTurn,
+    reducedMotion: widget.progress.settings['reducedMotion'] ?? false,
+  );
   bool _finished = false;
 
   void _onTurn(TurnResult result) {
+    if (result.accepted && (widget.progress.settings['haptics'] ?? true)) {
+      unawaited(HapticFeedback.selectionClick());
+    }
     if (mounted) setState(() {});
     if (session.outcome != LevelOutcome.playing) _finish();
   }
@@ -770,6 +815,12 @@ String _tutorialText(String id) => switch (id) {
       't_l_cloud_bomb' =>
         'A T or L match creates a Cloud Bomb that clears a 3×3 area.',
       _ => '',
+    };
+
+String _loungeAssetKey(String? styleId) => switch (styleId) {
+      'psychedelic' => 'room_lounge_psychedelic',
+      'retro_70s' => 'room_lounge_retro_70s',
+      _ => 'room_lounge',
     };
 
 class ResultsScreen extends StatelessWidget {
