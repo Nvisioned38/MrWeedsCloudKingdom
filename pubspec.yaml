@@ -29,3 +29,4 @@ flutter:
     - assets/data/story_chapters.json
     - assets/art/
     - assets/art/rooms/
+    - assets/art/brand/

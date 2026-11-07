@@ -42,7 +42,7 @@ void main() {
     expect(
       manifest.records
           .where((record) => record.state == ArtAssetState.integrated),
-      hasLength(7),
+      hasLength(10),
     );
     expect(manifest.records.where((record) => record.productionReady), isEmpty);
   });

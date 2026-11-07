@@ -71,25 +71,25 @@ Phase 2B remains the latest verified game implementation. Phase 2C was explicitl
 ## Current owner-authorized work
 
 ### Phase 2C — First Polished Android Playable V1
-**Status: IN PROGRESS / TECHNICAL PREVIEW BUILT / P0 ART + DEVICE GATE OPEN**
+**Status: IN PROGRESS / V10 BRANDING INTEGRATED / DEVICE SMOKE PASSED / P0 GAME ART OPEN**
 
 Execution specification: `07_CODEX_PHASE_2C_V1_IMPLEMENTATION.md`  
 Visual intake: `docs/V1_ASSET_INTAKE.md`  
 V1 QA gate: `docs/V1_QA_CHECKLIST.md`  
-Phase 2B baseline: `10ca8a5b0bdcb086c294785544d40732a16ef524`; latest pulled main includes Issue #1 fix `edcf151`.
+Phase 2B baseline: `10ca8a5b0bdcb086c294785544d40732a16ef524`; Issue #1 fix in `edcf151`; latest v10 checkpoint is in `docs/CURRENT_STATE.md`.
 
 Priority order:
-1. **2C-0 Stability:** Fix GitHub Issue #1 (unreachable Chapter 3 closing beat), add regression coverage, rerun gates.
-2. **2C-1 Production art infrastructure:** Audit art keys/files, stable asset manifest, visible placeholder detection, theme/tile/HUD sprite architecture, accessibility and responsive rules. Can proceed without missing image originals.
-3. **2C-2 Approved P0 artwork integration:** Official logos, Cloud Kingdom title, Mr. Weed, approved Match-3 tiles/blockers/specials/FX/UI, Cloud House, Lounge and Kitchen **only using source originals approved in actual v9 tracker**.
+1. **2C-0 Stability: COMPLETE.** Issue #1 finale gate has regression coverage.
+2. **2C-1 Production art infrastructure: COMPLETE for current approved engineering scope.** Stable registry/manifest, pending detection, renderer interface, theme and settings hooks are in place.
+3. **2C-2 Approved P0 artwork integration: IN PROGRESS.** Exact v10 BR-001/002 masters, v1 BR-003 title treatment and approved EN-002–008 environments are integrated. Approved Match-3 production sprites, modular board/HUD exports and Mr. Weed character exports remain unavailable.
 4. **2C-3 Collection and museum V1 UI:** Approved collection card framework, real runtime player state, collection shelf and optionally limited museum exhibit UI. Do not prematurely unlock the full Gallery.
-5. **2C-4 V1 Android validation:** Home → Match-3 → Victory → Cloud House flow, regression/performance/accessibility, debug APK + SHA, then Samsung S24 Ultra owner/device verification and visual sign-off.
+5. **2C-4 V1 Android validation: PARTIAL.** Arm64 APK installed via in-place update and cold-launched on S24 Ultra; existing Level 3/210 coins/2 stars were preserved; title, Cloud House and Level 3 board were visually checked. Full turn/win/reward flow, performance/accessibility checks and owner visual sign-off remain.
 
 **Visual priority:** replace generic Flutter placeholders on primary gameplay path before expansion. **Story freeze:** Chapters 1–3 only. The five Trolls are friendly in V1; no betrayal, Nave, Copycat Cloud Co., Cloud Bottle, or Keefler reveal. Keep the mystery hook subtle.
 
-**Verified checkpoint (2026-11-07):** 2C-0 Issue #1 regression passes; 2C-1 registry, source-aware manifest, pending-art detection, theme and renderer seams are implemented. Seven intact room/preview originals are integrated with provenance. The located `Game Art.zip` has SHA-256 `4a1824f098c498ffeebdfa1c90ab697f039ecc06cccdecccee29216978935739`, not the documented consolidated handoff archive; the v9 workbook is not accessible. Forty-eight tests pass, analyzer is clean, and an arm64 debug technical preview APK is built. See `docs/V1_QA_CHECKLIST.md` and `docs/CURRENT_STATE.md` for evidence.
+**Verified checkpoint (2026-11-07):** current approval source is the supplied v10 workbook (SHA-256 `a9256d1d2802226782ab0a4ab23268c0e6eb62309c5a075052925cc03808e3c0`). BR-001/002 official masters, BR-003 v1 title treatment and seven approved room/preview originals are integrated. All 48 tests pass; analyzer and formatting are clean. Samsung S24 Ultra install/update and limited screen smoke checks pass with saved state intact. Final arm64 technical preview SHA and details are in `docs/CURRENT_STATE.md` / `docs/V1_QA_CHECKLIST.md`.
 
-Official standalone brand logos and isolated approved Match-3 production art remain missing. The Samsung device is currently unauthorized to ADB. Do not fabricate art or sign-off. Continue only unblocked Phase 2C work and keep the visual/device release gate open.
+BR-005/006 cropped standalone exports are not separately available, but the canonical masters are used unchanged. Isolated approved Match-3 sprites and modular UI exports, Mr. Weed's character art and collection art remain unavailable. The connected phone has passed a limited launch/layout check; full gameplay and accessibility QA plus owner sign-off remain open. Do not fabricate art or sign-off. Continue unblocked Phase 2C work and keep the V1 release gate open.
 
 **No expanded game scope:** no Levels 31+, no new chapter arcs, no new backend/commerce, no economy refactor, and no spoiler story additions. A build without all mandatory verified originals is a **technical preview**, not a polished V1 release candidate.
 

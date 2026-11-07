@@ -192,22 +192,29 @@ class TitleScreen extends StatelessWidget {
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.cloud,
-                                size: 82, color: Color(0xffffd36e)),
-                            const SizedBox(height: 12),
-                            Text("MR. WEED'S",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium
-                                    ?.copyWith(
-                                        fontWeight: FontWeight.w900,
-                                        letterSpacing: 3)),
-                            const Text('CLOUD KINGDOM',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    letterSpacing: 5,
-                                    color: Color(0xffb6e8e9))),
-                            const SizedBox(height: 12),
+                            SizedBox(
+                              width: 320,
+                              height: 240,
+                              child: Image.asset(
+                                'assets/art/brand/cloud_kingdom_title.png',
+                                fit: BoxFit.contain,
+                                cacheWidth: 960,
+                                semanticLabel:
+                                    "Mr. Weed's Cloud Kingdom official title",
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            SizedBox(
+                              width: 106,
+                              height: 54,
+                              child: Image.asset(
+                                'assets/art/brand/cloud_cup_logo.png',
+                                fit: BoxFit.contain,
+                                cacheWidth: 512,
+                                semanticLabel: 'Official Cloud Cup logo',
+                              ),
+                            ),
+                            const SizedBox(height: 8),
                             const Text('Match • Build • Collect • Explore'),
                             const SizedBox(height: 36),
                             FilledButton.icon(
@@ -592,7 +599,20 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     return Scaffold(
       appBar: AppBar(
-          title: Text(_title),
+          title: Row(mainAxisSize: MainAxisSize.min, children: [
+            SizedBox(
+              width: 76,
+              height: 30,
+              child: Image.asset(
+                'assets/art/brand/mr_weeds_logo.png',
+                fit: BoxFit.contain,
+                cacheWidth: 512,
+                semanticLabel: "Official Mr. Weed's logo",
+              ),
+            ),
+            const SizedBox(width: 8),
+            Flexible(child: Text(_title, overflow: TextOverflow.ellipsis)),
+          ]),
           leading: IconButton(
               onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.arrow_back))),

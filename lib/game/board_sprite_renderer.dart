@@ -69,7 +69,7 @@ class CloudKingdomFallbackBoardRenderer implements BoardSpriteRenderer {
     final paint = Paint()
       ..style = PaintingStyle.fill
       ..color = piece.family == TileFamily.leaf
-          ? const Color(0xffd28be0)
+          ? const Color(0xff58ad77)
           : _colors[piece.family.index];
     switch (piece.family) {
       case TileFamily.cloud:
@@ -80,7 +80,7 @@ class CloudKingdomFallbackBoardRenderer implements BoardSpriteRenderer {
             center.translate(size * .18, size * .03), size * .2, paint);
         break;
       case TileFamily.leaf:
-        // Legacy save/domain identity maps to a clear Mystic Bloom flower.
+        // Legacy save/domain identity maps to the approved green spiral bloom.
         // Do not expose the old leaf-shaped visual in gameplay.
         for (var i = 0; i < 6; i++) {
           final angle = -math.pi / 2 + i * 2 * math.pi / 6;
@@ -91,7 +91,30 @@ class CloudKingdomFallbackBoardRenderer implements BoardSpriteRenderer {
               paint);
         }
         canvas.drawCircle(
-            center, size * .105, Paint()..color = const Color(0xffffd36e));
+            center, size * .11, Paint()..color = const Color(0xffd8f2a1));
+        final spiral = Path();
+        for (var step = 0; step <= 36; step++) {
+          final progress = step / 36;
+          final radius = size * .085 * progress;
+          final angle = -math.pi * 3 * progress;
+          final point = center.translate(
+            radius * math.cos(angle),
+            radius * math.sin(angle),
+          );
+          if (step == 0) {
+            spiral.moveTo(point.dx, point.dy);
+          } else {
+            spiral.lineTo(point.dx, point.dy);
+          }
+        }
+        canvas.drawPath(
+          spiral,
+          Paint()
+            ..color = const Color(0xff35704c)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = size * .035
+            ..strokeCap = StrokeCap.round,
+        );
         break;
       case TileFamily.sun:
         final flame = Path()

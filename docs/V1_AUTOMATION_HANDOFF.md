@@ -49,3 +49,9 @@ This document intentionally distinguishes prepared, dispatched, executing, teste
 ## 2026-11-07 accessible-source and build status
 
 The accessible `Game Art.zip` was inspected and its seven environment/preview originals were integrated with hashes and traceability. Its SHA-256 (`4a1824f098c498ffeebdfa1c90ab697f039ecc06cccdecccee29216978935739`) differs from the consolidated handoff package hash above. The expected consolidated archive and v9 workbook were not located, so P0 branding/sprite approval and final art acceptance remain open. A 48-test-clean, analyzer-clean arm64 debug technical preview was built; see `docs/V1_QA_CHECKLIST.md`. Samsung S24 Ultra ADB authorization is still pending. This checkpoint does not claim a polished V1 release.
+
+## 2026-11-07 v10 workbook and phone availability update
+
+The owner supplied the v10 Standalone Assets workbook (SHA-256 `a9256d1d2802226782ab0a4ab23268c0e6eb62309c5a075052925cc03808e3c0`), superseding the earlier v9 approval-status blocker. Exact BR-001 and BR-002 canonical masters and the BR-003 v1 title treatment are now accessible and integrated unchanged, with hashes and row IDs in `assets/art/manifest.json`. BR-005/006 standalone cropped exports named in the workbook were not separately located; the canonical masters are used directly. The Samsung S24 Ultra now reports ADB state `device` (authorized), enabling install/run QA without uninstalling or clearing app data.
+
+The v10 arm64 APK was updated in place on the phone and cold-launched. The title, Cloud House and Level 3 board were visually checked; existing Level 3/210 coins/2 stars remained visible. The board opened without a move. Full turn/win/reward and accessibility/performance QA remain unverified. Current build SHA: `DDF1678FD10B2FC93E07F558D55005BBE2CBD3F3A0E68A48FACF2AF6FE65EA82`.

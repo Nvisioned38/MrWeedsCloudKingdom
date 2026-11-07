@@ -60,7 +60,7 @@ The audited source-art files and original v9 workbook have **not yet been import
 
 The latest **verified app code** and test gate at this date were the Phase 2B baseline, **43 tests**. This is a historical checkpoint; see the 2026-11-07 entry below.
 
-## 2026-11-07 — Phase 2C technical preview checkpoint
+## 2026-11-07 — Phase 2C engineering checkpoint (superseded by v10 update below)
 
 Pulled latest `main` at `edcf151`; this upstream commit resolves GitHub Issue #1. The regression suite confirms the Chapter 3 finale dialogue remains unavailable until Level 30 is complete and becomes available after reload.
 
@@ -70,4 +70,12 @@ Seven original room/preview images were integrated as intact source copies, with
 
 Verification: `flutter pub get` passed; formatting passed; `flutter analyze` reported no issues; all 48 Flutter tests passed; `git diff --check` passed; Android arm64 debug APK build passed. The legacy leaf-family save identity renders as a flower-shaped Mystic Bloom, with no visible leaf motif. Final APK SHA-256: `FEEEEC74227290089EAB57B56D82E3611375C7614A46C7B5FCAC12E8EC13DEA4`. It is a technical preview, not visual V1 sign-off. Samsung S24 Ultra `R5CX156CZNF` is detected by ADB as `unauthorized`, so installation and manual device QA remain unverified.
 
-Remaining V1 blockers: canonical standalone brand logos and isolated approved Match-3 production sprites/effects are unavailable; v9 workbook row-level approvals cannot be directly checked; Samsung device authorization and owner visual sign-off are pending. Phase 2C remains in progress. Phase 3 has not started.
+At this checkpoint, v9 approval evidence and Samsung access had not yet been confirmed. See the later same-day v10 and device update below.
+
+## 2026-11-07 — v10 approved art and Samsung smoke test
+
+The current approval authority is the supplied v10 Standalone Assets workbook, SHA-256 `a9256d1d2802226782ab0a4ab23268c0e6eb62309c5a075052925cc03808e3c0`. Exact BR-001 and BR-002 logo masters were copied byte-for-byte into `assets/art/brand/`; the v10-approved v1 BR-003 title treatment was copied unchanged from the referenced Game Art ZIP. The title treatment and Cloud Cup logo are shown on the title screen; the Mr. Weed's logo appears in the app shell. Seven EN-002–EN-008 room/preview sources have their approvals updated to v10 in the manifest. No save identifiers or game mechanics changed. The legacy tile family now uses a green spiral-bloom shape matching v10 M3-002 while preserving the legacy save identity and keeping leaves out of gameplay.
+
+Verification after this update: formatting clean; all 48 tests pass; `flutter analyze` clean; arm64 Android debug APK built and installed over the existing app with `adb install -r` (no uninstall/data clear). On the connected Samsung S24 Ultra, the app cold-launched; title/brand artwork rendered; Cloud House loaded with the existing Level 3 state, 210 coins and 2 stars; the 8×8 board fit portrait and showed the green spiral bloom. No move was made, and the existing level was left unchanged. Log scan showed no Flutter asset-load or fatal errors. APK SHA-256: `DDF1678FD10B2FC93E07F558D55005BBE2CBD3F3A0E68A48FACF2AF6FE65EA82`.
+
+Phase 2C remains in progress. The separate BR-005/006 cropped export files are not present (runtime uses the unchanged canonical masters); P0 Match-3 production sprites, modular board/HUD exports, approved Mr. Weed character art, collection art, full gameplay/win/reward device flow, accessibility/performance checks, and final visual sign-off remain open. The v10 first-release spoiler boundary is preserved; no later-story material was integrated. Phase 3 has not started.
