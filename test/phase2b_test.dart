@@ -219,6 +219,32 @@ void main() {
     expect(session.board.at(1, 2)!.fogged, isFalse);
   });
 
+  test('story beats unlock at milestones and the Chapter 3 finale after 30', () {
+    final progress = ProgressState();
+
+    expect(progress.isStoryBeatAvailable(11), isFalse);
+    progress.completedLevels.add(10);
+    expect(progress.isStoryBeatAvailable(11), isTrue);
+    expect(progress.isStoryBeatAvailable(16), isFalse);
+    progress.completedLevels.add(15);
+    expect(progress.isStoryBeatAvailable(16), isTrue);
+
+    progress.completedLevels.add(20);
+    expect(progress.isStoryBeatAvailable(21), isTrue);
+    expect(progress.isStoryBeatAvailable(26), isFalse);
+
+    progress.completedLevels.add(25);
+    expect(progress.isStoryBeatAvailable(26), isTrue);
+    expect(progress.isStoryBeatAvailable(31), isFalse);
+
+    progress.completedLevels.add(30);
+    expect(progress.unlockedThrough, 30);
+    expect(progress.isStoryBeatAvailable(31), isTrue);
+    expect(ProgressState.fromJson(progress.toJson())
+        .isStoryBeatAvailable(31), isTrue);
+    expect(progress.isStoryBeatAvailable(32), isFalse);
+  });
+
   test('Phase 2A collectible IDs remain stable in the 30-card launch catalog',
       () {
     expect(collection.cards, hasLength(30));
