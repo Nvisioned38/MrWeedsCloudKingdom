@@ -1,79 +1,52 @@
-# V1 Approved Artwork Intake and Source-of-Truth Register
+# Phase 2C next art sprint — Match-3 and V1 release gates
 
-## Verified availability (repository audit, 2026-11-06)
+**Status update (2026-11-08):** The owner-approved Issue #4 Batch A/B/C handoff supersedes the missing-standalone-sprite blocker below. All 37 exports are present and integrated on the Issue #4 integration branch; hash/dimension/RGBA manifest verification passes. Use the current `docs/V1_ART_EXPORT_MATRIX.md` and `docs/V1_QA_CHECKLIST.md` for current status. The work described in this file remains useful for general gates, and final Android/S24 visual QA is still required.
 
-- GitHub `main` at `10ca8a5b0bdcb086c294785544d40732a16ef524` includes `assets/data/` but **does not include `assets/art/`**.
-- `lib/presentation/art_registry.dart` contains intended relative PNG paths. They are placeholders for future imports, not existing file evidence.
-- `pubspec.yaml` lists data assets, **not** an `assets/art/` bundle.
-- The owner **supplied and we inspected** the authoritative v9 workbook alongside Game Art ZIP in ChatGPT on 2026-11-06. **Original binaries have not yet been transferred to GitHub/Codex.** See `docs/V1_V9_ZIP_INTAKE_AUDIT.md` for source matches and exact hashes; older trackers do not override v9.
-- Approved art concepts/character sheets may still need separate exported transparent layers, correct slicing, resizing, and cropping before production use.
+**Current code baseline:** `04aca22f3f1566f11ec935e914b6a73ebd58a5b5` (2026-11-07). This is the **verified v10 branding technical preview**, not final V1 sign-off.
 
-## Intake sequence
+## Verified at the checkpoint
 
-1. The owner has already supplied the **actual v9 XLSX** in ChatGPT. Codex must import and read that unchanged workbook from the curated V1 art intake package, or another verified transfer, before production approval sign-off. The workbook is NOT yet in this GitHub checkout.
-2. Owner-supplied Game Art ZIP includes 77 PNG files and three nested ZIPs. A curated V1 intake package with 72 original PNG files and the v9 workbook has been prepared separately, but must still be transferred to Codex. The standalone official Mr. Weed's and Cloud Cup logos BR-001/002 were **not found** in the uploaded ZIP and must be supplied separately. Preserve unmodified source copies; do not use approximated lettering from art boards as substitutes.
-3. Codex builds/updates machine-readable `assets/art/manifest.json` with stable in-app art keys, approval row IDs, variants, actual source filename, target filename, expected dimensions/aspect/transparency, import readiness, SHA-256, and QA status.
-4. Process originals into game-ready exports in `assets/art/` while retaining source and approval traceability. Recompression/cropping of source is allowed only when it preserves the approved visible content and aspect/identity.
-5. Integrate only validated exports; test asset loading; request approval for any visible stylistic change.
+- Flutter `48/48` tests pass, formatting and `flutter analyze` clean; the [GitHub CI run](https://github.com/Nvisioned38/MrWeedsCloudKingdom/actions/runs/42408455904) also completed successfully.
+- v10 canonical pixel-exact BR-005 and BR-006 standalone logo exports, BR-003 v1 title, and seven approved EN-002–EN-008 original room/preview images are integrated and manifest-tracked.
+- `assets/art/manifest.json` records 80 entries: 10 **integrated**, 12 **originalReceived** (not production-ready), and 58 **missing**. Never equate originalReceived with integrated.
+- On Samsung S24 Ultra, a prior build showed title, Cloud House, and a portrait 8×8 Level 3 board, and an in-place update retained the existing Level 3 / 210 coin / 2-star save. The **final export-only APK was installed but was not recaptured because the phone was locked**. Full win/reward loop and accessibility/performance QA remain unverified.
+- Issue #1 (Chapter 3 finale gate) has verified regression coverage and is closed.
+- **v10 Standalone Assets workbook** is current authority. v9 remains historical; never silently revert to v9 values.
 
-## P0 source-package request (exact filenames only when confirmed)
+## Approved autonomous work order
 
-| Priority | Asset or group | Example existing expected runtime key | Original status |
-|---|---|---|---|
-| P0 | Mr. Weed's official horizontal logo | new brand key | Missing from GitHub |
-| P0 | Cloud Cup official logo | new brand key | Missing from GitHub |
-| P0 | Approved Cloud Kingdom title treatment (v1 priority) | new brand key | Missing from GitHub |
-| P0 | Mr. Weed exact portrait/full-body master | `portrait_mr_weed`, `character_mr_weed` | Missing from GitHub |
-| P0 | Cloud House approved exterior | `room_cloud_house` | Missing from GitHub |
-| P0 | Lounge approved art | `room_lounge` | Missing from GitHub |
-| P0 | High Cuisine Kitchen approved art | `room_kitchen` | Missing from GitHub |
-| P0 | Five approved tile source exports and board/frame components | separate board keys | Missing from GitHub |
-| P0 | MW crate, reinforced crate, Fog/Syrup, Prism, Cloud Bomb, butane torch, Cloud Cup vaporizer and their effects | separate gameplay keys | Missing from GitHub |
-| P0 | Approved Match-3 HUD, moves, objective, and victory UI components | separate UI keys | Missing from GitHub |
-| P1 | Chef Blaze and The Collector approved master portraits | `portrait_chef_blaze`, `portrait_collector` | Missing from GitHub |
-| P1 | Card base, rarity frames, collection shelf, museum components | new card/UI keys | Missing from GitHub |
-| P1 | Specific collectible card illustrations | `card_...` | Missing from GitHub; integrate in approved order |
+1. **Production sprite inventory and exports**
+   - Inspect the owner's accessible **v10 workbook** and the actual `Game Art.zip`/other approved source files in the Codex environment.
+   - Prepare one precise P0 missing-export matrix: `v10 ID | design source | original path | export type | dimensions/transparency | hash | ready/integrated/QA status`.
+   - Produce **isolated** approved Match-3 assets: Cloud Puff, Mystic Bloom, Ember Drop, Dream Crystal, Golden Nugget; MW Crate and reinforced MW Crate; Sticky Syrup, Fog; Torch lighter visual (legacy Rocket behavior), Cloud Cup vaporizer (legacy Hammer behavior), Prism, Cloud Bomb; moves/objectives/score/stars/victory controls and effects. Keep enum/save identities unchanged.
+   - Full board/HUD concept screenshots are **references**, not ready sprites. Avoid baking numbers or state into static images. Slicing/cropping is allowed only when visually faithful and correct for production. Do not synthesize new icons/character faces/logos.
+   - For each usable export: track source hash, v10 approval ID, exact runtime path and dimension; run automated loading/safe-area checks.
+2. **Gameplay V1 polish**
+   - Prioritize actual mobile gameplay screens: Home → Board → Victory/Rewards → Cloud House. Make board frame and overlays scale on S24 Ultra portrait with labels readable at normal and large-text sizes.
+   - Make objective and star progress, low/zero moves, booster-selected/pressed/disabled controls, win/lose states explicit and interactive. Keep preexisting scoring, level seeds, fairness and 30-level catalog intact.
+   - When a required art original is absent or can't be cleanly exported, keep the honest technical fallback, record the single missing source, and continue with unrelated engineering.
+3. **Character and collection V1 polish**
+   - Only after P0 gameplay presentation, integrate approved Mr. Weed image export matching the exact face/blank shirt/OK gesture, then Chef Blaze and The Collector portraits as available. The five Trolls remain **friendly**; no later story clues.
+   - Integrate collection-card base/rarity/evolution, selected filters, unlocked/favorite/equipped states and museum/shelf presentation from approved standalone source exports, keeping 30-card runtime data and schema 3 progress authoritative.
+   - The seven Nov 06 collection UI PNGs are known **new source versions**. Validate against v10 sign-offs. Never bake a `10/42` sample into a game with 30 launch collectibles, and never unlock the full Gallery due to an example navigation bar.
+4. **Device QA and release**
+   - Maintain format, analyze, full test suite (at least 48 existing tests), manifest/asset tests, Android arm64 debug APK build, and GitHub Actions artifacts for meaningful checkpoints.
+   - Verify true on-device **tap → swap → score → win → reward → Cloud House**, then relaunch and ensure save persists; no uninstall/reset of the existing progress-bearing Samsung app.
+   - Run large text, TalkBack/content descriptions, reduced motion, landscape behavior if supported, cutouts/safe area, background/resume and performance checks.
+   - Save APK SHA-256, screenshot/QA evidence and regression results in `docs/V1_QA_CHECKLIST.md`, `docs/CURRENT_STATE.md`, and `docs/BUILD_LOG.md`. Distinguish automated widget tests, local emulator, and owner S24 Ultra manual evidence.
+   - Maintain a **technical preview** designation until all mandatory P0 production assets, full device QA, and final owner visual acceptance pass.
 
-These are **work categories**, not a substitute for the v9 tracker, and do not assert which exact source image is already exported as a sprite.
+## Locked rules
 
-## Specific identity constraints
+Cloudcrafted Fantasy, no crowns, no visible cannabis leaves outside Secret Basement, no substituted official marks, white smoke by default. Internal legacy TileFamily names may remain for save compatibility; actual displayed tiles must match approved v10 visual names/shape language. No Phase 3, Levels 31+, later Troll betrayal, Copycat Cloud Co., Lord Nave, or Keefler reveals.
 
-**Brand:** use supplied `FINAL_Logo_Words_HORIZONTAL(1).png` and `LOGO_CloudCup_Horizontal(2).png` unchanged, provided the owner-supplied canonical files match these prior references. Older filenames may be recorded in past notes. Never choose between variants silently when both exist.
+## Autonomous continuation
 
-**Character:** Mr. Weed must match supplied head/face reference, with default white blank shirt and OK hand sign. Chef Blaze is a rounded-ear moss-gray/olive **Troll**, not Keefler baker Bakie. Do not reveal future betrayal through styling.
+Continue verified, unblocked P0 work without routine approvals. Commit logical units and push; let GitHub Actions build/check APK artifacts. Escalate only exact missing original sources, irreversible/dangerous changes, or legal/platform decisions. Never present an incomplete APK as the final polished V1.
 
-**World:** avoid cannabis leaf symbols except Secret Basement; no crowns; white Cloud Cup smoke.
+**Codex task:** [GitHub Issue #3](https://github.com/Nvisioned38/MrWeedsCloudKingdom/issues/3), with image availability tracked by [Issue #2](https://github.com/Nvisioned38/MrWeedsCloudKingdom/issues/2).
+# 2026-11-07 checkpoint — portrait integrated; source art gate remains
 
-**Tracker review:** v9 has final authority over earlier trackers. Treat locked design approval separately from bytes-ready, asset-in-app, and device-approved status.
+Integrated the v10-approved standalone CS-001 Mr. Weed portrait, copied unchanged and rendered in the Story catalog. The tracking manifest now reports 11 integrated / 11 original received but pending / 58 missing assets. Detailed v10 row/source decisions for M3-001–015 are in `docs/V1_ART_EXPORT_MATRIX.md`.
 
-## Consolidated blocker report format
-
-Use this table in Codex's closing report when any art is absent:
-
-| v9 Row ID | Art key | Expected original filename | Source supplied? | Export ready? | Integrated? | Required owner action |
-|---|---|---|---|---|---|---|
-
-If v9 is missing, leave `v9 Row ID` explicitly **unverified**, rather than inventing IDs or approvals.
-
-No image generation, visual reimagining, substitute AI faces, or third-party lookalike logos is authorized by this intake instruction.
-
-## 2026-11-06 additional Collection UI PNGs
-
-Seven further original PNGs were received and audited separately from the prior Game Art ZIP. See **`docs/V1_COLLECTION_UI_NOV06_SUPPLEMENT.md`** for exact SHA-256 hashes, v9 mapping, and dynamic UI restrictions. The new image versions remain pending new-file sign-off. A companion source ZIP and v9-preserving workbook addendum were prepared in the ChatGPT handoff but **not automatically transferred to GitHub or Codex**. Preserve static plaques/frames, render filters/counts/navigation/card states dynamically. Keep the Gallery preview gate intact.
-
-## 2026-11-07 accessible archive intake update (historical; approval source superseded)
-
-The archive accessible to the Codex checkout was `C:\Users\LifeN\OneDrive\Desktop\Mr Weeds\App_Game\The Build\Game Art.zip`, SHA-256 `4a1824f098c498ffeebdfa1c90ab697f039ecc06cccdecccee29216978935739`. It did not match the expected consolidated handoff ZIP hash recorded above; at that checkpoint no v9 workbook or consolidated handoff ZIP was found. The later v10 update below supersedes the approval-source limitation.
-
-Seven intact environment/preview images from the available archive are integrated: Cloud House restored/damaged, Lounge, two Lounge styles, Kitchen, and Higher Art Gallery preview. Source filenames, per-file hashes, dimensions and audit references are in `assets/art/manifest.json`. The Higher Art Gallery image is only shown in the existing Level 30-gated preview. Fifteen other source candidates are recorded as pending, not runtime-approved assets. Candidate standalone logo images in the archive are not verified canonical brand files and are not shipped as official logos. No isolated Match-3 production tile/blocker/special exports were available; composite artwork remains unsuitable as a set of sprites. The nested app images package is recipe/Higher Art content and was not integrated into runtime features.
-
-## 2026-11-07 — v10 approval workbook supplied
-
-The current approval authority is `Mr_Weeds_Cloud_Kingdom_Asset_Review_v10_Standalone_Assets.xlsx` (SHA-256 `a9256d1d2802226782ab0a4ab23268c0e6eb62309c5a075052925cc03808e3c0`), supplied at `C:\Users\LifeN\Downloads\...`. v10 directly confirms approved status for BR-001/002 official logo masters, BR-003 v1 title treatment, and the imported EN-002 through EN-008 environment images. The exact source masters were found outside the mismatched ZIP: `FINAL_Logo_Words_HORIZONTAL.png` (SHA-256 `e2f18c8ba65b4c622d839bc3c5fcb25e80f26fc4c225b04747e2cc1d5a2aa6c4`) and `LOGO_CloudCup_Horizontal.png` (SHA-256 `86d0345786c3e62e1a57c28213e779efd7614d8838009f626a924d60f3505c4d`). Their source pixels are preserved in BR-005/006 outputs: only transparent padding was eligible for cropping, and output pixels were compared against the matching canonical-master region. Both alpha bounds span the full canvas, so no dimensions/pixels were removed. The v10-referenced title treatment is imported unchanged.
-
-The v10-referenced v1 title treatment `Game Art/MW_img_CloudKingdomLogo.png` (SHA-256 `641e4725c42393d1557df4d737d83cd45f4ba6afd3f5c4622b2dc9cdd4a6d29f`) is imported unchanged. Separate BR-005/006 export files were not supplied; they were prepared from the exact BR-001/002 masters by cropping only alpha=0 padding, then verifying exported RGBA pixels against the source region. Both sources had full-canvas alpha bounds, so dimensions stayed unchanged. Export hashes are in the manifest. P0 Match-3 concepts are approved, but standalone sprite exports and board/UI slicing remain outstanding; locked villain-era and later-story visuals are excluded from V1. The v10 release-priority sheet keeps story spoilers reserved for later and sets the initial release boundary.
-# 2026-11-07 v10 Phase 2C portrait integration
-
-The v10 workbook is the approval authority (SHA-256 `a9256d1d2802226782ab0a4ab23268c0e6eb62309c5a075052925cc03808e3c0`). Integrated only the standalone approved CS-001 Mr. Weed portrait, with CH-001 design approval, unchanged from `Game Art/MW_img_CS-001b.png` (SHA-256 `803803526b9a94ae40915b4ae1fce974002d9d5406e18414043166ed7e6cce69`). See `assets/art/manifest.json` and `docs/V1_ART_EXPORT_MATRIX.md` for traceability.
-
-The reference Match-3 sheet, Cloud Cup screenshot, combo FX sheet, Chef Blaze sheet, and collection comparison/UI screenshots are composites or contain baked layout/text. They remain unintegrated. Individual approved production sprites and Collector source art were not found; do not crop/reconstruct these without source masters. Manifest tally after portrait integration: 11 integrated, 11 original received/pending, 58 missing (80 tracked keys).
+No standalone P0 tile, blocker, special, effect, or modular board/HUD production masters were present in the inspected workspace archive. The available M3 review, combo FX, Cloud Cup, Chef Blaze, and collection references are composites/screenshots with baked layout/content and remain unintegrated. Their approved design references do not authorize derived sprites. Continue when isolated approved originals are available; keep technical-preview status and Phase 3 out of scope.

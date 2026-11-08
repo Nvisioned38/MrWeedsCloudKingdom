@@ -118,7 +118,9 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = 3);
         }
-        if (_feedbackCells.contains(cell) && _feedbackLeft > 0) {
+        if (_feedbackCells.contains(cell) &&
+            _feedbackLeft > 0 &&
+            spriteRenderer is! BoardTurnEffectsRenderer) {
           final alpha = (_feedbackLeft / .28).clamp(0.0, 1.0).toDouble();
           canvas.drawCircle(
               center,
@@ -127,6 +129,18 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
                 ..color = const Color(0x99fff2ad).withValues(alpha: alpha));
         }
       }
+    }
+    if (_resolving && spriteRenderer is BoardTurnEffectsRenderer) {
+      final progress =
+          (1 - _feedbackLeft / _feedbackDuration).clamp(0.0, 1.0).toDouble();
+      (spriteRenderer as BoardTurnEffectsRenderer).drawTurnEffects(
+        canvas,
+        changedCells: _feedbackCells,
+        cascadeCount: _cascadeLabel,
+        cellSize: cellSize,
+        progress: progress,
+        reducedMotion: reducedMotion,
+      );
     }
     if (_resolving && _swapA != null && _swapB != null) {
       final progress =

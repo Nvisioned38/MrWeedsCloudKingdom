@@ -43,7 +43,15 @@ void main() {
     expect(
       manifest.records
           .where((record) => record.state == ArtAssetState.integrated),
-      hasLength(24), // 11 prior integrated + 13 approved V1 Match-3 sprites.
+      hasLength(48), // 11 prior integrated + all 37 approved Issue #4 exports.
+    );
+    expect(
+      manifest.records.where(
+        (record) =>
+            record.targetPath.startsWith('assets/art/match3/') &&
+            record.state == ArtAssetState.integrated,
+      ),
+      hasLength(37),
     );
     expect(manifest.records.where((record) => record.productionReady), isEmpty);
 

@@ -1,5 +1,11 @@
 # Current State
 
+## 2026-11-08 — Issue #4 owner-approved standalone art integration (verification pending)
+
+On `codex/issue-4-approved-art-integration`, the approved All 37 handoff is integrated in the app: 9 Batch A and 28 B/C standalone exports. The 37 PNG bytes, IHDR dimensions and 8-bit RGBA channel format passed `tools/verify_issue4_art.py` against the two supplied SHA-256 manifests. Artwork is wired into the board renderer, transparent-center frame, dynamic objective/move/score UI, Victory/reward panel, buttons, and an informational Specials guide. The logo-free vaporizer displays the exact canonical Cloud Cup logo as a separate overlay. Existing Match-3 enum/save IDs, deterministic rules, schema-3 save data, and all 30 levels remain intact. Batch D is excluded.
+
+This source checkpoint has **not yet passed Flutter format/analyze/tests or Android build in this session** because Flutter/Dart/ADB tools are absent from the active environment. GitHub Actions is the planned verification gate. The latest successful S24 QA predates this visual integration and is not evidence for the new art build; integrated-art visual/device verification is pending. V1 remains a technical preview until all release gates and owner visual sign-off pass. Phase 3 remains unstarted.
+
 ## 2026-11-07 — S24 Ultra isolated gameplay and QA completion
 
 Samsung S24 Ultra model SM-S928U, Android API 37, serial R5CX156CZNF. All install, clear, play, and profile-test commands targeted the separate user-0 package com.mrweeds.cloudkingdom.qa; no mutating command targeted the production package or its save. The QA app remains isolated. Only its own test data was reset to obtain a clean first-clear run.

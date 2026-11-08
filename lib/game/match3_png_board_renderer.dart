@@ -12,7 +12,8 @@ import 'board_sprite_renderer.dart';
 /// All original pixel files are verified against the art approval manifests
 /// during CI. The renderer only controls presentation: legacy TileFamily and
 /// SpecialKind identifiers remain unchanged for deterministic save continuity.
-class CloudKingdomPngBoardRenderer implements BoardSpriteRenderer {
+class CloudKingdomPngBoardRenderer
+    implements BoardSpriteRenderer, BoardTurnEffectsRenderer {
   CloudKingdomPngBoardRenderer._(this._images);
 
   final Map<String, ui.Image> _images;
@@ -31,6 +32,12 @@ class CloudKingdomPngBoardRenderer implements BoardSpriteRenderer {
     'butane_torch_lighter',
     'prism',
     'cloud_bomb',
+    'fx_white_smoke_01',
+    'fx_white_smoke_02',
+    'fx_white_smoke_03',
+    'fx_magic_sparkles',
+    'fx_combo_ring',
+    'fx_cascade_streak',
   ];
 
   static Future<CloudKingdomPngBoardRenderer> load() async {
@@ -51,7 +58,7 @@ class CloudKingdomPngBoardRenderer implements BoardSpriteRenderer {
   }
 
   void _draw(Canvas canvas, Offset center, double size, String key,
-      {double rotation = 0}) {
+      {double rotation = 0, double opacity = 1}) {
     final image = _images[key];
     if (image == null) return;
     final half = size / 2;
@@ -63,7 +70,9 @@ class CloudKingdomPngBoardRenderer implements BoardSpriteRenderer {
       image,
       Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
       rect,
-      Paint()..filterQuality = FilterQuality.medium,
+      Paint()
+        ..filterQuality = FilterQuality.medium
+        ..color = const Color(0xffffffff).withValues(alpha: opacity),
     );
     canvas.restore();
   }
@@ -119,6 +128,59 @@ class CloudKingdomPngBoardRenderer implements BoardSpriteRenderer {
           ..style = PaintingStyle.stroke
           ..strokeWidth = size * .05
           ..strokeCap = StrokeCap.round,
+      );
+    }
+  }
+
+  @override
+  void drawTurnEffects(
+    Canvas canvas, {
+    required Iterable<Cell> changedCells,
+    required int cascadeCount,
+    required double cellSize,
+    required double progress,
+    required bool reducedMotion,
+  }) {
+    final cells = changedCells.take(4).toList(growable: false);
+    if (cells.isEmpty) return;
+
+    if (reducedMotion) {
+      for (final cell in cells) {
+        _draw(
+          canvas,
+          Offset((cell.col + .5) * cellSize, (cell.row + .5) * cellSize),
+          cellSize * .45,
+          'fx_magic_sparkles',
+          opacity: .42,
+        );
+      }
+      return;
+    }
+
+    final smokeFrame = (progress * 3).floor().clamp(0, 2) + 1;
+    final smokeKey = 'fx_white_smoke_0$smokeFrame';
+    for (final cell in cells) {
+      final center = Offset((cell.col + .5) * cellSize,
+          (cell.row + .5) * cellSize);
+      _draw(canvas, center, cellSize * 1.12, smokeKey, opacity: .6);
+      _draw(canvas, center, cellSize * .62, 'fx_magic_sparkles',
+          opacity: .78);
+    }
+
+    if (cascadeCount > 1) {
+      final center = Offset(
+        cells.map((cell) => (cell.col + .5) * cellSize).reduce((a, b) => a + b) /
+            cells.length,
+        cells.map((cell) => (cell.row + .5) * cellSize).reduce((a, b) => a + b) /
+            cells.length,
+      );
+      _draw(canvas, center, cellSize * 4.6, 'fx_combo_ring', opacity: .72);
+      _draw(
+        canvas,
+        Offset(cellSize * 4, cellSize * .56),
+        cellSize * 6.2,
+        'fx_cascade_streak',
+        opacity: .6,
       );
     }
   }
