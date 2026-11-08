@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/painting.dart';
@@ -43,7 +45,16 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     // Existing renderer seams remain injectable for tests/alternate clients.
     // New image loading affects presentation only, not deterministic moves.
     if (spriteRenderer is CloudKingdomFallbackBoardRenderer) {
-      spriteRenderer = await CloudKingdomPngBoardRenderer.load();
+      // Decode artwork independently of Flame's lifecycle. Waiting for platform
+      // image codecs here prevents the board from accepting input in widget
+      // tests and can delay input on slower Android devices. The existing
+      // vector renderer remains visible until the exact PNGs are ready.
+      unawaited(CloudKingdomPngBoardRenderer.load().then((loaded) {
+        spriteRenderer = loaded;
+      }).catchError((Object error, StackTrace stack) {
+        // Preserve playable fallback when a device cannot decode art.
+        // The asset-verification CI gate catches missing/corrupted sources.
+      }));
     }
   }
 
