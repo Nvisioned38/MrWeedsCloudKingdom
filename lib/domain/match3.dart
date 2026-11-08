@@ -215,7 +215,7 @@ class ObjectiveProgress {
 
 String _familyLabel(TileFamily family) => switch (family) {
       TileFamily.cloud => 'blue Cloud tiles',
-      TileFamily.leaf => 'green Leaf tiles',
+      TileFamily.leaf => 'Mystic Bloom tiles',
       TileFamily.sun => 'gold Sun tiles',
       TileFamily.moon => 'purple Moon tiles',
       TileFamily.star => 'orange Star tiles',

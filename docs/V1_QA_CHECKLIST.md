@@ -16,9 +16,9 @@ This checklist records automated evidence and isolated S24 physical QA. Final vi
 | Save schema 3 upgrade/restart/reset/perk persisted | PASS | Phase 2B migration and round-trip tests pass; schema remains 3 |
 | Official logos and approved title treatment integrated | PASS | BR-005/006 alpha-bound exports verified pixel-exact to BR-001/002 masters; BR-003 v1 treatment copied unchanged; S24 title/app-shell rendering checked |
 | Approved Mr. Weed character portrait integrated | PASS | v10 CS-001 `MW_img_CS-001b.png` copied byte-identically; CH-001 OK-gesture/blank-shirt notes traced; S24 Story character catalog rendered it |
-| Core P0 Match-3 production tiles, blockers, specials and FX integrated | BLOCKED | v10 approves the concepts, but no isolated source sprites/modular exports were transferred; board remains an explicit technical renderer |
+| Core P0 Match-3 production tiles, blockers, specials and FX integrated | PASS — integration only | 37 approved standalone PNGs are in the app and match both manifest hashes/dimensions/RGBA validation; fresh Flutter build and S24 visual QA are pending |
 | Cloud House, Lounge and Kitchen source artwork integrated | PASS | 7 intact originals; source hashes, dimensions and v10 approval row IDs in `assets/art/manifest.json`; Home screen rendered on S24 |
-| Home → Match-3 → Victory → Rewards → Cloud House | PASS | Widget route plus S24 QA package: score 1,020, +100 coins/+1 star/+6 XP, Level 2 / 100 coins / 1 star in Home; Continue restored the same state after force-stop/relaunch |
+| Home → Match-3 → Victory → Rewards → Cloud House on current integrated build | NOT TESTED | Prior S24 QA passed before Issue #4 art integration; repeat on the isolated QA package after current branch build, preserving production saves |
 | Collection/equipment/evolution runtime states | PASS | Dynamic 30-card UI and progression tests pass; new collection art not yet approved/integrated |
 | V1 museum/shelf art states | BLOCKED | Supplement sources have pending new-file sign-off; full Gallery remains preview-only |
 | Story scope and spoiler firewall | PASS | Chapters 1–3 retained; no later-story content added |
@@ -28,12 +28,12 @@ This checklist records automated evidence and isolated S24 physical QA. Final vi
 | Background/resume lifecycle | PASS | S24 completed-level force-stop/relaunch showed Continue and restored Level 2/100 coins/1 star; no fatal logs. Mid-level board state is not saved by design |
 | Profile-mode emulator performance | PASS | Warm `watchPerformance` sample of 122 API 36 emulator frames: avg/p90 build 0.456/0.663 ms; avg/p90 raster 2.024/2.513 ms; 0 build-budget misses and 1 raster-budget miss |
 | Physical S24 Ultra performance | PASS | S24 API 37 profile run, 123 frames: build avg/p90/p99 1.275/2.295/5.882 ms, 0 misses; raster 3.290/5.399/8.450 ms, 0 misses |
-| Android debug APK built, filename and SHA-256 recorded | PASS | Local arm64 technical preview; SHA recorded below |
-| Samsung S24 Ultra install, launch and screen smoke | PASS | Installed/launched separate package com.mrweeds.cloudkingdom.qa on SM-S928U/API 37; production app package was not targeted by mutating commands |
-| Full isolated gameplay loop on Android | PASS | Emulator and S24 QA package completed Level 1, reward and Home flow; S24 reached 1,020 and restored Level 2/100 coins/1 star after relaunch |
+| Android debug APK for Issue #4 integration built, filename and SHA-256 recorded | NOT TESTED | Flutter SDK unavailable in current session; pending GitHub Actions build artifact |
+| Samsung S24 Ultra install, launch and visual smoke for integrated art | NOT TESTED | Historical isolated-package smoke predates Issue #4 integration; current session has no ADB tool |
+| Full isolated gameplay loop on current integrated build | NOT TESTED | Repeat Home → Board → Victory → Rewards → Cloud House → relaunch on QA package after the new build |
 | S24 physical gameplay/reward/accessibility/performance QA | PARTIAL | Gameplay, rewards, saved progression, semantic cells, 2× text, settings persistence and profile timing passed. Spoken TalkBack output was not assessed because the service was off |
-| Owner final visual sign-off against v10 workbook | BLOCKED | Workbook is read; full V1 art and manual QA gates remain open |
-| No generic placeholders on primary V1 path | BLOCKED | Exact logos and isolated Match-3 production sprites are not available |
+| Owner final visual sign-off against v10 workbook | BLOCKED | Owner approval authorizes integration; final device visual acceptance and remaining release gates are still open |
+| No generic placeholders on primary V1 path | NOT TESTED | Newly integrated Match-3 artwork needs on-device visual inspection; broader V1 release gate remains open |
 
 ## 2026-11-07 v10 Android technical preview evidence
 
@@ -101,3 +101,12 @@ This newer device-specific entry supersedes the older “ADB unauthorized” sta
 - Accessibility: UIAutomator showed 64 labeled/clickable board cells with row/column and selection hints. At temporary 2× system font scale the 64 cells and Level 2 objective remained visible; device font scale was restored to 0.9. Settings switches were labeled and clickable. System TalkBack was disabled (accessibility_enabled=0), so spoken announcements were not assessed.
 - Performance: profile-mode integration timing, 123 frames: build avg/p90/p99 1.275/2.295/5.882 ms with 0 missed budgets; raster avg/p90/p99 3.290/5.399/8.450 ms with 0 missed budgets.
 - After the performance run the regular debug QA APK was reinstalled under the separate QA package ID, preserving package isolation. Gradle applicationId is restored to the production value in the checkout.
+
+## 2026-11-08 Issue #4 integration verification status
+
+- Approval/integration evidence: the owner approved all 37 Batch A/B/C exports. `python tools/verify_issue4_art.py` passed for all 37 exact SHA-256 values, dimensions and RGBA PNG format.
+- Current Flutter verification and Android artifact: **NOT RUN in this environment** because `flutter`, `dart`, and `adb` executables are unavailable. GitHub Actions is required to run format, analyze, tests and debug APK build.
+- Current Samsung S24 visual/gameplay verification: **NOT RUN**. Prior S24 QA applies to the earlier art baseline; no production app or save was touched in this work. Repeat the loop only on the isolated QA application after obtaining the integrated build.
+- V1 is not declared complete. Phase 3 remains unstarted.
+
+- Current build evidence: PR #10 run 42441154111 succeeded; Flutter 3.47.7, 53/53 tests, analyzer clean, Android debug artifact `cloud-kingdom-android-debug-32` (SHA-256 `f58b2bc3938f2f90e15db15b888edebb2cd45fccd541884e0bdb0add34192d9b`). Device-specific rows above refer to earlier APK source and still require a current isolated-package run.

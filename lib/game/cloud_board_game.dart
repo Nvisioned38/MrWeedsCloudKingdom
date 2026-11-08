@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/painting.dart';
 
 import '../domain/match3.dart';
 import 'board_sprite_renderer.dart';
+import 'match3_png_board_renderer.dart';
 
 class CloudBoardGame extends FlameGame with TapCallbacks {
   CloudBoardGame({
@@ -17,7 +20,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
             spriteRenderer ?? const CloudKingdomFallbackBoardRenderer(),
         effectsHook = effectsHook ?? const NoBoardEffectsHook();
 
-  final BoardSpriteRenderer spriteRenderer;
+  BoardSpriteRenderer spriteRenderer;
   final BoardEffectsHook effectsHook;
   final bool reducedMotion;
   final LevelSession session;
@@ -35,6 +38,25 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
   Cell? _swapB;
   Piece? _swapPieceA;
   Piece? _swapPieceB;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    // Existing renderer seams remain injectable for tests/alternate clients.
+    // New image loading affects presentation only, not deterministic moves.
+    if (spriteRenderer is CloudKingdomFallbackBoardRenderer) {
+      // Decode artwork independently of Flame's lifecycle. Waiting for platform
+      // image codecs here prevents the board from accepting input in widget
+      // tests and can delay input on slower Android devices. The existing
+      // vector renderer remains visible until the exact PNGs are ready.
+      unawaited(CloudKingdomPngBoardRenderer.load().then((loaded) {
+        spriteRenderer = loaded;
+      }).catchError((Object error, StackTrace stack) {
+        // Preserve playable fallback when a device cannot decode art.
+        // The asset-verification CI gate catches missing/corrupted sources.
+      }));
+    }
+  }
 
   @override
   Color backgroundColor() => const Color(0xff173d55);
@@ -96,7 +118,9 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = 3);
         }
-        if (_feedbackCells.contains(cell) && _feedbackLeft > 0) {
+        if (_feedbackCells.contains(cell) &&
+            _feedbackLeft > 0 &&
+            spriteRenderer is! BoardTurnEffectsRenderer) {
           final alpha = (_feedbackLeft / .28).clamp(0.0, 1.0).toDouble();
           canvas.drawCircle(
               center,
@@ -105,6 +129,18 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
                 ..color = const Color(0x99fff2ad).withValues(alpha: alpha));
         }
       }
+    }
+    if (_resolving && spriteRenderer is BoardTurnEffectsRenderer) {
+      final progress =
+          (1 - _feedbackLeft / _feedbackDuration).clamp(0.0, 1.0).toDouble();
+      (spriteRenderer as BoardTurnEffectsRenderer).drawTurnEffects(
+        canvas,
+        changedCells: _feedbackCells,
+        cascadeCount: _cascadeLabel,
+        cellSize: cellSize,
+        progress: progress,
+        reducedMotion: reducedMotion,
+      );
     }
     if (_resolving && _swapA != null && _swapB != null) {
       final progress =

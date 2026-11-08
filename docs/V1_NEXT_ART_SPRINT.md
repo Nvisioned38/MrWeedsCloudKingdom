@@ -1,5 +1,7 @@
 # Phase 2C next art sprint — Match-3 and V1 release gates
 
+**Status update (2026-11-08):** The owner-approved Issue #4 Batch A/B/C handoff supersedes the missing-standalone-sprite blocker below. All 37 exports are present and integrated on the Issue #4 integration branch; hash/dimension/RGBA manifest verification passes. Use the current `docs/V1_ART_EXPORT_MATRIX.md` and `docs/V1_QA_CHECKLIST.md` for current status. The work described in this file remains useful for general gates, and final Android/S24 visual QA is still required.
+
 **Current code baseline:** `04aca22f3f1566f11ec935e914b6a73ebd58a5b5` (2026-11-07). This is the **verified v10 branding technical preview**, not final V1 sign-off.
 
 ## Verified at the checkpoint

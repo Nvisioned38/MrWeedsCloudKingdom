@@ -15,6 +15,18 @@ abstract interface class BoardSpriteRenderer {
       Canvas canvas, Offset center, double size, BlockerState blocker);
 }
 
+/// Optional art-only layer for approved turn feedback sprites.
+abstract interface class BoardTurnEffectsRenderer {
+  void drawTurnEffects(
+    Canvas canvas, {
+    required Iterable<Cell> changedCells,
+    required int cascadeCount,
+    required double cellSize,
+    required double progress,
+    required bool reducedMotion,
+  });
+}
+
 /// Optional integration point for haptics, sound, or analytics owned by UI.
 abstract interface class BoardEffectsHook {
   void onAcceptedTurn(TurnResult result);

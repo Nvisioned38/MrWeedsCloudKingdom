@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,7 @@ import 'game/cloud_board_game.dart';
 import 'presentation/art_manifest.dart';
 import 'presentation/art_widgets.dart';
 import 'presentation/cloud_kingdom_theme.dart';
+import 'presentation/match3_art_widgets.dart';
 import 'presentation/phase2_screens.dart';
 
 const _saveKey = 'cloud_kingdom_progress_v2';
@@ -738,6 +740,15 @@ class _PlayScreenState extends State<PlayScreen> {
   );
   bool _finished = false;
 
+  int get _scoreTarget {
+    for (final objective in session.objectives) {
+      if (objective.definition.kind == ObjectiveKind.score) {
+        return objective.definition.target;
+      }
+    }
+    return 0;
+  }
+
   void _onTurn(TurnResult result) {
     if (result.accepted && (widget.progress.settings['haptics'] ?? true)) {
       unawaited(HapticFeedback.selectionClick());
@@ -780,31 +791,23 @@ class _PlayScreenState extends State<PlayScreen> {
         body: SafeArea(
             child: Column(children: [
           Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('OBJECTIVES',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, letterSpacing: 1)),
-                    Text('Moves ${session.movesRemaining}',
-                        style: const TextStyle(fontWeight: FontWeight.bold))
-                  ])),
-          ...session.objectives.map((progress) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 2),
-              child: Row(children: [
-                Icon(
-                    progress.complete
-                        ? Icons.check_circle
-                        : Icons.radio_button_unchecked,
-                    size: 18,
-                    color: progress.complete
-                        ? const Color(0xff83d7a0)
-                        : const Color(0xffe6d393)),
-                const SizedBox(width: 8),
-                Expanded(child: Text(progress.label)),
-                Text('${progress.value}/${progress.definition.target}')
-              ]))),
+            padding: const EdgeInsets.fromLTRB(10, 4, 10, 0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    child: Match3ObjectivePanel(
+                        objectives: session.objectives)),
+                const SizedBox(width: 4),
+                Match3MovesCounter(movesRemaining: session.movesRemaining),
+              ],
+            ),
+          ),
+          Match3ScoreProgress(
+            score: session.board.score,
+            scoreTarget: _scoreTarget,
+            clearAvailable: session.outcome == LevelOutcome.won,
+          ),
           Expanded(
               child: Center(
                   child: AspectRatio(
@@ -818,6 +821,14 @@ class _PlayScreenState extends State<PlayScreen> {
                               GameWidget(
                                 key: const ValueKey('match3-board'),
                                 game: game,
+                              ),
+                              Positioned.fill(
+                                child: IgnorePointer(
+                                  child: Image.asset(
+                                    'assets/art/match3/board_frame_transparent_center.png',
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
                               ),
                               for (var row = 0; row < rows; row++)
                                 for (var col = 0; col < cols; col++)
@@ -835,9 +846,10 @@ class _PlayScreenState extends State<PlayScreen> {
                                   ),
                             ]);
                           }))))),
+          Match3SpecialsGuide(session: session),
           if (widget.level.tutorial != null)
             Padding(
-                padding: const EdgeInsets.fromLTRB(16, 2, 16, 10),
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                 child: Text(_tutorialText(widget.level.tutorial!),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall)),
@@ -959,60 +971,139 @@ class ResultsScreen extends StatelessWidget {
     final won = session.outcome == LevelOutcome.won;
     final navigator = Navigator.of(context);
     return Scaffold(
-        body: Center(
-            child: Padding(
-                padding: const EdgeInsets.all(26),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(won ? Icons.celebration : Icons.cloud_off,
-                          size: 76,
-                          color: won
-                              ? const Color(0xffffd36e)
-                              : const Color(0xff89b9c8)),
-                      const SizedBox(height: 14),
-                      Text(won ? 'Clouds cleared!' : 'So close!',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 10),
-                      Text('Level ${level.id} · score ${session.board.score}'),
-                      if (won && reward != null)
-                        Text(reward!.firstClear
-                            ? '+${reward!.coins} coins · +${reward!.stars} Star · +${reward!.collectionXp} Collection XP${reward!.keys > 0 ? ' · +${reward!.keys} Key' : ''}'
-                            : 'Replay complete · no duplicate first-clear reward'),
-                      if (won)
-                        Text(
-                            'Collection XP: ${progress.collectionXp} · Keys: ${progress.keys}'),
-                      if (won)
-                        Text(
-                            'Best score ${reward?.bestScore ?? session.board.score}'),
-                      const SizedBox(height: 26),
-                      FilledButton(
-                          onPressed: () async {
-                            navigator.pop();
-                            if (offerLounge) {
-                              await navigator.push(MaterialPageRoute(
-                                  builder: (_) => LoungeScreen(
-                                      progress: progress, persist: persist)));
-                            }
-                          },
-                          child: Text(offerLounge
-                              ? 'Restore the Lounge'
-                              : 'Back to Cloud House')),
-                      if (!won)
-                        TextButton(
-                            onPressed: () {
-                              navigator.pop();
-                              navigator.push(MaterialPageRoute(
-                                  builder: (_) => PlayScreen(
-                                      level: level,
-                                      progress: progress,
-                                      persist: persist)));
-                            },
-                            child: const Text('Replay Level')),
-                    ]))));
+        body: SafeArea(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final panelWidth = match3PanelWidth(constraints.maxWidth - 32);
+          final panelHeight = math.min(
+            panelWidth * 700 / 960,
+            constraints.maxHeight * .58,
+          );
+          return SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: panelWidth,
+                    height: panelHeight,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Image.asset(
+                          'assets/art/match3/victory_reward_panel_backing.png',
+                          fit: BoxFit.fill,
+                          cacheWidth: 800,
+                          excludeFromSemantics: true,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(36, 26, 36, 22),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      won
+                                          ? 'assets/art/match3/star_filled.png'
+                                          : 'assets/art/match3/star_empty.png',
+                                      width: 34,
+                                      height: 34,
+                                      cacheWidth: 96,
+                                      excludeFromSemantics: true,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Icon(
+                                      won
+                                          ? Icons.celebration
+                                          : Icons.cloud_off,
+                                      size: 42,
+                                      color: won
+                                          ? const Color(0xffffd36e)
+                                          : const Color(0xff89b9c8),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  won ? 'Clouds cleared!' : 'So close!',
+                                  key: const ValueKey('issue4-result-title'),
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall
+                                      ?.copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                    'Level ${level.id} · score ${session.board.score}',
+                                    textAlign: TextAlign.center),
+                                if (won && reward != null)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 4),
+                                    child: Text(
+                                      reward!.firstClear
+                                          ? '+${reward!.coins} coins · +${reward!.stars} Star · +${reward!.collectionXp} Collection XP${reward!.keys > 0 ? ' · +${reward!.keys} Key' : ''}'
+                                          : 'Replay complete · no duplicate first-clear reward',
+                                      key: const ValueKey('issue4-dynamic-reward'),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                if (won)
+                                  Text(
+                                    'Collection XP: ${progress.collectionXp} · Keys: ${progress.keys}',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                if (won)
+                                  Text(
+                                    'Best score ${reward?.bestScore ?? session.board.score}',
+                                    textAlign: TextAlign.center,
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Match3PrimaryArtButton(
+                    label: offerLounge
+                        ? 'Restore the Lounge'
+                        : 'Back to Cloud House',
+                    onPressed: () async {
+                      navigator.pop();
+                      if (offerLounge) {
+                        await navigator.push(MaterialPageRoute(
+                            builder: (_) => LoungeScreen(
+                                progress: progress, persist: persist)));
+                      }
+                    },
+                  ),
+                  if (!won) ...[
+                    const SizedBox(height: 8),
+                    Match3PrimaryArtButton(
+                      label: 'Replay Level',
+                      onPressed: () {
+                        navigator.pop();
+                        navigator.push(MaterialPageRoute(
+                            builder: (_) => PlayScreen(
+                                level: level,
+                                progress: progress,
+                                persist: persist)));
+                      },
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    ));
   }
 }
 
