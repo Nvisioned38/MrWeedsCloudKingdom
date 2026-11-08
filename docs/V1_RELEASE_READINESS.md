@@ -87,7 +87,7 @@ The default Flutter command remains a production-package build because the QA Gr
 
 | Source commit | APK | Package | Version | minSdk | SHA-256 |
 |---|---|---|---|---:|---|
-| Pending final build after code commit | `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk` | `com.mrweeds.cloudkingdom.qa` | `0.1.0`, split arm64 version code `2001` | 24 | Pending |
+| `549be00d9b4a59abced0fb922830bd7da2693c6b` | `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk` | `com.mrweeds.cloudkingdom.qa` | `0.1.0`, split arm64 version code `2001` | 24 | `ac357dc421f2cf0a9740ad299f1e00d6060f646742df43237b92760f57f23f28` |
 
 Verification run for this branch:
 
