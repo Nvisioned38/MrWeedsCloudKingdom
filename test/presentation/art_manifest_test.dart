@@ -43,7 +43,7 @@ void main() {
     expect(
       manifest.records
           .where((record) => record.state == ArtAssetState.integrated),
-      hasLength(11),
+      hasLength(24), // 11 prior integrated + 13 approved V1 Match-3 sprites.
     );
     expect(manifest.records.where((record) => record.productionReady), isEmpty);
 
