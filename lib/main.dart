@@ -84,7 +84,7 @@ class _BootScreenState extends State<BootScreen> {
         saveRecoveryBackupAvailable =
             await _backupUnreadableSave(prefs, _saveKey, saved);
         shouldPersistMigration = false;
-        debugPrint('[SAVE] Saved progress could not be read: $error');
+        debugPrint('[SAVE] Saved progress could not be read (${error.runtimeType}).');
       }
     } else {
       final legacy = prefs.getString('cloud_kingdom_save_v1');
@@ -112,7 +112,7 @@ class _BootScreenState extends State<BootScreen> {
           saveRecoveryBackupAvailable = await _backupUnreadableSave(
               prefs, 'cloud_kingdom_save_v1', legacy);
           shouldPersistMigration = false;
-          debugPrint('[SAVE] Legacy progress could not be read: $error');
+          debugPrint('[SAVE] Legacy progress could not be read (${error.runtimeType}).');
         }
       }
     }
