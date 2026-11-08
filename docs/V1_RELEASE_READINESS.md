@@ -25,6 +25,8 @@ Spoken screen-reader gate: [Issue #6](https://github.com/Nvisioned38/MrWeedsClou
 - Do not imply an unfinished level resumes on relaunch; only completed-level progress persistence was demonstrated.
 - All future QA must identify the **actual installed package** in APK metadata before installation, and refuse any QA-targeted installation if metadata shows the production package.
 - Prefer isolated emulator or `.qa` package for any mutating gameplay, reward, or New Game test.
+- The Android Gradle default remains production. The QA package is selected only by the explicit `cloudKingdomQa=true` project argument in `tools/build_qa_apk.ps1`.
+- The QA build/install script checks the APK package with Android `aapt` before it copies or installs it. Install uses `adb install -r` and never clears data. Its cleanup action can uninstall only `com.mrweeds.cloudkingdom.qa`.
 
 ## Verified test evidence as of 2026-11-07
 
@@ -38,11 +40,14 @@ Spoken screen-reader gate: [Issue #6](https://github.com/Nvisioned38/MrWeedsClou
 
 | Gate | Status | Owner / required evidence |
 |---|---|---|
-| Repeatable isolated `.qa` build with correct identity | NOT TESTED | Codex, Issue #8: choose safe separate build path, verify APK manifest |
-| Default debug build still uses exact production ID | NOT TESTED AFTER QA BUILD CHANGE | Codex, Issue #8 |
-| Build metadata and SHA recorded for each variant | NOT TESTED | Codex, Issue #8 |
-| Reliability regressions (partial/corrupt save, reward idempotence, offline startup) | PENDING TEST GAP AUDIT | Codex, Issue #8; don't duplicate existing tests |
-| Android app permission/signing/version checks | PENDING AUDIT | Codex, Issue #8; no owner Play/release key |
+| Repeatable isolated `.qa` build with correct identity | PASS | `tools/build_qa_apk.ps1`; actual QA APK metadata inspected with `aapt` |
+| Default debug and release package IDs | PASS | Both ordinary variants inspected; exact production ID remains `com.mrweeds.cloudkingdom` |
+| QA install/cleanup isolation | PASS ON EMULATOR | Install and removal targeted only `.qa`; install used `-r`, no data clear |
+| S24 install verification | BLOCKED | ADB shell could not confirm the production package for the active user; see limitation below. No S24 install was attempted. |
+| Empty/partial save, reward replay, and offline startup | PASS | Focused tests in `test/release_readiness_test.dart` and `test/offline_startup_test.dart`; existing schema migration and New Game reset tests retained |
+| Corrupt-save recovery | BLOCKED BY FILE SCOPE | `BootScreen._load` decodes saved JSON without a recovery catch; Issue #8 reserves `lib/main.dart` due to overlap with the independent art branch. |
+| Android min SDK, permissions, and signing | PASS / NOT RELEASE READY | Both APK identities/min SDK inspected; release variant is debug-signed and includes only the observed Flutter INTERNET permission plus package-scoped receiver permission. |
+| Build metadata and SHA evidence | PASS | QA APK path, source commit, package/version/min SDK and SHA-256 recorded below after the tested commit. |
 | Match-3 art export manifests + all 37 SHA checks on merged branch | BLOCKED UNTIL ART PR | Art team, Issue #4 |
 | Board sprite composition, safe areas, overlay/tile states and responsive 8×8 device fit | BLOCKED UNTIL ART PR | Art team + QA, Issue #4 |
 | Actual spoken TalkBack semantics and navigation on QA package | NOT TESTED | Issue #6, needs accessibility service and listening |
@@ -60,6 +65,45 @@ Spoken screen-reader gate: [Issue #6](https://github.com/Nvisioned38/MrWeedsClou
 5. Record PASS/FAIL/BLOCKED only from an actual test run; do not infer device pass from Flutter widget tests, or asset approval from the presence of PNGs.
 6. Merge/check integration after successful art QA. Re-run all checks for the merged commit and compare visual/source manifest hashes.
 7. Scope remains Phase 2C first polished playable V1. Do not introduce Levels 31+, Phase 3, villain betrayals, Lord Nave, Copycat Cloud Co., Cloud Bottle, or Keefler Elves revelations.
+
+## Issue #8 implementation and verification
+
+The supported Windows PowerShell entry point builds an arm64 debug APK, verifies its actual manifest package before saving it to the QA artifact path, and writes a local JSON evidence file (ignored under `build/`). It detects Flutter from `PATH` or `android/local.properties` and Android SDK/build-tools from the environment or local properties.
+
+```powershell
+# Build and verify; no device changes.
+.\tools\build_qa_apk.ps1
+
+# Optional isolated install/update. Requires an explicit ADB serial; does not clear data.
+.\tools\build_qa_apk.ps1 -Action InstallQa -DeviceSerial emulator-5554
+
+# Optional cleanup. Targets only the QA package on that explicit device.
+.\tools\build_qa_apk.ps1 -Action UninstallQa -DeviceSerial emulator-5554
+```
+
+The default Flutter command remains a production-package build because the QA Gradle property is passed only by the script. QA, default debug, and release APK metadata were inspected with `aapt`; signatures were verified with `apksigner`. A local release-variant APK builds successfully but uses the Android debug certificate (SHA-256 `bbcc9ce1f3ab98be310e5ffb30d7978a011b48b154f275907b02ae2e13bc9a6f`). No owner key is configured; the release variant is not Play-ready.
+
+### Tested QA artifact
+
+| Source commit | APK | Package | Version | minSdk | SHA-256 |
+|---|---|---|---|---:|---|
+| Pending final build after code commit | `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk` | `com.mrweeds.cloudkingdom.qa` | `0.1.0`, split arm64 version code `2001` | 24 | Pending |
+
+Verification run for this branch:
+
+- Full Flutter suite: **54 tests passed**.
+- `flutter analyze`: **No issues found**.
+- QA and ordinary production debug arm64 APK builds: passed. `aapt` showed QA ID `com.mrweeds.cloudkingdom.qa`; the unflagged default build showed production ID `com.mrweeds.cloudkingdom`.
+- Release arm64 packaging audit: passed; production ID and minSdk 24; `apksigner` confirmed Android Debug signing. This is technical evidence only, not a release approval.
+- Emulator QA-only install and cleanup: passed on `emulator-5554`; installation used `adb install -r`, and only `.qa` was removed afterward. No user data was cleared.
+- S24 install gate: not run. The active ADB user denied `pm path` access and the package list did not show `com.mrweeds.cloudkingdom`, so the safety preflight stopped before installing. Existing S24 data was not changed.
+- Current art manifest reports 69 runtime references as not integrated in this engineering checkout. Issue #4 artwork remains on its separate unmerged branch and is not included in this APK.
+
+### Remaining release blockers
+
+- Corrupt JSON in `cloud_kingdom_progress_v2` currently throws during boot because `_BootScreenState._load` calls `jsonDecode` without recovery. The focused Issue #8 tests cover empty and partial saves plus rewards after reload; they cannot safely add or assert app-level corruption recovery while `lib/main.dart` is reserved from edits due to the concurrent art branch. Add recovery and a genuine corrupted-save test after the file conflict is reconciled.
+- S24 package installation was deliberately withheld when Android could not confirm the production-package baseline for the active user. Repeat the isolated `.qa` install verification after resolving the ADB user/package visibility, without clearing either package's data.
+- Issue #4 mandatory original artwork and Issue #6 spoken TalkBack acceptance remain separate V1 gates. Story scope stays Chapters 1–3; Phase 3 and later story reveals remain deferred.
 
 ## Definition of done for Issue #8
 
