@@ -33,7 +33,8 @@ void main() {
     expect(prefs.getString('${_currentKey}_unreadable_backup'), damaged);
 
     await tester.tap(find.text('New Game'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
 
     expect(find.text('Cloud House'), findsWidgets);
     final replaced = prefs.getString(_currentKey);
