@@ -110,3 +110,11 @@ Remaining: isolated P0 Match-3 sprites and modular board/HUD art, Mr. Weed chara
 Added the standalone v10-approved Mr. Weed CS-001 portrait copied unchanged from the Game Art archive. Updated manifest approval/source/export provenance, runtime asset registration and manifest coverage. The corresponding export matrix records why approved Match-3 concept sheets, composites and character sheets cannot be substituted for isolated production assets.
 
 Verification: `flutter pub get` passed; `flutter test` passed 48/48; `flutter analyze` reported no issues; Android arm64 debug APK build passed. APK SHA-256: `AED184E6BA0A234AA22B6A0B86ECED2D6BAE273837432C043A78B9204614FD1B`. Installed with `adb install -r` on Samsung S24 Ultra `R5CX156CZNF`, preserving app data. Title, Home and Story catalog screens were checked; current home save state remained Level 3 / 210 coins / 2 stars. No gameplay turn or story beat was advanced. Phase 3 not started.
+
+## 2026-11-07 — S24 separate QA application touch validation
+
+Codex committed the isolated Android QA and board-accessibility changes at `dda1104933c5f06b45dd28c945355008172f3bd8`, which passed GitHub Actions at https://github.com/Nvisioned38/MrWeedsCloudKingdom/actions/runs/42428249531. Earlier documented QA verifies isolated emulator victory/reward and completed-progression persistence after relaunch, alongside 51 passing Flutter tests.
+
+In a subsequent owner-reported QA run, ADB authorized the real Samsung S24 Ultra. A temporary `com.mrweeds.cloudkingdom.qa` app was installed separately from the owner's production game. The 64-cell labeled board accepted a legal physical swipe/touch swap, progressing score 0 → 30 and moves 18 → 17. Device log checks showed no recent fatal exceptions. Force-stop/relaunch returned to intro because the test level was not completed. Production save and package remained untouched.
+
+**No new source-code QA change or new APK was built in this documentation-only update.** Remaining Issue #5 scope is full isolated phone victory/rewards/save relaunch and genuine TalkBack/performance/accessibility/lifecycle tests. Issue #4 still blocks final P0 artwork; V1 is a technical preview, not fully visually signed off.
