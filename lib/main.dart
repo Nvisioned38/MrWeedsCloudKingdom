@@ -16,8 +16,9 @@ import 'presentation/art_widgets.dart';
 import 'presentation/cloud_kingdom_theme.dart';
 import 'presentation/match3_art_widgets.dart';
 import 'presentation/phase2_screens.dart';
+import 'presentation/progress_restore.dart';
 
-const _saveKey = 'cloud_kingdom_progress_v2';
+const _saveKey = progressSaveKey;
 
 void main() => runApp(const CloudKingdomApp());
 
@@ -46,6 +47,8 @@ class _BootScreenState extends State<BootScreen> {
   late CharacterCatalog characterCatalog;
   late StoryCatalog storyCatalog;
   bool ready = false;
+  bool saveRecoveryWarning = false;
+  bool saveRecoveryBackupAvailable = false;
 
   @override
   void initState() {
@@ -55,34 +58,11 @@ class _BootScreenState extends State<BootScreen> {
 
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
-    final saved = prefs.getString(_saveKey);
-    var shouldPersistMigration = saved == null;
-    if (saved != null) {
-      final savedProgress = jsonDecode(saved) as Map<String, dynamic>;
-      progress = ProgressState.fromJson(savedProgress);
-      shouldPersistMigration = (savedProgress['schema'] as num? ?? 0) < 3;
-    } else {
-      final legacy = prefs.getString('cloud_kingdom_save_v1');
-      if (legacy != null) {
-        final old = jsonDecode(legacy) as Map<String, dynamic>;
-        final completed = (old['completed'] as List? ?? []).cast<int>();
-        final oldStyle = old['loungeStyle'] as String?;
-        progress = ProgressState.fromJson({
-          'completed': completed,
-          'stars': completed,
-          'best': old['best'] ?? <String, int>{},
-          'coins': old['coins'] ?? 0,
-          'loungeRestored':
-              (old['loungeRestored'] as bool?) ?? (oldStyle != null),
-          'loungeStyleId': switch (oldStyle) {
-            'Classic Cloud' => 'classic_cloud',
-            'Psychedelic' => 'psychedelic',
-            'Retro 70s' => 'retro_70s',
-            _ => null
-          },
-        });
-      }
-    }
+    final restored = await restoreSavedProgress(prefs);
+    progress = restored.progress;
+    saveRecoveryWarning = restored.needsRecovery;
+    saveRecoveryBackupAvailable = restored.backupAvailable;
+    final shouldPersistMigration = restored.shouldPersistMigration;
     final dataFiles = await Future.wait([
       rootBundle.loadString('assets/data/levels_001_030.json'),
       rootBundle.loadString('assets/data/collectibles.json'),
@@ -135,9 +115,13 @@ class _BootScreenState extends State<BootScreen> {
         characterCatalog: characterCatalog,
         storyCatalog: storyCatalog,
         persist: persist,
+        saveRecoveryWarning: saveRecoveryWarning,
+        saveRecoveryBackupAvailable: saveRecoveryBackupAvailable,
         onNewGame: () async {
           progress.resetForNewGame();
           await persist();
+          saveRecoveryWarning = false;
+          saveRecoveryBackupAvailable = false;
           if (mounted) setState(() {});
         });
   }
@@ -153,6 +137,8 @@ class TitleScreen extends StatelessWidget {
       required this.characterCatalog,
       required this.storyCatalog,
       required this.persist,
+      required this.saveRecoveryWarning,
+      required this.saveRecoveryBackupAvailable,
       required this.onNewGame});
   final ProgressState progress;
   final List<LevelSpec> levels;
@@ -161,6 +147,8 @@ class TitleScreen extends StatelessWidget {
   final CharacterCatalog characterCatalog;
   final StoryCatalog storyCatalog;
   final Future<void> Function() persist;
+  final bool saveRecoveryWarning;
+  final bool saveRecoveryBackupAvailable;
   final Future<void> Function() onNewGame;
 
   void _openWorld(BuildContext context) => Navigator.push(
@@ -218,6 +206,24 @@ class TitleScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             const Text('Match • Build • Collect • Explore'),
+                            if (saveRecoveryWarning)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 12),
+                                child: Semantics(
+                                  liveRegion: true,
+                                  child: Text(
+                                    saveRecoveryBackupAvailable
+                                        ? 'Saved progress could not be read. A local backup was preserved. Start a new game to continue.'
+                                        : 'Saved progress could not be read. The original was left untouched. Starting a new game will replace it.',
+                                    key: const ValueKey('save-recovery-warning'),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: Color(0xffffe0a0),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             const SizedBox(height: 36),
                             FilledButton.icon(
                                 onPressed: () async {
