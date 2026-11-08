@@ -4,6 +4,15 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+// QA builds opt into a separate Android package through the
+// cloudKingdomQa Gradle property. The normal Flutter build
+// path remains the production package unless that property is explicitly set.
+val cloudKingdomQa =
+    providers.gradleProperty("cloudKingdomQa").orNull.equals(
+        "true",
+        ignoreCase = true,
+    )
+
 android {
     namespace = "com.mrweeds.cloudkingdom"
     compileSdk = flutter.compileSdkVersion
@@ -16,7 +25,16 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.mrweeds.cloudkingdom"
+        applicationId = if (cloudKingdomQa) {
+            "com.mrweeds.cloudkingdom.qa"
+        } else {
+            "com.mrweeds.cloudkingdom"
+        }
+        manifestPlaceholders["appLabel"] = if (cloudKingdomQa) {
+            "Mr. Weed's Cloud Kingdom QA"
+        } else {
+            "mr_weeds_cloud_kingdom"
+        }
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
