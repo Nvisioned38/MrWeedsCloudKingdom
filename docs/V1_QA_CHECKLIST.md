@@ -1,6 +1,6 @@
 # V1 Android QA and Release Gate
 
-This checklist records current automated evidence and a limited Samsung screen smoke. It does not claim full device QA or final visual approval.
+This checklist records automated evidence and isolated S24 physical QA. Final visual and artwork sign-off remain open.
 
 ## Status legend
 
@@ -18,20 +18,20 @@ This checklist records current automated evidence and a limited Samsung screen s
 | Approved Mr. Weed character portrait integrated | PASS | v10 CS-001 `MW_img_CS-001b.png` copied byte-identically; CH-001 OK-gesture/blank-shirt notes traced; S24 Story character catalog rendered it |
 | Core P0 Match-3 production tiles, blockers, specials and FX integrated | BLOCKED | v10 approves the concepts, but no isolated source sprites/modular exports were transferred; board remains an explicit technical renderer |
 | Cloud House, Lounge and Kitchen source artwork integrated | PASS | 7 intact originals; source hashes, dimensions and v10 approval row IDs in `assets/art/manifest.json`; Home screen rendered on S24 |
-| Home → Match-3 → Victory → Rewards → Cloud House | PASS | Isolated widget route: semantic legal swap, victory, first-clear coins/stars/Level 2 unlock, JSON save restore, Home return; touch-driven win also passes |
+| Home → Match-3 → Victory → Rewards → Cloud House | PASS | Widget route plus S24 QA package: score 1,020, +100 coins/+1 star/+6 XP, Level 2 / 100 coins / 1 star in Home; Continue restored the same state after force-stop/relaunch |
 | Collection/equipment/evolution runtime states | PASS | Dynamic 30-card UI and progression tests pass; new collection art not yet approved/integrated |
 | V1 museum/shelf art states | BLOCKED | Supplement sources have pending new-file sign-off; full Gallery remains preview-only |
 | Story scope and spoiler firewall | PASS | Chapters 1–3 retained; no later-story content added |
 | Shape cues, reduced-motion and haptics wiring | PASS | Distinct fallback silhouettes; legacy leaf identity is a green spiral-bloom Mystic Bloom; settings control animation/haptic behavior |
-| TalkBack cell semantics | PASS | Isolated widget semantic tap test; API 36 emulator hierarchy exposed 64 named/tappable cells with coordinates and hints. Spoken TalkBack service check not run |
-| Large text, portrait cutout and landscape layout | PASS | Widget at 2× text; API 36 emulator at 2× font retained readable text/board; landscape screenshot retained controls/board; emulator had centered cutout |
-| Background/resume lifecycle | PASS | API 36 emulator Home/background and relaunch smoke; no Flutter/Android fatal log. Mid-level board state is not saved by design |
+| TalkBack cell semantics | PASS | S24 hierarchy exposed 64 named/clickable cells with row/column and selection hints; semantic widget action test passes. System TalkBack service was off; spoken output not assessed |
+| Large text, portrait cutout and landscape layout | PASS | S24 at temporary 2× system text scale retained all 64 board cells and the Level 2 objective; font scale restored to 0.9. Emulator landscape/cutout checks also pass |
+| Background/resume lifecycle | PASS | S24 completed-level force-stop/relaunch showed Continue and restored Level 2/100 coins/1 star; no fatal logs. Mid-level board state is not saved by design |
 | Profile-mode emulator performance | PASS | Warm `watchPerformance` sample of 122 API 36 emulator frames: avg/p90 build 0.456/0.663 ms; avg/p90 raster 2.024/2.513 ms; 0 build-budget misses and 1 raster-budget miss |
-| Physical S24 Ultra performance | BLOCKED | Device ADB unauthorized; no physical-device benchmark was run |
+| Physical S24 Ultra performance | PASS | S24 API 37 profile run, 123 frames: build avg/p90/p99 1.275/2.295/5.882 ms, 0 misses; raster 3.290/5.399/8.450 ms, 0 misses |
 | Android debug APK built, filename and SHA-256 recorded | PASS | Local arm64 technical preview; SHA recorded below |
-| Samsung S24 Ultra install, launch and screen smoke | BLOCKED | Current ADB state `unauthorized`; this QA run sent no app commands to the phone. Earlier authorized portrait checkpoint is documented below |
-| Full isolated gameplay loop on Android | PASS | Clean API 36 emulator reached Level 1 victory with score 800, +100 coins/+1 star/+6 XP; Home showed Level 2/100 coins/1 star; after force-stop/relaunch, Continue restored that Home state |
-| S24 physical gameplay/reward/accessibility/performance QA | BLOCKED | Device authorization required; app data was not read or modified |
+| Samsung S24 Ultra install, launch and screen smoke | PASS | Installed/launched separate package com.mrweeds.cloudkingdom.qa on SM-S928U/API 37; production app package was not targeted by mutating commands |
+| Full isolated gameplay loop on Android | PASS | Emulator and S24 QA package completed Level 1, reward and Home flow; S24 reached 1,020 and restored Level 2/100 coins/1 star after relaunch |
+| S24 physical gameplay/reward/accessibility/performance QA | PARTIAL | Gameplay, rewards, saved progression, semantic cells, 2× text, settings persistence and profile timing passed. Spoken TalkBack output was not assessed because the service was off |
 | Owner final visual sign-off against v10 workbook | BLOCKED | Workbook is read; full V1 art and manual QA gates remain open |
 | No generic placeholders on primary V1 path | BLOCKED | Exact logos and isolated Match-3 production sprites are not available |
 
@@ -91,3 +91,13 @@ This checklist records current automated evidence and a limited Samsung screen s
 - **V1 release status:** Technical preview. Mandatory standalone P0 Match-3 tiles, specials/blockers, modular HUD components and other approved original exports still blocked by Issue #4; unchanged gameplay/save schema maintained.
 
 This newer device-specific entry supersedes the older “ADB unauthorized” statement **for the S24 only**. Historical prior QA checkpoints remain recorded above.
+
+## 2026-11-07 S24 Ultra isolated gameplay and accessibility/performance pass
+
+- Device: Samsung SM-S928U, Android API 37, serial R5CX156CZNF.
+- Isolation: all mutating checks targeted com.mrweeds.cloudkingdom.qa. A clean QA-only save was used. No install/clear/uninstall command targeted com.mrweeds.cloudkingdom or its existing save.
+- Gameplay: five accepted legal swaps cleared Level 1 with score 1,020. Victory showed +100 coins, +1 Star, and +6 Collection XP. Back to Cloud House displayed Level 2, 100 coins, and 1 star.
+- Persistence: force-stop/relaunch showed Continue; selecting it restored the same Cloud House progression. The QA package’s Haptics-off and Reduced motion-on settings also survived relaunch.
+- Accessibility: UIAutomator showed 64 labeled/clickable board cells with row/column and selection hints. At temporary 2× system font scale the 64 cells and Level 2 objective remained visible; device font scale was restored to 0.9. Settings switches were labeled and clickable. System TalkBack was disabled (accessibility_enabled=0), so spoken announcements were not assessed.
+- Performance: profile-mode integration timing, 123 frames: build avg/p90/p99 1.275/2.295/5.882 ms with 0 missed budgets; raster avg/p90/p99 3.290/5.399/8.450 ms with 0 missed budgets.
+- After the performance run the regular debug QA APK was reinstalled under the separate QA package ID, preserving package isolation. Gradle applicationId is restored to the production value in the checkout.

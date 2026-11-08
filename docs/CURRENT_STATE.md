@@ -1,5 +1,16 @@
 # Current State
 
+## 2026-11-07 — S24 Ultra isolated gameplay and QA completion
+
+Samsung S24 Ultra model SM-S928U, Android API 37, serial R5CX156CZNF. All install, clear, play, and profile-test commands targeted the separate user-0 package com.mrweeds.cloudkingdom.qa; no mutating command targeted the production package or its save. The QA app remains isolated. Only its own test data was reset to obtain a clean first-clear run.
+
+The physical S24 Level 1 run used five accepted swaps and reached score 1,020. Victory displayed +100 coins, +1 star, and +6 Collection XP. Back to Cloud House showed Level 2, 100 coins, and 1 star. Force-stop/relaunch showed Continue; tapping it restored the same Cloud House progress. In Settings, Haptics off and Reduced motion on persisted across relaunch.
+
+Accessibility on device: Android UIAutomator exposed all 64 board cells as labeled, clickable controls with row/column and selection guidance. At temporary 2× system text scale, all 64 cells and the Level 2 objective remained visible. The phone’s original font scale, 0.9, was restored. Settings exposed labeled clickable switches for Haptics and Reduced motion. Android accessibility service state was off, so spoken TalkBack output was not assessed.
+
+S24 profile-mode performance harness captured 123 frames on the isolated QA package: average/p90/p99 build 1.275/2.295/5.882 ms, 0 build-budget misses; average/p90/p99 raster 3.290/5.399/8.450 ms, 0 raster-budget misses. This sample is from the board interaction harness; APK debug package and Gradle application ID were restored after the profile run.
+
+Phase 3 remains unstarted. Issue #4 original Match-3 production art requirements remain separate and unchanged.
 ## 2026-11-07 — Issue #5 isolated QA checkpoint
 
 Pulled latest `main` at `e72b0e5`. Added semantic TalkBack actions to the Flame board: each playable cell is a labeled button with tile/special/condition and row/column; semantic tap uses the same selection/swap path as touch. Blockers are announced and disabled. Added regression coverage for semantic selection, legal swap, victory, first-clear rewards, serialized schema-3 progress restoration, return to Home, large text and Settings touch targets.

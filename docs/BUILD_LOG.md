@@ -118,3 +118,11 @@ Codex committed the isolated Android QA and board-accessibility changes at `dda1
 In a subsequent owner-reported QA run, ADB authorized the real Samsung S24 Ultra. A temporary `com.mrweeds.cloudkingdom.qa` app was installed separately from the owner's production game. The 64-cell labeled board accepted a legal physical swipe/touch swap, progressing score 0 → 30 and moves 18 → 17. Device log checks showed no recent fatal exceptions. Force-stop/relaunch returned to intro because the test level was not completed. Production save and package remained untouched.
 
 **No new source-code QA change or new APK was built in this documentation-only update.** Remaining Issue #5 scope is full isolated phone victory/rewards/save relaunch and genuine TalkBack/performance/accessibility/lifecycle tests. Issue #4 still blocks final P0 artwork; V1 is a technical preview, not fully visually signed off.
+
+## 2026-11-07 — Samsung S24 Ultra Issue #5 completion
+
+Completed a clean Level 1 play-through on the Samsung SM-S928U (Android API 37) using only com.mrweeds.cloudkingdom.qa. Five legal swaps reached 1,020 points; Victory awarded +100 coins, +1 star, and +6 Collection XP. Cloud House displayed Level 2 / 100 coins / 1 star. After force-stop/relaunch, Continue restored that progression. Haptics off and Reduced motion on persisted in the QA package.
+
+S24 accessibility checks exposed 64 labeled/clickable board cells with row/column hints. At temporary 2× system font scale, all cells and the Level 2 objective remained visible; original scale 0.9 was restored. Settings switches were labeled/clickable. TalkBack service was disabled, so speech output was not assessed.
+
+Profile-mode integration timing on S24 captured 123 frames: build avg/p90/p99 1.275/2.295/5.882 ms (0 budget misses); raster avg/p90/p99 3.290/5.399/8.450 ms (0 budget misses). Every mutating ADB command targeted the QA package; the production app save was not targeted. The production Gradle application ID was restored after temporary QA builds.
