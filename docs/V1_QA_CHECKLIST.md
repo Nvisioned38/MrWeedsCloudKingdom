@@ -79,3 +79,15 @@ This checklist records current automated evidence and a limited Samsung screen s
 - Performance: used Flutter integration driver's profile-mode `watchPerformance` on the API 36 emulator after warm-up, with mocked preferences and a board interaction. It captured 122 frames: average/p90 build 0.456/0.663 ms (0 build-budget misses); average/p90 raster 2.024/2.513 ms (1 raster-budget miss). This passes the emulator sample only; it does not replace an S24 benchmark. No ANR or crash occurred.
 - Tool gate: `dart format --set-exit-if-changed lib test integration_test test_driver` clean; full Flutter suite 51/51 passed; `flutter analyze` no issues; arm64 Android APK build passed. APK: `C:\Users\LifeN\OneDrive\Desktop\Mr Weeds\App_Game\The Build\MrWeedsCloudKingdom_Issue5_V1_Technical_Preview_arm64.apk`; split arm64-v8a, 116,586,303 bytes; SHA-256 `7798B9D55D4164B172EAE42D24BA6C52DA7B5869273D282C885DBA5CB661967D`. A first test attempt had a test-harness compile/setup issue that was corrected before the green full run.
 - S24 physical QA remains blocked by ADB authorization. The prior known owner state was Level 3 / 210 coins / 2 stars; this run did not touch it.
+
+## 2026-11-07 S24 Ultra isolated-package touch QA (additional device evidence)
+
+- **Source:** owner-reported Codex QA results after verified commit `dda1104933c5f06b45dd28c945355008172f3bd8`; GitHub Actions checks passed at https://github.com/Nvisioned38/MrWeedsCloudKingdom/actions/runs/42428249531.
+- **Isolation PASS:** Android app package `com.mrweeds.cloudkingdom.qa` installed separately on the S24 Ultra. Production `com.mrweeds.cloudkingdom` and its existing save were untouched.
+- **Physical tap controls PASS:** 64 semantically labeled tiles exposed; a legal touch swap on the S24 changed the score 0 → 30 and remaining moves 18 → 17.
+- **Phone relaunch observation:** force-stop/relaunch returned to the intro with an **unfinished level**. This does **not** establish mid-level resume. The earlier **emulator** completed-level rewards and progression relaunch remained verified independently.
+- **Log smoke PASS:** no recent Flutter/Android fatal errors observed during the described device checks.
+- **STILL NOT TESTED physically:** S24 full victory → reward → Cloud House → relaunch, true TalkBack audio semantics, S24 performance, system font scaling, reduced motion, lifecycle/cutouts, and final image/visual sign-off. These must not inherit emulator PASS status.
+- **V1 release status:** Technical preview. Mandatory standalone P0 Match-3 tiles, specials/blockers, modular HUD components and other approved original exports still blocked by Issue #4; unchanged gameplay/save schema maintained.
+
+This newer device-specific entry supersedes the older “ADB unauthorized” statement **for the S24 only**. Historical prior QA checkpoints remain recorded above.
