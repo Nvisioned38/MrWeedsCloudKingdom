@@ -173,6 +173,8 @@ class _BootScreenState extends State<BootScreen> {
         onNewGame: () async {
           progress.resetForNewGame();
           await persist();
+          saveRecoveryWarning = false;
+          saveRecoveryBackupAvailable = false;
           if (mounted) setState(() {});
         });
   }
