@@ -108,3 +108,5 @@ This newer device-specific entry supersedes the older “ADB unauthorized” sta
 - Current Flutter verification and Android artifact: **NOT RUN in this environment** because `flutter`, `dart`, and `adb` executables are unavailable. GitHub Actions is required to run format, analyze, tests and debug APK build.
 - Current Samsung S24 visual/gameplay verification: **NOT RUN**. Prior S24 QA applies to the earlier art baseline; no production app or save was touched in this work. Repeat the loop only on the isolated QA application after obtaining the integrated build.
 - V1 is not declared complete. Phase 3 remains unstarted.
+
+- Current build evidence: PR #10 run 42441154111 succeeded; Flutter 3.47.7, 53/53 tests, analyzer clean, Android debug artifact `cloud-kingdom-android-debug-32` (SHA-256 `f58b2bc3938f2f90e15db15b888edebb2cd45fccd541884e0bdb0add34192d9b`). Device-specific rows above refer to earlier APK source and still require a current isolated-package run.
