@@ -731,6 +731,9 @@ class _PlayScreenState extends State<PlayScreen> {
   late final CloudBoardGame game = CloudBoardGame(
     session: session,
     onTurn: _onTurn,
+    onSelectionChanged: () {
+      if (mounted) setState(() {});
+    },
     reducedMotion: widget.progress.settings['reducedMotion'] ?? false,
   );
   bool _finished = false;
@@ -808,9 +811,30 @@ class _PlayScreenState extends State<PlayScreen> {
                       aspectRatio: 1,
                       child: Padding(
                           padding: const EdgeInsets.all(8),
-                          child: GameWidget(
-                              key: const ValueKey('match3-board'),
-                              game: game))))),
+                          child: LayoutBuilder(builder: (context, constraints) {
+                            final rows = session.board.rows;
+                            final cols = session.board.cols;
+                            return Stack(children: [
+                              GameWidget(
+                                key: const ValueKey('match3-board'),
+                                game: game,
+                              ),
+                              for (var row = 0; row < rows; row++)
+                                for (var col = 0; col < cols; col++)
+                                  _BoardCellSemantics(
+                                    key: ValueKey('board-cell-$row-$col'),
+                                    row: row,
+                                    col: col,
+                                    width: constraints.maxWidth / cols,
+                                    height: constraints.maxHeight / rows,
+                                    piece: session.board.at(row, col),
+                                    blocker: session.board.blockerAt(row, col),
+                                    selected:
+                                        game.selectedCell == Cell(row, col),
+                                    onTap: () => game.tapCell(Cell(row, col)),
+                                  ),
+                            ]);
+                          }))))),
           if (widget.level.tutorial != null)
             Padding(
                 padding: const EdgeInsets.fromLTRB(16, 2, 16, 10),
@@ -836,6 +860,77 @@ String _tutorialText(String id) => switch (id) {
         'A T or L match creates a Cloud Bomb that clears a 3×3 area.',
       _ => '',
     };
+
+class _BoardCellSemantics extends StatelessWidget {
+  const _BoardCellSemantics({
+    super.key,
+    required this.row,
+    required this.col,
+    required this.width,
+    required this.height,
+    required this.piece,
+    required this.blocker,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final int row;
+  final int col;
+  final double width;
+  final double height;
+  final Piece? piece;
+  final BlockerState? blocker;
+  final bool selected;
+  final VoidCallback onTap;
+
+  String get _label {
+    if (blocker != null) {
+      final kind =
+          blocker!.kind == BlockerKind.crate ? 'crate' : 'reinforced crate';
+      return '${blocker!.damaged ? 'damaged ' : ''}$kind, ${blocker!.hp} hit${blocker!.hp == 1 ? '' : 's'} remaining, row ${row + 1}, column ${col + 1}';
+    }
+    if (piece == null) return 'Empty cell, row ${row + 1}, column ${col + 1}';
+    final family = switch (piece!.family) {
+      TileFamily.cloud => 'Cloud Puff',
+      TileFamily.leaf => 'Mystic Bloom',
+      TileFamily.sun => 'Ember Drop',
+      TileFamily.moon => 'Dream Crystal',
+      TileFamily.star => 'Golden Nugget',
+    };
+    final special = switch (piece!.special) {
+      SpecialKind.rocket => ' Torch special',
+      SpecialKind.prism => ' Prism special',
+      SpecialKind.cloudBomb => ' Cloud Bomb special',
+      null => '',
+    };
+    final conditions = [
+      if (piece!.fogged) 'hidden by Fog',
+      if (piece!.stickySyrup) 'stuck in Sticky Syrup',
+      if (piece!.special != null) special,
+    ];
+    return '$family${conditions.isEmpty ? '' : ', ${conditions.join(', ')}'}, row ${row + 1}, column ${col + 1}';
+  }
+
+  @override
+  Widget build(BuildContext context) => Positioned(
+        left: col * width,
+        top: row * height,
+        width: width,
+        height: height,
+        child: Semantics(
+          container: true,
+          button: blocker == null,
+          enabled: blocker == null,
+          selected: selected,
+          label: _label,
+          hint: blocker == null
+              ? 'Double tap to select this cell, then select a neighboring cell to swap.'
+              : 'This blocker cannot be selected.',
+          onTap: blocker == null ? onTap : null,
+          child: const SizedBox.expand(),
+        ),
+      );
+}
 
 String _loungeAssetKey(String? styleId) => switch (styleId) {
       'psychedelic' => 'room_lounge_psychedelic',

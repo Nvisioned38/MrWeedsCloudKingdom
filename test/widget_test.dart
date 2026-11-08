@@ -1,11 +1,16 @@
 import 'dart:convert';
+import 'dart:ui' show SemanticsAction;
 
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mr_weeds_cloud_kingdom/domain/match3.dart';
+import 'package:mr_weeds_cloud_kingdom/game/cloud_board_game.dart';
 import 'package:mr_weeds_cloud_kingdom/main.dart';
+import 'package:mr_weeds_cloud_kingdom/presentation/phase2_screens.dart';
 
 const saveKey = 'cloud_kingdom_progress_v2';
 
@@ -49,6 +54,18 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     final progress = ProgressState();
+    progress.settings['reducedMotion'] = true;
+    progress.settings['haptics'] = false;
+    final platformCalls = <MethodCall>[];
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (call) async {
+        platformCalls.add(call);
+        return null;
+      },
+    );
+    addTearDown(() => tester.binding.defaultBinaryMessenger
+        .setMockMethodCallHandler(SystemChannels.platform, null));
     final authored = LevelSpec(
         id: 1,
         name: 'First Puff',
@@ -73,6 +90,10 @@ void main() {
             initialSession: session)));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
+    final game = tester
+        .widget<GameWidget>(find.byKey(const ValueKey('match3-board')))
+        .game;
+    expect((game as CloudBoardGame).reducedMotion, isTrue);
     final boardRect =
         tester.getRect(find.byKey(const ValueKey('match3-board')));
     await tester.tapAt(Offset(boardRect.left + boardRect.width * 1.5 / 8,
@@ -86,6 +107,10 @@ void main() {
     expect(progress.coins, 100);
     expect(progress.starLevelIds, {1});
     expect(progress.unlockedThrough, 2);
+    expect(
+        platformCalls.where((call) => call.method == 'HapticFeedback.vibrate'),
+        isEmpty,
+        reason: 'Haptics are disabled in the isolated QA profile.');
 
     final saved = (await SharedPreferences.getInstance()).getString(saveKey);
     expect(saved, isNotNull);
@@ -95,6 +120,101 @@ void main() {
     expect(restored.coins, 100);
     expect(restored.unlockedThrough, 2);
     await tester.binding.setSurfaceSize(null);
+  });
+
+  testWidgets(
+      'screen-reader board actions complete and persist an isolated win',
+      (tester) async {
+    final semantics = tester.ensureSemantics();
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final progress = ProgressState();
+    const authored = LevelSpec(
+      id: 1,
+      name: 'First Puff',
+      seed: 1001,
+      moves: 18,
+      objectives: [ObjectiveDefinition(kind: ObjectiveKind.score, target: 30)],
+      blockers: [],
+      coins: 100,
+    );
+    Future<void> persist() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(saveKey, jsonEncode(progress.toJson()));
+    }
+
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: Builder(
+          builder: (context) => Center(
+            child: TextButton(
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => PlayScreen(
+                  level: authored,
+                  progress: progress,
+                  persist: persist,
+                  initialSession:
+                      LevelSession(authored, initialTiles: boardFixture()),
+                ),
+              )),
+              child: const Text('Cloud House · Start Level 1'),
+            ),
+          ),
+        ),
+      ),
+    ));
+    await tester.tap(find.text('Cloud House · Start Level 1'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    final first =
+        tester.getSemantics(find.byKey(const ValueKey('board-cell-0-1')));
+    expect(first.label, 'Mystic Bloom, row 1, column 2');
+    expect(first.getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
+    first.owner!.performAction(first.id, SemanticsAction.tap);
+    await tester.pump();
+    final second =
+        tester.getSemantics(find.byKey(const ValueKey('board-cell-1-1')));
+    second.owner!.performAction(second.id, SemanticsAction.tap);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+
+    expect(find.text('Clouds cleared!'), findsOneWidget);
+    expect(progress.completedLevels, {1});
+    final saved = (await SharedPreferences.getInstance()).getString(saveKey);
+    expect(saved, isNotNull);
+    final restored =
+        ProgressState.fromJson(jsonDecode(saved!) as Map<String, dynamic>);
+    expect(restored.coins, 100);
+    expect(restored.starLevelIds, {1});
+    expect(restored.unlockedThrough, 2);
+    await tester.tap(find.text('Back to Cloud House'));
+    await tester.pumpAndSettle();
+    expect(find.text('Cloud House · Start Level 1'), findsOneWidget);
+    semantics.dispose();
+  });
+
+  testWidgets('settings remain labeled at large text scale with usable targets',
+      (tester) async {
+    final progress = ProgressState();
+    await tester.pumpWidget(MaterialApp(
+      home: MediaQuery(
+        data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+        child: Scaffold(
+          body: SettingsScreen(
+            progress: progress,
+            persist: () async {},
+          ),
+        ),
+      ),
+    ));
+    expect(find.text('Reduced motion'), findsOneWidget);
+    expect(find.text('Haptics'), findsOneWidget);
+    expect(tester.getSize(find.byType(SwitchListTile).first).height,
+        greaterThanOrEqualTo(48));
+    await tester.tap(find.text('Reduced motion'));
+    await tester.pump();
+    expect(progress.settings['reducedMotion'], isTrue);
   });
 
   testWidgets('Lounge style is saved and visible after app reload',

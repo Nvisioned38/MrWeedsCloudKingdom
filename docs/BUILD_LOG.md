@@ -1,5 +1,11 @@
 # Cloud Kingdom Build Log
 
+## 2026-11-07 — GitHub Issue #5 isolated Android QA
+
+Added per-cell accessibility semantics/actions to the Flame Match-3 board and regression tests for semantic gameplay, victory rewards, persisted save round-trip, Home return, and large-text Settings. Board semantics report canonical tile names, specials/conditions, and row/column; blocker cells are announced but disabled. Existing Flame touch behavior remains active.
+
+QA used mocked SharedPreferences and the disposable API 36 emulator. Full suite: 51/51 tests passed; formatter check clean; analyzer clean; split arm64-v8a Android debug APK build succeeded. Emulator gameplay reached Level 1 score 800; first-clear +100 coins/+1 star/+6 XP appeared. Home displayed Level 2/100 coins/1 star, and force-stop/relaunch followed by Continue restored that state. Native semantics exposed all 64 cell controls; landscape, 2× system text, cutout, and background/resume smoke showed no overflow/fatal logs. Existing domain/widget tests cover blocker/special/sticky/fog/objective/reward/migration/evolution/milestone behavior. Warm Flutter profile-mode `watchPerformance` captured 122 frames: average/p90 build 0.456/0.663 ms (0 build-budget misses); raster 2.024/2.513 ms (1 raster-budget miss). This is emulator evidence only. APK size 116,586,303 bytes; SHA-256 `7798B9D55D4164B172EAE42D24BA6C52DA7B5869273D282C885DBA5CB661967D`. S24 Ultra `R5CX156CZNF` was `unauthorized`; it was not used or changed.
+
 This log records verified implementation checkpoints and meaningful orchestration changes. It is not a substitute for Git history.
 
 ## 2026-11-02 — Phase 1 verified baseline

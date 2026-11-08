@@ -1,5 +1,15 @@
 # Current State
 
+## 2026-11-07 — Issue #5 isolated QA checkpoint
+
+Pulled latest `main` at `e72b0e5`. Added semantic TalkBack actions to the Flame board: each playable cell is a labeled button with tile/special/condition and row/column; semantic tap uses the same selection/swap path as touch. Blockers are announced and disabled. Added regression coverage for semantic selection, legal swap, victory, first-clear rewards, serialized schema-3 progress restoration, return to Home, large text and Settings touch targets.
+
+Isolated QA ran on Flutter widget data and disposable `MrWeeds_API36` API 36 emulator, not the owner's profile. All 51 tests pass; `flutter analyze` clean; formatting check clean; Android arm64 debug APK builds. Emulator evidence: cold launch/title, Cloud House, board, native accessibility hierarchy with 64 tile buttons, legal touch gameplay to Level 1 score 800, +100 coins/+1 star/+6 collection XP, return to Home, force-stop/relaunch and Continue restoring Level 2/100 coins/1 star. Landscape layout, 2× font and background/resume showed no fatal logs. The widget path also verifies semantic action, reward persistence and Home return in isolated schema-3 JSON.
+
+APK: split arm64-v8a debug build, 116,586,303 bytes. SHA-256: `7798B9D55D4164B172EAE42D24BA6C52DA7B5869273D282C885DBA5CB661967D`; delivered to the Desktop build folder as `MrWeedsCloudKingdom_Issue5_V1_Technical_Preview_arm64.apk`.
+
+Warm Flutter integration-driver profile sample on API 36 captured 122 frames during a Level 1 board interaction: average/p90 build 0.456/0.663 ms (0 build-budget misses); average/p90 raster 2.024/2.513 ms (1 raster-budget miss). This is the emulator performance result only. Samsung S24 Ultra reported ADB `unauthorized`; no install, app launch, data read or gameplay command was sent to it. The last known owner state was Level 3 / 210 coins / 2 stars and was not touched. Physical-device performance and spoken TalkBack service remain unverified. V1 remains a technical preview; no Phase 3 or art extraction work was started.
+
 ## Historical verified baselines
 
 The original verified Phase 1 project state used Flutter 3.47.7, Dart 3.13.5, Flame 1.38.2, Android application ID `com.mrweeds.cloudkingdom`, and 24 automated tests. It covered the authored ten-level catalog, blocker data, save-data round trips, static analysis, and a debug build. Historical checkpoint: `718b4c9`.

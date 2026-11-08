@@ -4,29 +4,34 @@ This checklist records current automated evidence and a limited Samsung screen s
 
 ## Status legend
 
-**NOT TESTED** = no current evidence; **PASS** = tested and documented; **FAIL** = defect; **BLOCKED** = waiting on original art / owner device / other dependency.
+**NOT TESTED** = no current evidence; **PASS** = tested and documented; **PARTIAL** = evidence exists but scope is incomplete; **FAIL** = defect; **BLOCKED** = waiting on owner device / other dependency.
 
 | Gate | Status | Evidence / commit / device |
 |---|---|---|
 | Resolve GitHub Issue #1 and regression for Level 30 Chapter 3 finale dialogue | PASS | Pulled `edcf151`; 29/30 and 30/30 story gate and save round-trip covered in tests |
 | Format clean | PASS | `dart format lib test` and `--set-exit-if-changed` |
 | `flutter analyze` no issues | PASS | Flutter 3.47.7, 2026-11-07 |
-| Full Flutter test suite | PASS | 48 tests passed, including manifest, renderer, progression, migration, and widget regressions |
+| Full Flutter test suite | PASS | 51 tests passed, including progression, mechanics, migration, reward/save round-trip, board semantics and large-text widget coverage |
 | 30-level catalogue and progression unaffected | PASS | Existing catalog and progression tests pass |
 | Save schema 3 upgrade/restart/reset/perk persisted | PASS | Phase 2B migration and round-trip tests pass; schema remains 3 |
 | Official logos and approved title treatment integrated | PASS | BR-005/006 alpha-bound exports verified pixel-exact to BR-001/002 masters; BR-003 v1 treatment copied unchanged; S24 title/app-shell rendering checked |
 | Approved Mr. Weed character portrait integrated | PASS | v10 CS-001 `MW_img_CS-001b.png` copied byte-identically; CH-001 OK-gesture/blank-shirt notes traced; S24 Story character catalog rendered it |
 | Core P0 Match-3 production tiles, blockers, specials and FX integrated | BLOCKED | v10 approves the concepts, but no isolated source sprites/modular exports were transferred; board remains an explicit technical renderer |
 | Cloud House, Lounge and Kitchen source artwork integrated | PASS | 7 intact originals; source hashes, dimensions and v10 approval row IDs in `assets/art/manifest.json`; Home screen rendered on S24 |
-| Home → Match-3 → Victory → Cloud House automated flow | PASS | New Game and controlled victory/reward widget tests pass |
+| Home → Match-3 → Victory → Rewards → Cloud House | PASS | Isolated widget route: semantic legal swap, victory, first-clear coins/stars/Level 2 unlock, JSON save restore, Home return; touch-driven win also passes |
 | Collection/equipment/evolution runtime states | PASS | Dynamic 30-card UI and progression tests pass; new collection art not yet approved/integrated |
 | V1 museum/shelf art states | BLOCKED | Supplement sources have pending new-file sign-off; full Gallery remains preview-only |
 | Story scope and spoiler firewall | PASS | Chapters 1–3 retained; no later-story content added |
 | Shape cues, reduced-motion and haptics wiring | PASS | Distinct fallback silhouettes; legacy leaf identity is a green spiral-bloom Mystic Bloom; settings control animation/haptic behavior |
-| TalkBack, large-text, notches, background/resume device QA | NOT TESTED | Device is connected; these checks remain unrun |
+| TalkBack cell semantics | PASS | Isolated widget semantic tap test; API 36 emulator hierarchy exposed 64 named/tappable cells with coordinates and hints. Spoken TalkBack service check not run |
+| Large text, portrait cutout and landscape layout | PASS | Widget at 2× text; API 36 emulator at 2× font retained readable text/board; landscape screenshot retained controls/board; emulator had centered cutout |
+| Background/resume lifecycle | PASS | API 36 emulator Home/background and relaunch smoke; no Flutter/Android fatal log. Mid-level board state is not saved by design |
+| Profile-mode emulator performance | PASS | Warm `watchPerformance` sample of 122 API 36 emulator frames: avg/p90 build 0.456/0.663 ms; avg/p90 raster 2.024/2.513 ms; 0 build-budget misses and 1 raster-budget miss |
+| Physical S24 Ultra performance | BLOCKED | Device ADB unauthorized; no physical-device benchmark was run |
 | Android debug APK built, filename and SHA-256 recorded | PASS | Local arm64 technical preview; SHA recorded below |
-| Samsung S24 Ultra install, launch and screen smoke | PASS | `adb install -r` updated in place; title, Home and Story character catalog rendered; existing Level 3/210 coins/2 stars remained visible; no move made |
-| Full S24 gameplay/reward/accessibility/performance QA | NOT TESTED | Only layout smoke was performed; no turn or win/reward was triggered |
+| Samsung S24 Ultra install, launch and screen smoke | BLOCKED | Current ADB state `unauthorized`; this QA run sent no app commands to the phone. Earlier authorized portrait checkpoint is documented below |
+| Full isolated gameplay loop on Android | PASS | Clean API 36 emulator reached Level 1 victory with score 800, +100 coins/+1 star/+6 XP; Home showed Level 2/100 coins/1 star; after force-stop/relaunch, Continue restored that Home state |
+| S24 physical gameplay/reward/accessibility/performance QA | BLOCKED | Device authorization required; app data was not read or modified |
 | Owner final visual sign-off against v10 workbook | BLOCKED | Workbook is read; full V1 art and manual QA gates remain open |
 | No generic placeholders on primary V1 path | BLOCKED | Exact logos and isolated Match-3 production sprites are not available |
 
@@ -62,3 +67,15 @@ This checklist records current automated evidence and a limited Samsung screen s
 10. Record APK SHA-256, Android OS/device info, build commit, manual pass/fail notes, screenshots if supplied, and final sign-off.
 
 **A compiled APK is not proof of a successful Samsung S24 Ultra installation or player experience.**
+
+## 2026-11-07 GitHub Issue #5 isolated Android QA
+
+- Baseline pulled: `e72b0e5` (latest main before QA work). The owner's S24 save was explicitly kept out of all modifying checks; connected S24 `R5CX156CZNF` reported `unauthorized`, and no install, launch, or app-data command targeted that serial.
+- Isolation: disposable `MrWeeds_API36` Android emulator, package `com.mrweeds.cloudkingdom`, clean profile. Emulator installation and Level 1 play used only its own data. Existing S24 progress was not read or changed.
+- Gameplay/rewards/save: isolated widget route invoked semantic tap actions for a valid tile swap, reached victory/reward, verified first-clear coins/stars/Level 2 unlock, deserialized persisted schema-3 save, and returned to Home. On the clean emulator, legal touch play reached score 800 and the game displayed +100 coins/+1 star/+6 collection XP. Home showed Level 2/100 coins/1 star. Force-stop/relaunch displayed Continue; resuming returned to the saved Level 2/100-coin/1-star Home state.
+- Mechanics: existing domain regressions cover invalid swap rollback, zero-move loss, blockers, Sticky Syrup, Fog identity reveal, Rocket, Prism, Cloud Bomb, score/collect objectives, deterministic replay, reward idempotence, Level 20 Kitchen, Level 30 Gallery preview, 30-card state/evolution/equipment/perk and schema 2→3 migration. Undo is not implemented in V1 and was not applicable.
+- Accessibility/layout: widget semantic action and 2× text-scale settings tests pass. Android UIAutomator observed 64 labeled/tappable board cells with row/column and selection guidance. API 36 emulator checks at 2× font, portrait cutout and landscape showed no overflow; system TalkBack audio/service was not enabled or assessed.
+- Lifecycle/logs: after the emulator victory, Home/background, force-stop/relaunch and Continue restored post-victory progress with no Flutter or Android fatal errors. Mid-level board moves are not persisted; completed-level progress persists.
+- Performance: used Flutter integration driver's profile-mode `watchPerformance` on the API 36 emulator after warm-up, with mocked preferences and a board interaction. It captured 122 frames: average/p90 build 0.456/0.663 ms (0 build-budget misses); average/p90 raster 2.024/2.513 ms (1 raster-budget miss). This passes the emulator sample only; it does not replace an S24 benchmark. No ANR or crash occurred.
+- Tool gate: `dart format --set-exit-if-changed lib test integration_test test_driver` clean; full Flutter suite 51/51 passed; `flutter analyze` no issues; arm64 Android APK build passed. APK: `C:\Users\LifeN\OneDrive\Desktop\Mr Weeds\App_Game\The Build\MrWeedsCloudKingdom_Issue5_V1_Technical_Preview_arm64.apk`; split arm64-v8a, 116,586,303 bytes; SHA-256 `7798B9D55D4164B172EAE42D24BA6C52DA7B5869273D282C885DBA5CB661967D`. A first test attempt had a test-harness compile/setup issue that was corrected before the green full run.
+- S24 physical QA remains blocked by ADB authorization. The prior known owner state was Level 3 / 210 coins / 2 stars; this run did not touch it.

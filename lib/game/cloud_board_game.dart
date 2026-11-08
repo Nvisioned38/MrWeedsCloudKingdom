@@ -9,6 +9,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
   CloudBoardGame({
     required this.session,
     required this.onTurn,
+    this.onSelectionChanged,
     BoardSpriteRenderer? spriteRenderer,
     BoardEffectsHook? effectsHook,
     this.reducedMotion = false,
@@ -21,6 +22,8 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
   final bool reducedMotion;
   final LevelSession session;
   final void Function(TurnResult result) onTurn;
+  final VoidCallback? onSelectionChanged;
+  Cell? get selectedCell => _selected;
   Cell? _selected;
   bool _resolving = false;
   double _feedbackLeft = 0;
@@ -155,13 +158,28 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
         session.board.blockerAt(row, col) != null) {
       return;
     }
-    final tapped = Cell(row, col);
+    tapCell(Cell(row, col));
+  }
+
+  /// Handles the same move input for TalkBack's semantic cell actions.
+  void tapCell(Cell tapped) {
+    if (_resolving ||
+        session.outcome != LevelOutcome.playing ||
+        tapped.row < 0 ||
+        tapped.row >= session.board.rows ||
+        tapped.col < 0 ||
+        tapped.col >= session.board.cols ||
+        session.board.blockerAt(tapped.row, tapped.col) != null) {
+      return;
+    }
     if (_selected == null) {
       _selected = tapped;
+      onSelectionChanged?.call();
       return;
     }
     if (_selected == tapped) {
       _selected = null;
+      onSelectionChanged?.call();
       return;
     }
     final from = _selected!;
@@ -184,6 +202,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
       onTurn(result);
     } else {
       _selected = tapped;
+      onSelectionChanged?.call();
     }
   }
 }
