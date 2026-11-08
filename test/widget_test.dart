@@ -33,7 +33,18 @@ void main() {
 
   testWidgets('New Game opens Cloud House and Level 1', (tester) async {
     await tester.pumpWidget(const CloudKingdomApp());
-    await tester.pumpAndSettle();
+    // BootScreen loads JSON and the expanded art manifest from real assets.
+    // A perpetual loading spinner cannot be pumpAndSettle'd while those
+    // asynchronous rootBundle operations are still in flight.
+    for (var attempt = 0;
+        attempt < 75 && find.text('New Game').evaluate().isEmpty;
+        attempt++) {
+      await tester.runAsync(() async {
+        await Future<void>.delayed(const Duration(milliseconds: 20));
+      });
+      await tester.pump();
+    }
+    expect(find.text('New Game'), findsOneWidget);
     await tester.tap(find.text('New Game'));
     await tester.pumpAndSettle();
     expect(find.text('Cloud House'), findsWidgets);

@@ -819,6 +819,14 @@ class _PlayScreenState extends State<PlayScreen> {
                                 key: const ValueKey('match3-board'),
                                 game: game,
                               ),
+                              Positioned.fill(
+                                child: IgnorePointer(
+                                  child: Image.asset(
+                                    'assets/art/match3/board_frame_transparent_center.png',
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
                               for (var row = 0; row < rows; row++)
                                 for (var col = 0; col < cols; col++)
                                   _BoardCellSemantics(
