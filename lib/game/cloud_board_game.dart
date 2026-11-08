@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 
 import '../domain/match3.dart';
 import 'board_sprite_renderer.dart';
+import 'match3_png_board_renderer.dart';
 
 class CloudBoardGame extends FlameGame with TapCallbacks {
   CloudBoardGame({
@@ -17,7 +18,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
             spriteRenderer ?? const CloudKingdomFallbackBoardRenderer(),
         effectsHook = effectsHook ?? const NoBoardEffectsHook();
 
-  final BoardSpriteRenderer spriteRenderer;
+  BoardSpriteRenderer spriteRenderer;
   final BoardEffectsHook effectsHook;
   final bool reducedMotion;
   final LevelSession session;
@@ -35,6 +36,16 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
   Cell? _swapB;
   Piece? _swapPieceA;
   Piece? _swapPieceB;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    // Existing renderer seams remain injectable for tests/alternate clients.
+    // New image loading affects presentation only, not deterministic moves.
+    if (spriteRenderer is CloudKingdomFallbackBoardRenderer) {
+      spriteRenderer = await CloudKingdomPngBoardRenderer.load();
+    }
+  }
 
   @override
   Color backgroundColor() => const Color(0xff173d55);
