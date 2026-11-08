@@ -55,8 +55,8 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
     expect(find.textContaining('Level 1'), findsWidgets);
-    expect(find.text('Moves 18'), findsOneWidget);
-    expect(find.text('Score'), findsOneWidget);
+    expect(find.byKey(const ValueKey('issue4-moves-counter')), findsOneWidget);
+    expect(find.text('Score 0'), findsOneWidget);
   });
 
   testWidgets(

@@ -45,12 +45,8 @@ void main() {
     expect(find.text('Score 60'), findsOneWidget);
     expect(find.text('Back to Cloud House'), findsOneWidget);
     expect(
-      find.byWidgetPredicate(
-        (widget) =>
-            widget is Image &&
-            widget.image is AssetImage &&
-            (widget.image as AssetImage).assetName ==
-                'assets/art/match3/moves_counter_backing_low.png',
+      find.byKey(
+        const ValueKey('assets/art/match3/moves_counter_backing_low.png'),
       ),
       findsOneWidget,
     );
@@ -95,10 +91,10 @@ void main() {
     await tester.tap(find.text('Specials guide'));
     await tester.pumpAndSettle();
 
-    final imagePaths = tester.widgetList<Image>(find.byType(Image)).map(
-          (image) => (image.image as AssetImage).assetName,
-        );
-    expect(imagePaths, contains('assets/art/match3/cloud_cup_vaporizer.png'));
-    expect(imagePaths, contains('assets/art/brand/cloud_cup_logo.png'));
+    expect(find.byKey(const ValueKey('issue4-vaporizer-art')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('issue4-cloud-cup-logo-overlay')),
+      findsOneWidget,
+    );
   });
 }

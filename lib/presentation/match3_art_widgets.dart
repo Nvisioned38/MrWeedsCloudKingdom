@@ -112,7 +112,12 @@ class Match3MovesCounter extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Image.asset(_asset, fit: BoxFit.contain, cacheWidth: 128),
+                Image.asset(
+                  _asset,
+                  key: ValueKey(_asset),
+                  fit: BoxFit.contain,
+                  cacheWidth: 128,
+                ),
                 Center(
                   child: Text(
                     '$movesRemaining',
@@ -352,6 +357,7 @@ class _Match3SpecialsGuideState extends State<Match3SpecialsGuide> {
                     children: [
                       Image.asset(
                         '${_match3Art}cloud_cup_vaporizer.png',
+                        key: const ValueKey('issue4-vaporizer-art'),
                         fit: BoxFit.contain,
                         cacheWidth: 160,
                       ),
@@ -362,6 +368,7 @@ class _Match3SpecialsGuideState extends State<Match3SpecialsGuide> {
                         height: 13,
                         child: Image.asset(
                           '${_brandArt}cloud_cup_logo.png',
+                          key: const ValueKey('issue4-cloud-cup-logo-overlay'),
                           fit: BoxFit.contain,
                           cacheWidth: 384,
                         ),
