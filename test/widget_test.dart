@@ -59,6 +59,37 @@ void main() {
     expect(find.text('Score 0'), findsOneWidget);
   });
 
+  testWidgets('board title reflows without truncation at 2x text scale',
+      (tester) async {
+    const authored = LevelSpec(
+      id: 1,
+      name: 'First Puff',
+      seed: 1001,
+      moves: 18,
+      objectives: [ObjectiveDefinition(kind: ObjectiveKind.score, target: 30)],
+      blockers: [],
+      coins: 100,
+    );
+    await tester.pumpWidget(MaterialApp(
+      home: MediaQuery(
+        data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+        child: PlayScreen(
+          level: authored,
+          progress: ProgressState(),
+          persist: () async {},
+          initialSession: LevelSession(authored, initialTiles: boardFixture()),
+        ),
+      ),
+    ));
+    await tester.pump();
+    expect(find.text('Level 1\nFirst Puff'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('issue4-objectives-large-text-backing')),
+      findsOneWidget,
+    );
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets(
       'controlled level win persists first-clear rewards and unlocks Level 2',
       (tester) async {
@@ -107,6 +138,17 @@ void main() {
     expect((game as CloudBoardGame).reducedMotion, isTrue);
     final boardRect =
         tester.getRect(find.byKey(const ValueKey('match3-board')));
+    final frameRect =
+        tester.getRect(find.byKey(const ValueKey('match3-board-frame')));
+    expect(boardRect.center.dx, closeTo(frameRect.center.dx, .1));
+    expect(boardRect.center.dy, closeTo(frameRect.center.dy, .1));
+    expect(boardRect.width / frameRect.width, closeTo(.824, .002));
+    final firstCell =
+        tester.getRect(find.byKey(const ValueKey('board-cell-0-0')));
+    final lastCell =
+        tester.getRect(find.byKey(const ValueKey('board-cell-7-7')));
+    expect(firstCell.left, greaterThan(frameRect.left + frameRect.width * .08));
+    expect(lastCell.right, lessThan(frameRect.right - frameRect.width * .08));
     await tester.tapAt(Offset(boardRect.left + boardRect.width * 1.5 / 8,
         boardRect.top + boardRect.height * .5 / 8));
     await tester.pump(const Duration(milliseconds: 30));

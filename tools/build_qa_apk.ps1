@@ -9,6 +9,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $qaPackage = 'com.mrweeds.cloudkingdom.qa'
 $productionPackage = 'com.mrweeds.cloudkingdom'
+$qaAndroidUser = '0'
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $flutterApk = Join-Path $repoRoot 'build/app/outputs/flutter-apk/app-arm64-v8a-debug.apk'
 $apk = Join-Path $repoRoot 'build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk'
@@ -100,6 +101,25 @@ function Assert-TargetDevice {
     return $adb
 }
 
+function Assert-QaUserZero([string] $AdbPath) {
+    $activeUser = & $AdbPath -s $DeviceSerial shell am get-current-user 2>&1
+    if ($LASTEXITCODE -ne 0 -or ($activeUser -join '').Trim() -ne $qaAndroidUser) {
+        throw "Refusing QA install: active Android user is not $qaAndroidUser on ${DeviceSerial}: $activeUser"
+    }
+
+    $existingQa = & $AdbPath -s $DeviceSerial shell pm path --user $qaAndroidUser $qaPackage 2>&1
+    if ($LASTEXITCODE -ne 0 -or -not ($existingQa -match 'package:.+\.apk')) {
+        throw "Refusing QA install: existing $qaPackage was not confirmed for Android user $qaAndroidUser on ${DeviceSerial}: $existingQa"
+    }
+
+    $packageHelp = & $AdbPath -s $DeviceSerial shell cmd package help 2>&1
+    $helpText = $packageHelp -join "`n"
+    if ($LASTEXITCODE -ne 0 -or $helpText -notmatch '(?s)install \[-[^\]]*\].*?--user USER_ID' -or
+        $helpText -notmatch '--user: install under the given user') {
+        throw 'Refusing QA install: Android Package Manager did not confirm an install --user USER_ID option.'
+    }
+}
+
 Push-Location $repoRoot
 try {
     if ($Action -eq 'UninstallQa') {
@@ -147,13 +167,23 @@ try {
 
     if ($Action -eq 'InstallQa') {
         $adb = Assert-TargetDevice
-        & $adb -s $DeviceSerial install -r $apk
-        if ($LASTEXITCODE -ne 0) { throw "ADB install failed for isolated QA package on $DeviceSerial." }
-        $installed = & $adb -s $DeviceSerial shell pm path $qaPackage 2>&1
-        if ($LASTEXITCODE -ne 0 -or -not ($installed -match [regex]::Escape($qaPackage))) {
-            throw "QA package install could not be verified on ${DeviceSerial}: $installed"
+        Assert-QaUserZero $adb
+        $remoteApk = "/data/local/tmp/cloudkingdom-qa-$hash.apk"
+        & $adb -s $DeviceSerial push $apk $remoteApk
+        if ($LASTEXITCODE -ne 0) { throw "Could not stage the verified QA APK on $DeviceSerial; no package installation was attempted." }
+        $remoteHashResult = & $adb -s $DeviceSerial shell sha256sum $remoteApk 2>&1
+        if ($LASTEXITCODE -ne 0 -or (($remoteHashResult -join ' ') -notmatch [regex]::Escape($hash))) {
+            throw "Staged QA APK hash did not match the local verified artifact: $remoteHashResult. No package installation was attempted."
         }
-        Write-Output "Installed and verified only $qaPackage on $DeviceSerial. No app data was cleared."
+        & $adb -s $DeviceSerial shell cmd package install -r --user $qaAndroidUser $remoteApk
+        if ($LASTEXITCODE -ne 0) { throw "Android Package Manager rejected the QA-only install for user $qaAndroidUser on $DeviceSerial. No uninstall or data-clear fallback was attempted." }
+        $installed = & $adb -s $DeviceSerial shell pm path --user $qaAndroidUser $qaPackage 2>&1
+        if ($LASTEXITCODE -ne 0 -or -not ($installed -match [regex]::Escape($qaPackage))) {
+            throw "QA package install could not be verified for Android user $qaAndroidUser on ${DeviceSerial}: $installed"
+        }
+        & $adb -s $DeviceSerial shell rm $remoteApk
+        if ($LASTEXITCODE -ne 0) { Write-Warning "The verified QA APK remains staged at $remoteApk; package install and user 0 verification succeeded." }
+        Write-Output "Installed and verified only $qaPackage for Android user $qaAndroidUser on $DeviceSerial. Reinstall used -r; no app data was cleared."
     }
 } finally {
     Pop-Location

@@ -215,7 +215,8 @@ class TitleScreen extends StatelessWidget {
                                     saveRecoveryBackupAvailable
                                         ? 'Saved progress could not be read. A local backup was preserved. Start a new game to continue.'
                                         : 'Saved progress could not be read. The original was left untouched. Starting a new game will replace it.',
-                                    key: const ValueKey('save-recovery-warning'),
+                                    key:
+                                        const ValueKey('save-recovery-warning'),
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       color: Color(0xffffe0a0),
@@ -788,79 +789,110 @@ class _PlayScreenState extends State<PlayScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-            title: Text('Level ${widget.level.id} · ${widget.level.name}'),
-            leading: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.close))),
-        body: SafeArea(
-            child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 4, 10, 0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                    child: Match3ObjectivePanel(
-                        objectives: session.objectives)),
-                const SizedBox(width: 4),
-                Match3MovesCounter(movesRemaining: session.movesRemaining),
-              ],
+  Widget build(BuildContext context) {
+    final largeText = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
+    final levelTitle = 'Level ${widget.level.id} · ${widget.level.name}';
+    return Scaffold(
+      appBar: AppBar(
+          toolbarHeight: largeText ? 96 : null,
+          title: Semantics(
+            label: levelTitle,
+            child: Text(
+              largeText
+                  ? 'Level ${widget.level.id}\n${widget.level.name}'
+                  : levelTitle,
+              maxLines: largeText ? 2 : 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-          Match3ScoreProgress(
-            score: session.board.score,
-            scoreTarget: _scoreTarget,
-            clearAvailable: session.outcome == LevelOutcome.won,
+          leading: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(Icons.close))),
+      body: SafeArea(
+          child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(10, 4, 10, 0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                  child: Match3ObjectivePanel(objectives: session.objectives)),
+              const SizedBox(width: 4),
+              Match3MovesCounter(movesRemaining: session.movesRemaining),
+            ],
           ),
-          Expanded(
-              child: Center(
-                  child: AspectRatio(
-                      aspectRatio: 1,
-                      child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: LayoutBuilder(builder: (context, constraints) {
-                            final rows = session.board.rows;
-                            final cols = session.board.cols;
-                            return Stack(children: [
-                              GameWidget(
-                                key: const ValueKey('match3-board'),
-                                game: game,
-                              ),
-                              Positioned.fill(
-                                child: IgnorePointer(
-                                  child: Image.asset(
-                                    'assets/art/match3/board_frame_transparent_center.png',
-                                    fit: BoxFit.fill,
+        ),
+        Match3ScoreProgress(
+          score: session.board.score,
+          scoreTarget: _scoreTarget,
+          clearAvailable: session.outcome == LevelOutcome.won,
+        ),
+        Expanded(
+            child: Center(
+                child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Stack(children: [
+                          Align(
+                            child: FractionallySizedBox(
+                              // The approved frame art reserves roughly
+                              // 8.8% at each edge for its bezel. Keep the
+                              // playable grid and hit targets inside the
+                              // transparent center instead of under the art.
+                              widthFactor: .824,
+                              heightFactor: .824,
+                              child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                final rows = session.board.rows;
+                                final cols = session.board.cols;
+                                return Stack(children: [
+                                  Positioned.fill(
+                                    child: GameWidget(
+                                      key: const ValueKey('match3-board'),
+                                      game: game,
+                                    ),
                                   ),
-                                ),
+                                  for (var row = 0; row < rows; row++)
+                                    for (var col = 0; col < cols; col++)
+                                      _BoardCellSemantics(
+                                        key: ValueKey('board-cell-$row-$col'),
+                                        row: row,
+                                        col: col,
+                                        width: constraints.maxWidth / cols,
+                                        height: constraints.maxHeight / rows,
+                                        piece: session.board.at(row, col),
+                                        blocker:
+                                            session.board.blockerAt(row, col),
+                                        selected:
+                                            game.selectedCell == Cell(row, col),
+                                        onTap: () =>
+                                            game.tapCell(Cell(row, col)),
+                                      ),
+                                ]);
+                              }),
+                            ),
+                          ),
+                          Positioned.fill(
+                            child: IgnorePointer(
+                              child: Image.asset(
+                                'assets/art/match3/board_frame_transparent_center.png',
+                                key: const ValueKey('match3-board-frame'),
+                                fit: BoxFit.fill,
                               ),
-                              for (var row = 0; row < rows; row++)
-                                for (var col = 0; col < cols; col++)
-                                  _BoardCellSemantics(
-                                    key: ValueKey('board-cell-$row-$col'),
-                                    row: row,
-                                    col: col,
-                                    width: constraints.maxWidth / cols,
-                                    height: constraints.maxHeight / rows,
-                                    piece: session.board.at(row, col),
-                                    blocker: session.board.blockerAt(row, col),
-                                    selected:
-                                        game.selectedCell == Cell(row, col),
-                                    onTap: () => game.tapCell(Cell(row, col)),
-                                  ),
-                            ]);
-                          }))))),
-          Match3SpecialsGuide(session: session),
-          if (widget.level.tutorial != null)
-            Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                child: Text(_tutorialText(widget.level.tutorial!),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodySmall)),
-        ])),
-      );
+                            ),
+                          ),
+                        ]))))),
+        Match3SpecialsGuide(session: session),
+        if (widget.level.tutorial != null)
+          Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: Text(_tutorialText(widget.level.tutorial!),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall)),
+      ])),
+    );
+  }
 }
 
 String _tutorialText(String id) => switch (id) {
@@ -976,8 +1008,7 @@ class ResultsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final won = session.outcome == LevelOutcome.won;
     final navigator = Navigator.of(context);
-    return Scaffold(
-        body: SafeArea(
+    return Scaffold(body: SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) {
           final panelWidth = match3PanelWidth(constraints.maxWidth - 32);
@@ -1023,9 +1054,7 @@ class ResultsScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 8),
                                     Icon(
-                                      won
-                                          ? Icons.celebration
-                                          : Icons.cloud_off,
+                                      won ? Icons.celebration : Icons.cloud_off,
                                       size: 42,
                                       color: won
                                           ? const Color(0xffffd36e)
@@ -1054,7 +1083,8 @@ class ResultsScreen extends StatelessWidget {
                                       reward!.firstClear
                                           ? '+${reward!.coins} coins · +${reward!.stars} Star · +${reward!.collectionXp} Collection XP${reward!.keys > 0 ? ' · +${reward!.keys} Key' : ''}'
                                           : 'Replay complete · no duplicate first-clear reward',
-                                      key: const ValueKey('issue4-dynamic-reward'),
+                                      key: const ValueKey(
+                                          'issue4-dynamic-reward'),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),

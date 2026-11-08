@@ -13,81 +13,90 @@ class Match3ObjectivePanel extends StatelessWidget {
   final List<ObjectiveProgress> objectives;
 
   @override
-  Widget build(BuildContext context) => Semantics(
-        key: const ValueKey('issue4-objectives-panel'),
-        container: true,
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-                '${_match3Art}objectives_panel_backing.png',
-                fit: BoxFit.fill,
-                cacheWidth: 960,
-                excludeFromSemantics: true,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text(
-                    'OBJECTIVES',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1,
-                      color: Colors.white,
+  Widget build(BuildContext context) {
+    final largeText = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
+    return Semantics(
+      key: const ValueKey('issue4-objectives-panel'),
+      container: true,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: largeText
+                ? DecoratedBox(
+                    key: const ValueKey('issue4-objectives-large-text-backing'),
+                    decoration: BoxDecoration(
+                      color: const Color(0xff321052),
+                      borderRadius: BorderRadius.circular(18),
+                      border:
+                          Border.all(color: const Color(0xffffcf59), width: 3),
+                    ),
+                  )
+                : Image.asset(
+                    '${_match3Art}objectives_panel_backing.png',
+                    fit: BoxFit.fill,
+                    cacheWidth: 960,
+                    excludeFromSemantics: true,
+                  ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  'OBJECTIVES',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                    color: Colors.white,
+                  ),
+                ),
+                for (final objective in objectives)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          objective.complete
+                              ? '${_match3Art}objective_state_complete.png'
+                              : '${_match3Art}objective_state_in_progress.png',
+                          width: 26,
+                          height: 26,
+                          cacheWidth: 64,
+                          excludeFromSemantics: true,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            objective.label,
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${objective.value}/${objective.definition.target}',
+                          style:
+                              Theme.of(context).textTheme.labelLarge?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ],
                     ),
                   ),
-                  for (final objective in objectives)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            objective.complete
-                                ? '${_match3Art}objective_state_complete.png'
-                                : '${_match3Art}objective_state_in_progress.png',
-                            width: 26,
-                            height: 26,
-                            cacheWidth: 64,
-                            excludeFromSemantics: true,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              objective.label,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            '${objective.value}/${objective.definition.target}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                ],
-              ),
+              ],
             ),
-          ],
-        ),
-      );
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class Match3MovesCounter extends StatelessWidget {
@@ -122,12 +131,12 @@ class Match3MovesCounter extends StatelessWidget {
                   child: Text(
                     '$movesRemaining',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w900,
-                          shadows: const [
-                            Shadow(color: Colors.black87, blurRadius: 3)
-                          ],
-                        ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      shadows: const [
+                        Shadow(color: Colors.black87, blurRadius: 3)
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -149,9 +158,8 @@ class Match3ScoreProgress extends StatelessWidget {
   final int scoreTarget;
   final bool clearAvailable;
 
-  double get _progress => scoreTarget <= 0
-      ? 0
-      : (score / scoreTarget).clamp(0.0, 1.0).toDouble();
+  double get _progress =>
+      scoreTarget <= 0 ? 0 : (score / scoreTarget).clamp(0.0, 1.0).toDouble();
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -179,12 +187,12 @@ class Match3ScoreProgress extends StatelessWidget {
                                 .textTheme
                                 .labelLarge
                                 ?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  shadows: const [
-                                    Shadow(color: Colors.black87, blurRadius: 3)
-                                  ],
-                                ),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              shadows: const [
+                                Shadow(color: Colors.black87, blurRadius: 3)
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -347,7 +355,8 @@ class _Match3SpecialsGuideState extends State<Match3SpecialsGuide> {
           children: [
             Semantics(
               image: true,
-              label: 'Logo-free Cloud Cup vaporizer artwork with the official Cloud Cup logo overlaid separately',
+              label:
+                  'Logo-free Cloud Cup vaporizer artwork with the official Cloud Cup logo overlaid separately',
               child: ExcludeSemantics(
                 child: SizedBox(
                   width: 74,
@@ -424,7 +433,8 @@ class _Match3SpecialsGuideState extends State<Match3SpecialsGuide> {
           behavior: HitTestBehavior.opaque,
           onTapDown:
               enabled ? (_) => setState(() => _pressedKey = keyName) : null,
-          onTapCancel: enabled ? () => setState(() => _pressedKey = null) : null,
+          onTapCancel:
+              enabled ? () => setState(() => _pressedKey = null) : null,
           onTapUp: enabled ? (_) => setState(() => _pressedKey = null) : null,
           onTap: enabled ? () => _select(keyName) : null,
           child: Padding(
@@ -507,13 +517,14 @@ class Match3PrimaryArtButton extends StatelessWidget {
                       child: Text(
                         label,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              shadows: const [
-                                Shadow(color: Colors.black87, blurRadius: 3)
-                              ],
-                            ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          shadows: const [
+                            Shadow(color: Colors.black87, blurRadius: 3)
+                          ],
+                        ),
                       ),
                     ),
                   ),
