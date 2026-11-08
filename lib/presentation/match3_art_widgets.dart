@@ -461,7 +461,11 @@ class _Match3SpecialsGuideState extends State<Match3SpecialsGuide> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.asset('$_match3Art$art', cacheWidth: 128),
+                      Image.asset(
+                        '$_match3Art$art',
+                        key: ValueKey('issue4-booster-$keyName-$art'),
+                        cacheWidth: 128,
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: Image.asset(

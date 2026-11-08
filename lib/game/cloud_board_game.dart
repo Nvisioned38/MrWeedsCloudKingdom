@@ -15,12 +15,14 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     this.onSelectionChanged,
     BoardSpriteRenderer? spriteRenderer,
     BoardEffectsHook? effectsHook,
+    this.approvedArtLoader,
     this.reducedMotion = false,
   })  : spriteRenderer =
             spriteRenderer ?? const CloudKingdomFallbackBoardRenderer(),
         effectsHook = effectsHook ?? const NoBoardEffectsHook();
 
   BoardSpriteRenderer spriteRenderer;
+  final Future<BoardSpriteRenderer> Function()? approvedArtLoader;
   final BoardEffectsHook effectsHook;
   final bool reducedMotion;
   final LevelSession session;
@@ -49,7 +51,9 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
       // image codecs here prevents the board from accepting input in widget
       // tests and can delay input on slower Android devices. The existing
       // vector renderer remains visible until the exact PNGs are ready.
-      unawaited(CloudKingdomPngBoardRenderer.load().then((loaded) {
+      final loadArtwork =
+          approvedArtLoader ?? () => CloudKingdomPngBoardRenderer.load();
+      unawaited(loadArtwork().then((loaded) {
         spriteRenderer = loaded;
       }).catchError((Object error, StackTrace stack) {
         // Preserve playable fallback when a device cannot decode art.

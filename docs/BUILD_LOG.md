@@ -138,3 +138,11 @@ The current integrated APK has **not** been installed or visually/gameplay-teste
 ## 2026-11-08 — Issue #15 objectives panel sizing
 
 On latest `main` `8cd0901` (after PR #13 merge), replaced the fixed-height ornamental objectives backing behavior with a content-sized high-contrast Flutter frame. The frame adapts across 1–3 rows and scales; objective labels wrap, values remain contained, and the 30-move counter scales inside its backing. The approved image exports and their manifest bytes were left unchanged. Added regressions for 0.9×, 1×, 1.5×, 2×, long localized-like labels, three objective rows, and 64-cell board visibility. Focused widget tests passed (12/12); analyzer and formatter passed. Full test/build gates follow after Issue #14 fixtures.
+
+## 2026-11-08 — Issues #15 and #14 QA follow-up
+
+Issue #15: content-aware objective panel/Flutter frame, wrapped labels and contained counters; verified 1–3 objective fixtures with localized-like long text at 0.9×/1×/1.5×/2×, plus complete board visibility. S24 QA-only Level 10 screenshots at 0.9× and 2× pass; saved progress was not reset, and system scale returned to 0.9.
+
+Issue #14: added test-only approved-art render/UI fixtures for Fog, Syrup, reinforced crate damage, Torch direction, booster states/semantics, smoke sequence, combo/cascade, Reduced Motion, missing-image fallback with selectable 64-cell board, and fresh isolated first-clear rewards after restoration/replay. Optional states were automated-only, not claimed as S24 physical passes.
+
+Gate: 71/71 Flutter tests, analyzer clean, changed-file format clean, 37/37 art hash/dimensions/RGBA verifier, QA and production-ID arm64 debug APK builds passed. QA app was updated only with user-0 `-r`; production was not installed or accessed. Issue #6 and owner final visual sign-off remain open; no Phase 3.
