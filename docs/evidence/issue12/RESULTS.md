@@ -10,7 +10,7 @@
 - ADB authorization: **PASS** (`device` state); active user: **PASS** (`0`); QA package path before and after install: **PASS**.
 - The installed ADB 37.0.1 does not support `adb install --user`; the first guard probe failed closed before installation. `tools/build_qa_apk.ps1` now verifies active user 0 and the existing QA package, confirms Android Package Manager's documented `install --user USER_ID`, stages only the locally verified QA APK, checks the staged SHA-256, then uses `cmd package install -r --user 0` and verifies `pm path --user 0`.
 - Reinstall used replace semantics (`-r`); no uninstall, app-data clear, profile switch, Secure Folder operation, production-package command, or production save access was performed. Existing QA progress was retained.
-- Final debug APK: `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk` (arm64, package `com.mrweeds.cloudkingdom.qa`, version `0.1.0` / code `2001`, min SDK 24). See `qa-build-metadata.json` for the final commit and SHA-256.
+- Final debug APK: `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk` (arm64, package `com.mrweeds.cloudkingdom.qa`, version `0.1.0` / code `2001`, min SDK 24; 117,582,826 bytes). SHA-256: `26be7bcf039e9074c571e8d7af12611847d84b0295f6ba2eec2c3245b5b8216e`. Built from source commit `92107ed4eb87fc2905ae03300e21158b22f82f10` and installed over the existing user-0 QA app with data-preserving replace semantics.
 
 ## Results
 
