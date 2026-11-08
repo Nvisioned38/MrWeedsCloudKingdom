@@ -110,3 +110,24 @@ This newer device-specific entry supersedes the older “ADB unauthorized” sta
 - V1 is not declared complete. Phase 3 remains unstarted.
 
 - Current build evidence: PR #10 run 42441154111 succeeded; Flutter 3.47.7, 53/53 tests, analyzer clean, Android debug artifact `cloud-kingdom-android-debug-32` (SHA-256 `f58b2bc3938f2f90e15db15b888edebb2cd45fccd541884e0bdb0add34192d9b`). Device-specific rows above refer to earlier APK source and still require a current isolated-package run.
+
+## 2026-11-08 — Issue #12 S24 visual QA preflight
+
+| Issue #12 item | Status | Evidence |
+|---|---|---|
+| Latest `main` baseline / CI | PASS | `main` at `5e6f149290b0901bf9557b83ec198ef7b91c1671`; [CI run 42446015783](https://github.com/Nvisioned38/MrWeedsCloudKingdom/actions/runs/42446015783) passed. Flutter tests: 64/64; analyzer: no issues; issue4 verifier: 37/37; Android debug build passed. |
+| Repository QA APK build | PASS | `tools/build_qa_apk.ps1 -Action Build` built and `aapt` verified isolated package `com.mrweeds.cloudkingdom.qa`, version `0.1.0`, code `2001`, min SDK 24. APK: `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk`; SHA-256 `83597c0b654c5a5db0b2acdcfa9d9d9a3feb54a72a7393bea109c6ae5ebaa9c3`. |
+| S24 model/ADB serial | PASS | `SM-S928U`, serial `R5CX156CZNF`, ADB state `device`. |
+| Active-user production baseline | BLOCKED | Read-only `am get-current-user` returned user `0`; exact package inventory for user 0 found `com.mrweeds.cloudkingdom.qa` but did not find `com.mrweeds.cloudkingdom`; `pm path` for production returned no path. Android also lists Secure Folder user 150. Per Issue #12, do not install until the active-user baseline is confirmable. |
+| Install current QA APK | NOT TESTED | `tools/build_qa_apk.ps1 -Action InstallQa` was not run. No install, uninstall, clear, launch or profile command was sent to the S24. |
+| Title → Home → Board, v10 branding, Cloud House and image-load errors | NOT TESTED | Current QA build was not installed/launched. |
+| Five tiles, crates, Fog, Sticky Syrup, specials, Cloud Cup logo overlay and booster states | NOT TESTED | No current-build screen capture. |
+| Full 8×8 board, frame fit, alignment, touch targets and safe areas | NOT TESTED | No current-build screen capture or interaction. |
+| Live HUD values, 2× text and normal/low/zero moves | NOT TESTED | No current-build screen capture. |
+| Smoke, sparkle, cascade/combo FX and Reduced Motion | NOT TESTED | No current-build interaction. |
+| Victory/rewards/Cloud House/relaunch persistence | NOT TESTED | No level was played. Existing S24 QA evidence in earlier sections predates the 37-art current build. |
+| Current-art S24 profile performance | NOT TESTED | No profile session. Historical pre-art baseline: 123 frames; build avg/p90/p99 1.275/2.295/5.882 ms, zero budget misses; raster 3.290/5.399/8.450 ms, zero budget misses. |
+| Production app/save remained untouched | PASS | Only read-only device enumeration, active-user and package/path queries were performed. No install action or production-package mutation ran. |
+| Screenshots / app logs | NOT TESTED | No app launch occurred; therefore no QA screenshots or app log capture exist for this build. |
+
+The APK is a debug technical-preview build, not a release-signed package. To resume Issue #12, make the production package visible/confirmable in the intended active Android user, then rerun the safety preflight before `InstallQa`. Do not switch profiles or change the production app as part of this checkpoint.

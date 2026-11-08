@@ -1,5 +1,11 @@
 # Current State
 
+## 2026-11-08 — Issue #12 isolated S24 QA preflight blocked
+
+Pulled `main` at `5e6f149290b0901bf9557b83ec198ef7b91c1671`; CI run 42446015783 passed (64 Flutter tests, analyzer clean, 37/37 art verifier, Android build). On branch `codex/issue-12-s24-qa`, `tools/build_qa_apk.ps1 -Action Build` succeeded and independently verified package `com.mrweeds.cloudkingdom.qa`, version `0.1.0` code `2001`, min SDK 24. APK SHA-256: `83597c0b654c5a5db0b2acdcfa9d9d9a3feb54a72a7393bea109c6ae5ebaa9c3`.
+
+The connected device is Samsung SM-S928U, serial `R5CX156CZNF`, ADB state `device`. Read-only preflight found active user `0` and QA package `com.mrweeds.cloudkingdom.qa`, but no exact `com.mrweeds.cloudkingdom` production package/path in that active user; Secure Folder user `150` is also listed. Following Issue #12's safety gate, the QA APK was **not installed**. No package mutation, app launch, screen capture, log capture, or production-save action occurred. All current integrated-art visual, flow, accessibility and profile checks are therefore NOT TESTED. This checkpoint does not override Issue #5's prior pre-art device results.
+
 ## 2026-11-08 — Issue #4 owner-approved standalone art integration (verification pending)
 
 On `codex/issue-4-approved-art-integration`, the approved All 37 handoff is integrated in the app: 9 Batch A and 28 B/C standalone exports. The 37 PNG bytes, IHDR dimensions and 8-bit RGBA channel format passed `tools/verify_issue4_art.py` against the two supplied SHA-256 manifests. Artwork is wired into the board renderer, transparent-center frame, dynamic objective/move/score UI, Victory/reward panel, buttons, and an informational Specials guide. The logo-free vaporizer displays the exact canonical Cloud Cup logo as a separate overlay. Existing Match-3 enum/save IDs, deterministic rules, schema-3 save data, and all 30 levels remain intact. Batch D is excluded.
