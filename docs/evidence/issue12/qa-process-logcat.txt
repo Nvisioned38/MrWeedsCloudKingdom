@@ -1,0 +1,188 @@
+--------- beginning of main
+11-08 12:47:48.996 I/libprocessgroup(17661): Created cgroup /sys/fs/cgroup/apps/uid_10110/pid_17661
+11-08 12:47:49.007 I/Zygote  (17661): Process 17661 created for com.mrweeds.cloudkingdom.qa
+11-08 12:47:49.007 I/cloudkingdom.qa(17661): Late-enabling -Xcheck:jni
+11-08 12:47:49.020 I/cloudkingdom.qa(17661): Using generational CollectorTypeCMC GC.
+11-08 12:47:49.044 D/nativeloader(17661): Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+11-08 12:47:49.119 D/ApplicationLoaders(17661): Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+11-08 12:47:49.119 D/ApplicationLoaders(17661): Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+11-08 12:47:49.240 D/nativeloader(17661): Configuring clns-9 for other apk /data/app/~~it5MsFkAcmXsTIaGPrKW5Q==/com.mrweeds.cloudkingdom.qa-qiUriv8LtauVXYnZPe-K-g==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~it5MsFkAcmXsTIaGPrKW5Q==/com.mrweeds.cloudkingdom.qa-qiUriv8LtauVXYnZPe-K-g==/lib/arm64:/data/app/~~it5MsFkAcmXsTIaGPrKW5Q==/com.mrweeds.cloudkingdom.qa-qiUriv8LtauVXYnZPe-K-g==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.mrweeds.cloudkingdom.qa
+11-08 12:47:49.246 V/GraphicsEnvironment(17661): Currently set values for:
+11-08 12:47:49.246 V/GraphicsEnvironment(17661):   angle_gl_driver_selection_pkgs=[]
+11-08 12:47:49.246 V/GraphicsEnvironment(17661):   angle_gl_driver_selection_values=[]
+11-08 12:47:49.246 V/GraphicsEnvironment(17661): com.mrweeds.cloudkingdom.qa is not listed in per-application setting
+11-08 12:47:49.246 V/GraphicsEnvironment(17661): first_api_level (34) < 36; skipping config_angleAllowList for com.mrweeds.cloudkingdom.qa
+11-08 12:47:49.247 V/GraphicsEnvironment(17661): No special selections for ANGLE, returning default driver choice
+11-08 12:47:49.265 V/GraphicsEnvironment(17661): App is not on the allowlist for updatable production driver.
+11-08 12:47:49.293 D/BBA2    (17661): setIsFg isFg = false; delayValue 3999ms
+11-08 12:47:55.045 D/ProfileInstaller(17661): Installing profile for com.mrweeds.cloudkingdom.qa
+11-08 12:48:27.767 D/BBA2    (17661): setIsFg isFg = true
+--------- beginning of system
+11-08 12:48:27.769 D/ActivityThread(17661): com.mrweeds.cloudkingdom.qa will use render engine as VK
+11-08 12:48:27.769 D/HWUI    (17661): HWUI - treat SMPTE_170M as sRGB
+11-08 12:48:27.779 I/DisplayManager(17661): Implicitly registering for refresh rate
+11-08 12:48:27.786 D/HWUI    (17661): CacheManager constructor. deviceInfo=(1080, 1920)
+11-08 12:48:27.786 D/vulkan  (17661): searching for layers in '/data/app/~~it5MsFkAcmXsTIaGPrKW5Q==/com.mrweeds.cloudkingdom.qa-qiUriv8LtauVXYnZPe-K-g==/lib/arm64'
+11-08 12:48:27.786 D/vulkan  (17661): searching for layers in '/data/app/~~it5MsFkAcmXsTIaGPrKW5Q==/com.mrweeds.cloudkingdom.qa-qiUriv8LtauVXYnZPe-K-g==/base.apk!/lib/arm64-v8a'
+11-08 12:48:27.792 E/Adreno-AppProfiles(17661): QSPM AIDL service doesn't exist
+11-08 12:48:27.793 I/AdrenoVK-0(17661): ===== BEGIN DUMP OF OVERRIDDEN SETTINGS =====
+11-08 12:48:27.793 I/AdrenoVK-0(17661): ===== END DUMP OF OVERRIDDEN SETTINGS =====
+11-08 12:48:27.802 D/nativeloader(17661): Load /data/app/~~it5MsFkAcmXsTIaGPrKW5Q==/com.mrweeds.cloudkingdom.qa-qiUriv8LtauVXYnZPe-K-g==/base.apk!/lib/arm64-v8a/libflutter.so using class loader ns clns-9 (caller=/data/app/~~it5MsFkAcmXsTIaGPrKW5Q==/com.mrweeds.cloudkingdom.qa-qiUriv8LtauVXYnZPe-K-g==/base.apk): ok
+11-08 12:48:27.807 D/skia    (17661): [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+11-08 12:48:27.810 I/AdrenoVK-0(17661): QUALCOMM build          : bb11e2f361, Id7183d7088
+11-08 12:48:27.810 I/AdrenoVK-0(17661): Build Date              : 07/24/26
+11-08 12:48:27.810 I/AdrenoVK-0(17661): Shader Compiler Version : E031.45.02.43
+11-08 12:48:27.810 I/AdrenoVK-0(17661): Local Branch            : 
+11-08 12:48:27.810 I/AdrenoVK-0(17661): Remote Branch           : refs/tags/AU_LINUX_ANDROID_LA.VENDOR.14.3.0.R1.00.00.00.000.225
+11-08 12:48:27.810 I/AdrenoVK-0(17661): Remote Branch           : NONE
+11-08 12:48:27.810 I/AdrenoVK-0(17661): Reconstruct Branch      : NOTHING
+11-08 12:48:27.810 I/AdrenoVK-0(17661): Build Config            : S P 16.1.2 AArch64
+11-08 12:48:27.810 I/AdrenoVK-0(17661): Driver Path             : /vendor/lib64/hw/vulkan.adreno.so
+11-08 12:48:27.810 I/AdrenoVK-0(17661): Driver Version          : 0762.48.1
+11-08 12:48:27.810 I/AdrenoVK-0(17661): PFP                     : 0x01520181
+11-08 12:48:27.810 I/AdrenoVK-0(17661): ME                      : 0x01520023
+11-08 12:48:27.811 I/AdrenoVK-0(17661): Application Name    : android framework
+11-08 12:48:27.811 I/AdrenoVK-0(17661): Application Version : 0x00000000
+11-08 12:48:27.811 I/AdrenoVK-0(17661): Engine Name         : android framework
+11-08 12:48:27.811 I/AdrenoVK-0(17661): Engine Version      : 0x00000000
+11-08 12:48:27.811 I/AdrenoVK-0(17661): Api Version         : 0x00401000
+11-08 12:48:27.835 I/flutter (17661): The Dart VM service is listening on http://127.0.0.1:44349/l_tBm1OeQ6w=/
+11-08 12:48:27.838 I/AdrenoVK-0(17661): QUALCOMM build          : bb11e2f361, Id7183d7088
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Build Date              : 07/24/26
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Shader Compiler Version : E031.45.02.43
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Local Branch            : 
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Remote Branch           : refs/tags/AU_LINUX_ANDROID_LA.VENDOR.14.3.0.R1.00.00.00.000.225
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Remote Branch           : NONE
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Reconstruct Branch      : NOTHING
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Build Config            : S P 16.1.2 AArch64
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Driver Path             : /vendor/lib64/hw/vulkan.adreno.so
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Driver Version          : 0762.48.1
+11-08 12:48:27.838 I/AdrenoVK-0(17661): PFP                     : 0x01520181
+11-08 12:48:27.838 I/AdrenoVK-0(17661): ME                      : 0x01520023
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Application Name    : Impeller
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Application Version : 0x00400000
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Engine Name         : Impeller
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Engine Version      : 0x00800000
+11-08 12:48:27.838 I/AdrenoVK-0(17661): Api Version         : 0x00401000
+11-08 12:48:27.839 D/nativeloader(17661): Load /data/app/~~it5MsFkAcmXsTIaGPrKW5Q==/com.mrweeds.cloudkingdom.qa-qiUriv8LtauVXYnZPe-K-g==/base.apk!/lib/arm64-v8a/libdartjni.so using class loader ns clns-9 (caller=/data/app/~~it5MsFkAcmXsTIaGPrKW5Q==/com.mrweeds.cloudkingdom.qa-qiUriv8LtauVXYnZPe-K-g==/base.apk!classes2.dex): ok
+11-08 12:48:27.844 I/flutter (17661): [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+11-08 12:48:27.852 I/cloudkingdom.qa(17661): hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported,test-api) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+11-08 12:48:27.852 I/cloudkingdom.qa(17661): hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+11-08 12:48:27.852 I/cloudkingdom.qa(17661): hiddenapi: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+11-08 12:48:27.853 I/cloudkingdom.qa(17661): hiddenapi: Accessing hidden method Landroid/util/LongArray;->get(I)J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+11-08 12:48:27.858 D/CompatChangeReporter(17661): Compat change id reported: 377864165; UID 10110; state: ENABLED
+11-08 12:48:27.859 I/DecorView(17661): setWindowBackground: isPopOver=false color=ff000000 d=android.graphics.drawable.ColorDrawable@12897f5
+11-08 12:48:27.862 D/ViewRootImpl(17661): desktopMode is false
+11-08 12:48:27.863 I/ViewRootImpl(17661): dVRR is disabled
+11-08 12:48:27.863 D/HardwareRenderer(17661): onDisplayChanged. displayId=0 current wxh=1080x2340 mLargest wxh=0x0
+11-08 12:48:27.863 D/HardwareRenderer(17661): Set largestWidth and largestHeight as logical resolution. (1080x2340)
+11-08 12:48:27.863 D/HWUI    (17661): setMaxSurfaceArea requested wxh=(1080,2340) requestedSurfaceArea(2527200) mMaxSurfaceArea(2073600)
+11-08 12:48:27.864 D/NativeCustomFrequencyManager(17661): [NativeCFMS] BpCustomFrequencyManager::BpCustomFrequencyManager()
+11-08 12:48:27.867 D/InputTransport(17661): Input channel constructed: '658951f', fd=144
+11-08 12:48:27.868 I/InsetsController(17661): onStateChanged: host=com.mrweeds.cloudkingdom.qa/com.mrweeds.cloudkingdom.MainActivity, from=android.view.ViewRootImpl.onInsetsStateChanged:3319, state=InsetsState: {mDisplayFrame=Rect(0, 0 - 1080, 2340), mDisplayCutout=DisplayCutout{insets=Rect(0, 96 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(515, 0 - 566, 96), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1080 displayHeight=2340 physicalDisplayWidth=1080 physicalDisplayHeight=2340 density={2.8125} cutoutSpec={M 0,0 H -9.066666666666667 V 34.13333333333333 H 9.066666666666667 V 0 H 0 Z @dp} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, mRoundedCorners=RoundedCorners{[RoundedCorner{position=TopLeft, radius=5, center=Point(5, 5)}, RoundedCorner{position=TopRight, radius=5, center=Point(1075, 5)}, RoundedCorner{position=BottomRight, radius=5, center=Point(1075, 2335)}, RoundedCorner{position=BottomLeft, radius=5, center=Point(5, 2335)}]}  mRoundedCornerFrame=Rect(0, 0 - 1080, 2340), mPrivacyIndicatorBounds=PrivacyIndicatorBounds {static bounds=Rect(964, 0 - 1080, 97) rotation=0}, mDisplayShape=DisplayShape{type=2, displayWidth=1080, displayHeight=2340, physicalPixelDisplaySizeRatio=0.75, rotation=0, offsetX=0, offsetY=0, scale=1.0}, mSources= { InsetsSource: {3 mType=ime mFrame=[0,0][0,0] mAttachedInsets=null mVisible=false mFlags=INVALID mSideHint=NONE}, InsetsSource: {27 mType=displayCutout mFrame=[0,0][1080,96] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {2c280000 mType=statusBars mFrame=[0,0][1080,97] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {2c280005 mType=mandatorySystemGestures mFrame=[0,0][1080,128] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {2c280006 mType=tappableElement mFrame=[0,0][1080,97] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {43b00001 mType=navigationBars mFrame=[0,2214][1080,2340] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {43b00004 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE}, InsetsSource: {43b00005 mType=mandatorySystemGestures mFrame=[0,2214][1080,2340] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {43b00006 mType=tappableElement mFrame=[0,2214][1080,2340] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {43b00024 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE} }
+11-08 12:48:27.868 I/VRI[MainActivity]@938d0ad(17661): synced displayState. AttachInfo displayState=2
+11-08 12:48:27.869 I/VRI[MainActivity]@938d0ad(17661): setView = com.android.internal.policy.DecorView@b428d5c IsHRR=false mFlingFrameRateChange=0 TM=true
+11-08 12:48:27.869 I/IDS_TAG (17661): Clearing training data of android.app.Application@ffb2170
+11-08 12:48:27.869 I/IDS_TAG (17661): Starting IDS observe window
+11-08 12:48:27.869 I/IDS_TAG (17661): Getting Shared Preference for android.app.Application@ffb2170 uid = 10110
+11-08 12:48:27.870 I/IDS_TAG (17661): App android.app.Application@ffb2170 has not finished training
+11-08 12:48:27.878 D/HWUI    (17661): HWUI - treat SMPTE_170M as sRGB
+11-08 12:48:27.878 I/IDS_TAG (17661): Closing IDS observe window
+11-08 12:48:27.878 I/IDS_TAG (17661): Getting Shared Preference for android.app.Application@ffb2170 uid = 10110
+11-08 12:48:27.879 I/IDS_TAG (17661): IDS count updated to 1 for android.app.Application@ffb2170
+11-08 12:48:27.879 D/WindowOnBackDispatcher(17661): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda1@2f4df06
+11-08 12:48:27.882 I/WindowExtensionsImpl(17661): Initializing Window Extensions, vendor API level=10, activity embedding enabled=true
+11-08 12:48:27.884 W/UiContextUtils(17661): Requested context is a non-UI Context. Creating a UI-Context with display: 0. Context: Context=android.app.Application@ffb2170, of which baseContext=android.app.ContextImpl@2ee0c9a
+11-08 12:48:27.888 I/SV[41162704 MainActivity](17661): onWindowVisibilityChanged(0) true io.flutter.embedding.android.FlutterSurfaceView{27417d0 V.E...... ......I. 0,0-0,0} of VRI[MainActivity]@938d0ad
+11-08 12:48:27.888 D/VRI[MainActivity]@938d0ad(17661): WindowInsets changed: 1080x2340 statusBars:[0,97,0,0] navigationBars:[0,0,0,126] mandatorySystemGestures:[0,128,0,126] 
+11-08 12:48:27.893 E/BufferQueueProducer(17661): Unable to open libpenguin.so: dlopen failed: library "libpenguin.so" not found.
+11-08 12:48:27.893 E/cloudkingdom.qa(17661): Unable to open libpenguin.so: dlopen failed: library "libpenguin.so" not found.
+11-08 12:48:27.893 I/Surface (17661): Creating surface for consumer unnamed-17661-0 with slotExpansion=1 for 64 slots
+11-08 12:48:27.893 W/libc    (17661): Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-08 12:48:27.893 I/BufferQueueProducer(17661): [](id:44fd00000000,api:0,p:1,c:17661) setDequeueTimeout:2077252342
+11-08 12:48:27.893 I/BLASTBufferQueue_Java(17661): new BLASTBufferQueue, mName= VRI[MainActivity]@938d0ad mNativeObject= 0xb40000781cca6010 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3909 android.view.ViewRootImpl.updateRenderTargetIfNeeded:3890 android.view.ViewRootImpl.relayoutWindow:12632 android.view.ViewRootImpl.performTraversals:5287 android.view.ViewRootImpl.doTraversal:4255 android.view.ViewRootImpl$TraversalCallback.onVsync:13896 android.view.Choreographer$CallbackRecord.run:1995 android.view.Choreographer.doCallbacks:1440 android.view.Choreographer.doFrame:1393 android.view.Choreographer$FrameDisplayEventReceiver.run:1957 
+11-08 12:48:27.893 I/BLASTBufferQueue_Java(17661): update, w= 1080 h= 2340 mName = VRI[MainActivity]@938d0ad mNativeObject= 0xb40000781cca6010 sc.mNativeObject= 0xb4000078fcca6d50 format= -3 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3914 android.view.ViewRootImpl.updateRenderTargetIfNeeded:3890 android.view.ViewRootImpl.relayoutWindow:12632 android.view.ViewRootImpl.performTraversals:5287 android.view.ViewRootImpl.doTraversal:4255 android.view.ViewRootImpl$TraversalCallback.onVsync:13896 
+11-08 12:48:27.894 I/Surface (17661): Creating surface for consumer VRI[MainActivity]@938d0ad#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+11-08 12:48:27.894 W/libc    (17661): Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-08 12:48:27.894 I/VRI[MainActivity]@938d0ad(17661): Relayout returned: old=(0,0,1080,2340) new=(0,0,1080,2340) relayoutAsync=false req=(1080,2340)0 dur=4 res=0x3 s={true 0xb40000790ccc5690} ch=true seqId=1 syncSeqId=0
+11-08 12:48:27.894 D/VRI[MainActivity]@938d0ad(17661): reportNextDraw android.view.ViewRootImpl.performTraversals:5295 android.view.ViewRootImpl.doTraversal:4255 android.view.ViewRootImpl$TraversalCallback.onVsync:13896 android.view.Choreographer$CallbackRecord.run:1995 android.view.Choreographer.doCallbacks:1440 
+11-08 12:48:27.894 D/VRI[MainActivity]@938d0ad(17661): applyTransactionOnDraw applyImmediately
+11-08 12:48:27.894 I/VRI[MainActivity]@938d0ad(17661): performConfigurationChange setNightDimText nightDimLevel=0
+11-08 12:48:27.894 D/VRI[MainActivity]@938d0ad(17661): mThreadedRenderer.initialize() mSurface={isValid=true 0xb40000790ccc5690} hwInitialized=true
+11-08 12:48:27.895 I/SV[41162704 MainActivity](17661): windowStopped(false) true io.flutter.embedding.android.FlutterSurfaceView{27417d0 V.E...... ......ID 0,0-1080,2340} of VRI[MainActivity]@938d0ad
+11-08 12:48:27.895 D/VRI[MainActivity]@938d0ad(17661): reportNextDraw android.view.ViewRootImpl.performTraversals:5940 android.view.ViewRootImpl.doTraversal:4255 android.view.ViewRootImpl$TraversalCallback.onVsync:13896 android.view.Choreographer$CallbackRecord.run:1995 android.view.Choreographer.doCallbacks:1440 
+11-08 12:48:27.895 I/SurfaceView(17661): 41162704 Changes: creating=true format=true size=true visible=true alpha=false hint=false left=true top=true z=false attached=true lifecycleStrategy=false blurRegionsChanged=false
+11-08 12:48:27.896 I/Surface (17661): Creating surface for consumer unnamed-17661-1 with slotExpansion=1 for 64 slots
+11-08 12:48:27.896 W/libc    (17661): Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-08 12:48:27.896 I/BufferQueueProducer(17661): [](id:44fd00000001,api:0,p:1818321696,c:17661) setDequeueTimeout:2077252342
+11-08 12:48:27.896 I/BLASTBufferQueue_Java(17661): new BLASTBufferQueue, mName= 27417d0 SurfaceView[com.mrweeds.cloudkingdom.qa/com.mrweeds.cloudkingdom.MainActivity]@0 mNativeObject= 0xb40000781ccaf090 caller= android.view.SurfaceView.createBlastSurfaceControls:2043 android.view.SurfaceView.updateSurface:1677 android.view.SurfaceView.lambda$new$0:289 android.view.SurfaceView.$r8$lambda$NfZyM_TG8F8lqzaOVZ7noREFjzU:0 android.view.SurfaceView$$ExternalSyntheticLambda1.onPreDraw:0 android.view.ViewTreeObserver.dispatchOnPreDraw:1208 android.view.ViewRootImpl.performTraversals:5945 android.view.ViewRootImpl.doTraversal:4255 android.view.ViewRootImpl$TraversalCallback.onVsync:13896 android.view.Choreographer$CallbackRecord.run:1995 
+11-08 12:48:27.896 I/BLASTBufferQueue_Java(17661): update, w= 1080 h= 2340 mName = 27417d0 SurfaceView[com.mrweeds.cloudkingdom.qa/com.mrweeds.cloudkingdom.MainActivity]@0 mNativeObject= 0xb40000781ccaf090 sc.mNativeObject= 0xb4000078fcca71d0 format= 4 caller= android.view.SurfaceView.createBlastSurfaceControls:2044 android.view.SurfaceView.updateSurface:1677 android.view.SurfaceView.lambda$new$0:289 android.view.SurfaceView.$r8$lambda$NfZyM_TG8F8lqzaOVZ7noREFjzU:0 android.view.SurfaceView$$ExternalSyntheticLambda1.onPreDraw:0 android.view.ViewTreeObserver.dispatchOnPreDraw:1208 
+11-08 12:48:27.896 I/SurfaceView(17661): 41162704 Cur surface: Surface(name=null mNativeObject=0)/@0x1b994f2
+11-08 12:48:27.896 D/SurfaceView(17661): 41162704 performSurfaceTransaction RenderWorker position = [0, 0, 1080, 2340] surfaceSize = 1080x2340
+11-08 12:48:27.896 I/Surface (17661): Creating surface for consumer 27417d0 SurfaceView[com.mrweeds.cloudkingdom.qa/com.mrweeds.cloudkingdom.MainActivity]@0#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+11-08 12:48:27.897 W/libc    (17661): Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+11-08 12:48:27.897 I/SV[41162704 MainActivity](17661): updateSurface: mVisible = true mSurface.isValid() = true
+11-08 12:48:27.897 I/SV[41162704 MainActivity](17661): updateSurface: mSurfaceCreated = false surfaceChanged = true visibleChanged = true
+11-08 12:48:27.897 I/SurfaceView(17661): 41162704 visibleChanged -- surfaceCreated
+11-08 12:48:27.897 I/SV[41162704 MainActivity](17661): surfaceCreated 1 #8 io.flutter.embedding.android.FlutterSurfaceView{27417d0 V.E...... ......ID 0,0-1080,2340}
+11-08 12:48:27.897 I/AdrenoUtils(17661): <ReadGpuID:357>: Reading chip ID through GSL
+11-08 12:48:27.897 W/qdgralloc(17661): GetSize: Pixel format: 0x3b is not supported by gralloc
+11-08 12:48:27.897 W/qdgralloc(17661): gralloc failed to allocate buffer for size 0 format 59 AWxAH 1x1 usage 2816
+11-08 12:48:27.897 E/Gralloc4(17661): isSupported(1, 1, 59, 1, ...) failed with 7
+11-08 12:48:27.898 E/GraphicBufferAllocator(17661): Failed to allocate (4 x 4) layerCount 1 format 59 usage b00: 2
+11-08 12:48:27.898 E/AHardwareBuffer(17661): GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -2), handle=0x0
+11-08 12:48:27.898 W/qdgralloc(17661): GetSize: Pixel format: 0x3b is not supported by gralloc
+11-08 12:48:27.898 W/qdgralloc(17661): gralloc failed to allocate buffer for size 0 format 59 AWxAH 1x1 usage 2816
+11-08 12:48:27.898 E/Gralloc4(17661): isSupported(1, 1, 59, 1, ...) failed with 7
+11-08 12:48:27.898 E/GraphicBufferAllocator(17661): Failed to allocate (4 x 4) layerCount 1 format 59 usage b00: 2
+11-08 12:48:27.898 E/AHardwareBuffer(17661): GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -2), handle=0x0
+11-08 12:48:27.898 W/qdgralloc(17661): getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+11-08 12:48:27.899 W/qdgralloc(17661): getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+11-08 12:48:27.900 W/qdgralloc(17661): getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+11-08 12:48:27.901 W/qdgralloc(17661): getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+11-08 12:48:27.901 W/qdgralloc(17661): getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+11-08 12:48:27.904 I/SurfaceView(17661): 41162704 surfaceChanged -- format=4 w=1080 h=2340
+11-08 12:48:27.904 I/SV[41162704 MainActivity](17661): surfaceChanged (1080,2340) 1 #8 io.flutter.embedding.android.FlutterSurfaceView{27417d0 V.E...... ......ID 0,0-1080,2340}
+11-08 12:48:27.904 I/SurfaceView(17661): 41162704 surfaceRedrawNeeded
+11-08 12:48:27.904 V/SurfaceView(17661): Layout: x=0 y=0 w=1080 h=2340, frame=Rect(0, 0 - 1080, 2340)
+11-08 12:48:27.904 D/VRI[MainActivity]@938d0ad(17661): Canceling draw. cancelDueToPreDrawListener=true cancelDueToSync=false
+11-08 12:48:27.912 I/InsetsSourceConsumer(17661): applyRequestedVisibilityToControl: visible=true, type=navigationBars, host=com.mrweeds.cloudkingdom.qa/com.mrweeds.cloudkingdom.MainActivity
+11-08 12:48:27.912 I/InsetsSourceConsumer(17661): applyRequestedVisibilityToControl: visible=true, type=statusBars, host=com.mrweeds.cloudkingdom.qa/com.mrweeds.cloudkingdom.MainActivity
+11-08 12:48:27.914 D/WindowLayoutComponentImpl(17661): Register WindowLayoutInfoListener on Context=com.mrweeds.cloudkingdom.MainActivity@54b8ffd, of which baseContext=android.app.ContextImpl@e480e3e
+11-08 12:48:27.959 I/BLASTBufferQueue(17661): [27417d0 SurfaceView[com.mrweeds.cloudkingdom.qa/com.mrweeds.cloudkingdom.MainActivity]@0#1](f:0,a:0,s:0) onFrameAvailable the first frame is available
+11-08 12:48:27.960 I/SurfaceComposerClient(17661): apply transaction with the first frame. layerId: 18765, bufferData(ID: 75853417414670, frameNumber: 1)
+11-08 12:48:27.961 I/SurfaceView(17661): 41162704 finishedDrawing
+11-08 12:48:27.964 D/VRI[MainActivity]@938d0ad(17661): Setup new sync=wmsSync-VRI[MainActivity]@938d0ad#1
+11-08 12:48:27.964 I/VRI[MainActivity]@938d0ad(17661): Creating new active sync group VRI[MainActivity]@938d0ad#2
+11-08 12:48:28.026 D/VRI[MainActivity]@938d0ad(17661): Draw frame after cancel
+11-08 12:48:28.026 D/VRI[MainActivity]@938d0ad(17661): registerCallbacksForSync syncBuffer=false
+11-08 12:48:28.027 D/SurfaceView(17661): 41162704 updateSurfacePosition RenderWorker, frameNr = 1, position = [0, 0, 1080, 2340] clip = [0, 0, 1080, 2340] surfaceSize = 1080x2340 renderNodeSize = 10802340shouldDisableClip = false
+11-08 12:48:28.028 I/SV[41162704 MainActivity](17661): onSSPAndSRT: pl = 0 pt = 0 sx = 1.0 sy = 1.0
+11-08 12:48:28.028 D/SurfaceComposerClient(17661): setBlurRegions for 27417d0 SurfaceView[com.mrweeds.cloudkingdom.qa/com.mrweeds.cloudkingdom.MainActivity]@0#18764 ## regionSize=0
+11-08 12:48:28.028 D/SurfaceView(17661): Setting layer crop = [0.000000, 0.000000, 1080.000000, 2340.000000] from scale 1.000000, 1.000000
+11-08 12:48:28.028 I/SV[41162704 MainActivity](17661): aOrMT: VRI[MainActivity]@938d0ad t = android.view.SurfaceControl$Transaction@655a716 fN = 1 android.view.SurfaceView.-$$Nest$mapplyOrMergeTransaction:0 android.view.SurfaceView$SurfaceViewPositionUpdateListener.positionChanged:2280 android.graphics.RenderNode$CompositePositionUpdateListener.positionChanged:410 
+11-08 12:48:28.028 I/VRI[MainActivity]@938d0ad(17661): mWNT: t=0xb400007a2ccb78a0 fn= 1 HdrRenderState mRenderHdrSdrRatio=1.0 caller= android.view.SurfaceView.applyOrMergeTransaction:2125 android.view.SurfaceView.-$$Nest$mapplyOrMergeTransaction:0 android.view.SurfaceView$SurfaceViewPositionUpdateListener.positionChanged:2280 
+11-08 12:48:28.028 D/VRI[MainActivity]@938d0ad(17661): Received frameDrawingCallback syncResult=0 frameNum=1.
+11-08 12:48:28.028 I/VRI[MainActivity]@938d0ad(17661): mWNT: t=0xb400007a2ccbab80 fn= 1 HdrRenderState mRenderHdrSdrRatio=1.0 caller= android.view.ViewRootImpl$12.onFrameDraw:16715 android.view.ThreadedRenderer$1.onFrameDraw:750 <bottom of call stack> 
+11-08 12:48:28.028 I/VRI[MainActivity]@938d0ad(17661): Setting up sync and frameCommitCallback
+11-08 12:48:28.029 W/qdgralloc(17661): getInterlacedFlag: getMetaData returned 3, defaulting to interlaced_flag = 0
+11-08 12:48:28.031 I/BLASTBufferQueue(17661): [VRI[MainActivity]@938d0ad#0](f:0,a:0,s:0) onFrameAvailable the first frame is available
+11-08 12:48:28.031 I/SurfaceComposerClient(17661): apply transaction with the first frame. layerId: 18760, bufferData(ID: 75853417414675, frameNumber: 1)
+11-08 12:48:28.031 I/VRI[MainActivity]@938d0ad(17661): Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true
+11-08 12:48:28.032 D/HWUI    (17661): CFMS:: SetUp Pid : 17661    Tid : 18098
+11-08 12:48:28.032 D/VRI[MainActivity]@938d0ad(17661): reportDrawFinished seqId=1
+11-08 12:48:28.051 D/VRI[MainActivity]@938d0ad(17661): mThreadedRenderer.initializeIfNeeded()#2 mSurface={isValid=true 0xb40000790ccc5690}
+11-08 12:48:28.051 D/InputMethodManager(17661): setCurrentRootViewLocked: updateReceivingDispatcher
+11-08 12:48:28.051 D/InputMethodManagerUtils(17661): startInputInner - Id : 0
+11-08 12:48:28.051 I/InputMethodManager(17661): startInputInner - IInputMethodManagerGlobalInvoker.startInputOrWindowGainedFocus
+11-08 12:48:28.055 D/InsetsController(17661): hide(ime())
+11-08 12:48:28.055 I/ImeTracker(17661): com.mrweeds.cloudkingdom.qa:62dcf5fe: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-08 12:48:28.057 D/InputTransport(17661): Input channel constructed: 'ClientS', fd=172
+11-08 12:48:28.395 I/cloudkingdom.qa(17661): Compiler allocated 5446KB to compile void android.view.ViewRootImpl.performTraversals(long)
+11-08 12:48:29.917 I/VRI[MainActivity]@938d0ad(17661): ViewPostIme pointer 0
+11-08 12:48:29.918 I/VRI[MainActivity]@938d0ad(17661): call setFrameRateCategory for touch hint category=high hint, reason=touch, vri=VRI[MainActivity]@938d0ad
+11-08 12:48:29.920 I/VRI[MainActivity]@938d0ad(17661): ViewPostIme pointer 1
+11-08 12:48:29.945 D/WindowOnBackDispatcher(17661): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@8b4b9ab
+11-08 12:48:32.041 I/VRI[MainActivity]@938d0ad(17661): ViewPostIme pointer 0
+11-08 12:48:32.044 I/VRI[MainActivity]@938d0ad(17661): ViewPostIme pointer 1
+11-08 12:48:35.045 I/VRI[MainActivity]@938d0ad(17661): call setFrameRateCategory for touch hint category=no preference, reason=boost timeout, vri=VRI[MainActivity]@938d0ad
