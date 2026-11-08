@@ -20,7 +20,8 @@ void main() {
     expect(tester.takeException(), isNull);
 
     await tester.tap(find.text('New Game'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
 
     expect(find.text('Cloud House'), findsWidgets);
     expect(find.text('First Puff'), findsOneWidget);
