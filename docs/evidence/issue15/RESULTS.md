@@ -22,4 +22,4 @@ The former objectives panel stretched a fixed ornamental backing at ordinary tex
 - Current Cloud House showing the retained progress: [02-cloud-house-current.png](02-cloud-house-current.png)
 - Earlier pre-fix board capture from Issue #12 for comparison: [../issue12/03-board-aligned.png](../issue12/03-board-aligned.png)
 
-The issue-specific regression tests are in `test/presentation/match3_art_widgets_test.dart` and `test/widget_test.dart`. Full Flutter results and current APK/package hashes are recorded in the root build log / Issue #14 verification after the final commit.
+The issue-specific regression tests are in `test/presentation/match3_art_widgets_test.dart` and `test/widget_test.dart`. Final Flutter results and APK/package hashes are recorded in [Issue #14 verification](../issue14/RESULTS.md).

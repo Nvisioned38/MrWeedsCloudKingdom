@@ -29,6 +29,8 @@ All rendering fixtures use the actual approved PNGs. `tools/verify_issue4_art.py
 - Changed Dart files: `dart format --set-exit-if-changed` **clean**.
 - Android QA arm64 debug build: **PASS**, exact ID `com.mrweeds.cloudkingdom.qa`.
 - Android production-ID arm64 debug build: **PASS**, exact ID `com.mrweeds.cloudkingdom`; it was built but not installed.
+- Final QA APK: `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk`, 117,584,746 bytes, SHA-256 `5cdb0d40f9e60791ba93fcba4177285d8b091f6db5048719b493071e0c9e1a67`; version `0.1.0` (2001), minSdk 24, built from commit `87bc709120dca4eb3bd7f017018cbf98eecddcf5`. The exact package ID was confirmed by `aapt` and the APK is installed in QA user 0.
+- Production-ID debug APK: `build/app/outputs/flutter-apk/app-arm64-v8a-debug.apk`, 117,584,726 bytes, SHA-256 `00ff322974afcd34626e701fd8d1b50619ffab8084c98e29d0b79b1db66ab664`; exact ID `com.mrweeds.cloudkingdom`. It was built, identity-checked and not installed.
 - QA-only physical S24 install for Issue #15 used the checked user-0 `-r` path; data remained intact. No production app command was issued.
 
 TalkBack spoken output remains **NOT TESTED** and open under Issue #6. Owner visual approval remains a separate V1 release gate. These fixture results do not declare V1 final.
