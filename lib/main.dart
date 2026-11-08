@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'domain/match3.dart';
 import 'domain/phase2_models.dart';
+import 'game/board_sprite_renderer.dart';
 import 'game/cloud_board_game.dart';
 import 'presentation/art_manifest.dart';
 import 'presentation/art_widgets.dart';
@@ -720,11 +721,14 @@ class PlayScreen extends StatefulWidget {
       required this.level,
       required this.progress,
       required this.persist,
-      this.initialSession});
+      this.initialSession,
+      this.approvedArtLoader});
   final LevelSpec level;
   final ProgressState progress;
   final Future<void> Function() persist;
   final LevelSession? initialSession;
+  @visibleForTesting
+  final Future<BoardSpriteRenderer> Function()? approvedArtLoader;
   @override
   State<PlayScreen> createState() => _PlayScreenState();
 }
@@ -743,6 +747,7 @@ class _PlayScreenState extends State<PlayScreen> {
     onSelectionChanged: () {
       if (mounted) setState(() {});
     },
+    approvedArtLoader: widget.approvedArtLoader,
     reducedMotion: widget.progress.settings['reducedMotion'] ?? false,
   );
   bool _finished = false;

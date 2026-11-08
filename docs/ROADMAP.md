@@ -116,3 +116,13 @@ Later development may include Higher Art Gallery expansion, new rooms, more leve
 - Further specific approved character/collection production exports, final comprehensive visual QA and owner sign-off.
 
 Continue Phase 2C only. **A CI-validated technical preview is available, not yet the finished polished V1.** Do not begin Phase 3 or future storyline reveals.
+
+## 2026-11-08 Issues #15 and #14 — current Phase 2C work
+
+PR #13 has merged to main (`8cd09011dcd33fab612d5bc27279bed0a00bad2b`). Issue #15 is being handled first: the objectives panel now uses a content-sized Flutter frame instead of stretching the approved decorative backing, preserving every approved asset file unchanged. Focused layout tests pass at 0.9×, 1×, 1.5× and 2×, including three objectives, a long label, a 30-move counter and all 64 visible board cells. Issue #14 follows on the same branch with deterministic test-only fixtures; production levels and S24 save data must remain unchanged. TalkBack Issue #6 and owner visual sign-off remain open.
+
+## 2026-11-08 — Issues #15 and #14 (Phase 2C)
+
+- **Issue #15: implemented and verified.** The objectives HUD uses a content-aware Flutter frame rather than stretching or editing its approved ornamental PNG. Widget/device evidence covers 1–3 objectives, long labels, 30 moves, and 0.9×/1×/1.5×/2×. The S24 QA-only Level 10 display fits all text and keeps all 64 cells visible at 0.9× and 2×.
+- **Issue #14: isolated QA fixtures implemented and verified.** Approved-art Fog/Syrup, crate damage, Torch direction, booster art/semantics, smoke/combo/reduced-motion, resolver-driven missing-image fallback, playable/tappable cells, and fresh first-clear reward persistence/idempotence have deterministic tests. No production debug route or authored-level change was added. Optional state tests remain automated-only, not physical S24 visual acceptance.
+- Current gate: 71 Flutter tests pass; analyzer, changed-file format, 37/37 approved-art verification and both arm64 debug builds pass. QA app update was user-0 `.qa` replace-only; production package/save untouched. TalkBack Issue #6 and owner visual approval remain release gates. Phase 2C remains in progress; Phase 3 is not started.

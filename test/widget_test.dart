@@ -84,10 +84,76 @@ void main() {
     await tester.pump();
     expect(find.text('Level 1\nFirst Puff'), findsOneWidget);
     expect(
-      find.byKey(const ValueKey('issue4-objectives-large-text-backing')),
+      find.byKey(const ValueKey('issue4-objectives-adaptive-backing')),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('three objectives retain all board cells at accessible scales',
+      (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    const authored = LevelSpec(
+      id: 10,
+      name: 'Lounge Rescue',
+      seed: 1010,
+      moves: 30,
+      objectives: [
+        ObjectiveDefinition(
+          kind: ObjectiveKind.destroyBlockers,
+          blocker: BlockerKind.crate,
+          target: 6,
+        ),
+        ObjectiveDefinition(
+          kind: ObjectiveKind.destroyBlockers,
+          blocker: BlockerKind.reinforcedCrate,
+          target: 6,
+        ),
+        ObjectiveDefinition(kind: ObjectiveKind.score, target: 3500),
+      ],
+      blockers: [],
+      coins: 100,
+    );
+
+    for (final scale in [0.9, 1.0, 1.5, 2.0]) {
+      await tester.pumpWidget(MaterialApp(
+        home: MediaQuery(
+          data: MediaQueryData(textScaler: TextScaler.linear(scale)),
+          child: PlayScreen(
+            level: authored,
+            progress: ProgressState(),
+            persist: () async {},
+            initialSession:
+                LevelSession(authored, initialTiles: boardFixture()),
+          ),
+        ),
+      ));
+      await tester.pump();
+
+      final panelFinder = find.byKey(const ValueKey('issue4-objectives-panel'));
+      final panel = tester.getRect(panelFinder);
+      expect(find.text('Destroy crates'), findsOneWidget);
+      expect(find.text('Destroy reinforced Crates'), findsOneWidget);
+      expect(find.text('Score'), findsOneWidget);
+      expect(find.text('0/3500'), findsOneWidget);
+      expect(find.byKey(const ValueKey('match3-board')), findsOneWidget);
+      expect(find.byKey(const ValueKey('board-cell-0-0')), findsOneWidget);
+      expect(find.byKey(const ValueKey('board-cell-7-7')), findsOneWidget);
+      expect(find.text('30'), findsOneWidget);
+      expect(
+          tester.getRect(find.text('OBJECTIVES')).top, greaterThan(panel.top));
+      expect(tester.getRect(find.text('OBJECTIVES')).bottom,
+          lessThan(panel.bottom));
+      expect(
+          tester
+              .getRect(find.byKey(const ValueKey('match3-board-frame')))
+              .bottom,
+          lessThan(844));
+      expect(tester.getRect(find.byKey(const ValueKey('board-cell-0-0'))).top,
+          greaterThanOrEqualTo(panel.bottom));
+      expect(tester.takeException(), isNull, reason: 'text scale $scale');
+    }
   });
 
   testWidgets(
