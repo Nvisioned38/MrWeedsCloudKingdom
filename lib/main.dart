@@ -46,6 +46,8 @@ class _BootScreenState extends State<BootScreen> {
   late CharacterCatalog characterCatalog;
   late StoryCatalog storyCatalog;
   bool ready = false;
+  bool saveRecoveryWarning = false;
+  bool saveRecoveryBackupAvailable = false;
 
   @override
   void initState() {
@@ -53,34 +55,65 @@ class _BootScreenState extends State<BootScreen> {
     _load();
   }
 
+  Future<bool> _backupUnreadableSave(
+      SharedPreferences prefs, String key, String raw) async {
+    final backupKey = '${key}_unreadable_backup';
+    try {
+      if (prefs.getString(backupKey) != null) return true;
+      return await prefs.setString(backupKey, raw);
+    } catch (error) {
+      // The unreadable original remains untouched if backup storage fails.
+      debugPrint('[SAVE] Could not preserve an unreadable-save backup: $error');
+      return false;
+    }
+  }
+
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
     final saved = prefs.getString(_saveKey);
     var shouldPersistMigration = saved == null;
     if (saved != null) {
-      final savedProgress = jsonDecode(saved) as Map<String, dynamic>;
-      progress = ProgressState.fromJson(savedProgress);
-      shouldPersistMigration = (savedProgress['schema'] as num? ?? 0) < 3;
+      try {
+        final savedProgress = jsonDecode(saved) as Map<String, dynamic>;
+        progress = ProgressState.fromJson(savedProgress);
+        shouldPersistMigration = (savedProgress['schema'] as num? ?? 0) < 3;
+      } catch (error) {
+        // Never auto-rewrite a corrupted save during boot. Keep the original
+        // in place and save a separate local copy before a user chooses New Game.
+        saveRecoveryWarning = true;
+        saveRecoveryBackupAvailable =
+            await _backupUnreadableSave(prefs, _saveKey, saved);
+        shouldPersistMigration = false;
+        debugPrint('[SAVE] Saved progress could not be read: $error');
+      }
     } else {
       final legacy = prefs.getString('cloud_kingdom_save_v1');
       if (legacy != null) {
-        final old = jsonDecode(legacy) as Map<String, dynamic>;
-        final completed = (old['completed'] as List? ?? []).cast<int>();
-        final oldStyle = old['loungeStyle'] as String?;
-        progress = ProgressState.fromJson({
-          'completed': completed,
-          'stars': completed,
-          'best': old['best'] ?? <String, int>{},
-          'coins': old['coins'] ?? 0,
-          'loungeRestored':
-              (old['loungeRestored'] as bool?) ?? (oldStyle != null),
-          'loungeStyleId': switch (oldStyle) {
-            'Classic Cloud' => 'classic_cloud',
-            'Psychedelic' => 'psychedelic',
-            'Retro 70s' => 'retro_70s',
-            _ => null
-          },
-        });
+        try {
+          final old = jsonDecode(legacy) as Map<String, dynamic>;
+          final completed = (old['completed'] as List? ?? []).cast<int>();
+          final oldStyle = old['loungeStyle'] as String?;
+          progress = ProgressState.fromJson({
+            'completed': completed,
+            'stars': completed,
+            'best': old['best'] ?? <String, int>{},
+            'coins': old['coins'] ?? 0,
+            'loungeRestored':
+                (old['loungeRestored'] as bool?) ?? (oldStyle != null),
+            'loungeStyleId': switch (oldStyle) {
+              'Classic Cloud' => 'classic_cloud',
+              'Psychedelic' => 'psychedelic',
+              'Retro 70s' => 'retro_70s',
+              _ => null
+            },
+          });
+        } catch (error) {
+          saveRecoveryWarning = true;
+          saveRecoveryBackupAvailable = await _backupUnreadableSave(
+              prefs, 'cloud_kingdom_save_v1', legacy);
+          shouldPersistMigration = false;
+          debugPrint('[SAVE] Legacy progress could not be read: $error');
+        }
       }
     }
     final dataFiles = await Future.wait([
@@ -135,6 +168,8 @@ class _BootScreenState extends State<BootScreen> {
         characterCatalog: characterCatalog,
         storyCatalog: storyCatalog,
         persist: persist,
+        saveRecoveryWarning: saveRecoveryWarning,
+        saveRecoveryBackupAvailable: saveRecoveryBackupAvailable,
         onNewGame: () async {
           progress.resetForNewGame();
           await persist();
@@ -153,6 +188,8 @@ class TitleScreen extends StatelessWidget {
       required this.characterCatalog,
       required this.storyCatalog,
       required this.persist,
+      required this.saveRecoveryWarning,
+      required this.saveRecoveryBackupAvailable,
       required this.onNewGame});
   final ProgressState progress;
   final List<LevelSpec> levels;
@@ -161,6 +198,8 @@ class TitleScreen extends StatelessWidget {
   final CharacterCatalog characterCatalog;
   final StoryCatalog storyCatalog;
   final Future<void> Function() persist;
+  final bool saveRecoveryWarning;
+  final bool saveRecoveryBackupAvailable;
   final Future<void> Function() onNewGame;
 
   void _openWorld(BuildContext context) => Navigator.push(
@@ -218,6 +257,24 @@ class TitleScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             const Text('Match • Build • Collect • Explore'),
+                            if (saveRecoveryWarning)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 12),
+                                child: Semantics(
+                                  liveRegion: true,
+                                  child: Text(
+                                    saveRecoveryBackupAvailable
+                                        ? 'Saved progress could not be read. A local backup was preserved. Start a new game to continue.'
+                                        : 'Saved progress could not be read. The original was left untouched. Starting a new game will replace it.',
+                                    key: const ValueKey('save-recovery-warning'),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: Color(0xffffe0a0),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             const SizedBox(height: 36),
                             FilledButton.icon(
                                 onPressed: () async {
