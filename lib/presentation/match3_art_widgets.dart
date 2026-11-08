@@ -8,57 +8,62 @@ const _match3Art = 'assets/art/match3/';
 const _brandArt = 'assets/art/brand/';
 
 class Match3ObjectivePanel extends StatelessWidget {
-  const Match3ObjectivePanel({super.key, required this.objectives});
+  const Match3ObjectivePanel({
+    super.key,
+    required this.objectives,
+    this.labelForObjective,
+  });
 
   final List<ObjectiveProgress> objectives;
+  final String Function(ObjectiveProgress objective)? labelForObjective;
 
   @override
   Widget build(BuildContext context) {
-    final largeText = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
     return Semantics(
       key: const ValueKey('issue4-objectives-panel'),
       container: true,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: largeText
-                ? DecoratedBox(
-                    key: const ValueKey('issue4-objectives-large-text-backing'),
-                    decoration: BoxDecoration(
-                      color: const Color(0xff321052),
-                      borderRadius: BorderRadius.circular(18),
-                      border:
-                          Border.all(color: const Color(0xffffcf59), width: 3),
-                    ),
-                  )
-                : Image.asset(
-                    '${_match3Art}objectives_panel_backing.png',
-                    fit: BoxFit.fill,
-                    cacheWidth: 960,
-                    excludeFromSemantics: true,
-                  ),
+      child: DecoratedBox(
+        key: const ValueKey('issue4-objectives-adaptive-backing'),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xff542087), Color(0xff321052)],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  'OBJECTIVES',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1,
-                    color: Colors.white,
-                  ),
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: const Color(0xffffcf59), width: 2),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x770c0619),
+              blurRadius: 5,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                'OBJECTIVES',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1,
+                  color: Colors.white,
                 ),
-                for (final objective in objectives)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
+              ),
+              const SizedBox(height: 4),
+              for (final objective in objectives)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Image.asset(
                           objective.complete
                               ? '${_match3Art}objective_state_complete.png'
                               : '${_match3Art}objective_state_in_progress.png',
@@ -67,33 +72,38 @@ class Match3ObjectivePanel extends StatelessWidget {
                           cacheWidth: 64,
                           excludeFromSemantics: true,
                         ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            objective.label,
-                            style:
-                                Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          labelForObjective?.call(objective) ?? objective.label,
+                          softWrap: true,
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
-                        const SizedBox(width: 8),
-                        Text(
+                      ),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
                           '${objective.value}/${objective.definition.target}',
+                          softWrap: true,
+                          textAlign: TextAlign.end,
                           style:
                               Theme.of(context).textTheme.labelLarge?.copyWith(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                   ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -128,14 +138,18 @@ class Match3MovesCounter extends StatelessWidget {
                   cacheWidth: 128,
                 ),
                 Center(
-                  child: Text(
-                    '$movesRemaining',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      shadows: const [
-                        Shadow(color: Colors.black87, blurRadius: 3)
-                      ],
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      '$movesRemaining',
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        shadows: const [
+                          Shadow(color: Colors.black87, blurRadius: 3)
+                        ],
+                      ),
                     ),
                   ),
                 ),

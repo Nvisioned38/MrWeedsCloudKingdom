@@ -116,3 +116,7 @@ Later development may include Higher Art Gallery expansion, new rooms, more leve
 - Further specific approved character/collection production exports, final comprehensive visual QA and owner sign-off.
 
 Continue Phase 2C only. **A CI-validated technical preview is available, not yet the finished polished V1.** Do not begin Phase 3 or future storyline reveals.
+
+## 2026-11-08 Issues #15 and #14 — current Phase 2C work
+
+PR #13 has merged to main (`8cd09011dcd33fab612d5bc27279bed0a00bad2b`). Issue #15 is being handled first: the objectives panel now uses a content-sized Flutter frame instead of stretching the approved decorative backing, preserving every approved asset file unchanged. Focused layout tests pass at 0.9×, 1×, 1.5× and 2×, including three objectives, a long label, a 30-move counter and all 64 visible board cells. Issue #14 follows on the same branch with deterministic test-only fixtures; production levels and S24 save data must remain unchanged. TalkBack Issue #6 and owner visual sign-off remain open.
