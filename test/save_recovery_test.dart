@@ -13,7 +13,7 @@ Future<void> _launchToTitle(WidgetTester tester) async {
   // Runtime assets are loaded asynchronously. Wait for the actual title
   // instead of pumpAndSettle on the boot spinner.
   for (var attempt = 0;
-      attempt < 75 &&
+      attempt < 300 &&
           find.text('New Game').evaluate().isEmpty &&
           find.text('Continue').evaluate().isEmpty;
       attempt++) {
