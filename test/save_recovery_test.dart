@@ -8,6 +8,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 const _currentKey = 'cloud_kingdom_progress_v2';
 const _legacyKey = 'cloud_kingdom_save_v1';
 
+Future<void> _launchToTitle(WidgetTester tester) async {
+  await tester.pumpWidget(const CloudKingdomApp());
+  // Runtime assets are loaded asynchronously. Wait for the actual title
+  // instead of pumpAndSettle on the boot spinner.
+  for (var attempt = 0;
+      attempt < 75 &&
+          find.text('New Game').evaluate().isEmpty &&
+          find.text('Continue').evaluate().isEmpty;
+      attempt++) {
+    await tester.runAsync(() async {
+      await Future<void>.delayed(const Duration(milliseconds: 20));
+    });
+    await tester.pump();
+  }
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -21,8 +37,7 @@ void main() {
     const damaged = '{"schema":3,"completed":';
     SharedPreferences.setMockInitialValues({_currentKey: damaged});
 
-    await tester.pumpWidget(const CloudKingdomApp());
-    await tester.pumpAndSettle();
+    await _launchToTitle(tester);
 
     expect(find.text('New Game'), findsOneWidget);
     expect(find.byKey(const ValueKey('save-recovery-warning')), findsOneWidget);
@@ -49,8 +64,7 @@ void main() {
     const wrongRoot = '[1, 2, 3]';
     SharedPreferences.setMockInitialValues({_currentKey: wrongRoot});
 
-    await tester.pumpWidget(const CloudKingdomApp());
-    await tester.pumpAndSettle();
+    await _launchToTitle(tester);
 
     expect(find.text('New Game'), findsOneWidget);
     expect(find.byKey(const ValueKey('save-recovery-warning')), findsOneWidget);
@@ -65,8 +79,7 @@ void main() {
     const invalidFields = '{"schema":3,"completed":"not-a-list"}';
     SharedPreferences.setMockInitialValues({_currentKey: invalidFields});
 
-    await tester.pumpWidget(const CloudKingdomApp());
-    await tester.pumpAndSettle();
+    await _launchToTitle(tester);
 
     expect(find.text('New Game'), findsOneWidget);
     expect(find.byKey(const ValueKey('save-recovery-warning')), findsOneWidget);
@@ -81,8 +94,7 @@ void main() {
     const invalidLegacy = '{truncated legacy';
     SharedPreferences.setMockInitialValues({_legacyKey: invalidLegacy});
 
-    await tester.pumpWidget(const CloudKingdomApp());
-    await tester.pumpAndSettle();
+    await _launchToTitle(tester);
 
     expect(find.text('New Game'), findsOneWidget);
     expect(find.byKey(const ValueKey('save-recovery-warning')), findsOneWidget);
@@ -99,8 +111,7 @@ void main() {
         '{"schema":3,"completed":[1],"stars":[1],"best":{"1":1020},"coins":100}';
     SharedPreferences.setMockInitialValues({_currentKey: saved});
 
-    await tester.pumpWidget(const CloudKingdomApp());
-    await tester.pumpAndSettle();
+    await _launchToTitle(tester);
 
     expect(find.text('Continue'), findsOneWidget);
     expect(find.byKey(const ValueKey('save-recovery-warning')), findsNothing);
