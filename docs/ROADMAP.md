@@ -128,8 +128,10 @@ PR #13 has merged to main (`8cd09011dcd33fab612d5bc27279bed0a00bad2b`). Issue #1
 - Current gate: 71 Flutter tests pass; analyzer, changed-file format, 37/37 approved-art verification and both arm64 debug builds pass. QA app update was user-0 `.qa` replace-only; production package/save untouched. TalkBack Issue #6 and owner visual approval remain release gates. Phase 2C remains in progress; Phase 3 is not started.
 
 ## Active animation work — Issue #19 Stage A
-**Status: IMPLEMENTED; AUTOMATED/BUILD GATES PASS; S24 VISUAL ACCEPTANCE PENDING**
+**Status: IMPLEMENTED; AUTOMATED/BUILD/DEVICE EVIDENCE PASS; OWNER VISUAL REVIEW PENDING**
 
 Work is on `animation/issue-19-stage-a`, draft PR #20, based on current verified `main`. Engine trace, deterministic parity, snapshot rendering, Reduced Motion, input lock and lifecycle cancellation are implemented and verified. See `docs/evidence/issue19/STAGE_A_QA.md`.
 
-**Current blocker:** the S24 is ADB-authorized and the isolated QA package/data were verified, but the handset remained locked. Current-build animation visuals/captures and profile frame timings are not tested. Keep Stage B paused until Stage A's device review is completed. Do not resume Issue #6/PR #18, import Batch 5 binaries, or start Phase 3.
+S24 QA captured a valid match, actual cascade/refill, selected-cell feedback in Reduced Motion, and a 5-second profile SurfaceFlinger sample (609 QA layer frames, 0 dropped). The normal-motion match advanced score 0→30 and moves 18→17. Reduced Motion was restored to its original on state. The exact pre-test QA progress JSON hash was restored and verified after a Flutter Driver version-mismatch uninstall fallback; production was never targeted. Current frame-source limitations and recordings are documented in `docs/evidence/issue19/STAGE_A_QA.md`.
+
+**Next gate:** owner visual review of the current screenshots/recordings. Keep Stage B paused until that review. Do not resume Issue #6/PR #18, import Batch 5 binaries, or start Phase 3.

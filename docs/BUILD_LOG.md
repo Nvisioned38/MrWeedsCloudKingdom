@@ -153,4 +153,14 @@ Final artifacts from committed Issue #15/#14 source `87bc709120dca4eb3bd7f017018
 
 Added the optional immutable animation trace to the actual engine pipeline, exact gravity/refill lineage and snapshot timeline, Reduced Motion path, touch/semantic resolution gate, one-shot delayed result callback and lifecycle cancellation/reconciliation. Added deterministic trace parity/cascade tests and widget busy/lifecycle coverage. See `docs/evidence/issue19/STAGE_A_QA.md` for exact implementation and verification.
 
-Verification: 27-file Dart format check clean; `flutter analyze` clean; full suite **74/74**; approved-art validation **37/37**; isolated user-0 QA APK built, identity/hash verified, and replace-installed without data reset. QA save payload hash was unchanged. The S24 is ADB-authorized but locked; physical animation capture and current-build profile timing remain **NOT TESTED**. Stage B must wait for the Stage A device gate.
+Verification: 27-file Dart format check clean; `flutter analyze` clean; full suite **74/74**; approved-art validation **37/37**; isolated user-0 QA APK built, identity/hash verified, and replace-installed. See the device verification update below.
+
+## 2026-11-09 — Issue #19 Stage A S24 verification
+
+On the unlocked S24 Ultra, installed/tested only `com.mrweeds.cloudkingdom.qa` as Android user 0. Captured normal-motion four-tile match/cascade video and settled board; a valid swap advanced score 0→30 and moves 18→17. Captured the original Reduced Motion on state, selected-cell feedback, normal/Reduced Motion settings, and Cloud House.
+
+Profile-mode SurfaceFlinger TimeStats ran for five seconds around a valid match: 609 QA SurfaceView frames, 0 dropped frames, 0 layer-janky frames. Device-wide legacy stats counted 34 missed frames among 613; this includes non-game/system layers. The sample is directional relative to the historical Issue #5 Flutter frame benchmark because the timing sources differ. Raw sample and handset recordings are under `docs/evidence/issue19/`.
+
+A Flutter Driver attempt initially produced a profile APK with code 1, below the installed QA code 2001; its downgrade fallback uninstalled only the QA app and the performance test then failed to connect to the VM timeline service. The exact pre-run QA progress JSON had been read and hash-recorded. It was restored to the QA package and the original SHA-256 (`90823d16ca76a7c993a653213c7e8eeae967b237fda5b0349cedafb854122579`) verified after relaunch and final debug `-r` replacement. A split arm64 profile APK with the correct QA identity/code was subsequently installed with explicit user-0 replace semantics for the SurfaceFlinger sample. No production package was installed, launched, queried, or modified.
+
+Final debug QA artifact remains `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk`, package `com.mrweeds.cloudkingdom.qa`, version 0.1.0 (2001), SHA-256 `ea7ee13d0a58a91c51705a6edc5c8ab537c5c48591d8a6090940599738ba176d`. Stage A physical evidence is recorded; keep Stage B paused pending owner visual review.
