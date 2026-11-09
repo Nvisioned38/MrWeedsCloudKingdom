@@ -40,7 +40,6 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
   TurnAnimationTrace? _trace;
   BoardVisualSnapshot? _settledSnapshot;
   TurnResult? _pendingResult;
-  Set<Cell> _feedbackCells = {};
   int _cascadeLabel = 0;
   double _cascadeLeft = 0;
 
@@ -78,7 +77,6 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     _elapsed = _duration;
     _resolving = false;
     _trace = null;
-    _feedbackCells = {};
     onSelectionChanged?.call();
     if (notify) completePendingTurn();
   }
@@ -99,16 +97,6 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     } else {
       _settledSnapshot ??= _snapshotCurrent();
       _renderSnapshot(canvas, _settledSnapshot!, cellSize, tileSize);
-    }
-    if (_resolving && spriteRenderer is BoardTurnEffectsRenderer) {
-      (spriteRenderer as BoardTurnEffectsRenderer).drawTurnEffects(
-        canvas,
-        changedCells: _feedbackCells,
-        cascadeCount: _cascadeLabel,
-        cellSize: cellSize,
-        progress: (_elapsed / _duration).clamp(0.0, 1.0).toDouble(),
-        reducedMotion: reducedMotion,
-      );
     }
     if (!reducedMotion && _cascadeLeft > 0 && _cascadeLabel > 1) {
       _drawLabel(canvas, 'CASCADE ×$_cascadeLabel', Offset(size.x / 2, 18), 16,
@@ -143,6 +131,17 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
             ..color = const Color(0xfffff2ad)
             ..style = PaintingStyle.stroke
             ..strokeWidth = 2,
+        );
+      }
+      if (trace.waves.isNotEmpty) {
+        _drawWaveEffects(
+          canvas,
+          trace.waves.first,
+          trace.before,
+          0,
+          BoardEffectPhase.clearing,
+          1,
+          cellSize,
         );
       }
       return;
@@ -186,7 +185,9 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     }
 
     var local = _elapsed - swapDuration;
-    for (final wave in trace.waves) {
+    var previousSnapshot = trace.before;
+    for (var waveIndex = 0; waveIndex < trace.waves.length; waveIndex++) {
+      final wave = trace.waves[waveIndex];
       if (local < waveDuration) {
         final clearDuration = waveDuration * .42;
         final clearT = (local / clearDuration).clamp(0.0, 1.0).toDouble();
@@ -210,6 +211,15 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
               entry.key.row * session.board.cols + entry.key.col,
             );
           }
+          _drawWaveEffects(
+            canvas,
+            wave,
+            previousSnapshot,
+            waveIndex,
+            BoardEffectPhase.clearing,
+            clearT,
+            cellSize,
+          );
         } else {
           final gravityT = _easeInOut(
               ((local - clearDuration) / (waveDuration - clearDuration))
@@ -247,10 +257,20 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
               spawn.piece,
             );
           }
+          _drawWaveEffects(
+            canvas,
+            wave,
+            previousSnapshot,
+            waveIndex,
+            BoardEffectPhase.gravity,
+            gravityT,
+            cellSize,
+          );
         }
         return;
       }
       local -= waveDuration;
+      previousSnapshot = wave.afterGravity;
     }
 
     if (trace.shuffled && trace.shuffleBefore != null) {
@@ -265,6 +285,40 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     } else {
       _renderSnapshot(canvas, trace.after, cellSize, tileSize);
     }
+  }
+
+  void _drawWaveEffects(
+    Canvas canvas,
+    MatchWaveTrace wave,
+    BoardVisualSnapshot previousSnapshot,
+    int waveIndex,
+    BoardEffectPhase phase,
+    double progress,
+    double cellSize,
+  ) {
+    final renderer = spriteRenderer;
+    if (renderer is! BoardTurnEffectsRenderer) return;
+    (renderer as BoardTurnEffectsRenderer).drawTurnEffects(
+      canvas,
+      cellSize: cellSize,
+      event: BoardTurnEffectFrame(
+        clearedCells: wave.clearedPieces.keys.toSet(),
+        createdSpecials: wave.createdSpecials,
+        activatedSpecials: {
+          for (final cell in wave.triggeredSpecials)
+            if (wave.beforeClear.at(cell)?.special != null)
+              cell: wave.beforeClear.at(cell)!,
+        },
+        blockerChanges: wave.blockerChanges,
+        conditionChanges: wave.conditionChanges,
+        beforeWave: previousSnapshot,
+        currentWave: wave.beforeClear,
+        waveIndex: waveIndex,
+        phase: phase,
+        progress: progress,
+        reducedMotion: reducedMotion,
+      ),
+    );
   }
 
   void _renderSnapshot(Canvas canvas, BoardVisualSnapshot snapshot,
@@ -419,7 +473,6 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     _settledSnapshot = _trace?.after ?? _settledSnapshot;
     _resolving = false;
     _trace = null;
-    _feedbackCells = {};
     final result = _pendingResult;
     _pendingResult = null;
     onSelectionChanged?.call();
@@ -501,7 +554,6 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
                 (trace?.waves.length ?? 1) * .25 +
                 (trace?.shuffled ?? false ? .22 : 0),
           );
-    _feedbackCells = result.changedCells;
     _cascadeLabel = result.cascadeCount;
     _cascadeLeft = reducedMotion ? 0 : .8;
     _pendingResult = result;

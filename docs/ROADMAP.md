@@ -127,11 +127,9 @@ PR #13 has merged to main (`8cd09011dcd33fab612d5bc27279bed0a00bad2b`). Issue #1
 - **Issue #14: isolated QA fixtures implemented and verified.** Approved-art Fog/Syrup, crate damage, Torch direction, booster art/semantics, smoke/combo/reduced-motion, resolver-driven missing-image fallback, playable/tappable cells, and fresh first-clear reward persistence/idempotence have deterministic tests. No production debug route or authored-level change was added. Optional state tests remain automated-only, not physical S24 visual acceptance.
 - Current gate: 71 Flutter tests pass; analyzer, changed-file format, 37/37 approved-art verification and both arm64 debug builds pass. QA app update was user-0 `.qa` replace-only; production package/save untouched. TalkBack Issue #6 and owner visual approval remain release gates. Phase 2C remains in progress; Phase 3 is not started.
 
-## Active animation work — Issue #19 Stage A
-**Status: IMPLEMENTED; AUTOMATED/BUILD/DEVICE EVIDENCE PASS; OWNER VISUAL REVIEW PENDING**
+## Active animation work — Issue #19
+**Status: STAGE A VERIFIED; EVENT-DRIVEN FX IMPLEMENTED; NEW SHEET/DEVICE REVIEW PENDING**
 
-Work is on `animation/issue-19-stage-a`, draft PR #20, based on current verified `main`. Engine trace, deterministic parity, snapshot rendering, Reduced Motion, input lock and lifecycle cancellation are implemented and verified. See `docs/evidence/issue19/STAGE_A_QA.md`.
+Work remains on `animation/issue-19-stage-a`, draft PR #20. Stage A engine trace, deterministic parity, snapshot rendering, Reduced Motion, input lock and lifecycle cancellation are verified in `docs/evidence/issue19/STAGE_A_QA.md`. The owner then authorized continued motion and event-linked effects. The existing Issue #4 smoke/sparkle/combo artwork now follows actual clear, special, cascade, blocker and tile-condition changes; details and limitations are in `docs/evidence/issue19/EVENT_DRIVEN_FX_CHECKPOINT.md`.
 
-S24 QA captured a valid match, actual cascade/refill, selected-cell feedback in Reduced Motion, and a 5-second profile SurfaceFlinger sample (609 QA layer frames, 0 dropped). The normal-motion match advanced score 0→30 and moves 18→17. Reduced Motion was restored to its original on state. The exact pre-test QA progress JSON hash was restored and verified after a Flutter Driver version-mismatch uninstall fallback; production was never targeted. Current frame-source limitations and recordings are documented in `docs/evidence/issue19/STAGE_A_QA.md`.
-
-**Next gate:** owner visual review of the current screenshots/recordings. Keep Stage B paused until that review. Do not resume Issue #6/PR #18, import Batch 5 binaries, or start Phase 3.
+The latest automated gate is clean (74 Flutter tests, analyzer and 37/37 approved-art hashes); the arm64 QA build is installed using user-0 replace-only semantics and the QA save hash is unchanged. Physical S24 visual verification for the new event-linked effects is pending while the handset is locked. Do not resume Issue #6/PR #18, import Batch 5, or start Phase 3.

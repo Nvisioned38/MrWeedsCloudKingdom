@@ -69,17 +69,32 @@ Future<Uint8List> renderPiece(
 Future<Uint8List> renderEffects(
   CloudKingdomPngBoardRenderer renderer, {
   required double progress,
-  required int cascadeCount,
+  required int waveIndex,
   required bool reducedMotion,
+  Piece? activatedSpecial,
 }) async {
+  final cells = {Cell(3, 3), Cell(3, 4)};
+  final tiles = fixtureTiles();
+  if (activatedSpecial != null) tiles[3][3] = activatedSpecial;
+  final snapshot = BoardVisualSnapshot(tiles: tiles, blockers: const {});
   final recorder = ui.PictureRecorder();
   renderer.drawTurnEffects(
     Canvas(recorder),
-    changedCells: [Cell(3, 3), Cell(3, 4)],
-    cascadeCount: cascadeCount,
     cellSize: 24,
-    progress: progress,
-    reducedMotion: reducedMotion,
+    event: BoardTurnEffectFrame(
+      clearedCells: cells,
+      createdSpecials: const {},
+      activatedSpecials:
+          activatedSpecial == null ? const {} : {Cell(3, 3): activatedSpecial},
+      blockerChanges: const {},
+      conditionChanges: const {},
+      beforeWave: snapshot,
+      currentWave: snapshot,
+      waveIndex: waveIndex,
+      phase: BoardEffectPhase.clearing,
+      progress: progress,
+      reducedMotion: reducedMotion,
+    ),
   );
   final picture = recorder.endRecording();
   final image = await picture.toImage(192, 192);
@@ -144,25 +159,25 @@ void main() {
     final earlySmoke = await renderEffects(
       renderer,
       progress: .1,
-      cascadeCount: 1,
+      waveIndex: 0,
       reducedMotion: false,
     );
     final lateSmoke = await renderEffects(
       renderer,
       progress: .8,
-      cascadeCount: 1,
+      waveIndex: 0,
       reducedMotion: false,
     );
     final combo = await renderEffects(
       renderer,
       progress: .1,
-      cascadeCount: 2,
+      waveIndex: 1,
       reducedMotion: false,
     );
     final reduced = await renderEffects(
       renderer,
       progress: .1,
-      cascadeCount: 2,
+      waveIndex: 1,
       reducedMotion: true,
     );
     expect(lateSmoke, isNot(equals(earlySmoke)),
@@ -172,6 +187,17 @@ void main() {
     expect(reduced, isNot(equals(combo)),
         reason: 'Reduced Motion uses the static sparkle alternative.');
     expect(reduced.any((channel) => channel != 0), isTrue);
+
+    final bomb = await renderEffects(
+      renderer,
+      progress: .2,
+      waveIndex: 0,
+      reducedMotion: false,
+      activatedSpecial:
+          const Piece(TileFamily.star, special: SpecialKind.cloudBomb),
+    );
+    expect(bomb, isNot(equals(earlySmoke)),
+        reason: 'Bomb smoke is keyed to an actual triggered-special event.');
   });
 
   testWidgets(
