@@ -853,9 +853,18 @@ class _PlayScreenState extends State<PlayScreen> {
                                 final cols = session.board.cols;
                                 return Stack(children: [
                                   Positioned.fill(
-                                    child: GameWidget(
-                                      key: const ValueKey('match3-board'),
-                                      game: game,
+                                    child: Semantics(
+                                      key: const ValueKey(
+                                          'match3-board-accessibility'),
+                                      container: true,
+                                      label:
+                                          'Match-3 board, $rows rows by $cols columns',
+                                      child: ExcludeSemantics(
+                                        child: GameWidget(
+                                          key: const ValueKey('match3-board'),
+                                          game: game,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   for (var row = 0; row < rows; row++)

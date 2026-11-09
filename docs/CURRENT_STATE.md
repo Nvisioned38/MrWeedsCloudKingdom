@@ -1,5 +1,15 @@
 # Current State
 
+## 2026-11-08 — Issue #6 actual TalkBack QA resumed (partial)
+
+On branch `codex/issue-6-talkback` from `ce025a0`, the owner enabled TalkBack for testing only in isolated QA. Actual Samsung S24 Ultra listening confirmed that welcome navigation speaks the title, subtitle, Continue button and activation hint, followed by Level Path; activating Continue clearly announced the QA app title and Cloud House. Earlier collection navigation announced “tab 2 of 4,” not the expected Undiscovered card; that focus path still needs a retest.
+
+On Level 1, the owner heard an unlabeled board node followed by “Cloud Puff, row one, column one.” Android UIAutomator independently showed the focusable blank-label node spanning the full board before the 64 individually labeled cells. The node is now explicitly announced as “Match-3 board, 8 rows by 8 columns,” while Flame rendering semantics are excluded and the tile controls remain separate. This rebuilt QA APK was installed with the repository’s QA-only user-0 replace-install script. The owner confirmed the new board label by listening; the rebuilt Android accessibility tree contains the named group and 64 named/clickable cells.
+
+The QA saved-progress key remained byte-for-byte identical across reinstall (749 characters, value SHA-256 `B11238429A13057E52791C982A8C3AA3BC6D61E13E15B04891D9EF4375BBBACB`). Production app/save were not targeted. Updated QA APK `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk`, package `com.mrweeds.cloudkingdom.qa`, versionCode 2001, minSdk 24, SHA-256 `8b66c3ec47e3ae640af9b901a777f02a65ce2c5a702d430e63e5b7dd5c34a1ef`.
+
+Verification so far: focused widgets 8/8 pass; full Flutter suite 71/71 pass; `flutter analyze` clean; modified Dart files formatted; QA arm64 build/package verification pass. Issue #6 remains open while physical speech is checked for cell naming/selection, objectives and counters, results/rewards, Cloud House progression and relaunch; original accessibility settings must also be restored before testing ends. Phase 3 has not started and V1 is not finally approved.
+
 ## 2026-11-08 — Issue #4 owner-approved standalone art integration (verification pending)
 
 On `codex/issue-4-approved-art-integration`, the approved All 37 handoff is integrated in the app: 9 Batch A and 28 B/C standalone exports. The 37 PNG bytes, IHDR dimensions and 8-bit RGBA channel format passed `tools/verify_issue4_art.py` against the two supplied SHA-256 manifests. Artwork is wired into the board renderer, transparent-center frame, dynamic objective/move/score UI, Victory/reward panel, buttons, and an informational Specials guide. The logo-free vaporizer displays the exact canonical Cloud Cup logo as a separate overlay. Existing Match-3 enum/save IDs, deterministic rules, schema-3 save data, and all 30 levels remain intact. Batch D is excluded.

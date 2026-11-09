@@ -286,6 +286,10 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
 
+    final boardLabel = tester
+        .getSemantics(find.byKey(const ValueKey('match3-board-accessibility')));
+    expect(boardLabel.label, 'Match-3 board, 8 rows by 8 columns');
+
     final first =
         tester.getSemantics(find.byKey(const ValueKey('board-cell-0-1')));
     expect(first.label, 'Mystic Bloom, row 1, column 2');

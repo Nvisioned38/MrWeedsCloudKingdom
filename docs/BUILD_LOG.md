@@ -148,3 +148,11 @@ Issue #14: added test-only approved-art render/UI fixtures for Fog, Syrup, reinf
 Gate: 71/71 Flutter tests, analyzer clean, changed-file format clean, 37/37 art hash/dimensions/RGBA verifier, QA and production-ID arm64 debug APK builds passed. QA app was updated only with user-0 `-r`; production was not installed or accessed. Issue #6 and owner final visual sign-off remain open; no Phase 3.
 
 Final artifacts from committed Issue #15/#14 source `87bc709120dca4eb3bd7f017018cbf98eecddcf5`: QA arm64 debug (`com.mrweeds.cloudkingdom.qa`) 117,584,746 bytes, SHA-256 `5cdb0d40f9e60791ba93fcba4177285d8b091f6db5048719b493071e0c9e1a67`; installed on S24 user 0 by replace-only verified script. Production-ID arm64 debug (`com.mrweeds.cloudkingdom`) 117,584,726 bytes, SHA-256 `00ff322974afcd34626e701fd8d1b50619ffab8084c98e29d0b79b1db66ab664`; built and identity-verified, not installed.
+
+## 2026-11-08 — Issue #6 TalkBack board semantics fix (spoken QA in progress)
+
+Actual owner-listened S24 TalkBack exposed a focusable blank-label node over the whole Match-3 board. Updated `PlayScreen` to expose “Match-3 board, 8 rows by 8 columns” and exclude the Flame renderer from semantics, leaving all 64 cell controls independent. Added a widget regression assertion for the named board group. The owner confirmed the updated spoken board label after an isolated QA reinstall.
+
+The existing progress entry remained byte-for-byte unchanged across the `tools/build_qa_apk.ps1 -Action InstallQa` replace install to Android user 0. Production package was not targeted. QA APK versionCode 2001 / minSdk 24 SHA-256 `8b66c3ec47e3ae640af9b901a777f02a65ce2c5a702d430e63e5b7dd5c34a1ef`.
+
+Checks so far: focused widget tests 8/8; full Flutter suite 71/71; `flutter analyze` clean; modified files formatted; QA arm64 build and package ID verified. Spoken welcome and Cloud House transition passed by owner report. Cell/selection, objectives/counters, results/rewards, progression/relaunch and original TalkBack setting restoration are still under actual device assessment; Issue #6 remains open.
