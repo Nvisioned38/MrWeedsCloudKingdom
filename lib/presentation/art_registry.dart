@@ -39,13 +39,11 @@ class ArtRegistry {
     'tile_dream_crystal': 'assets/art/match3/dream_crystal.png',
     'tile_golden_nugget': 'assets/art/match3/golden_nugget.png',
     'blocker_crate': 'assets/art/match3/mw_crate.png',
-    'blocker_reinforced_crate':
-        'assets/art/match3/reinforced_mw_crate.png',
+    'blocker_reinforced_crate': 'assets/art/match3/reinforced_mw_crate.png',
     'blocker_sticky_syrup': 'assets/art/match3/sticky_syrup_overlay.png',
     'blocker_fog': 'assets/art/match3/fog_overlay.png',
     'special_rocket_torch': 'assets/art/match3/butane_torch_lighter.png',
-    'special_cloud_cup_vaporizer':
-        'assets/art/match3/cloud_cup_vaporizer.png',
+    'special_cloud_cup_vaporizer': 'assets/art/match3/cloud_cup_vaporizer.png',
     'special_prism': 'assets/art/match3/prism.png',
     'special_cloud_bomb': 'assets/art/match3/cloud_bomb.png',
     'fx_combo_cascade': 'assets/art/match3/fx_combo_ring.png',
@@ -61,7 +59,8 @@ class ArtRegistry {
     'board_fx_smoke_3': 'assets/art/match3/fx_white_smoke_03.png',
     'board_fx_magic_sparkles': 'assets/art/match3/fx_magic_sparkles.png',
     'ui_objective_complete': 'assets/art/match3/objective_state_complete.png',
-    'ui_objective_in_progress': 'assets/art/match3/objective_state_in_progress.png',
+    'ui_objective_in_progress':
+        'assets/art/match3/objective_state_in_progress.png',
     'ui_moves_low': 'assets/art/match3/moves_counter_backing_low.png',
     'ui_moves_zero': 'assets/art/match3/moves_counter_backing_zero.png',
     'ui_star_filled': 'assets/art/match3/star_filled.png',
@@ -72,7 +71,8 @@ class ArtRegistry {
     'ui_booster_pressed': 'assets/art/match3/booster_button_pressed.png',
     'ui_booster_selected': 'assets/art/match3/booster_button_selected.png',
     'ui_booster_disabled': 'assets/art/match3/booster_button_disabled.png',
-    'ui_button_primary_blank': 'assets/art/match3/button_frame_primary_blank.png',
+    'ui_button_primary_blank':
+        'assets/art/match3/button_frame_primary_blank.png',
     'ui_collection_card_frame': 'assets/art/collection/card_frame.png',
     'ui_collection_filter': 'assets/art/collection/filter_bar.png',
     'ui_collection_shelf': 'assets/art/collection/shelf.png',

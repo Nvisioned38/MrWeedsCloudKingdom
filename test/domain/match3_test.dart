@@ -63,6 +63,125 @@ void main() {
       }
     });
 
+    test('optional event trace preserves invalid and accepted engine results',
+        () {
+      final plainInvalid = LevelSession(level(), initialTiles: boardFixture());
+      final tracedInvalid = LevelSession(level(), initialTiles: boardFixture());
+      final invalidBefore = tracedInvalid.board.fingerprint;
+      LevelTurnAnimationTrace? rejectedTrace;
+      final rejected = tracedInvalid.swap(
+        const Cell(0, 0),
+        const Cell(0, 1),
+        onAnimationTrace: (trace) => rejectedTrace = trace,
+      );
+      expect(rejected.accepted, isFalse);
+      expect(plainInvalid.swap(const Cell(0, 0), const Cell(0, 1)).accepted,
+          isFalse);
+      expect(rejectedTrace, isNotNull);
+      expect(rejectedTrace!.boardTrace.accepted, isFalse);
+      expect(rejectedTrace!.boardTrace.waves, isEmpty);
+      expect(tracedInvalid.board.fingerprint, invalidBefore);
+      expect(tracedInvalid.board.fingerprint, plainInvalid.board.fingerprint);
+      expect(tracedInvalid.movesUsed, 0);
+
+      final plain = LevelSession(level(), initialTiles: boardFixture());
+      final traced = LevelSession(level(), initialTiles: boardFixture());
+      LevelTurnAnimationTrace? acceptedTrace;
+      final expected = plain.swap(const Cell(0, 1), const Cell(1, 1));
+      final actual = traced.swap(
+        const Cell(0, 1),
+        const Cell(1, 1),
+        onAnimationTrace: (trace) => acceptedTrace = trace,
+      );
+      expect(actual.accepted, expected.accepted);
+      expect(actual.cleared, expected.cleared);
+      expect(actual.scoreGained, expected.scoreGained);
+      expect(actual.cascadeCount, expected.cascadeCount);
+      expect(traced.board.fingerprint, plain.board.fingerprint);
+      expect(traced.board.score, plain.board.score);
+      expect(traced.movesUsed, plain.movesUsed);
+      expect(traced.outcome, plain.outcome);
+      expect(
+        traced.objectives.map((item) => item.value),
+        plain.objectives.map((item) => item.value),
+      );
+      final trace = acceptedTrace!.boardTrace;
+      expect(trace.accepted, isTrue);
+      expect(trace.waves, isNotEmpty);
+      expect(trace.waves.first.clearedPieces.keys,
+          containsAll([const Cell(0, 0), const Cell(0, 1), const Cell(0, 2)]));
+      expect(trace.waves.first.spawns, isNotEmpty);
+      expect(
+        trace.waves.first.spawns.every((spawn) =>
+            spawn.origin == spawn.segmentTop - 1 &&
+            spawn.destination.row >= spawn.segmentTop &&
+            spawn.destination.row <= spawn.segmentBottom),
+        isTrue,
+      );
+      expect(trace.after.at(const Cell(0, 1)), traced.board.at(0, 1));
+      expect(acceptedTrace!.outcome, traced.outcome);
+    });
+
+    test('trace records cascades in actual resolution order with parity', () {
+      var found = false;
+      for (var seed = 1; seed <= 100 && !found; seed++) {
+        final plain = Match3Board(level: level(seed: seed));
+        final traced = Match3Board(level: level(seed: seed));
+        for (var row = 0; row < 8 && !found; row++) {
+          for (var col = 0; col < 8 && !found; col++) {
+            for (final next in [Cell(row, col + 1), Cell(row + 1, col)]) {
+              if (next.row >= 8 || next.col >= 8) continue;
+              final expected = plain.resolveSwap(Cell(row, col), next);
+              TurnAnimationTrace? trace;
+              final actual = traced.resolveSwap(
+                Cell(row, col),
+                next,
+                onAnimationTrace: (value) => trace = value,
+              );
+              expect(actual.accepted, expected.accepted);
+              expect(actual.cleared, expected.cleared);
+              expect(actual.collectedTiles, expected.collectedTiles);
+              expect(actual.scoreGained, expected.scoreGained);
+              expect(actual.createdSpecials, expected.createdSpecials);
+              expect(
+                  actual.createdPieces.length, expected.createdPieces.length);
+              expect(actual.destroyedBlockers, expected.destroyedBlockers);
+              expect(actual.cascadeCount, expected.cascadeCount);
+              expect(actual.changedCells, expected.changedCells);
+              expect(traced.fingerprint, plain.fingerprint);
+              expect(traced.score, plain.score);
+              if (actual.accepted && actual.cascadeCount > 1) {
+                expect(trace!.waves.length, actual.cascadeCount);
+                expect(trace!.waves.any((wave) => wave.movements.isNotEmpty),
+                    isTrue);
+                expect(
+                    trace!.waves.any((wave) => wave.spawns.isNotEmpty), isTrue);
+                expect(
+                  trace!.waves.expand((wave) => wave.movements).every((move) =>
+                      move.source.row >= move.segmentTop &&
+                      move.source.row <= move.segmentBottom &&
+                      move.destination.row >= move.segmentTop &&
+                      move.destination.row <= move.segmentBottom),
+                  isTrue,
+                );
+                expect(trace!.waves.last.afterGravity.tiles,
+                    equals(trace!.after.tiles));
+                expect(
+                    trace!.waves.every((wave) => wave.movements.every(
+                        (movement) =>
+                            movement.piece ==
+                            wave.afterGravity.at(movement.destination))),
+                    isTrue);
+                found = true;
+              }
+              if (actual.accepted) break;
+            }
+          }
+        }
+      }
+      expect(found, isTrue, reason: 'A seeded cascade must be traceable.');
+    });
+
     test('refill and cascades replay deterministically', () {
       var foundCascade = false;
       for (var seed = 1; seed <= 100 && !foundCascade; seed++) {

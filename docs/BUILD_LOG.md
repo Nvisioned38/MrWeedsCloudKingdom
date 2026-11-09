@@ -148,3 +148,9 @@ Issue #14: added test-only approved-art render/UI fixtures for Fog, Syrup, reinf
 Gate: 71/71 Flutter tests, analyzer clean, changed-file format clean, 37/37 art hash/dimensions/RGBA verifier, QA and production-ID arm64 debug APK builds passed. QA app was updated only with user-0 `-r`; production was not installed or accessed. Issue #6 and owner final visual sign-off remain open; no Phase 3.
 
 Final artifacts from committed Issue #15/#14 source `87bc709120dca4eb3bd7f017018cbf98eecddcf5`: QA arm64 debug (`com.mrweeds.cloudkingdom.qa`) 117,584,746 bytes, SHA-256 `5cdb0d40f9e60791ba93fcba4177285d8b091f6db5048719b493071e0c9e1a67`; installed on S24 user 0 by replace-only verified script. Production-ID arm64 debug (`com.mrweeds.cloudkingdom`) 117,584,726 bytes, SHA-256 `00ff322974afcd34626e701fd8d1b50619ffab8084c98e29d0b79b1db66ab664`; built and identity-verified, not installed.
+
+## 2026-11-09 — Issue #19 Stage A implementation checkpoint
+
+Added the optional immutable animation trace to the actual engine pipeline, exact gravity/refill lineage and snapshot timeline, Reduced Motion path, touch/semantic resolution gate, one-shot delayed result callback and lifecycle cancellation/reconciliation. Added deterministic trace parity/cascade tests and widget busy/lifecycle coverage. See `docs/evidence/issue19/STAGE_A_QA.md` for exact implementation and verification.
+
+Verification: 27-file Dart format check clean; `flutter analyze` clean; full suite **74/74**; approved-art validation **37/37**; isolated user-0 QA APK built, identity/hash verified, and replace-installed without data reset. QA save payload hash was unchanged. The S24 is ADB-authorized but locked; physical animation capture and current-build profile timing remain **NOT TESTED**. Stage B must wait for the Stage A device gate.

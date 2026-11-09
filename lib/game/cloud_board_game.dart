@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -29,36 +30,29 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
   final void Function(TurnResult result) onTurn;
   final VoidCallback? onSelectionChanged;
   Cell? get selectedCell => _selected;
+  bool get isResolving => _resolving;
+
   Cell? _selected;
   bool _resolving = false;
-  double _feedbackLeft = 0;
-  double _feedbackDuration = .28;
+  double _elapsed = 0;
+  double _duration = 0;
+  double _selectedPulse = 0;
+  TurnAnimationTrace? _trace;
+  BoardVisualSnapshot? _settledSnapshot;
+  TurnResult? _pendingResult;
   Set<Cell> _feedbackCells = {};
   int _cascadeLabel = 0;
   double _cascadeLeft = 0;
-  Cell? _swapA;
-  Cell? _swapB;
-  Piece? _swapPieceA;
-  Piece? _swapPieceB;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    // Existing renderer seams remain injectable for tests/alternate clients.
-    // New image loading affects presentation only, not deterministic moves.
     if (spriteRenderer is CloudKingdomFallbackBoardRenderer) {
-      // Decode artwork independently of Flame's lifecycle. Waiting for platform
-      // image codecs here prevents the board from accepting input in widget
-      // tests and can delay input on slower Android devices. The existing
-      // vector renderer remains visible until the exact PNGs are ready.
       final loadArtwork =
           approvedArtLoader ?? () => CloudKingdomPngBoardRenderer.load();
       unawaited(loadArtwork().then((loaded) {
         spriteRenderer = loaded;
-      }).catchError((Object error, StackTrace stack) {
-        // Preserve playable fallback when a device cannot decode art.
-        // The asset-verification CI gate catches missing/corrupted sources.
-      }));
+      }).catchError((Object error, StackTrace stack) {}));
     }
   }
 
@@ -68,18 +62,31 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
   @override
   void update(double dt) {
     super.update(dt);
+    _selectedPulse = (_selectedPulse + dt * 5) % (math.pi * 2);
     if (_resolving) {
-      _feedbackLeft -= dt;
-      if (_feedbackLeft <= 0) {
-        _resolving = false;
-        _feedbackCells = {};
-        _swapA = null;
-        _swapB = null;
-        _swapPieceA = null;
-        _swapPieceB = null;
-      }
+      _elapsed = math.min(_duration, _elapsed + dt);
+      if (_elapsed >= _duration) _completePresentation();
     }
-    if (_cascadeLeft > 0) _cascadeLeft -= dt;
+    if (_cascadeLeft > 0) _cascadeLeft = math.max(0, _cascadeLeft - dt);
+  }
+
+  /// Stops visual work and reconciles to the authoritative already-resolved
+  /// engine state. The caller can defer the result callback until resume.
+  void cancelAnimation({bool notify = true}) {
+    if (!_resolving) return;
+    _settledSnapshot = _trace?.after ?? _settledSnapshot;
+    _elapsed = _duration;
+    _resolving = false;
+    _trace = null;
+    _feedbackCells = {};
+    onSelectionChanged?.call();
+    if (notify) completePendingTurn();
+  }
+
+  void completePendingTurn() {
+    final result = _pendingResult;
+    _pendingResult = null;
+    if (result != null) onTurn(result);
   }
 
   @override
@@ -87,80 +94,21 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     super.render(canvas);
     final cellSize = size.x / session.board.cols;
     final tileSize = cellSize * .88;
-    final paint = Paint()..style = PaintingStyle.fill;
-    for (var row = 0; row < session.board.rows; row++) {
-      for (var col = 0; col < session.board.cols; col++) {
-        final cell = Cell(row, col);
-        final center = Offset((col + .5) * cellSize, (row + .5) * cellSize);
-        paint.color = const Color(0xff244f67);
-        canvas.drawRRect(
-            RRect.fromRectAndRadius(
-                Rect.fromCenter(
-                    center: center, width: tileSize, height: tileSize),
-                const Radius.circular(9)),
-            paint);
-        final blocker = session.board.blockerAt(row, col);
-        if (blocker != null) {
-          spriteRenderer.drawBlocker(canvas, center, tileSize, blocker);
-        } else {
-          final piece = session.board.at(row, col);
-          if (piece != null &&
-              !(_resolving && (_swapA == cell || _swapB == cell))) {
-            spriteRenderer.drawPiece(canvas, center, tileSize, piece);
-          }
-        }
-        if (_selected == cell) {
-          canvas.drawRRect(
-              RRect.fromRectAndRadius(
-                  Rect.fromCenter(
-                      center: center,
-                      width: cellSize * .97,
-                      height: cellSize * .97),
-                  const Radius.circular(10)),
-              Paint()
-                ..color = const Color(0xffffffff)
-                ..style = PaintingStyle.stroke
-                ..strokeWidth = 3);
-        }
-        if (_feedbackCells.contains(cell) &&
-            _feedbackLeft > 0 &&
-            spriteRenderer is! BoardTurnEffectsRenderer) {
-          final alpha = (_feedbackLeft / .28).clamp(0.0, 1.0).toDouble();
-          canvas.drawCircle(
-              center,
-              tileSize * (.25 + .18 * (1 - alpha)),
-              Paint()
-                ..color = const Color(0x99fff2ad).withValues(alpha: alpha));
-        }
-      }
+    if (_resolving && _trace != null) {
+      _renderTrace(canvas, _trace!, cellSize, tileSize);
+    } else {
+      _settledSnapshot ??= _snapshotCurrent();
+      _renderSnapshot(canvas, _settledSnapshot!, cellSize, tileSize);
     }
     if (_resolving && spriteRenderer is BoardTurnEffectsRenderer) {
-      final progress =
-          (1 - _feedbackLeft / _feedbackDuration).clamp(0.0, 1.0).toDouble();
       (spriteRenderer as BoardTurnEffectsRenderer).drawTurnEffects(
         canvas,
         changedCells: _feedbackCells,
         cascadeCount: _cascadeLabel,
         cellSize: cellSize,
-        progress: progress,
+        progress: (_elapsed / _duration).clamp(0.0, 1.0).toDouble(),
         reducedMotion: reducedMotion,
       );
-    }
-    if (_resolving && _swapA != null && _swapB != null) {
-      final progress =
-          (1 - _feedbackLeft / _feedbackDuration).clamp(0.0, 1.0).toDouble();
-      final a =
-          Offset((_swapA!.col + .5) * cellSize, (_swapA!.row + .5) * cellSize);
-      final b =
-          Offset((_swapB!.col + .5) * cellSize, (_swapB!.row + .5) * cellSize);
-      if (_swapPieceA != null) {
-        spriteRenderer.drawPiece(
-            canvas, Offset.lerp(a, b, progress)!, tileSize, _swapPieceA!);
-      }
-      if (_swapPieceB != null) {
-        spriteRenderer.drawPiece(
-            canvas, Offset.lerp(b, a, progress)!, tileSize, _swapPieceB!);
-      }
     }
     if (!reducedMotion && _cascadeLeft > 0 && _cascadeLabel > 1) {
       _drawLabel(canvas, 'CASCADE ×$_cascadeLabel', Offset(size.x / 2, 18), 16,
@@ -169,20 +117,313 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     }
   }
 
+  void _renderTrace(Canvas canvas, TurnAnimationTrace trace, double cellSize,
+      double tileSize) {
+    final t = (_elapsed / _duration).clamp(0.0, 1.0).toDouble();
+    if (reducedMotion) {
+      _renderSnapshot(
+        canvas,
+        trace.accepted ? trace.after : trace.before,
+        cellSize,
+        tileSize,
+      );
+      final feedbackCells =
+          trace.accepted ? trace.result.changedCells : {trace.from, trace.to};
+      for (final cell in feedbackCells) {
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+            Rect.fromCenter(
+              center: _center(cell, cellSize),
+              width: cellSize * .82,
+              height: cellSize * .82,
+            ),
+            const Radius.circular(9),
+          ),
+          Paint()
+            ..color = const Color(0xfffff2ad)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2,
+        );
+      }
+      return;
+    }
+    const swapDuration = .14;
+    final shuffleDuration = trace.shuffled ? .22 : 0.0;
+    final waveDuration = trace.waves.isEmpty
+        ? 0.0
+        : (_duration - swapDuration - shuffleDuration) / trace.waves.length;
+    final from = _center(trace.from, cellSize);
+    final to = _center(trace.to, cellSize);
+    if (!trace.accepted) {
+      _renderSnapshot(canvas, trace.before, cellSize, tileSize,
+          hidden: {trace.from, trace.to});
+      final progress = _easeOut(t);
+      final excursion = progress < .48 ? progress / .48 : (1 - progress) / .52;
+      if (trace.originalFrom != null) {
+        spriteRenderer.drawPiece(canvas, Offset.lerp(from, to, excursion)!,
+            tileSize, trace.originalFrom!);
+      }
+      if (trace.originalTo != null) {
+        spriteRenderer.drawPiece(canvas, Offset.lerp(to, from, excursion)!,
+            tileSize, trace.originalTo!);
+      }
+      return;
+    }
+
+    if (_elapsed < swapDuration) {
+      _renderSnapshot(canvas, trace.before, cellSize, tileSize,
+          hidden: {trace.from, trace.to});
+      final progress = _easeInOut((_elapsed / swapDuration).clamp(0.0, 1.0));
+      if (trace.originalFrom != null) {
+        spriteRenderer.drawPiece(canvas, Offset.lerp(from, to, progress)!,
+            tileSize, trace.originalFrom!);
+      }
+      if (trace.originalTo != null) {
+        spriteRenderer.drawPiece(canvas, Offset.lerp(to, from, progress)!,
+            tileSize, trace.originalTo!);
+      }
+      return;
+    }
+
+    var local = _elapsed - swapDuration;
+    for (final wave in trace.waves) {
+      if (local < waveDuration) {
+        final clearDuration = waveDuration * .42;
+        final clearT = (local / clearDuration).clamp(0.0, 1.0).toDouble();
+        if (local < clearDuration) {
+          _renderSnapshot(canvas, wave.beforeClear, cellSize, tileSize,
+              hidden: wave.clearedPieces.keys.toSet());
+          for (final entry in wave.clearedPieces.entries) {
+            _drawPieceTransform(
+              canvas,
+              _center(entry.key, cellSize),
+              tileSize,
+              entry.value,
+              scale: 1 - _easeInOut(clearT) * .72,
+              opacity: 1 - _easeInOut(clearT),
+            );
+            _drawClearSparkle(
+              canvas,
+              _center(entry.key, cellSize),
+              tileSize,
+              clearT,
+              entry.key.row * session.board.cols + entry.key.col,
+            );
+          }
+        } else {
+          final gravityT = _easeInOut(
+              ((local - clearDuration) / (waveDuration - clearDuration))
+                  .clamp(0.0, 1.0)
+                  .toDouble());
+          final hidden = <Cell>{};
+          for (final movement in wave.movements) {
+            hidden
+              ..add(movement.source)
+              ..add(movement.destination);
+          }
+          for (final spawn in wave.spawns) {
+            hidden.add(spawn.destination);
+          }
+          _renderSnapshot(canvas, wave.afterClear, cellSize, tileSize,
+              hidden: hidden);
+          for (final movement in wave.movements) {
+            spriteRenderer.drawPiece(
+              canvas,
+              Offset.lerp(_center(movement.source, cellSize),
+                  _center(movement.destination, cellSize), gravityT)!,
+              tileSize,
+              movement.piece,
+            );
+          }
+          for (final spawn in wave.spawns) {
+            spriteRenderer.drawPiece(
+              canvas,
+              Offset.lerp(
+                  Offset((spawn.destination.col + .5) * cellSize,
+                      (spawn.origin + .5) * cellSize),
+                  _center(spawn.destination, cellSize),
+                  gravityT)!,
+              tileSize,
+              spawn.piece,
+            );
+          }
+        }
+        return;
+      }
+      local -= waveDuration;
+    }
+
+    if (trace.shuffled && trace.shuffleBefore != null) {
+      final shuffleT = (local / shuffleDuration).clamp(0.0, 1.0).toDouble();
+      _renderSnapshot(canvas, trace.shuffleBefore!, cellSize, tileSize,
+          opacity: 1 - _easeInOut(shuffleT));
+      _renderSnapshot(canvas, trace.after, cellSize, tileSize,
+          opacity: _easeInOut(shuffleT));
+      _drawLabel(canvas, 'RESHUFFLING', Offset(size.x / 2, 18), 13,
+          const Color(0xfffff2ad),
+          bold: true);
+    } else {
+      _renderSnapshot(canvas, trace.after, cellSize, tileSize);
+    }
+  }
+
+  void _renderSnapshot(Canvas canvas, BoardVisualSnapshot snapshot,
+      double cellSize, double tileSize,
+      {Set<Cell> hidden = const {}, double opacity = 1}) {
+    final paint = Paint()..style = PaintingStyle.fill;
+    for (var row = 0; row < session.board.rows; row++) {
+      for (var col = 0; col < session.board.cols; col++) {
+        final cell = Cell(row, col);
+        final center = _center(cell, cellSize);
+        paint.color = const Color(0xff244f67);
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+            Rect.fromCenter(center: center, width: tileSize, height: tileSize),
+            const Radius.circular(9),
+          ),
+          paint,
+        );
+        final blocker = snapshot.blockers[cell];
+        if (blocker != null) {
+          canvas.saveLayer(
+            Rect.fromCenter(center: center, width: tileSize, height: tileSize),
+            Paint()..color = Color.fromRGBO(255, 255, 255, opacity),
+          );
+          spriteRenderer.drawBlocker(canvas, center, tileSize,
+              BlockerState.visual(blocker.kind, blocker.hp));
+          canvas.restore();
+        } else if (!hidden.contains(cell)) {
+          final piece = snapshot.at(cell);
+          if (piece != null) {
+            _drawPieceTransform(
+              canvas,
+              center,
+              tileSize,
+              piece,
+              opacity: opacity,
+              scale: cell == _selected && !_resolving
+                  ? 1 + (reducedMotion ? 0 : .035 * math.sin(_selectedPulse))
+                  : 1,
+            );
+          }
+        }
+        if (_selected == cell && !_resolving) {
+          final alpha = reducedMotion
+              ? 1.0
+              : (.76 + .24 * math.sin(_selectedPulse)).clamp(0.0, 1.0);
+          canvas.drawRRect(
+            RRect.fromRectAndRadius(
+              Rect.fromCenter(
+                center: center,
+                width: cellSize * .97,
+                height: cellSize * .97,
+              ),
+              const Radius.circular(10),
+            ),
+            Paint()
+              ..color = Color.fromRGBO(255, 255, 255, alpha.toDouble())
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 3,
+          );
+        }
+      }
+    }
+  }
+
+  void _drawPieceTransform(
+      Canvas canvas, Offset center, double tileSize, Piece piece,
+      {double scale = 1, double opacity = 1}) {
+    if (opacity <= 0 || scale <= 0) return;
+    canvas.save();
+    canvas.translate(center.dx, center.dy);
+    canvas.scale(scale);
+    canvas.translate(-center.dx, -center.dy);
+    canvas.saveLayer(
+      Rect.fromCenter(
+          center: center, width: tileSize * 1.3, height: tileSize * 1.3),
+      Paint()
+        ..color = Color.fromRGBO(255, 255, 255, opacity.clamp(0, 1).toDouble()),
+    );
+    spriteRenderer.drawPiece(canvas, center, tileSize, piece);
+    canvas.restore();
+  }
+
+  void _drawClearSparkle(Canvas canvas, Offset center, double tileSize,
+      double progress, int seed) {
+    if (reducedMotion || progress > .78) return;
+    final fade = (1 - progress / .78).clamp(0.0, 1.0).toDouble();
+    final offset = Offset(
+      (seed.isEven ? -1 : 1) * tileSize * .18,
+      (seed % 3 - 1) * tileSize * .12,
+    );
+    final sparkleCenter = center + offset;
+    final radius = tileSize * (.055 + .035 * progress);
+    final paint = Paint()
+      ..color = const Color(0xfffff4c5).withValues(alpha: fade)
+      ..strokeWidth = math.max(1.1, tileSize * .025)
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(
+      sparkleCenter.translate(-radius, 0),
+      sparkleCenter.translate(radius, 0),
+      paint,
+    );
+    canvas.drawLine(
+      sparkleCenter.translate(0, -radius),
+      sparkleCenter.translate(0, radius),
+      paint,
+    );
+  }
+
+  BoardVisualSnapshot _snapshotCurrent() => BoardVisualSnapshot(
+        tiles: [
+          for (var r = 0; r < session.board.rows; r++)
+            [
+              for (var c = 0; c < session.board.cols; c++)
+                session.board.at(r, c)
+            ],
+        ],
+        blockers: {
+          for (final entry in session.board.blockers.entries)
+            entry.key: BlockerVisualState(entry.value.kind, entry.value.hp),
+        },
+      );
+
+  Offset _center(Cell cell, double size) =>
+      Offset((cell.col + .5) * size, (cell.row + .5) * size);
+
+  double _easeInOut(double value) => value * value * (3 - 2 * value);
+  double _easeOut(double value) => 1 - math.pow(1 - value, 3).toDouble();
+
   void _drawLabel(
       Canvas canvas, String text, Offset center, double fontSize, Color color,
       {bool bold = false}) {
     final painter = TextPainter(
-        text: TextSpan(
-            text: text,
-            style: TextStyle(
-                color: color,
-                fontSize: fontSize,
-                fontWeight: bold ? FontWeight.w900 : FontWeight.w600)),
-        textDirection: TextDirection.ltr)
-      ..layout();
+      text: TextSpan(
+        text: text,
+        style: TextStyle(
+          color: color,
+          fontSize: fontSize,
+          fontWeight: bold ? FontWeight.w900 : FontWeight.w600,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
     painter.paint(
-        canvas, center.translate(-painter.width / 2, -painter.height / 2));
+      canvas,
+      center.translate(-painter.width / 2, -painter.height / 2),
+    );
+  }
+
+  void _completePresentation() {
+    if (!_resolving) return;
+    _settledSnapshot = _trace?.after ?? _settledSnapshot;
+    _resolving = false;
+    _trace = null;
+    _feedbackCells = {};
+    final result = _pendingResult;
+    _pendingResult = null;
+    onSelectionChanged?.call();
+    if (result != null) onTurn(result);
   }
 
   @override
@@ -201,7 +442,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     tapCell(Cell(row, col));
   }
 
-  /// Handles the same move input for TalkBack's semantic cell actions.
+  /// Same move path for physical touch and semantic actions.
   void tapCell(Cell tapped) {
     if (_resolving ||
         session.outcome != LevelOutcome.playing ||
@@ -223,26 +464,48 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
       return;
     }
     final from = _selected!;
-    final pieceA = session.board.at(from.row, from.col);
-    final pieceB = session.board.at(tapped.row, tapped.col);
-    final result = session.swap(from, tapped);
-    _selected = null;
-    if (result.accepted) {
-      _resolving = true;
-      _feedbackDuration = reducedMotion ? .04 : .28;
-      _feedbackLeft = _feedbackDuration;
-      _feedbackCells = result.changedCells;
-      _swapA = from;
-      _swapB = tapped;
-      _swapPieceA = pieceA;
-      _swapPieceB = pieceB;
-      _cascadeLabel = result.cascadeCount;
-      _cascadeLeft = reducedMotion ? 0 : .8;
-      effectsHook.onAcceptedTurn(result);
-      onTurn(result);
-    } else {
+    if ((from.row - tapped.row).abs() + (from.col - tapped.col).abs() != 1) {
       _selected = tapped;
       onSelectionChanged?.call();
+      return;
     }
+    TurnAnimationTrace? trace;
+    final result = session.swap(
+      from,
+      tapped,
+      onAnimationTrace: (turnTrace) => trace = turnTrace.boardTrace,
+    );
+    _selected = null;
+    if (!result.accepted) {
+      _trace = trace;
+      if (trace != null) {
+        _resolving = true;
+        _elapsed = 0;
+        _duration = reducedMotion ? .06 : .14;
+        _pendingResult = null;
+      } else {
+        _selected = tapped;
+      }
+      onSelectionChanged?.call();
+      return;
+    }
+    _resolving = true;
+    _trace = trace;
+    _settledSnapshot = trace?.after;
+    _elapsed = 0;
+    _duration = reducedMotion
+        ? .12
+        : math.min(
+            2.3,
+            .14 +
+                (trace?.waves.length ?? 1) * .25 +
+                (trace?.shuffled ?? false ? .22 : 0),
+          );
+    _feedbackCells = result.changedCells;
+    _cascadeLabel = result.cascadeCount;
+    _cascadeLeft = reducedMotion ? 0 : .8;
+    _pendingResult = result;
+    effectsHook.onAcceptedTurn(result);
+    onSelectionChanged?.call();
   }
 }

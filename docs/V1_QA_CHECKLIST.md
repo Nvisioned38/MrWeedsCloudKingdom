@@ -113,3 +113,18 @@ This newer device-specific entry supersedes the older “ADB unauthorized” sta
 - V1 is not declared complete. Phase 3 remains unstarted.
 
 - Current build evidence: PR #10 run 42441154111 succeeded; Flutter 3.47.7, 53/53 tests, analyzer clean, Android debug artifact `cloud-kingdom-android-debug-32` (SHA-256 `f58b2bc3938f2f90e15db15b888edebb2cd45fccd541884e0bdb0add34192d9b`). Device-specific rows above refer to earlier APK source and still require a current isolated-package run.
+
+## 2026-11-09 Issue #19 — Stage A animation checkpoint
+
+| Gate | Status | Evidence |
+|---|---|---|
+| Trace-on/off seeded result parity | PASS | Board fingerprint, score, result fields, moves, objective progress and outcome agree; real cascade/movement/spawn lineage tested. |
+| Swap, invalid rollback, clear, gravity/refill, cascade sequencing | PASS — automated | Engine snapshots record real resolver wave order and per-segment movement/refill sources. Widget regression confirms a valid turn blocks touch and semantics while resolving. |
+| Reduced Motion and lifecycle cancellation | PASS — automated | Reduced Motion uses no travel and visible completion feedback; pause/reentry reconciles to final state; semantic board retains all 64 cells. |
+| Existing progression/save/art regression | PASS | Full Flutter suite 74/74; schema and authored-level behavior unchanged. Approved art manifest validation 37/37. |
+| Format / analyzer | PASS | 27-file `dart format --set-exit-if-changed`; `flutter analyze` no issues. |
+| Isolated QA arm64 build/package/install | PASS | QA package only, user 0, replace-only safety script; SHA-256 `ea7ee13d0a58a91c51705a6edc5c8ab537c5c48591d8a6090940599738ba176d`. |
+| QA progress preservation | PASS | Same save payload hash before/after install: `90823d16ca76a7c993a653213c7e8eeae967b237fda5b0349cedafb854122579`; 1,295 coins / 9 stars / 9 levels remain. |
+| S24 current-build valid/invalid/cascade visuals and captures | BLOCKED | Device authorized and QA package verified/installed, but handset was at its lock screen. No bypass attempted; no gameplay screenshot was captured. |
+| S24 current-build frame pacing vs historical benchmark | NOT TESTED | Prior Issue #5 123-frame timing retained as a reference only; no current animation timing was collected. |
+| Stage A acceptance / Stage B start | OPEN / NOT STARTED | Wait for S24 physical review; Stage B remains outside this checkpoint. |

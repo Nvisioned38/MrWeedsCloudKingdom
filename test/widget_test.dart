@@ -221,7 +221,11 @@ void main() {
     await tester.tapAt(Offset(boardRect.left + boardRect.width * 1.5 / 8,
         boardRect.top + boardRect.height * 1.5 / 8));
     await tester.pump();
+    expect(session.movesUsed, 1);
+    expect(game.isResolving, isTrue);
     await tester.pump(const Duration(milliseconds: 400));
+    expect(game.isResolving, isFalse);
+    await tester.pump();
     expect(find.text('Clouds cleared!'), findsOneWidget);
     expect(progress.coins, 100);
     expect(progress.starLevelIds, {1});
@@ -239,6 +243,80 @@ void main() {
     expect(restored.coins, 100);
     expect(restored.unlockedThrough, 2);
     await tester.binding.setSurfaceSize(null);
+  });
+
+  testWidgets('tile resolution locks touch and semantic cells until settled',
+      (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final authored = LevelSpec(
+      id: 1,
+      name: 'Trace Gate',
+      seed: 19,
+      moves: 20,
+      objectives: const [
+        ObjectiveDefinition(kind: ObjectiveKind.score, target: 99999),
+      ],
+      blockers: const [],
+      coins: 100,
+    );
+    final session = LevelSession(authored, initialTiles: boardFixture());
+    await tester.pumpWidget(MaterialApp(
+      home: PlayScreen(
+        level: authored,
+        progress: ProgressState(),
+        persist: () async {},
+        initialSession: session,
+      ),
+    ));
+    await tester.pump();
+    final game = tester
+        .widget<GameWidget>(find.byKey(const ValueKey('match3-board')))
+        .game as CloudBoardGame;
+    game.tapCell(const Cell(0, 1));
+    game.tapCell(const Cell(3, 3));
+    expect(game.isResolving, isFalse);
+    expect(game.selectedCell, const Cell(3, 3));
+    expect(session.movesUsed, 0);
+    game.tapCell(const Cell(3, 3));
+    final cellA = find.byKey(const ValueKey('board-cell-0-1'));
+    final boardRect = tester.getRect(
+      find.byKey(const ValueKey('match3-board')),
+    );
+    await tester.tapAt(Offset(
+      boardRect.left + boardRect.width * 1.5 / 8,
+      boardRect.top + boardRect.height * .5 / 8,
+    ));
+    await tester.pump();
+    expect(game.selectedCell, const Cell(0, 1));
+    await tester.tapAt(Offset(
+      boardRect.left + boardRect.width * 1.5 / 8,
+      boardRect.top + boardRect.height * 1.5 / 8,
+    ));
+    await tester.pump(const Duration(milliseconds: 80));
+    expect(game.isResolving, isTrue);
+    expect(session.movesUsed, 1);
+    final semantic = tester.widget<Semantics>(find.descendant(
+      of: cellA,
+      matching: find.byType(Semantics),
+    ));
+    expect(semantic.properties.enabled, isFalse);
+    expect(semantic.properties.onTap, isNull);
+    game.tapCell(const Cell(2, 2));
+    expect(session.movesUsed, 1, reason: 'A busy semantic action is ignored.');
+    expect(
+      find.byWidgetPredicate((widget) =>
+          widget.key is ValueKey<String> &&
+          (widget.key! as ValueKey<String>).value.startsWith('board-cell-')),
+      findsNWidgets(64),
+    );
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    await tester.pump();
+    expect(game.isResolving, isFalse);
+    expect(session.movesUsed, 1);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pump();
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets(
@@ -284,7 +362,9 @@ void main() {
     ));
     await tester.tap(find.text('Cloud House · Start Level 1'));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pump();
+    await tester.pump();
 
     final first =
         tester.getSemantics(find.byKey(const ValueKey('board-cell-0-1')));
@@ -296,7 +376,8 @@ void main() {
         tester.getSemantics(find.byKey(const ValueKey('board-cell-1-1')));
     second.owner!.performAction(second.id, SemanticsAction.tap);
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pump();
 
     expect(find.text('Clouds cleared!'), findsOneWidget);
     expect(progress.completedLevels, {1});
@@ -396,7 +477,8 @@ void main() {
                     )))));
     await tester.tap(find.text('Start Level 10'));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pump();
     final boardRect =
         tester.getRect(find.byKey(const ValueKey('match3-board')));
     await tester.tapAt(Offset(boardRect.left + boardRect.width * 1.5 / 8,
@@ -405,7 +487,8 @@ void main() {
     await tester.tapAt(Offset(boardRect.left + boardRect.width * 1.5 / 8,
         boardRect.top + boardRect.height * 1.5 / 8));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pump();
     expect(find.text('Clouds cleared!'), findsOneWidget);
     expect(progress.completedLevels, contains(10));
     await tester.tap(find.text('Restore the Lounge'));

@@ -126,3 +126,10 @@ PR #13 has merged to main (`8cd09011dcd33fab612d5bc27279bed0a00bad2b`). Issue #1
 - **Issue #15: implemented and verified.** The objectives HUD uses a content-aware Flutter frame rather than stretching or editing its approved ornamental PNG. Widget/device evidence covers 1–3 objectives, long labels, 30 moves, and 0.9×/1×/1.5×/2×. The S24 QA-only Level 10 display fits all text and keeps all 64 cells visible at 0.9× and 2×.
 - **Issue #14: isolated QA fixtures implemented and verified.** Approved-art Fog/Syrup, crate damage, Torch direction, booster art/semantics, smoke/combo/reduced-motion, resolver-driven missing-image fallback, playable/tappable cells, and fresh first-clear reward persistence/idempotence have deterministic tests. No production debug route or authored-level change was added. Optional state tests remain automated-only, not physical S24 visual acceptance.
 - Current gate: 71 Flutter tests pass; analyzer, changed-file format, 37/37 approved-art verification and both arm64 debug builds pass. QA app update was user-0 `.qa` replace-only; production package/save untouched. TalkBack Issue #6 and owner visual approval remain release gates. Phase 2C remains in progress; Phase 3 is not started.
+
+## Active animation work — Issue #19 Stage A
+**Status: IMPLEMENTED; AUTOMATED/BUILD GATES PASS; S24 VISUAL ACCEPTANCE PENDING**
+
+Work is on `animation/issue-19-stage-a`, draft PR #20, based on current verified `main`. Engine trace, deterministic parity, snapshot rendering, Reduced Motion, input lock and lifecycle cancellation are implemented and verified. See `docs/evidence/issue19/STAGE_A_QA.md`.
+
+**Current blocker:** the S24 is ADB-authorized and the isolated QA package/data were verified, but the handset remained locked. Current-build animation visuals/captures and profile frame timings are not tested. Keep Stage B paused until Stage A's device review is completed. Do not resume Issue #6/PR #18, import Batch 5 binaries, or start Phase 3.

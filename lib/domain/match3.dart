@@ -56,6 +56,8 @@ class Piece {
 class BlockerState {
   BlockerState(this.kind) : hp = kind == BlockerKind.crate ? 1 : 2;
   BlockerState._(this.kind, this.hp);
+  factory BlockerState.visual(BlockerKind kind, int hp) =>
+      BlockerState._(kind, hp);
   final BlockerKind kind;
   int hp;
   bool get damaged => kind == BlockerKind.reinforcedCrate && hp == 1;
@@ -259,6 +261,123 @@ class TurnResult {
       changedCells: {});
 }
 
+/// Immutable, turn-local snapshots used only by presentation and QA.
+/// These objects are never serialized and never influence engine decisions.
+class BoardVisualSnapshot {
+  BoardVisualSnapshot({
+    required List<List<Piece?>> tiles,
+    required Map<Cell, BlockerVisualState> blockers,
+  })  : tiles = List.unmodifiable(
+          tiles.map((row) => List<Piece?>.unmodifiable(row)),
+        ),
+        blockers = Map.unmodifiable(blockers);
+
+  final List<List<Piece?>> tiles;
+  final Map<Cell, BlockerVisualState> blockers;
+  Piece? at(Cell cell) => tiles[cell.row][cell.col];
+}
+
+class BlockerVisualState {
+  const BlockerVisualState(this.kind, this.hp);
+  final BlockerKind kind;
+  final int hp;
+  bool get damaged => kind == BlockerKind.reinforcedCrate && hp == 1;
+}
+
+class TileMovement {
+  const TileMovement({
+    required this.source,
+    required this.destination,
+    required this.piece,
+    required this.segmentTop,
+    required this.segmentBottom,
+  });
+  final Cell source;
+  final Cell destination;
+  final Piece piece;
+  final int segmentTop;
+  final int segmentBottom;
+}
+
+class TileSpawn {
+  const TileSpawn({
+    required this.destination,
+    required this.origin,
+    required this.piece,
+    required this.segmentTop,
+    required this.segmentBottom,
+  });
+  final Cell destination;
+
+  /// Row immediately above the gravity segment, in board-cell coordinates.
+  final int origin;
+  final Piece piece;
+  final int segmentTop;
+  final int segmentBottom;
+}
+
+class MatchWaveTrace {
+  MatchWaveTrace({
+    required this.beforeClear,
+    required this.clearedPieces,
+    required this.createdSpecials,
+    required this.triggeredSpecials,
+    required this.conditionChanges,
+    required this.blockerChanges,
+    required this.afterClear,
+    required this.movements,
+    required this.spawns,
+    required this.afterGravity,
+  });
+  final BoardVisualSnapshot beforeClear;
+  final Map<Cell, Piece> clearedPieces;
+  final Map<Cell, Piece> createdSpecials;
+  final Set<Cell> triggeredSpecials;
+  final Map<Cell, Piece> conditionChanges;
+  final Map<Cell, BlockerVisualState?> blockerChanges;
+  final BoardVisualSnapshot afterClear;
+  final List<TileMovement> movements;
+  final List<TileSpawn> spawns;
+  final BoardVisualSnapshot afterGravity;
+}
+
+class TurnAnimationTrace {
+  TurnAnimationTrace({
+    required this.from,
+    required this.to,
+    required this.originalFrom,
+    required this.originalTo,
+    required this.accepted,
+    required this.waves,
+    required this.before,
+    required this.after,
+    required this.result,
+    this.shuffled = false,
+    this.shuffleBefore,
+  });
+  final Cell from;
+  final Cell to;
+  final Piece? originalFrom;
+  final Piece? originalTo;
+  final bool accepted;
+  final List<MatchWaveTrace> waves;
+  final BoardVisualSnapshot before;
+  final BoardVisualSnapshot after;
+  final TurnResult result;
+  final bool shuffled;
+  final BoardVisualSnapshot? shuffleBefore;
+}
+
+class LevelTurnAnimationTrace {
+  const LevelTurnAnimationTrace(
+      {required this.boardTrace,
+      required this.outcome,
+      required this.objectiveValues});
+  final TurnAnimationTrace boardTrace;
+  final LevelOutcome outcome;
+  final List<int> objectiveValues;
+}
+
 class _MatchAnalysis {
   _MatchAnalysis(this.cells, this.horizontalRuns, this.verticalRuns);
   final Set<Cell> cells;
@@ -422,7 +541,26 @@ class Match3Board {
     return false;
   }
 
-  TurnResult resolveSwap(Cell a, Cell b) {
+  TurnResult resolveSwap(Cell a, Cell b,
+      {void Function(TurnAnimationTrace trace)? onAnimationTrace}) {
+    final originalFrom = _inside(a) ? at(a.row, a.col) : null;
+    final originalTo = _inside(b) ? at(b.row, b.col) : null;
+    final before = onAnimationTrace == null ? null : _visualSnapshot();
+    void rejectedTrace() {
+      if (onAnimationTrace == null || before == null) return;
+      onAnimationTrace(TurnAnimationTrace(
+        from: a,
+        to: b,
+        originalFrom: originalFrom,
+        originalTo: originalTo,
+        accepted: false,
+        waves: const [],
+        before: before,
+        after: _visualSnapshot(),
+        result: TurnResult.rejected,
+      ));
+    }
+
     if (!_inside(a) ||
         !_inside(b) ||
         (a.row - b.row).abs() + (a.col - b.col).abs() != 1 ||
@@ -430,6 +568,7 @@ class Match3Board {
         at(b.row, b.col) == null ||
         at(a.row, a.col)!.stickySyrup ||
         at(b.row, b.col)!.stickySyrup) {
+      rejectedTrace();
       return TurnResult.rejected;
     }
     final scoreBefore = score;
@@ -439,6 +578,7 @@ class Match3Board {
         _tiles[b.row][b.col]?.special != null;
     if (analysis.cells.isEmpty && !swappedSpecial) {
       _swap(a, b);
+      rejectedTrace();
       return TurnResult.rejected;
     }
 
@@ -460,10 +600,13 @@ class Match3Board {
     var prismSwapPending = swappedPrismTarget != null;
     var specialSwapPending = swappedSpecial;
     Cell? specialAnchor;
+    final waves = onAnimationTrace == null ? null : <MatchWaveTrace>[];
 
     while (
         analysis.cells.isNotEmpty || prismSwapPending || specialSwapPending) {
       if (cascade++ > 500) break;
+      final specialsBeforeCreation =
+          onAnimationTrace == null ? null : _visualSnapshot();
       specialAnchor =
           _createMatchSpecial(analysis, a, b, created, createdPieces);
       final normalCells = Set<Cell>.of(analysis.cells);
@@ -507,12 +650,60 @@ class Match3Board {
       wave.addAll(specialCells);
       if (wave.isEmpty) break;
       specialCoverage.addAll(specialCells);
+      final beforeClear = onAnimationTrace == null ? null : _visualSnapshot();
+      final waveCreated = onAnimationTrace == null ? null : <Cell, Piece>{};
+      if (specialsBeforeCreation != null) {
+        for (var r = 0; r < rows; r++) {
+          for (var c = 0; c < cols; c++) {
+            final cell = Cell(r, c);
+            final piece = _tiles[r][c];
+            if (piece?.special != null &&
+                specialsBeforeCreation.at(cell) != piece) {
+              waveCreated![cell] = piece!;
+            }
+          }
+        }
+      }
+      final beforeConditions =
+          onAnimationTrace == null ? null : _pieceMap(_visualSnapshot());
+      final beforeBlockers =
+          onAnimationTrace == null ? null : _visualSnapshot().blockers;
       _resolveAdjacentTileConditions(wave, changed);
+      final conditionChanges =
+          beforeConditions == null ? null : <Cell, Piece>{};
+      if (beforeConditions != null) {
+        for (final entry in _pieceMap(_visualSnapshot()).entries) {
+          final previous = beforeConditions[entry.key];
+          if (previous != null &&
+              (previous.fogged != entry.value.fogged ||
+                  previous.stickySyrup != entry.value.stickySyrup)) {
+            conditionChanges![entry.key] = entry.value;
+          }
+        }
+      }
       _damageBlockers(analysis.cells, specialCoverage, destroyed, changed);
+      final blockerChanges =
+          beforeBlockers == null ? null : <Cell, BlockerVisualState?>{};
+      if (beforeBlockers != null) {
+        final afterBlockerDamage = _visualSnapshot().blockers;
+        for (final cell in {
+          ...beforeBlockers.keys,
+          ...afterBlockerDamage.keys
+        }) {
+          final oldState = beforeBlockers[cell];
+          final newState = afterBlockerDamage[cell];
+          if (oldState?.hp != newState?.hp ||
+              oldState?.kind != newState?.kind) {
+            blockerChanges![cell] = newState;
+          }
+        }
+      }
       var clearedTileCount = 0;
+      final clearedPieces = onAnimationTrace == null ? null : <Cell, Piece>{};
       for (final cell in wave) {
         final piece = _tiles[cell.row][cell.col];
         if (piece != null) {
+          clearedPieces?[cell] = piece;
           clearedTileCount++;
           allCleared.add(cell);
           collected[piece.family] = (collected[piece.family] ?? 0) + 1;
@@ -521,11 +712,39 @@ class Match3Board {
         _tiles[cell.row][cell.col] = null;
       }
       score += clearedTileCount * 10 * cascade;
-      _collapseAndRefill();
+      final afterClear = onAnimationTrace == null ? null : _visualSnapshot();
+      final movements = onAnimationTrace == null ? null : <TileMovement>[];
+      final spawns = onAnimationTrace == null ? null : <TileSpawn>[];
+      _collapseAndRefill(
+        onMovement:
+            movements == null ? null : (movement) => movements.add(movement),
+        onSpawn: spawns == null ? null : (spawn) => spawns.add(spawn),
+      );
+      if (waves != null && beforeClear != null && afterClear != null) {
+        final afterGravity = _visualSnapshot();
+        waves.add(MatchWaveTrace(
+          beforeClear: beforeClear,
+          clearedPieces: Map.unmodifiable(clearedPieces!),
+          createdSpecials: Map.unmodifiable(waveCreated!),
+          triggeredSpecials: Set.unmodifiable(specialCells),
+          conditionChanges: Map.unmodifiable(conditionChanges!),
+          blockerChanges: Map.unmodifiable(blockerChanges!),
+          afterClear: afterClear,
+          movements: List.unmodifiable(movements!),
+          spawns: List.unmodifiable(spawns!),
+          afterGravity: afterGravity,
+        ));
+      }
       analysis = _analyzeMatches();
     }
-    if (!hasLegalMove) shuffleUntilPlayable();
-    return TurnResult(
+    final needsShuffle = !hasLegalMove;
+    final beforeShuffle =
+        needsShuffle && onAnimationTrace != null ? _visualSnapshot() : null;
+    final beforeShuffleFingerprint = beforeShuffle == null ? null : fingerprint;
+    if (needsShuffle) shuffleUntilPlayable();
+    final shuffled = beforeShuffleFingerprint != null &&
+        fingerprint != beforeShuffleFingerprint;
+    final result = TurnResult(
         accepted: true,
         cleared: allCleared,
         collectedTiles: collected,
@@ -535,7 +754,48 @@ class Match3Board {
         destroyedBlockers: destroyed,
         cascadeCount: cascade,
         changedCells: changed);
+    if (onAnimationTrace != null && before != null) {
+      final traceResult = TurnResult(
+        accepted: result.accepted,
+        cleared: Set.unmodifiable(result.cleared),
+        collectedTiles: Map.unmodifiable(result.collectedTiles),
+        scoreGained: result.scoreGained,
+        createdSpecials: List.unmodifiable(result.createdSpecials),
+        createdPieces: List.unmodifiable(result.createdPieces),
+        destroyedBlockers: Map.unmodifiable(result.destroyedBlockers),
+        cascadeCount: result.cascadeCount,
+        changedCells: Set.unmodifiable(result.changedCells),
+      );
+      onAnimationTrace(TurnAnimationTrace(
+        from: a,
+        to: b,
+        originalFrom: originalFrom,
+        originalTo: originalTo,
+        accepted: true,
+        waves: List.unmodifiable(waves!),
+        before: before,
+        after: _visualSnapshot(),
+        result: traceResult,
+        shuffled: shuffled,
+        shuffleBefore: shuffled ? beforeShuffle : null,
+      ));
+    }
+    return result;
   }
+
+  BoardVisualSnapshot _visualSnapshot() => BoardVisualSnapshot(
+        tiles: _tiles,
+        blockers: {
+          for (final entry in _blockers.entries)
+            entry.key: BlockerVisualState(entry.value.kind, entry.value.hp),
+        },
+      );
+
+  Map<Cell, Piece> _pieceMap(BoardVisualSnapshot snapshot) => {
+        for (var r = 0; r < rows; r++)
+          for (var c = 0; c < cols; c++)
+            if (snapshot.tiles[r][c] != null) Cell(r, c): snapshot.tiles[r][c]!,
+      };
 
   void _resolveAdjacentTileConditions(
       Set<Cell> clearedCells, Set<Cell> changed) {
@@ -645,7 +905,10 @@ class Match3Board {
     }
   }
 
-  void _collapseAndRefill() {
+  void _collapseAndRefill({
+    void Function(TileMovement movement)? onMovement,
+    void Function(TileSpawn spawn)? onSpawn,
+  }) {
     for (var c = 0; c < cols; c++) {
       var end = rows - 1;
       while (end >= 0) {
@@ -662,15 +925,40 @@ class Match3Board {
         }
         final top = start + 1;
         final survivors = <Piece>[];
+        final survivorRows = onMovement == null ? null : <int>[];
         for (var r = end; r >= top; r--) {
           final piece = _tiles[r][c];
-          if (piece != null) survivors.add(piece);
+          if (piece != null) {
+            survivors.add(piece);
+            survivorRows?.add(r);
+          }
         }
         for (var r = end, i = 0; r >= top; r--, i++) {
-          _tiles[r][c] = i < survivors.length
-              ? survivors[i]
-              : Piece(
-                  TileFamily.values[_random.nextInt(TileFamily.values.length)]);
+          if (i < survivors.length) {
+            final piece = survivors[i];
+            _tiles[r][c] = piece;
+            final sourceRow = survivorRows?[i];
+            if (sourceRow != null && sourceRow != r) {
+              onMovement?.call(TileMovement(
+                source: Cell(sourceRow, c),
+                destination: Cell(r, c),
+                piece: piece,
+                segmentTop: top,
+                segmentBottom: end,
+              ));
+            }
+          } else {
+            final piece = Piece(
+                TileFamily.values[_random.nextInt(TileFamily.values.length)]);
+            _tiles[r][c] = piece;
+            onSpawn?.call(TileSpawn(
+              destination: Cell(r, c),
+              origin: top - 1,
+              piece: piece,
+              segmentTop: top,
+              segmentBottom: end,
+            ));
+          }
         }
         end = start - 1;
       }
@@ -765,10 +1053,27 @@ class LevelSession {
   bool get allObjectivesComplete =>
       objectives.every((objective) => objective.complete);
 
-  TurnResult swap(Cell a, Cell b) {
+  TurnResult swap(Cell a, Cell b,
+      {void Function(LevelTurnAnimationTrace trace)? onAnimationTrace}) {
     if (outcome != LevelOutcome.playing) return TurnResult.rejected;
-    final result = board.resolveSwap(a, b);
-    if (!result.accepted) return result;
+    TurnAnimationTrace? boardTrace;
+    final result = board.resolveSwap(
+      a,
+      b,
+      onAnimationTrace:
+          onAnimationTrace == null ? null : (trace) => boardTrace = trace,
+    );
+    if (!result.accepted) {
+      if (onAnimationTrace != null && boardTrace != null) {
+        onAnimationTrace(LevelTurnAnimationTrace(
+          boardTrace: boardTrace!,
+          outcome: outcome,
+          objectiveValues:
+              List.unmodifiable(objectives.map((value) => value.value)),
+        ));
+      }
+      return result;
+    }
     movesUsed++;
     for (final progress in objectives) {
       final definition = progress.definition;
@@ -791,6 +1096,14 @@ class LevelSession {
       outcome = LevelOutcome.won;
     } else if (movesUsed >= level.moves) {
       outcome = LevelOutcome.lost;
+    }
+    if (onAnimationTrace != null && boardTrace != null) {
+      onAnimationTrace(LevelTurnAnimationTrace(
+        boardTrace: boardTrace!,
+        outcome: outcome,
+        objectiveValues:
+            List.unmodifiable(objectives.map((value) => value.value)),
+      ));
     }
     return result;
   }

@@ -733,7 +733,7 @@ class PlayScreen extends StatefulWidget {
   State<PlayScreen> createState() => _PlayScreenState();
 }
 
-class _PlayScreenState extends State<PlayScreen> {
+class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
   late final LevelSession session = widget.initialSession ??
       LevelSession(
         widget.level,
@@ -751,6 +751,30 @@ class _PlayScreenState extends State<PlayScreen> {
     reducedMotion: widget.progress.settings['reducedMotion'] ?? false,
   );
   bool _finished = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
+      game.cancelAnimation(notify: false);
+    } else if (state == AppLifecycleState.resumed) {
+      game.completePendingTurn();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    game.cancelAnimation(notify: false);
+    super.dispose();
+  }
 
   int get _scoreTarget {
     for (final objective in session.objectives) {
@@ -871,6 +895,7 @@ class _PlayScreenState extends State<PlayScreen> {
                                             session.board.blockerAt(row, col),
                                         selected:
                                             game.selectedCell == Cell(row, col),
+                                        resolving: game.isResolving,
                                         onTap: () =>
                                             game.tapCell(Cell(row, col)),
                                       ),
@@ -926,6 +951,7 @@ class _BoardCellSemantics extends StatelessWidget {
     required this.piece,
     required this.blocker,
     required this.selected,
+    required this.resolving,
     required this.onTap,
   });
 
@@ -936,6 +962,7 @@ class _BoardCellSemantics extends StatelessWidget {
   final Piece? piece;
   final BlockerState? blocker;
   final bool selected;
+  final bool resolving;
   final VoidCallback onTap;
 
   String get _label {
@@ -975,13 +1002,13 @@ class _BoardCellSemantics extends StatelessWidget {
         child: Semantics(
           container: true,
           button: blocker == null,
-          enabled: blocker == null,
+          enabled: blocker == null && !resolving,
           selected: selected,
           label: _label,
           hint: blocker == null
               ? 'Double tap to select this cell, then select a neighboring cell to swap.'
               : 'This blocker cannot be selected.',
-          onTap: blocker == null ? onTap : null,
+          onTap: blocker == null && !resolving ? onTap : null,
           child: const SizedBox.expand(),
         ),
       );
