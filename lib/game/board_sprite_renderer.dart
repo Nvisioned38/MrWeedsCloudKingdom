@@ -29,6 +29,7 @@ class BoardTurnEffectFrame {
     required this.conditionChanges,
     required this.beforeWave,
     required this.currentWave,
+    required this.prismTargetFamily,
     required this.waveIndex,
     required this.phase,
     required this.progress,
@@ -42,6 +43,7 @@ class BoardTurnEffectFrame {
   final Map<Cell, Piece> conditionChanges;
   final BoardVisualSnapshot beforeWave;
   final BoardVisualSnapshot currentWave;
+  final TileFamily? prismTargetFamily;
   final int waveIndex;
   final BoardEffectPhase phase;
   final double progress;

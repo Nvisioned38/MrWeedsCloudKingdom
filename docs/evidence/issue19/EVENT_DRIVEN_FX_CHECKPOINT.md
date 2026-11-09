@@ -10,7 +10,7 @@ The Flame presentation now sends each active `MatchWaveTrace` to the artwork ren
 - Match clear: smoke and sparkles follow the current wave’s cleared pieces.
 - Created special: sparkles appear at the resolver-reported special anchor.
 - Torch: a directional warm trail follows the actually cleared row or column.
-- Prism: a restrained family-color pulse follows the matching family in the wave snapshot.
+- Prism: the engine trace carries the exact selected target family and the pulse follows only that family's cleared cells.
 - Cloud Bomb: localized white smoke appears at its actual trigger cell.
 - Cascade: combo ring and gravity streak are tied to later cascade waves.
 - Crate damage/break, Fog reveal, and Sticky Syrup removal receive feedback only where the trace records a state change.
@@ -24,7 +24,7 @@ Cloud Cup vaporizer FX remains absent because the V1 resolver has no correspondi
 - `flutter analyze`: no issues.
 - `flutter test`: **74/74 passed**; Issue #14 render fixture now verifies phase-progress smoke, cascade layer, Reduced Motion and a triggered Cloud Bomb event.
 - Approved Issue #4 artwork manifest: **37/37** hashes and dimensions pass.
-- QA APK: `com.mrweeds.cloudkingdom.qa`, arm64 debug, version 0.1.0 (2001), SHA-256 `6f4b1f23764fdc9ae71a6e8ffacc2b89ba937253c289e7b078abdd9dbc2cd84d`.
+- QA APK: `com.mrweeds.cloudkingdom.qa`, arm64 debug, version 0.1.0 (2001), SHA-256 `d2ec5b504514b64ce1fa626fdbd528e7f1d510066fa8e95d569b75e4ef4c3d33`. A follow-up domain regression asserts exact Prism target-family trace data.
 - S24 install: the verified QA APK replaced only the existing package under Android user 0 using `-r`. The saved progress payload remained byte-for-byte equal to checkpoint hash `90823d16ca76a7c993a653213c7e8eeae967b237fda5b0349cedafb854122579`.
 - **S24 animation visual QA: NOT TESTED.** The handset is currently at its lock screen. No keyguard bypass was attempted. APK install and save-preservation are verified; actual interaction, screen recording, and frame pacing await the unlocked handset.
 

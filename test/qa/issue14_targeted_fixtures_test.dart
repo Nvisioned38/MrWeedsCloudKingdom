@@ -90,6 +90,9 @@ Future<Uint8List> renderEffects(
       conditionChanges: const {},
       beforeWave: snapshot,
       currentWave: snapshot,
+      prismTargetFamily: activatedSpecial?.special == SpecialKind.prism
+          ? TileFamily.moon
+          : null,
       waveIndex: waveIndex,
       phase: BoardEffectPhase.clearing,
       progress: progress,

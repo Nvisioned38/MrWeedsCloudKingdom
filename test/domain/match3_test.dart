@@ -358,8 +358,15 @@ void main() {
       grid[3][3] = const Piece(TileFamily.star, special: SpecialKind.prism);
       grid[3][4] = const Piece(TileFamily.moon);
       final board = Match3Board(level: level(), initialTiles: grid);
-      final result = board.resolveSwap(const Cell(3, 3), const Cell(3, 4));
+      TurnAnimationTrace? trace;
+      final result = board.resolveSwap(
+        const Cell(3, 3),
+        const Cell(3, 4),
+        onAnimationTrace: (event) => trace = event,
+      );
       expect(result.accepted, isTrue);
+      expect(trace!.waves.first.prismTargetFamily, TileFamily.moon,
+          reason: 'Prism FX receives the exact engine-selected target family.');
       for (var r = 0; r < 8; r++) {
         for (var c = 0; c < 8; c++) {
           if (grid[r][c]?.family == TileFamily.moon) {

@@ -264,18 +264,8 @@ class CloudKingdomPngBoardRenderer
           _draw(canvas, center, cellSize * 3.3, smokeKey,
               opacity: .62 * (1 - progress));
         case SpecialKind.prism:
-          final familyCounts = <TileFamily, int>{};
-          for (final cell in cells) {
-            if (cell == source) continue;
-            final family = event.currentWave.at(cell)?.family;
-            if (family != null) {
-              familyCounts[family] = (familyCounts[family] ?? 0) + 1;
-            }
-          }
-          if (familyCounts.isNotEmpty) {
-            final targetFamily = familyCounts.entries
-                .reduce((a, b) => a.value >= b.value ? a : b)
-                .key;
+          final targetFamily = event.prismTargetFamily;
+          if (targetFamily != null) {
             for (final cell in cells.where(
                 (cell) => event.currentWave.at(cell)?.family == targetFamily)) {
               final target = Offset(

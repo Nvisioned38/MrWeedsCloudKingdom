@@ -328,6 +328,7 @@ class MatchWaveTrace {
     required this.movements,
     required this.spawns,
     required this.afterGravity,
+    this.prismTargetFamily,
   });
   final BoardVisualSnapshot beforeClear;
   final Map<Cell, Piece> clearedPieces;
@@ -339,6 +340,7 @@ class MatchWaveTrace {
   final List<TileMovement> movements;
   final List<TileSpawn> spawns;
   final BoardVisualSnapshot afterGravity;
+  final TileFamily? prismTargetFamily;
 }
 
 class TurnAnimationTrace {
@@ -617,6 +619,7 @@ class Match3Board {
             .where((cell) => _tiles[cell.row][cell.col]?.special != null));
         specialSwapPending = false;
       }
+      final prismTargetFamily = prismSwapPending ? swappedPrismTarget : null;
       if (prismSwapPending) {
         for (var r = 0; r < rows; r++) {
           for (var c = 0; c < cols; c++) {
@@ -733,6 +736,7 @@ class Match3Board {
           movements: List.unmodifiable(movements!),
           spawns: List.unmodifiable(spawns!),
           afterGravity: afterGravity,
+          prismTargetFamily: prismTargetFamily,
         ));
       }
       analysis = _analyzeMatches();

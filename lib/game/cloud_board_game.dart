@@ -313,6 +313,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
         conditionChanges: wave.conditionChanges,
         beforeWave: previousSnapshot,
         currentWave: wave.beforeClear,
+        prismTargetFamily: wave.prismTargetFamily,
         waveIndex: waveIndex,
         phase: phase,
         progress: progress,
