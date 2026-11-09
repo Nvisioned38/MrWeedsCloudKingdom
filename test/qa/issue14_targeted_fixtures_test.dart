@@ -113,6 +113,14 @@ Future<Uint8List> renderEffects(
   }
 }
 
+int alphaSum(Uint8List rgba) {
+  var sum = 0;
+  for (var index = 3; index < rgba.length; index += 4) {
+    sum += rgba[index];
+  }
+  return sum;
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -183,6 +191,18 @@ void main() {
       waveIndex: 1,
       reducedMotion: true,
     );
+    final reducedAtHalf = await renderEffects(
+      renderer,
+      progress: .5,
+      waveIndex: 1,
+      reducedMotion: true,
+    );
+    final reducedAtEnd = await renderEffects(
+      renderer,
+      progress: 1,
+      waveIndex: 1,
+      reducedMotion: true,
+    );
     expect(lateSmoke, isNot(equals(earlySmoke)),
         reason: 'White-smoke sequence advances across animation progress.');
     expect(combo, isNot(equals(earlySmoke)),
@@ -190,6 +210,12 @@ void main() {
     expect(reduced, isNot(equals(combo)),
         reason: 'Reduced Motion uses the static sparkle alternative.');
     expect(reduced.any((channel) => channel != 0), isTrue);
+    expect(alphaSum(reducedAtHalf), greaterThan(0),
+        reason: 'Reduced Motion feedback remains visible midway through fade.');
+    expect(alphaSum(reducedAtHalf), lessThan(alphaSum(reduced)),
+        reason: 'Reduced Motion sparkle fades smoothly over time.');
+    expect(alphaSum(reducedAtEnd), 0,
+        reason: 'Reduced Motion feedback is gone at the end of its interval.');
 
     final bomb = await renderEffects(
       renderer,

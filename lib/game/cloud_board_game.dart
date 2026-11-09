@@ -10,6 +10,9 @@ import 'board_sprite_renderer.dart';
 import 'match3_png_board_renderer.dart';
 
 class CloudBoardGame extends FlameGame with TapCallbacks {
+  static const _reducedMatchFeedbackDuration = .30;
+  static const _reducedInvalidFeedbackDuration = .22;
+
   CloudBoardGame({
     required this.session,
     required this.onTurn,
@@ -117,20 +120,29 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
       );
       final feedbackCells =
           trace.accepted ? trace.result.changedCells : {trace.from, trace.to};
+      final fade = 1 - _easeInOut(t);
       for (final cell in feedbackCells) {
+        final rect = Rect.fromCenter(
+          center: _center(cell, cellSize),
+          width: cellSize * .82,
+          height: cellSize * .82,
+        );
+        final feedbackColor =
+            trace.accepted ? const Color(0xffffd36e) : const Color(0xffc9d6e8);
         canvas.drawRRect(
-          RRect.fromRectAndRadius(
-            Rect.fromCenter(
-              center: _center(cell, cellSize),
-              width: cellSize * .82,
-              height: cellSize * .82,
-            ),
-            const Radius.circular(9),
-          ),
+          RRect.fromRectAndRadius(rect, const Radius.circular(9)),
           Paint()
-            ..color = const Color(0xfffff2ad)
+            ..color = feedbackColor.withValues(alpha: .28 * fade)
             ..style = PaintingStyle.stroke
-            ..strokeWidth = 2,
+            ..strokeWidth = cellSize * .07
+            ..maskFilter = MaskFilter.blur(BlurStyle.normal, cellSize * .1),
+        );
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(rect, const Radius.circular(9)),
+          Paint()
+            ..color = feedbackColor.withValues(alpha: .78 * fade)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 1.5,
         );
       }
       if (trace.waves.isNotEmpty) {
@@ -140,7 +152,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
           trace.before,
           0,
           BoardEffectPhase.clearing,
-          1,
+          t,
           cellSize,
         );
       }
@@ -535,7 +547,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
       if (trace != null) {
         _resolving = true;
         _elapsed = 0;
-        _duration = reducedMotion ? .06 : .14;
+        _duration = reducedMotion ? _reducedInvalidFeedbackDuration : .14;
         _pendingResult = null;
       } else {
         _selected = tapped;
@@ -548,7 +560,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     _settledSnapshot = trace?.after;
     _elapsed = 0;
     _duration = reducedMotion
-        ? .12
+        ? _reducedMatchFeedbackDuration
         : math.min(
             2.3,
             .14 +

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:ui' show SemanticsAction;
+import 'dart:ui' show Canvas, Offset, PictureRecorder, SemanticsAction;
 
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +9,33 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mr_weeds_cloud_kingdom/domain/match3.dart';
 import 'package:mr_weeds_cloud_kingdom/game/cloud_board_game.dart';
+import 'package:mr_weeds_cloud_kingdom/game/board_sprite_renderer.dart';
 import 'package:mr_weeds_cloud_kingdom/main.dart';
 import 'package:mr_weeds_cloud_kingdom/presentation/phase2_screens.dart';
 
 const saveKey = 'cloud_kingdom_progress_v2';
+
+class _PositionRecordingRenderer implements BoardSpriteRenderer {
+  final centers = <Offset>[];
+
+  @override
+  void drawPiece(Canvas canvas, Offset center, double size, Piece piece) {
+    centers.add(center);
+  }
+
+  @override
+  void drawBlocker(
+      Canvas canvas, Offset center, double size, BlockerState blocker) {}
+}
+
+List<Offset> _recordPieceCenters(
+    CloudBoardGame game, _PositionRecordingRenderer renderer) {
+  renderer.centers.clear();
+  final recorder = PictureRecorder();
+  game.render(Canvas(recorder));
+  recorder.endRecording().dispose();
+  return List<Offset>.of(renderer.centers);
+}
 
 List<List<Piece?>> boardFixture() {
   final grid = List.generate(
@@ -202,6 +225,8 @@ void main() {
         .widget<GameWidget>(find.byKey(const ValueKey('match3-board')))
         .game;
     expect((game as CloudBoardGame).reducedMotion, isTrue);
+    final positionRenderer = _PositionRecordingRenderer();
+    game.spriteRenderer = positionRenderer;
     final boardRect =
         tester.getRect(find.byKey(const ValueKey('match3-board')));
     final frameRect =
@@ -223,7 +248,24 @@ void main() {
     await tester.pump();
     expect(session.movesUsed, 1);
     expect(game.isResolving, isTrue);
-    await tester.pump(const Duration(milliseconds: 400));
+    final stationaryCentersAtStart =
+        _recordPieceCenters(game, positionRenderer);
+    await tester.pump(const Duration(milliseconds: 120));
+    expect(game.isResolving, isTrue,
+        reason: 'The Reduced Motion completion cue is still active at 150 ms.');
+    expect(
+      _recordPieceCenters(game, positionRenderer),
+      stationaryCentersAtStart,
+      reason: 'Reduced Motion presents the final board without tile travel.',
+    );
+    expect(
+      find.byWidgetPredicate((widget) =>
+          widget.key is ValueKey<String> &&
+          (widget.key! as ValueKey<String>).value.startsWith('board-cell-')),
+      findsNWidgets(64),
+      reason: 'All semantic board cells remain mounted during feedback.',
+    );
+    await tester.pump(const Duration(milliseconds: 200));
     expect(game.isResolving, isFalse);
     await tester.pump();
     expect(find.text('Clouds cleared!'), findsOneWidget);
@@ -295,6 +337,9 @@ void main() {
     ));
     await tester.pump(const Duration(milliseconds: 80));
     expect(game.isResolving, isTrue);
+    await tester.pump(const Duration(milliseconds: 70));
+    expect(game.isResolving, isTrue,
+        reason: 'The locked normal-mode timeline still runs beyond 150 ms.');
     expect(session.movesUsed, 1);
     final semantic = tester.widget<Semantics>(find.descendant(
       of: cellA,
