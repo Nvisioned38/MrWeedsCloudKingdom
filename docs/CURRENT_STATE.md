@@ -12,7 +12,13 @@ Actual S24 listening now also confirms “Cloud Puff, row one, column one,” �
 
 The profile was not reset or rolled back. Comparing the pre-session QA save with the current one shows Level 1 best score changed 1,030→3,100; coins (1,295), stars (9), XP (54), completed levels and unlocks remain. The owner reports they did not complete a replay; preserve this higher best score while checking results behavior. Production app/save remain untouched.
 
-Verification so far: focused widgets 8/8 pass; full Flutter suite 71/71 pass after the label fixes; `flutter analyze` clean; modified Dart files formatted; QA arm64 build/package verification pass; QA app log scan shows no Flutter/fatal errors. Issue #6 remains open while updated title/Close speech, victory/rewards, Cloud House progression/relaunch speech and restoration of original accessibility settings are checked. Phase 3 has not started and V1 is not finally approved.
+Latest-build listening confirmed the Close control as “Close level button, double tap to activate” and the title as “Level One – First Puff” once. TalkBack was restored after this partial run to its original state: accessibility_enabled=0, no enabled service, touch_exploration_enabled=0. Android user 0 and the QA package remain as before; production was not targeted.
+
+Actual replay speech: the owner heard “Clouds Cleared” from the Level 1 result screen. The saved progress entry remained unchanged across the result (first-clear reward was already claimed). After a QA-only force-stop/relaunch, Continue announced “Cloud House,” followed by “1,295 coins – 9 stars,” “Collection Shelf,” “Current Path,” and “Lounge Rescue – Level 10 – 30 moves – double tap to activate.”
+
+After the resumed session, original TalkBack settings were restored and verified: active user 0, accessibility_enabled=0, no enabled service, touch_exploration_enabled=0. Final QA progress entry SHA-256 is `90823D16CA76A7C993A653213C7E8EEAE967B237FDA5B0349CEDAFB854122579` (749 characters); schema 3, 1,295 coins, 9 stars, 54 XP, Levels 1–9 completed, Level 1 best 3,100. No QA progress was cleared or rolled back; production was not targeted.
+
+Verification so far: focused widgets 8/8 pass; full Flutter suite 71/71 pass after the label fixes; `flutter analyze` clean; modified Dart files formatted; QA arm64 build/package verification pass; QA app log scan shows no Flutter/fatal errors. The replay result headline and relaunch progression labels were actually heard, but exact score/reward details and fresh first-clear reward speech remain NOT TESTED; the QA save already claimed that reward and was not reset. Issue #6 remains open. Phase 3 has not started and V1 is not finally approved.
 
 ## 2026-11-08 — Issue #4 owner-approved standalone art integration (verification pending)
 
