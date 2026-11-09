@@ -128,8 +128,8 @@ PR #13 has merged to main (`8cd09011dcd33fab612d5bc27279bed0a00bad2b`). Issue #1
 - Current gate: 71 Flutter tests pass; analyzer, changed-file format, 37/37 approved-art verification and both arm64 debug builds pass. QA app update was user-0 `.qa` replace-only; production package/save untouched. TalkBack Issue #6 and owner visual approval remain release gates. Phase 2C remains in progress; Phase 3 is not started.
 
 ## Active animation work — Issue #19
-**Status: STAGE A VERIFIED; EVENT-DRIVEN FX IMPLEMENTED; NEW SHEET/DEVICE REVIEW PENDING**
+**Status: STAGE A VERIFIED; EVENT-DRIVEN FX IMPLEMENTED; S24 VISUAL QA PASS; PACING/ART REVIEW PENDING**
 
 Work remains on `animation/issue-19-stage-a`, draft PR #20. Stage A engine trace, deterministic parity, snapshot rendering, Reduced Motion, input lock and lifecycle cancellation are verified in `docs/evidence/issue19/STAGE_A_QA.md`. The owner then authorized continued motion and event-linked effects. The existing Issue #4 smoke/sparkle/combo artwork now follows actual clear, special, cascade, blocker and tile-condition changes; details and limitations are in `docs/evidence/issue19/EVENT_DRIVEN_FX_CHECKPOINT.md`.
 
-The latest automated gate is clean (74 Flutter tests, analyzer and 37/37 approved-art hashes); the arm64 QA build is installed using user-0 replace-only semantics and the QA save hash is unchanged. Physical S24 visual verification for the new event-linked effects is pending while the handset is locked. Do not resume Issue #6/PR #18, import Batch 5, or start Phase 3.
+The latest automated gate is clean (74 Flutter tests, analyzer and 37/37 approved-art hashes); the arm64 QA build is installed using user-0 replace-only semantics and the QA save hash is unchanged. The S24 normal-motion match/Torch and Reduced Motion visual checks now pass; evidence is in `docs/evidence/issue19/EVENT_DRIVEN_FX_CHECKPOINT.md`. Frame pacing was not remeasured in that follow-up. Clean source-frame artwork, broader visual acceptance and owner review remain pending. Do not resume Issue #6/PR #18, import Batch 5, or start Phase 3.
