@@ -8,7 +8,11 @@ On Level 1, the owner heard an unlabeled board node followed by “Cloud Puff, r
 
 The QA saved-progress key remained byte-for-byte identical across reinstall (749 characters, value SHA-256 `B11238429A13057E52791C982A8C3AA3BC6D61E13E15B04891D9EF4375BBBACB`). Production app/save were not targeted. Updated QA APK `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk`, package `com.mrweeds.cloudkingdom.qa`, versionCode 2001, minSdk 24, SHA-256 `8b66c3ec47e3ae640af9b901a777f02a65ce2c5a702d430e63e5b7dd5c34a1ef`.
 
-Verification so far: focused widgets 8/8 pass; full Flutter suite 71/71 pass; `flutter analyze` clean; modified Dart files formatted; QA arm64 build/package verification pass. Issue #6 remains open while physical speech is checked for cell naming/selection, objectives and counters, results/rewards, Cloud House progression and relaunch; original accessibility settings must also be restored before testing ends. Phase 3 has not started and V1 is not finally approved.
+Actual S24 listening now also confirms “Cloud Puff, row one, column one,” “selected,” “Objectives, Score, 0 of 800,” and “18 moves remaining.” Android UIAutomator shows 64 named/clickable cells and no unlabeled full-board node. Inspection also found a blank Close-level button label and a duplicated level-title announcement. Commit `9a7dcd2` fixes both with an icon semantic label and a single level-title semantics node; the updated QA APK has been rebuilt/reinstalled. It is package `com.mrweeds.cloudkingdom.qa`, versionCode 2001, minSdk 24, SHA-256 `71c51df5a24a3387bf106a19058caab33580fa1b5ed7372d06459882f5dc287c`.
+
+The profile was not reset or rolled back. Comparing the pre-session QA save with the current one shows Level 1 best score changed 1,030→3,100; coins (1,295), stars (9), XP (54), completed levels and unlocks remain. The owner reports they did not complete a replay; preserve this higher best score while checking results behavior. Production app/save remain untouched.
+
+Verification so far: focused widgets 8/8 pass; full Flutter suite 71/71 pass after the label fixes; `flutter analyze` clean; modified Dart files formatted; QA arm64 build/package verification pass; QA app log scan shows no Flutter/fatal errors. Issue #6 remains open while updated title/Close speech, victory/rewards, Cloud House progression/relaunch speech and restoration of original accessibility settings are checked. Phase 3 has not started and V1 is not finally approved.
 
 ## 2026-11-08 — Issue #4 owner-approved standalone art integration (verification pending)
 
