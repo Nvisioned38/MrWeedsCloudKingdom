@@ -289,6 +289,14 @@ void main() {
     final boardLabel = tester
         .getSemantics(find.byKey(const ValueKey('match3-board-accessibility')));
     expect(boardLabel.label, 'Match-3 board, 8 rows by 8 columns');
+    final levelLabel = tester
+        .getSemantics(find.byKey(const ValueKey('level-title-accessibility')));
+    expect(levelLabel.label, 'Level 1 · First Puff');
+    final closeLevel =
+        tester.getSemantics(find.byKey(const ValueKey('close-level-button')));
+    expect(closeLevel.label, 'Close level');
+    expect(
+        closeLevel.getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
 
     final first =
         tester.getSemantics(find.byKey(const ValueKey('board-cell-0-1')));

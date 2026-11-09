@@ -801,18 +801,23 @@ class _PlayScreenState extends State<PlayScreen> {
       appBar: AppBar(
           toolbarHeight: largeText ? 96 : null,
           title: Semantics(
+            key: const ValueKey('level-title-accessibility'),
             label: levelTitle,
-            child: Text(
-              largeText
-                  ? 'Level ${widget.level.id}\n${widget.level.name}'
-                  : levelTitle,
-              maxLines: largeText ? 2 : 1,
-              overflow: TextOverflow.ellipsis,
+            child: ExcludeSemantics(
+              child: Text(
+                largeText
+                    ? 'Level ${widget.level.id}\n${widget.level.name}'
+                    : levelTitle,
+                maxLines: largeText ? 2 : 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
           leading: IconButton(
+              key: const ValueKey('close-level-button'),
               onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.close))),
+              tooltip: 'Close level',
+              icon: const Icon(Icons.close, semanticLabel: 'Close level'))),
       body: SafeArea(
           child: Column(children: [
         Padding(
