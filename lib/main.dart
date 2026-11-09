@@ -801,18 +801,23 @@ class _PlayScreenState extends State<PlayScreen> {
       appBar: AppBar(
           toolbarHeight: largeText ? 96 : null,
           title: Semantics(
+            key: const ValueKey('level-title-accessibility'),
             label: levelTitle,
-            child: Text(
-              largeText
-                  ? 'Level ${widget.level.id}\n${widget.level.name}'
-                  : levelTitle,
-              maxLines: largeText ? 2 : 1,
-              overflow: TextOverflow.ellipsis,
+            child: ExcludeSemantics(
+              child: Text(
+                largeText
+                    ? 'Level ${widget.level.id}\n${widget.level.name}'
+                    : levelTitle,
+                maxLines: largeText ? 2 : 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
           leading: IconButton(
+              key: const ValueKey('close-level-button'),
               onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.close))),
+              tooltip: 'Close level',
+              icon: const Icon(Icons.close, semanticLabel: 'Close level'))),
       body: SafeArea(
           child: Column(children: [
         Padding(
@@ -853,9 +858,18 @@ class _PlayScreenState extends State<PlayScreen> {
                                 final cols = session.board.cols;
                                 return Stack(children: [
                                   Positioned.fill(
-                                    child: GameWidget(
-                                      key: const ValueKey('match3-board'),
-                                      game: game,
+                                    child: Semantics(
+                                      key: const ValueKey(
+                                          'match3-board-accessibility'),
+                                      container: true,
+                                      label:
+                                          'Match-3 board, $rows rows by $cols columns',
+                                      child: ExcludeSemantics(
+                                        child: GameWidget(
+                                          key: const ValueKey('match3-board'),
+                                          game: game,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   for (var row = 0; row < rows; row++)

@@ -1,5 +1,27 @@
 # Current State
 
+## 2026-11-08 — Issue #6 actual TalkBack QA resumed (partial)
+
+On branch `codex/issue-6-talkback` from `ce025a0`, the owner enabled TalkBack for testing only in isolated QA. Actual Samsung S24 Ultra listening confirmed that welcome navigation speaks the title, subtitle, Continue button and activation hint, followed by Level Path; activating Continue clearly announced the QA app title and Cloud House. Earlier collection navigation announced “tab 2 of 4,” not the expected Undiscovered card; that focus path still needs a retest.
+
+On Level 1, the owner heard an unlabeled board node followed by “Cloud Puff, row one, column one.” Android UIAutomator independently showed the focusable blank-label node spanning the full board before the 64 individually labeled cells. The node is now explicitly announced as “Match-3 board, 8 rows by 8 columns,” while Flame rendering semantics are excluded and the tile controls remain separate. This rebuilt QA APK was installed with the repository’s QA-only user-0 replace-install script. The owner confirmed the new board label by listening; the rebuilt Android accessibility tree contains the named group and 64 named/clickable cells.
+
+The QA saved-progress key remained byte-for-byte identical across reinstall (749 characters, value SHA-256 `B11238429A13057E52791C982A8C3AA3BC6D61E13E15B04891D9EF4375BBBACB`). Production app/save were not targeted. Updated QA APK `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk`, package `com.mrweeds.cloudkingdom.qa`, versionCode 2001, minSdk 24, SHA-256 `8b66c3ec47e3ae640af9b901a777f02a65ce2c5a702d430e63e5b7dd5c34a1ef`.
+
+Actual S24 listening now also confirms “Cloud Puff, row one, column one,” “selected,” “Objectives, Score, 0 of 800,” and “18 moves remaining.” Android UIAutomator shows 64 named/clickable cells and no unlabeled full-board node. Inspection also found a blank Close-level button label and a duplicated level-title announcement. Commit `9a7dcd2` fixes both with an icon semantic label and a single level-title semantics node; the updated QA APK has been rebuilt/reinstalled. It is package `com.mrweeds.cloudkingdom.qa`, versionCode 2001, minSdk 24, SHA-256 `71c51df5a24a3387bf106a19058caab33580fa1b5ed7372d06459882f5dc287c`.
+
+The profile was not reset or rolled back. Comparing the pre-session QA save with the current one shows Level 1 best score changed 1,030→3,100; coins (1,295), stars (9), XP (54), completed levels and unlocks remain. The owner reports they did not complete a replay; preserve this higher best score while checking results behavior. Production app/save remain untouched.
+
+Latest-build listening confirmed the Close control as “Close level button, double tap to activate” and the title as “Level One – First Puff” once. TalkBack was restored after this partial run to its original state: accessibility_enabled=0, no enabled service, touch_exploration_enabled=0. Android user 0 and the QA package remain as before; production was not targeted.
+
+Actual replay-result speech, in TalkBack order: “Clouds Cleared,” “Level 1 – Score 970,” “Replay Complete, no duplicate first clear reward,” “Collection XP – 54, Keys: 0,” and “Best Score: 3100.” The Back control spoke “Back To Cloud House button, double tap to activate.” Activating it returned to Cloud House and focused “Level Path – Level One First Puff.” The saved progress entry remained unchanged across the replay result; first-clear reward was already claimed.
+
+After a QA-only force-stop/relaunch, Continue announced “Cloud House,” followed by “1,295 coins – 9 stars,” “Collection Shelf,” “Current Path,” and “Lounge Rescue – Level 10 – 30 moves – double tap to activate.”
+
+After the resumed session, original TalkBack settings were restored and verified: active user 0, accessibility_enabled=0, no enabled service, touch_exploration_enabled=0. Final QA progress entry SHA-256 is `90823D16CA76A7C993A653213C7E8EEAE967B237FDA5B0349CEDAFB854122579` (749 characters); schema 3, 1,295 coins, 9 stars, 54 XP, Levels 1–9 completed, Level 1 best 3,100. No QA progress was cleared or rolled back; production was not targeted.
+
+Verification so far: focused widgets 8/8 pass; full Flutter suite 71/71 pass after the label fixes; `flutter analyze` clean; modified Dart files formatted; QA arm64 build/package verification pass; QA app log scan shows no Flutter/fatal errors. Actual replay score and no-duplicate-reward speech passed. Fresh first-clear payout speech cannot be tested without resetting the already-cleared QA save, so it remains NOT TESTED. The earlier Collection screen “tab 2 of 4” focus report also remains unverified. The profile was preserved. Issue #6 remains open. Phase 3 has not started and V1 is not finally approved.
+
 ## 2026-11-08 — Issue #4 owner-approved standalone art integration (verification pending)
 
 On `codex/issue-4-approved-art-integration`, the approved All 37 handoff is integrated in the app: 9 Batch A and 28 B/C standalone exports. The 37 PNG bytes, IHDR dimensions and 8-bit RGBA channel format passed `tools/verify_issue4_art.py` against the two supplied SHA-256 manifests. Artwork is wired into the board renderer, transparent-center frame, dynamic objective/move/score UI, Victory/reward panel, buttons, and an informational Specials guide. The logo-free vaporizer displays the exact canonical Cloud Cup logo as a separate overlay. Existing Match-3 enum/save IDs, deterministic rules, schema-3 save data, and all 30 levels remain intact. Batch D is excluded.
