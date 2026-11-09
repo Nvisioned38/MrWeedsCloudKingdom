@@ -30,6 +30,6 @@ Cloud Cup vaporizer FX remains absent because the V1 resolver has no correspondi
 
 ## Locked animation-sheet intake
 
-`Cloud_Kingdom_Animation_FX_Batch2_APPROVED_LOCKED.zip` was found in Downloads and its archive SHA-256 matches the handoff (`d9d520219cc9097641e350151bcb7e07250765479b09d4b8747db279e9420eb1`). Its source sheets/candidate frames were not imported; candidate frame seam/alpha/anchoring and on-device review remain required before runtime use. The Batch 1 approved source ZIP was not found in the inspected Downloads/Desktop/OneDrive locations. Existing Issue #4 FX layers were used byte-exactly.
+`Cloud_Kingdom_Animation_FX_Batch2_APPROVED_LOCKED.zip` was found in Downloads and its archive SHA-256 matches the handoff (`d9d520219cc9097641e350151bcb7e07250765479b09d4b8747db279e9420eb1`). All eight gravity/refill candidate crop hashes and dimensions matched the package manifest. Visual/boundary QA rejected them for runtime: sampled nontransparent pixels occupied **78.1–93.9% of frame-edge samples** across the set, with the purple/blue glow visibly cut at the crop borders. They remain unimported; do not use them until clean standalone frame exports are available. The original approved sheets were not altered. The Batch 1 approved source ZIP was not found in the inspected Downloads/Desktop/OneDrive locations. Existing Issue #4 FX layers were used byte-exactly.
 
 **Gate:** event-driven code implementation and automated/build checks pass. S24 visual acceptance for this checkpoint is pending; Issue #19 and V1 remain open.
