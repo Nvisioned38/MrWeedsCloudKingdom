@@ -330,6 +330,8 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
         phase: phase,
         progress: progress,
         reducedMotion: reducedMotion,
+        movements: wave.movements,
+        spawns: wave.spawns,
       ),
     );
   }

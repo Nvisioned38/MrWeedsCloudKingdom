@@ -34,6 +34,8 @@ class BoardTurnEffectFrame {
     required this.phase,
     required this.progress,
     required this.reducedMotion,
+    this.movements = const [],
+    this.spawns = const [],
   });
 
   final Set<Cell> clearedCells;
@@ -48,6 +50,8 @@ class BoardTurnEffectFrame {
   final BoardEffectPhase phase;
   final double progress;
   final bool reducedMotion;
+  final List<TileMovement> movements;
+  final List<TileSpawn> spawns;
 }
 
 abstract interface class BoardTurnEffectsRenderer {

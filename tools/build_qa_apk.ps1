@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('Build', 'InstallQa', 'UninstallQa')]
+    [ValidateSet('Build', 'InstallQa', 'BuildProfileQa', 'InstallProfileQa')]
     [string] $Action = 'Build',
     [string] $DeviceSerial,
     [string] $Flutter
@@ -11,8 +11,15 @@ $qaPackage = 'com.mrweeds.cloudkingdom.qa'
 $productionPackage = 'com.mrweeds.cloudkingdom'
 $qaAndroidUser = '0'
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
-$flutterApk = Join-Path $repoRoot 'build/app/outputs/flutter-apk/app-arm64-v8a-debug.apk'
-$apk = Join-Path $repoRoot 'build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk'
+$qaInstallSafetyModule = Join-Path $PSScriptRoot 'qa_install_safety.psm1'
+Import-Module $qaInstallSafetyModule -Force
+$buildMode = if ($Action -in @('BuildProfileQa', 'InstallProfileQa')) { 'profile' } else { 'debug' }
+$flutterApk = Join-Path $repoRoot "build/app/outputs/flutter-apk/app-arm64-v8a-$buildMode.apk"
+$apk = if ($buildMode -eq 'profile') {
+    Join-Path $repoRoot 'build/qa/profile/app/outputs/flutter-apk/app-arm64-v8a-profile.apk'
+} else {
+    Join-Path $repoRoot 'build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk'
+}
 
 function Get-AndroidSdkRoot {
     foreach ($candidate in @($env:ANDROID_SDK_ROOT, $env:ANDROID_HOME)) {
@@ -68,6 +75,35 @@ function Get-AaptPath {
     return $candidate
 }
 
+function Get-ApkSignerPath {
+    $sdkRoot = Get-AndroidSdkRoot
+    $buildTools = Join-Path $sdkRoot 'build-tools'
+    $candidate = Get-ChildItem -LiteralPath $buildTools -Directory |
+        Sort-Object { [version]$_.Name } -Descending |
+        ForEach-Object {
+            foreach ($name in @('apksigner.bat', 'apksigner.exe')) {
+                $path = Join-Path $_.FullName $name
+                if (Test-Path -LiteralPath $path) { return $path }
+            }
+        } |
+        Select-Object -First 1
+    if (-not $candidate) { throw "apksigner was not found under $buildTools." }
+    return $candidate
+}
+
+function Get-ApkSignerSha256([string] $Path) {
+    $apksigner = Get-ApkSignerPath
+    $details = & $apksigner verify --print-certs $Path 2>&1
+    if ($LASTEXITCODE -ne 0) { throw "apksigner could not verify $Path`n$details" }
+    $line = $details | Where-Object {
+        $_ -match 'Signer #1 certificate SHA-256 digest:\s*([0-9a-fA-F]+)'
+    } | Select-Object -First 1
+    if (-not $line -or $line -notmatch 'Signer #1 certificate SHA-256 digest:\s*([0-9a-fA-F]+)') {
+        throw "Could not read the APK signing certificate SHA-256 from $Path."
+    }
+    return $Matches[1].ToLowerInvariant()
+}
+
 function Get-ApkIdentity([string] $Path) {
     if (-not (Test-Path -LiteralPath $Path)) { throw "APK not found: $Path" }
     $aapt = Get-AaptPath
@@ -120,20 +156,51 @@ function Assert-QaUserZero([string] $AdbPath) {
     }
 }
 
+function Assert-QaReplaceIsSafe([string] $AdbPath, [string] $CandidatePath, $CandidateIdentity) {
+    $packageInfo = & $AdbPath -s $DeviceSerial shell dumpsys package $qaPackage 2>&1
+    if ($LASTEXITCODE -ne 0 -or ($packageInfo -join "`n") -notmatch 'versionCode=(\d+)') {
+        throw "Refusing QA install: installed version metadata could not be verified for $qaPackage on user $qaAndroidUser."
+    }
+    $installedVersionCode = [long]$Matches[1]
+    $installedPaths = & $AdbPath -s $DeviceSerial shell pm path --user $qaAndroidUser $qaPackage 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        throw "Refusing QA install: installed APK path could not be verified: $installedPaths"
+    }
+    $basePathLine = $installedPaths | Where-Object { $_ -match '^package:.*/base\.apk$' } | Select-Object -First 1
+    if (-not $basePathLine -or $basePathLine -notmatch '^package:(.+)$') {
+        throw "Refusing QA install: installed base APK path was not found: $installedPaths"
+    }
+    $installedApkPath = $Matches[1]
+
+    $candidateSigner = Get-ApkSignerSha256 $CandidatePath
+    $tempBase = Join-Path $env:TEMP "cloudkingdom-qa-installed-$([guid]::NewGuid().ToString('N')).apk"
+    try {
+        & $AdbPath -s $DeviceSerial pull $installedApkPath $tempBase 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $tempBase)) {
+            throw 'Refusing QA install: installed QA base APK could not be read to verify its signing certificate.'
+        }
+        $installedSigner = Get-ApkSignerSha256 $tempBase
+        Assert-QaInstallCompatible `
+            -CandidatePackage $CandidateIdentity.Package `
+            -CandidateVersionCode ([long]$CandidateIdentity.VersionCode) `
+            -CandidateSignerSha256 $candidateSigner `
+            -InstalledPackage $qaPackage `
+            -InstalledVersionCode $installedVersionCode `
+            -InstalledSignerSha256 $installedSigner `
+            -AndroidUser $qaAndroidUser
+    } finally {
+        if (Test-Path -LiteralPath $tempBase) {
+            Remove-Item -LiteralPath $tempBase -Force
+        }
+    }
+}
+
 Push-Location $repoRoot
 try {
-    if ($Action -eq 'UninstallQa') {
-        $adb = Assert-TargetDevice
-        & $adb -s $DeviceSerial uninstall $qaPackage
-        if ($LASTEXITCODE -ne 0) { throw "Could not uninstall QA package $qaPackage from $DeviceSerial." }
-        Write-Output "Removed only $qaPackage from $DeviceSerial. Production package was not targeted."
-        exit 0
-    }
-
-    if ($Action -eq 'Build' -or $Action -eq 'InstallQa') {
+    if ($Action -in @('Build', 'InstallQa', 'BuildProfileQa', 'InstallProfileQa')) {
         $flutterCommand = Get-FlutterCommand
-        & $flutterCommand build apk --debug --target-platform android-arm64 --split-per-abi --android-project-arg cloudKingdomQa=true
-        if ($LASTEXITCODE -ne 0) { throw "Flutter QA APK build failed with exit code $LASTEXITCODE." }
+        & $flutterCommand build apk "--$buildMode" --target-platform android-arm64 --split-per-abi --android-project-arg cloudKingdomQa=true
+        if ($LASTEXITCODE -ne 0) { throw "Flutter QA $buildMode APK build failed with exit code $LASTEXITCODE." }
 
         $identity = Get-ApkIdentity $flutterApk
         if ($identity.Package -ne $qaPackage) {
@@ -146,28 +213,33 @@ try {
 
         $commit = (& git -C $repoRoot rev-parse HEAD).Trim()
         $hash = (Get-FileHash -LiteralPath $apk -Algorithm SHA256).Hash.ToLowerInvariant()
-        $metadataPath = Join-Path $repoRoot 'build/qa/qa-build-metadata.json'
+        $signer = Get-ApkSignerSha256 $apk
+        $metadataPath = Join-Path $repoRoot "build/qa/$buildMode/qa-build-metadata.json"
+        $null = New-Item -ItemType Directory -Force -Path (Split-Path -Parent $metadataPath)
         $metadata = [ordered]@{
-            variant = 'debug-arm64-v8a'
+            variant = "$buildMode-arm64-v8a"
             applicationId = $identity.Package
             versionCode = $identity.VersionCode
             versionName = $identity.VersionName
             minSdk = $identity.MinSdk
             gitCommit = $commit
-            apk = 'build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk'
+            apk = [System.IO.Path]::GetRelativePath($repoRoot, $apk)
             sha256 = $hash
+            signingCertificateSha256 = $signer
             verifiedUtc = [DateTime]::UtcNow.ToString('yyyy-MM-ddTHH:mm:ssZ')
         }
         $metadata | ConvertTo-Json | Set-Content -LiteralPath $metadataPath -Encoding utf8
-        Write-Output "Verified QA APK: $apk"
+        Write-Output "Verified QA $buildMode APK: $apk"
         Write-Output "Package: $($identity.Package); version $($identity.VersionName) ($($identity.VersionCode)); minSdk $($identity.MinSdk)"
         Write-Output "SHA-256: $hash"
+        Write-Output "Signer SHA-256: $signer"
         Write-Output "Build metadata: $metadataPath"
     }
 
-    if ($Action -eq 'InstallQa') {
+    if ($Action -in @('InstallQa', 'InstallProfileQa')) {
         $adb = Assert-TargetDevice
         Assert-QaUserZero $adb
+        Assert-QaReplaceIsSafe $adb $apk $identity
         $remoteApk = "/data/local/tmp/cloudkingdom-qa-$hash.apk"
         & $adb -s $DeviceSerial push $apk $remoteApk
         if ($LASTEXITCODE -ne 0) { throw "Could not stage the verified QA APK on $DeviceSerial; no package installation was attempted." }
