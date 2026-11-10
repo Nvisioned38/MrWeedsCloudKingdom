@@ -11,7 +11,7 @@ Device: Samsung Galaxy S24 Ultra, model `SM-S928U`, serial `R5CX156CZNF`, Androi
 | ADB authorization and device identity | PASS | `adb devices -l` returned the S24 as `device`, model `SM-S928U`. |
 | Active Android user | PASS | `am get-current-user` returned `0`. |
 | QA package identity/version | PASS | Only `com.mrweeds.cloudkingdom.qa` was inspected; version `0.1.0` / code `2001`, user-0 `base.apk` confirmed. Production package and Secure Folder were not accessed. |
-| QA profile APK build and package check | PASS | Profile APK SHA-256 `b4a0f0b2ac4e93caac293a61bb6201853aff9fa9d7ab09fb3a5d7432314038c9`; signer SHA-256 `bbcc9ce1f3ab98be310e5ffb30d7978a011b48b154f275907b02ae2e13bc9a6f`; package verified as QA. |
+| QA profile APK build and package check | PASS | Commit `9d04b1a3e7b866b24a55519a759e12fea11e944f`; APK SHA-256 `32d9dcaabb3d70737fb1c52f5c54f564e69c83599f9eaa33d2b63c73533c4c71`; signer SHA-256 `bbcc9ce1f3ab98be310e5ffb30d7978a011b48b154f275907b02ae2e13bc9a6f`; package verified as QA. |
 | Safe profile replacement | PASS | `tools/build_qa_apk.ps1 -Action InstallProfileQa -DeviceSerial R5CX156CZNF` used its user-0, version, signer, staged-hash, and QA-package checks. It performed `install -r`; no uninstall or data-clear fallback. |
 | Existing QA preferences preservation | PASS | SHA-256 before and after the profile replacement was identical: `bc2cc112dad557f49ac60f672cacb3f1e8086f39458dc18058b0ca24f04b99ac` (1,478 bytes). No level was played or completed. Production was not queried or changed. |
 | Display state | PASS | Physical size `1080×2340`, active mode reported as `60.000004 Hz`; the panel supports 120 Hz. Budget for this capture state is therefore `16.667 ms`. The active mode was observed, not changed. |
@@ -41,7 +41,8 @@ The phone currently showed the Android lock screen. No swipe, PIN entry, profile
 | Approved artwork integrity | PASS | `python tools/verify_issue4_art.py`: **37/37 owner-approved PNGs** matched the supplied hash manifests byte-for-byte. The tool also reports 50 unrelated manifest references pending; those are pre-existing and out of Issue #24 scope. |
 | QA installer safety tests | PASS | Same-version replacement and upgrades accepted; downgrade, signer mismatch, production identity and non-user-0 targets refused. |
 | Android arm64 QA profile build | PASS | `com.mrweeds.cloudkingdom.qa`, profile mode, instrumentation define on. SHA-256 above. |
-| Production-ID Android debug build | PASS | `com.mrweeds.cloudkingdom`, SHA-256 `54d8daccadcf918a34034425c05a87921b429e98be0b222ff507249f2432037e`. Built locally and not installed. |`n| Android arm64 QA debug build | PASS | Package `com.mrweeds.cloudkingdom.qa`; SHA-256 `90e50528682816c00182ab35ad4750e1995c8c37b2e90954bcb7337951c76f13`. Not installed over the profile APK. |
+| Production-ID Android debug build | PASS | `com.mrweeds.cloudkingdom`; SHA-256 `feb2b01edc0b72bd74323e47b7fcf8995898572e4a8c71e7a1d8f758714c51aa`; built locally and not installed. |
+| Android arm64 QA debug build | PASS | Package `com.mrweeds.cloudkingdom.qa`; SHA-256 `3955bb1b8a6d65f85831552add7dbb48763fd5312e8a792412ee74cc5a0490dd`. Not installed over the profile APK. |
 
 No valid performance statistics are available yet. Accordingly, p50/p90/p99, max tail, refresh-rate misses, >16.67 ms misses, and sample counts for gameplay scenarios are **NOT TESTED**, not zero. The historical 123-frame S24 Flutter sample in `docs/CURRENT_STATE.md` used another build and capture; it is not directly comparable and is not treated as a baseline result for this change.
 
