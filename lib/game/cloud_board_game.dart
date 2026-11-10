@@ -21,6 +21,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     BoardEffectsHook? effectsHook,
     this.approvedArtLoader,
     this.reducedMotion = false,
+    this.onQaTrace,
   })  : spriteRenderer =
             spriteRenderer ?? const CloudKingdomFallbackBoardRenderer(),
         effectsHook = effectsHook ?? const NoBoardEffectsHook();
@@ -29,6 +30,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
   final Future<BoardSpriteRenderer> Function()? approvedArtLoader;
   final BoardEffectsHook effectsHook;
   final bool reducedMotion;
+  final void Function(TurnAnimationTrace trace)? onQaTrace;
   final LevelSession session;
   final void Function(TurnResult result) onTurn;
   final VoidCallback? onSelectionChanged;
@@ -543,6 +545,7 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
       tapped,
       onAnimationTrace: (turnTrace) => trace = turnTrace.boardTrace,
     );
+    if (trace != null) onQaTrace?.call(trace!);
     _selected = null;
     if (!result.accepted) {
       _trace = trace;

@@ -18,6 +18,7 @@ import 'presentation/cloud_kingdom_theme.dart';
 import 'presentation/match3_art_widgets.dart';
 import 'presentation/phase2_screens.dart';
 import 'presentation/progress_restore.dart';
+import 'qa/frame_timing_collector.dart';
 
 const _saveKey = progressSaveKey;
 
@@ -747,15 +748,22 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
     onSelectionChanged: () {
       if (mounted) setState(() {});
     },
+    onQaTrace: QaFrameTimingCollector.isProfilingBuild
+        ? (trace) => _frameTiming.observeTurn(trace)
+        : null,
     approvedArtLoader: widget.approvedArtLoader,
     reducedMotion: widget.progress.settings['reducedMotion'] ?? false,
   );
   bool _finished = false;
+  late final QaFrameTimingCollector _frameTiming = QaFrameTimingCollector(
+    reducedMotion: game.reducedMotion,
+  );
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    unawaited(_frameTiming.start());
   }
 
   @override
@@ -763,8 +771,10 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
     if (state == AppLifecycleState.inactive ||
         state == AppLifecycleState.paused ||
         state == AppLifecycleState.detached) {
+      _frameTiming.pause();
       game.cancelAnimation(notify: false);
     } else if (state == AppLifecycleState.resumed) {
+      _frameTiming.resume();
       game.completePendingTurn();
     }
   }
@@ -772,6 +782,7 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _frameTiming.finish(levelEnded: session.outcome != LevelOutcome.playing);
     game.cancelAnimation(notify: false);
     super.dispose();
   }

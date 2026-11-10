@@ -1,5 +1,15 @@
 # Current State
 
+## 2026-11-09 — Issue #24 S24 FrameTiming checkpoint (physical capture pending)
+
+Issue #24 is active on `qa/issue-24-s24-frame-timing` / draft PR #25. Added an opt-in `SchedulerBinding.addTimingsCallback` collector for the isolated QA profile APK only. The normal and production build paths do not pass its compile-time define; the collector also checks the Android application ID at runtime and activates only for `com.mrweeds.cloudkingdom.qa`. It waits two seconds before sampling, detaches while backgrounded, caps capture at 3,000 delivered frames, reports aggregate trace-event labels and bounded percentile summaries to logcat, and never stores data in save preferences. Gameplay, Stage A/B animation timing, authored levels, approved assets and save schema are unchanged.
+
+Automated gate: formatting clean; `flutter analyze` clean; full Flutter suite **83/83 passed**; all 37 Issue #4 approved PNGs hash-verified; QA installer safety tests pass; arm64 QA profile and debug builds pass. Profile APK SHA-256 `b4a0f0b2ac4e93caac293a61bb6201853aff9fa9d7ab09fb3a5d7432314038c9`; signer and package identity match the existing QA app.
+
+S24 identity and install safety checks passed for `R5CX156CZNF` / `SM-S928U`: ADB authorized, user 0 active, exact `.qa` package at version code 2001. Profile APK replacement used only the hardened `-r --user 0` script. The QA preferences XML hash stayed `bc2cc112dad557f49ac60f672cacb3f1e8086f39458dc18058b0ca24f04b99ac` before and after. The display was active at 60 Hz (120 Hz supported). The phone then displayed its lock screen; no interactive board or performance capture was performed and no unlock bypass was attempted. Every gameplay scenario and all S24 frame-time statistics therefore remain **NOT TESTED**. The QA profile APK remains installed and the existing save is preserved. Production and Secure Folder were not accessed.
+
+Detailed automated vs physical results and safe reproduction steps: `docs/evidence/issue24/FRAME_TIMING_QA.md`. Issue #24 and PR #25 must remain open/draft until at least one normal-motion S24 profile capture contains 300 or more app-delivered `FrameTiming` samples; special-event samples remain pending as well. Historical timings use a different build/capture method and are not treated as comparable.
+
 ## 2026-11-08 — Issue #4 owner-approved standalone art integration (verification pending)
 
 On `codex/issue-4-approved-art-integration`, the approved All 37 handoff is integrated in the app: 9 Batch A and 28 B/C standalone exports. The 37 PNG bytes, IHDR dimensions and 8-bit RGBA channel format passed `tools/verify_issue4_art.py` against the two supplied SHA-256 manifests. Artwork is wired into the board renderer, transparent-center frame, dynamic objective/move/score UI, Victory/reward panel, buttons, and an informational Specials guide. The logo-free vaporizer displays the exact canonical Cloud Cup logo as a separate overlay. Existing Match-3 enum/save IDs, deterministic rules, schema-3 save data, and all 30 levels remain intact. Batch D is excluded.
