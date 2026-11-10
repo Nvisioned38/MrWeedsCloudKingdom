@@ -160,13 +160,18 @@ class CloudKingdomPngBoardRenderer
     if (event.phase == BoardEffectPhase.gravity) {
       if (event.reducedMotion || event.waveIndex == 0) return;
       final movedCells = <Cell>{
-        ...event.clearedCells,
-        ...event.createdSpecials.keys,
-      }.take(16).toList(growable: false);
+        ...event.movements.map((movement) => movement.destination),
+        ...event.spawns.map((spawn) => spawn.destination),
+      }.take(20).toList(growable: false);
       if (movedCells.isEmpty) return;
       final center = _centerOf(movedCells, cellSize);
-      _draw(canvas, center, cellSize * 4.2, 'fx_cascade_streak',
-          opacity: .45 * math.sin(math.pi * progress));
+      final envelope = math.sin(math.pi * progress).clamp(0.0, 1.0);
+      final bounds = _boundsOf(movedCells, cellSize).inflate(cellSize * .18);
+      canvas.save();
+      canvas.clipRect(bounds);
+      _draw(canvas, center, cellSize * 3.5, 'fx_cascade_streak',
+          opacity: .34 * envelope);
+      canvas.restore();
       return;
     }
 
@@ -244,26 +249,73 @@ class CloudKingdomPngBoardRenderer
                     : (a.dx > b.dx ? a : b));
             final travel = 1 - math.pow(1 - progress, 3).toDouble();
             final trailEnd = Offset.lerp(start, end, travel)!;
+            final trailAlpha = (.34 + .56 * math.sin(math.pi * progress))
+                .clamp(0.0, 1.0)
+                .toDouble();
             canvas.drawLine(
               start,
               trailEnd,
               Paint()
-                ..color = const Color(0xffffbf65).withValues(alpha: .8)
-                ..strokeWidth = cellSize * .27
+                ..color =
+                    const Color(0xffff9e50).withValues(alpha: .28 * trailAlpha)
+                ..strokeWidth = cellSize * .46
                 ..strokeCap = StrokeCap.round,
             );
             canvas.drawLine(
               start,
               trailEnd,
               Paint()
-                ..color = const Color(0xfffff1c5).withValues(alpha: .78)
-                ..strokeWidth = cellSize * .09
+                ..color =
+                    const Color(0xffffc86e).withValues(alpha: .84 * trailAlpha)
+                ..strokeWidth = cellSize * .17
                 ..strokeCap = StrokeCap.round,
+            );
+            canvas.drawLine(
+              start,
+              trailEnd,
+              Paint()
+                ..color =
+                    const Color(0xfffff5d4).withValues(alpha: .86 * trailAlpha)
+                ..strokeWidth = cellSize * .055
+                ..strokeCap = StrokeCap.round,
+            );
+            final headRadius = cellSize *
+                (.17 + .06 * math.sin(math.pi * progress).clamp(0.0, 1.0));
+            canvas.drawCircle(
+              trailEnd,
+              headRadius,
+              Paint()
+                ..color =
+                    const Color(0xffffe5a1).withValues(alpha: .9 * trailAlpha),
             );
           }
         case SpecialKind.cloudBomb:
-          _draw(canvas, center, cellSize * 3.3, smokeKey,
-              opacity: .62 * (1 - progress));
+          final blastCells = cells
+              .where((cell) =>
+                  (cell.row - source.row).abs() <= 1 &&
+                  (cell.col - source.col).abs() <= 1)
+              .take(9);
+          for (final cell in blastCells) {
+            final target =
+                Offset((cell.col + .5) * cellSize, (cell.row + .5) * cellSize);
+            final distance = math.sqrt(math.pow(cell.row - source.row, 2) +
+                math.pow(cell.col - source.col, 2));
+            final delay = distance / 4.25;
+            final localProgress =
+                ((progress - delay) / (1 - delay)).clamp(0.0, 1.0).toDouble();
+            final fade = (1 - localProgress).clamp(0.0, 1.0).toDouble();
+            final plumeSize = cellSize * (.72 + .4 * localProgress);
+            _draw(canvas, target, plumeSize, smokeKey, opacity: .52 * fade);
+          }
+          final pulse = math.sin(math.pi * progress).clamp(0.0, 1.0);
+          canvas.drawCircle(
+            center,
+            cellSize * (.46 + 1.12 * progress),
+            Paint()
+              ..color = const Color(0xfff6fbff).withValues(alpha: .5 * pulse)
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = cellSize * .065,
+          );
         case SpecialKind.prism:
           final targetFamily = event.prismTargetFamily;
           if (targetFamily != null) {
@@ -271,15 +323,19 @@ class CloudKingdomPngBoardRenderer
                 (cell) => event.currentWave.at(cell)?.family == targetFamily)) {
               final target = Offset(
                   (cell.col + .5) * cellSize, (cell.row + .5) * cellSize);
-              final pulse = .45 + .5 * math.sin(math.pi * progress);
+              final pulse =
+                  math.sin(math.pi * progress).clamp(0.0, 1.0).toDouble();
+              final radius = cellSize * (.3 + .22 * progress);
               canvas.drawCircle(
                 target,
-                cellSize * (.42 + .16 * progress),
+                radius,
                 Paint()
-                  ..color = _familyColor(targetFamily).withValues(alpha: pulse)
+                  ..color =
+                      _familyColor(targetFamily).withValues(alpha: .82 * pulse)
                   ..style = PaintingStyle.stroke
-                  ..strokeWidth = cellSize * .09,
+                  ..strokeWidth = cellSize * .055,
               );
+              _drawPrismGlint(canvas, target, radius, cellSize, pulse);
             }
           }
           _draw(canvas, center, cellSize * 1.9, 'fx_combo_ring',
@@ -298,44 +354,149 @@ class CloudKingdomPngBoardRenderer
       }
     }
 
-    for (final cell in changedConditionCells) {
+    for (final cell in changedConditionCells.take(12)) {
       final previous = event.beforeWave.at(cell)!;
       final updated = event.conditionChanges[cell]!;
       final center =
           Offset((cell.col + .5) * cellSize, (cell.row + .5) * cellSize);
       if (previous.fogged && !updated.fogged) {
-        _draw(canvas, center, cellSize * 1.1, smokeKey,
-            opacity: .55 * (1 - progress));
-      }
-      if (previous.stickySyrup && !updated.stickySyrup) {
+        final reveal = _easeOut(progress);
+        _draw(canvas, center, cellSize * (1.0 + .24 * reveal), smokeKey,
+            opacity: .48 * (1 - progress));
         canvas.drawCircle(
           center,
-          cellSize * (.3 + .3 * progress),
+          cellSize * (.34 + .46 * reveal),
           Paint()
             ..color =
-                const Color(0xffffd77b).withValues(alpha: .72 * (1 - progress))
+                const Color(0xffe6f8ff).withValues(alpha: .55 * (1 - progress))
             ..style = PaintingStyle.stroke
-            ..strokeWidth = cellSize * .07,
+            ..strokeWidth = cellSize * .045,
+        );
+      }
+      if (previous.stickySyrup && !updated.stickySyrup) {
+        final release = _easeOut(progress);
+        final ring = Rect.fromCenter(
+          center: center.translate(0, cellSize * (.2 + .14 * release)),
+          width: cellSize * (.48 + .38 * release),
+          height: cellSize * (.2 + .14 * release),
+        );
+        canvas.drawOval(
+          ring,
+          Paint()
+            ..color =
+                const Color(0xffffd77b).withValues(alpha: .78 * (1 - progress))
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = cellSize * .055,
+        );
+        final glint = center.translate(cellSize * (-.24 + .48 * release),
+            cellSize * (.17 - .34 * release));
+        canvas.drawCircle(
+          glint,
+          cellSize * .045,
+          Paint()
+            ..color =
+                const Color(0xfffff1c6).withValues(alpha: .78 * (1 - progress)),
         );
       }
     }
 
     for (final entry in event.blockerChanges.entries.take(8)) {
+      final before = event.beforeWave.blockers[entry.key];
       final center = Offset(
           (entry.key.col + .5) * cellSize, (entry.key.row + .5) * cellSize);
+      final envelope = math.sin(math.pi * progress).clamp(0.0, 1.0);
+      final isBreak = entry.value == null;
+      final reinforced = before?.kind == BlockerKind.reinforcedCrate;
       canvas.drawCircle(
         center,
-        cellSize * (.35 + progress * .18),
+        cellSize * (.32 + progress * (isBreak ? .52 : .28)),
         Paint()
-          ..color = (entry.value == null
-                  ? const Color(0xffffe0a0)
-                  : const Color(0xfff5c47d))
-              .withValues(alpha: .75 * (1 - progress))
+          ..color = (isBreak
+                  ? const Color(0xffffdda0)
+                  : reinforced
+                      ? const Color(0xffd7d8ee)
+                      : const Color(0xfff1bd78))
+              .withValues(alpha: .86 * envelope)
           ..style = PaintingStyle.stroke
-          ..strokeWidth = cellSize * .07,
+          ..strokeWidth = cellSize * (reinforced ? .09 : .065),
       );
+      final crack = Path()
+        ..moveTo(center.dx - cellSize * .15, center.dy - cellSize * .2)
+        ..lineTo(center.dx + cellSize * .015, center.dy - cellSize * .035)
+        ..lineTo(center.dx - cellSize * .055, center.dy + cellSize * .065)
+        ..lineTo(center.dx + cellSize * .16, center.dy + cellSize * .2);
+      canvas.drawPath(
+        crack,
+        Paint()
+          ..color = const Color(0xff34232c).withValues(
+              alpha: isBreak ? .46 * (1 - progress) : .92 * envelope)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = cellSize * (reinforced ? .055 : .04)
+          ..strokeCap = StrokeCap.round,
+      );
+      if (isBreak) _drawCrateSplinters(canvas, center, cellSize, progress);
     }
   }
+
+  void _drawPrismGlint(Canvas canvas, Offset center, double radius,
+      double cellSize, double pulse) {
+    if (pulse <= 0) return;
+    final offsets = [
+      Offset(-radius, 0),
+      Offset(0, -radius),
+      Offset(radius, 0),
+      Offset(0, radius),
+    ];
+    for (final offset in offsets) {
+      final point = center + offset;
+      final arm = cellSize * .055;
+      final paint = Paint()
+        ..color = const Color(0xfffff7da).withValues(alpha: .9 * pulse)
+        ..strokeWidth = math.max(1.0, cellSize * .018)
+        ..strokeCap = StrokeCap.round;
+      canvas.drawLine(point.translate(-arm, 0), point.translate(arm, 0), paint);
+      canvas.drawLine(point.translate(0, -arm), point.translate(0, arm), paint);
+    }
+  }
+
+  void _drawCrateSplinters(
+      Canvas canvas, Offset center, double cellSize, double progress) {
+    final eased = _easeOut(progress);
+    final offsets = [
+      const Offset(-1, -.7),
+      const Offset(.82, -.55),
+      const Offset(-.7, .75),
+      const Offset(.9, .62),
+    ];
+    final paint = Paint()
+      ..color = const Color(0xffffdfaa).withValues(alpha: .82 * (1 - progress))
+      ..strokeWidth = cellSize * .045
+      ..strokeCap = StrokeCap.round;
+    for (final offset in offsets) {
+      final start = center.translate(
+          offset.dx * cellSize * .11, offset.dy * cellSize * .11);
+      final end = center.translate(offset.dx * cellSize * (.16 + .18 * eased),
+          offset.dy * cellSize * (.16 + .18 * eased));
+      canvas.drawLine(start, end, paint);
+    }
+  }
+
+  double _easeOut(double value) => 1 - math.pow(1 - value, 3).toDouble();
+
+  Rect _boundsOf(Iterable<Cell> cells, double cellSize) {
+    final points = cells.map((cell) => _cellCenter(cell, cellSize)).toList();
+    final left =
+        points.map((point) => point.dx).reduce(math.min) - cellSize / 2;
+    final right =
+        points.map((point) => point.dx).reduce(math.max) + cellSize / 2;
+    final top = points.map((point) => point.dy).reduce(math.min) - cellSize / 2;
+    final bottom =
+        points.map((point) => point.dy).reduce(math.max) + cellSize / 2;
+    return Rect.fromLTRB(left, top, right, bottom);
+  }
+
+  Offset _cellCenter(Cell cell, double cellSize) =>
+      Offset((cell.col + .5) * cellSize, (cell.row + .5) * cellSize);
 
   Offset _centerOf(Iterable<Cell> cells, double cellSize) {
     final list = cells.toList(growable: false);

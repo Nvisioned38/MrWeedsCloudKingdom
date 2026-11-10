@@ -130,3 +130,20 @@ This newer device-specific entry supersedes the older “ADB unauthorized” sta
 | S24 profile-mode frame pacing | PARTIAL — surface sample | QA profile SurfaceView: 609 frames, 0 dropped / late-acquire / bad-desired-present; FrameTimeline jank counters unavailable (`totalTimelineFrames=0`). System-wide legacy counters 34/613 missed include other layers. SurfaceFlinger sample differs from the prior Flutter build/raster metrics; raw log in `docs/evidence/issue19/profile-surface-timestats.txt`. |
 | QA progress preservation during QA/profile work | PASS — exact restore verified | Flutter Driver downgraded/uninstalled QA after profile version mismatch; the pre-test QA JSON snapshot was restored byte-for-byte by matching its payload hash. Cloud House relaunch shows 1,295 coins / 9 stars / Level 10. Production package was never addressed. |
 | Stage A acceptance / Stage B start | VISUAL REVIEW PENDING / NOT STARTED | Stage A implementation, automated, build, real valid-match capture and profile surface sample are done. Keep PR #20 draft and wait for owner visual review. |
+
+## 2026-11-09 — Issue #22 Stage B verification
+
+| Gate | Status | Evidence |
+|---|---|---|
+| Main post-merge CI before Stage B | PASS | Run 42742349930 passed on merged Stage A main |
+| Deterministic game/save/accessibility parity | PASS | Full 77-test suite; no resolver/RNG/schema/level or semantic-cell changes |
+| Stage A timing and Reduced Motion behavior preserved | PASS | No timing constants or Stage A cue implementation changed |
+| Approved Match-3 asset bytes | PASS | 37/37 exact SHA-256, dimensions, RGBA verification |
+| Issue #21 no-downgrade install protection | PASS | User-0, QA-only, signer/version preflight; simulated downgrade/signature/identity refusals; no uninstall fallback |
+| S24 Prism/cascade | PASS | Level 4 completed replay: Prism 0/1→1/1, score 780, 5-wave cascade; follow-up score 860 |
+| S24 Cloud Bomb/crate interaction | PASS | Level 8 completed replay: bomb 0/1→1/1 and 4-wave cascade; next move crate 0/4→1/4 |
+| S24 Reduced Motion restore and QA save | PASS | Reduced Motion enabled after test; prefs SHA `5506ce444d4ec61c1eea86da3f61b01d8c668c49c8bbe24af2f8a545b62de94f`; Cloud House 1,295 coins / 9 stars |
+| S24 frame timing versus earlier benchmark | NOT TESTED | No fresh SurfaceFlinger sample; gfxinfo exposed only one frame. No timing percentile claim. |
+| Owner visual checkpoint / V1 sign-off | PENDING | PR #23 remains draft; see `docs/evidence/issue22/STAGE_B_QA.md` |
+
+APK: isolated arm64 debug `.qa` SHA-256 `bf67c439f6f5574edac1677ca24b3083c6969cb681f4327dd93cf353ba3bab09`; isolated arm64 profile `.qa` SHA-256 `778740d607780982c561e9484ec5a4840b788fba84f1ef2b12190d86ec02414e`. Both use package `com.mrweeds.cloudkingdom.qa`, version code 2001, and the same verified signer. Profile was restored to debug by explicit user-0 replace install.
