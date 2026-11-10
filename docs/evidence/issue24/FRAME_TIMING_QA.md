@@ -43,6 +43,7 @@ The phone currently showed the Android lock screen. No swipe, PIN entry, profile
 | Android arm64 QA profile build | PASS | `com.mrweeds.cloudkingdom.qa`, profile mode, instrumentation define on. SHA-256 above. |
 | Production-ID Android debug build | PASS | `com.mrweeds.cloudkingdom`; SHA-256 `feb2b01edc0b72bd74323e47b7fcf8995898572e4a8c71e7a1d8f758714c51aa`; built locally and not installed. |
 | Android arm64 QA debug build | PASS | Package `com.mrweeds.cloudkingdom.qa`; SHA-256 `3955bb1b8a6d65f85831552add7dbb48763fd5312e8a792412ee74cc5a0490dd`. Not installed over the profile APK. |
+| GitHub Actions PR CI | PASS | Run [42759559276](https://github.com/Nvisioned38/MrWeedsCloudKingdom/actions/runs/42759559276): art, formatting, analysis, all 83 tests, production debug APK, QA profile APK build/package identity and artifact upload succeeded. |
 
 No valid performance statistics are available yet. Accordingly, p50/p90/p99, max tail, refresh-rate misses, >16.67 ms misses, and sample counts for gameplay scenarios are **NOT TESTED**, not zero. The historical 123-frame S24 Flutter sample in `docs/CURRENT_STATE.md` used another build and capture; it is not directly comparable and is not treated as a baseline result for this change.
 
