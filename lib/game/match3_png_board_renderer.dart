@@ -181,7 +181,7 @@ class CloudKingdomPngBoardRenderer
         .map((entry) => entry.key)
         .toList(growable: false);
     if (event.reducedMotion) {
-      final fade = math.pow(1 - progress, 1.4).toDouble();
+      final fade = math.pow(1 - progress, .8).toDouble();
       final feedbackCells = <Cell>{...cells, ...changedConditionCells}.take(16);
       for (final cell in feedbackCells) {
         _draw(
@@ -189,7 +189,7 @@ class CloudKingdomPngBoardRenderer
           Offset((cell.col + .5) * cellSize, (cell.row + .5) * cellSize),
           cellSize * .45,
           'fx_magic_sparkles',
-          opacity: .42 * fade,
+          opacity: .64 * fade,
         );
       }
       return;

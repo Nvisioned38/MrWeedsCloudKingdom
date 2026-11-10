@@ -132,17 +132,17 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
         canvas.drawRRect(
           RRect.fromRectAndRadius(rect, const Radius.circular(9)),
           Paint()
-            ..color = feedbackColor.withValues(alpha: .28 * fade)
+            ..color = feedbackColor.withValues(alpha: .4 * fade)
             ..style = PaintingStyle.stroke
-            ..strokeWidth = cellSize * .07
-            ..maskFilter = MaskFilter.blur(BlurStyle.normal, cellSize * .1),
+            ..strokeWidth = cellSize * .1
+            ..maskFilter = MaskFilter.blur(BlurStyle.normal, cellSize * .08),
         );
         canvas.drawRRect(
           RRect.fromRectAndRadius(rect, const Radius.circular(9)),
           Paint()
-            ..color = feedbackColor.withValues(alpha: .78 * fade)
+            ..color = feedbackColor.withValues(alpha: .96 * fade)
             ..style = PaintingStyle.stroke
-            ..strokeWidth = 1.5,
+            ..strokeWidth = 2.6,
         );
       }
       if (trace.waves.isNotEmpty) {
