@@ -32,7 +32,7 @@ Stage A timing constants and Reduced Motion behavior were not changed. The deter
 
 Device `R5CX156CZNF` (SM-S928U), ADB-authorized; Android user 0. Every device action used `com.mrweeds.cloudkingdom.qa`.
 
-- **Prism and cascade:** on the completed Level 4 replay, the seeded legal match advanced the Prism objective from 0/1 to 1/1, scored 780 and consumed one move. The board displayed a five-wave cascade. A subsequent Prism-triggering turn advanced to score 860. Screenshots and videos are in this directory (`18`, `33`–`36`).
+- **Prism and cascade:** on the completed Level 4 replay, the seeded legal match advanced the Prism objective from 0/1 to 1/1, scored 780 and consumed one move. The board displayed a five-wave cascade. A follow-up special interaction advanced to score 860; the exact activated special is not independently confirmed by the capture. Screenshots and videos are in this directory (`18`, `33`–`36`).
 - **Cloud Bomb:** on completed Level 8, the seeded move advanced Create Cloud Bomb from 0/1 to 1/1, score 550 and moves 26→25; the screen showed a four-wave cascade. The next move activated the bomb, destroyed one crate (0/4→1/4), scored 640 and moves 25→24. See `25`, `27`–`30`.
 - **Crate damage:** Level 10 replay showed the reinforced-crate damaged state after an actual adjacent match. Normal and Reduced Motion recordings/screenshots are `07`–`14`.
 - **Reduced Motion setting:** temporarily disabled for normal-motion captures and restored to its original enabled state. Final setting is visible in `38_s24_reduced_motion_restored_on.png`.
