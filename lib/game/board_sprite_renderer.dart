@@ -16,14 +16,45 @@ abstract interface class BoardSpriteRenderer {
 }
 
 /// Optional art-only layer for approved turn feedback sprites.
+enum BoardEffectPhase { clearing, gravity }
+
+/// Presentation facts derived from one real resolver wave. This is temporary
+/// render input only; it is never serialized or used to decide game state.
+class BoardTurnEffectFrame {
+  const BoardTurnEffectFrame({
+    required this.clearedCells,
+    required this.createdSpecials,
+    required this.activatedSpecials,
+    required this.blockerChanges,
+    required this.conditionChanges,
+    required this.beforeWave,
+    required this.currentWave,
+    required this.prismTargetFamily,
+    required this.waveIndex,
+    required this.phase,
+    required this.progress,
+    required this.reducedMotion,
+  });
+
+  final Set<Cell> clearedCells;
+  final Map<Cell, Piece> createdSpecials;
+  final Map<Cell, Piece> activatedSpecials;
+  final Map<Cell, BlockerVisualState?> blockerChanges;
+  final Map<Cell, Piece> conditionChanges;
+  final BoardVisualSnapshot beforeWave;
+  final BoardVisualSnapshot currentWave;
+  final TileFamily? prismTargetFamily;
+  final int waveIndex;
+  final BoardEffectPhase phase;
+  final double progress;
+  final bool reducedMotion;
+}
+
 abstract interface class BoardTurnEffectsRenderer {
   void drawTurnEffects(
     Canvas canvas, {
-    required Iterable<Cell> changedCells,
-    required int cascadeCount,
+    required BoardTurnEffectFrame event,
     required double cellSize,
-    required double progress,
-    required bool reducedMotion,
   });
 }
 

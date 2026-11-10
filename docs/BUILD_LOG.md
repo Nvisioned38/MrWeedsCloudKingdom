@@ -148,3 +148,44 @@ Issue #14: added test-only approved-art render/UI fixtures for Fog, Syrup, reinf
 Gate: 71/71 Flutter tests, analyzer clean, changed-file format clean, 37/37 art hash/dimensions/RGBA verifier, QA and production-ID arm64 debug APK builds passed. QA app was updated only with user-0 `-r`; production was not installed or accessed. Issue #6 and owner final visual sign-off remain open; no Phase 3.
 
 Final artifacts from committed Issue #15/#14 source `87bc709120dca4eb3bd7f017018cbf98eecddcf5`: QA arm64 debug (`com.mrweeds.cloudkingdom.qa`) 117,584,746 bytes, SHA-256 `5cdb0d40f9e60791ba93fcba4177285d8b091f6db5048719b493071e0c9e1a67`; installed on S24 user 0 by replace-only verified script. Production-ID arm64 debug (`com.mrweeds.cloudkingdom`) 117,584,726 bytes, SHA-256 `00ff322974afcd34626e701fd8d1b50619ffab8084c98e29d0b79b1db66ab664`; built and identity-verified, not installed.
+
+## 2026-11-09 — Issue #19 Stage A implementation checkpoint
+
+Added the optional immutable animation trace to the actual engine pipeline, exact gravity/refill lineage and snapshot timeline, Reduced Motion path, touch/semantic resolution gate, one-shot delayed result callback and lifecycle cancellation/reconciliation. Added deterministic trace parity/cascade tests and widget busy/lifecycle coverage. See `docs/evidence/issue19/STAGE_A_QA.md` for exact implementation and verification.
+
+Verification: 27-file Dart format check clean; `flutter analyze` clean; full suite **74/74**; approved-art validation **37/37**; isolated user-0 QA APK built, identity/hash verified, and replace-installed. See the device verification update below.
+
+## 2026-11-09 — Issue #19 Stage A S24 verification
+
+On the unlocked S24 Ultra, installed/tested only `com.mrweeds.cloudkingdom.qa` as Android user 0. Captured normal-motion four-tile match/cascade video and settled board; a valid swap advanced score 0→30 and moves 18→17. Captured the original Reduced Motion on state, selected-cell feedback, normal/Reduced Motion settings, and Cloud House.
+
+Profile-mode SurfaceFlinger TimeStats ran for five seconds around a valid match: 609 QA SurfaceView frames, 0 dropped, 0 late-acquire and 0 bad-desired-present frames. FrameTimeline jank counters were unavailable (`totalTimelineFrames=0`), so no app jank percentile is claimed. Device-wide legacy stats counted 34 missed frames among 613; this includes non-game/system layers. The sample is partial and directional relative to the historical Issue #5 Flutter frame benchmark because the timing sources differ. Raw sample and handset recordings are under `docs/evidence/issue19/`.
+
+A Flutter Driver attempt initially produced a profile APK with code 1, below the installed QA code 2001; its downgrade fallback uninstalled only the QA app and the performance test then failed to connect to the VM timeline service. The exact pre-run QA progress JSON had been read and hash-recorded. It was restored to the QA package and the original SHA-256 (`90823d16ca76a7c993a653213c7e8eeae967b237fda5b0349cedafb854122579`) verified after relaunch and final debug `-r` replacement. A split arm64 profile APK with the correct QA identity/code was subsequently installed with explicit user-0 replace semantics for the SurfaceFlinger sample. No production package was installed, launched, queried, or modified.
+
+Final debug QA artifact remains `build/qa/app/outputs/flutter-apk/app-arm64-v8a-debug.apk`, package `com.mrweeds.cloudkingdom.qa`, version 0.1.0 (2001), SHA-256 `ea7ee13d0a58a91c51705a6edc5c8ab537c5c48591d8a6090940599738ba176d`. Stage A physical evidence is recorded; keep Stage B paused pending owner visual review.
+## 2026-11-09 — Issue #19 event-driven Match-3 FX checkpoint
+
+The owner authorized continued tile-motion and effect wiring after Stage A. Replaced global turn-progress effect drawing with per-wave rendering based on actual clear, gravity, special-trigger, blocker, Fog/Syrup and special-creation trace events. Existing 37 approved standalone art bytes remain unchanged; the approved smoke, sparkle, combo, Torch, Prism and Bomb layers now animate only at their matching events. Prism carries the exact engine-selected family in the trace, never an inferred family. Reduced Motion uses a brief static cue. No Cloud Cup action was added because the resolver has no corresponding booster mechanic.
+
+Verification passed: Dart format, clean `flutter analyze`, full Flutter suite **74/74**, approved-art hash check **37/37**, QA arm64 build and safe replace-install on S24 user 0. QA progress SHA-256 stayed exactly `90823d16ca76a7c993a653213c7e8eeae967b237fda5b0349cedafb854122579`. APK SHA-256: `d2ec5b504514b64ce1fa626fdbd528e7f1d510066fa8e95d569b75e4ef4c3d33`. The handset was locked during that checkpoint; a subsequent owner-unlocked visual follow-up is recorded below.
+
+## 2026-11-09 — Issue #19 S24 event-FX visual follow-up
+
+On Samsung S24 Ultra `R5CX156CZNF` (SM-S928U), visually tested only `com.mrweeds.cloudkingdom.qa` under Android user 0. With Reduced Motion temporarily disabled, a legal four-Mystic-Bloom match played through the actual match/cascade sequence, scored 30 points, consumed one move and created a Torch; activating the Torch cleared its row, scored 80 more points and consumed one move. With Reduced Motion restored to its original on state, the same match resolved with the concise completion cue and no travel animation. Normal, Torch and Reduced Motion recordings and settled-board screenshots are linked in `docs/evidence/issue19/EVENT_DRIVEN_FX_CHECKPOINT.md`.
+
+No replay reached Victory. Reduced Motion was restored to on and the final isolated QA save payload returned byte-identically to pretest SHA-256 `90823d16ca76a7c993a653213c7e8eeae967b237fda5b0349cedafb854122579` (1,295 coins, 9 stars, nine completed levels). Frame pacing was **not measured** in this visual follow-up. The earlier limited SurfaceFlinger result remains separately documented in `STAGE_A_QA.md`; no new pacing claim is made. Production app and save were not touched. Stage A and event-linked FX checks pass visually; clean source frames, broader review and owner visual approval remain open. No Stage B or Phase 3 work was started.
+
+## 2026-11-09 — Issue #19 Reduced Motion cue refinement
+
+Applied the owner's narrow acceptance change without altering normal-mode timing: successful Reduced Motion matches now use a smooth, stationary warm-gold glow and restrained approved sparkle over 300 ms; invalid swaps receive a subtle stationary cue over 220 ms. The authoritative board still snaps immediately, with no travel, burst, camera shake or flash. Engine mutation timing and outcomes remain unchanged, and touch/semantic actions stay gated until the short presentation cue completes.
+
+Verification: formatting clean; full Flutter tests **74/74 passed**; `flutter analyze` clean; approved art **37/37 byte/hash verified**; `git diff --check` clean. Time-stepped tests verify the feedback remains visible at 150 ms and fades out within its bounded duration, tile draw centers are unchanged (no travel), all 64 semantic cells remain mounted, and normal motion is still resolving beyond 150 ms. The repository QA script built and package-verified `com.mrweeds.cloudkingdom.qa`, version 0.1.0 (2001), arm64 debug; APK SHA-256 `db2ce300a11b4b2cf146761db6b12105cae5594f34106b0c8265d88f9c47f631`.
+
+At that checkpoint ADB was unauthorized, so installation was deferred. Follow-up after the owner's USB debugging reauthorization is recorded next.
+
+## 2026-11-09 — Issue #19 authorized S24 Reduced Motion recapture
+
+ADB now reports the S24 Ultra (`R5CX156CZNF`, SM-S928U) authorized, Android user 0 active. Rebuilt and package-verified the latest arm64 QA APK (`com.mrweeds.cloudkingdom.qa`, 0.1.0/2001), SHA-256 `58655e4948b04ca3d67651f666026b5b2b03a54b51c238ba04a7d4e90959fa38`, then installed over the existing QA package with `-r --user 0`. No Flutter Driver downgrade/fallback, uninstall, clear-data, profile change, or production package operation occurred.
+
+The successful Level 1 replay showed a stationary gold match halo at 150 ms and no tile travel; the cue had settled by the 300 ms endpoint. Score was 90 and moves 17; no Victory/reward screen was reached. Recording and screenshots are linked in `docs/evidence/issue19/EVENT_DRIVEN_FX_CHECKPOINT.md`. QA save/preferences hash before and after device work matched exactly: `5506ce444d4ec61c1eea86da3f61b01d8c668c49c8bbe24af2f8a545b62de94f`. Existing progress stayed at 1,295 coins, 9 stars and nine completed levels; Reduced Motion remained enabled. Formatting, analyzer, full Flutter suite (74/74), approved-art verification (37/37) and Android QA build/install pass. Frame pacing was not remeasured. PR #20 remains draft; Stage B and accessibility work remain paused pending animation checkpoint approval.

@@ -41,8 +41,7 @@ Future<bool> _backupUnreadableSave(
 ///
 /// The caller only persists when shouldPersistMigration is true, ensuring a
 /// corrupted saved game is never silently overwritten during app startup.
-Future<ProgressLoadResult> restoreSavedProgress(
-    SharedPreferences prefs) async {
+Future<ProgressLoadResult> restoreSavedProgress(SharedPreferences prefs) async {
   final saved = prefs.getString(progressSaveKey);
   if (saved != null) {
     try {
@@ -53,9 +52,9 @@ Future<ProgressLoadResult> restoreSavedProgress(
         shouldPersistMigration: (data['schema'] as num? ?? 0) < 3,
       );
     } catch (error) {
-      final backup =
-          await _backupUnreadableSave(prefs, progressSaveKey, saved);
-      debugPrint('[SAVE] Saved progress cannot be read (${error.runtimeType}).');
+      final backup = await _backupUnreadableSave(prefs, progressSaveKey, saved);
+      debugPrint(
+          '[SAVE] Saved progress cannot be read (${error.runtimeType}).');
       return ProgressLoadResult(
         progress: ProgressState(),
         shouldPersistMigration: false,
@@ -88,9 +87,10 @@ Future<ProgressLoadResult> restoreSavedProgress(
       return ProgressLoadResult(
           progress: progress, shouldPersistMigration: true);
     } catch (error) {
-      final backup = await _backupUnreadableSave(
-          prefs, legacyProgressSaveKey, legacy);
-      debugPrint('[SAVE] Legacy progress cannot be read (${error.runtimeType}).');
+      final backup =
+          await _backupUnreadableSave(prefs, legacyProgressSaveKey, legacy);
+      debugPrint(
+          '[SAVE] Legacy progress cannot be read (${error.runtimeType}).');
       return ProgressLoadResult(
         progress: ProgressState(),
         shouldPersistMigration: false,

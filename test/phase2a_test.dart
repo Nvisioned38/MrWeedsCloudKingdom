@@ -292,7 +292,8 @@ void main() {
     await tester.tapAt(Offset(board.left + board.width * 1.5 / 8,
         board.top + board.height * 1.5 / 8));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pump();
     expect(find.text('Clouds cleared!'), findsOneWidget);
     expect(progress.unlockedCollectibleIds, {'bluebeary_pancakes'});
   });
