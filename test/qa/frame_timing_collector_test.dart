@@ -77,6 +77,89 @@ void main() {
     expect((report['rasterMs'] as Map)['p50'], 1.9);
   });
 
+  testWidgets('attributes FrameTiming to its exact render-scene marker',
+      (tester) async {
+    final output = <String>[];
+    final collector = QaFrameTimingCollector(
+      reducedMotion: false,
+      warmup: Duration.zero,
+      maxSamples: 4,
+      runtimePackageNameForTesting: 'com.mrweeds.cloudkingdom.qa',
+      log: (message, {wrapWidth}) => output.add(message!),
+    );
+
+    await collector.start();
+    await tester.pump(const Duration(milliseconds: 1));
+    collector.markRenderFrameAtForTesting(1100, 'cloud_bomb_midpoint');
+    collector.recordCanvasWorkAtForTesting(
+      1100,
+      imageDraws: 72,
+      translucentImageDraws: 17,
+      cloudBombSmokeDraws: 9,
+      vectorDraws: 1,
+      saveLayers: 64,
+    );
+    collector.ingestTimingBatch([_frame(1000)]);
+
+    collector.finish(levelEnded: false);
+    final summaryLine = output.singleWhere(
+      (line) => line.startsWith('CK_FRAME_TIMING '),
+    );
+    final report = jsonDecode(
+      summaryLine.substring('CK_FRAME_TIMING '.length),
+    ) as Map<String, dynamic>;
+    final attribution = report['renderFrameAttribution'] as Map;
+    expect(attribution['matchedFrames'], 1);
+    expect(attribution['unmatchedFrames'], 0);
+    final sceneLine = output.singleWhere(
+      (line) => line.startsWith('CK_FRAME_TIMING_SCENE '),
+    );
+    final bomb = jsonDecode(
+      sceneLine.substring('CK_FRAME_TIMING_SCENE '.length),
+    ) as Map<String, dynamic>;
+    expect(bomb['scene'], 'cloud_bomb_midpoint');
+    expect(bomb['sampleCount'], 1);
+    expect((bomb['rasterMs'] as Map)['p50'], 1.9);
+    expect(bomb['averageCanvasWork'], {
+      'imageDraws': 72.0,
+      'translucentImageDraws': 17.0,
+      'cloudBombSmokeDraws': 9.0,
+      'vectorDraws': 1.0,
+      'saveLayers': 64.0,
+    });
+  });
+
+  testWidgets('attributes small timestamp skew to the nearest render marker',
+      (tester) async {
+    String? output;
+    final collector = QaFrameTimingCollector(
+      reducedMotion: false,
+      warmup: Duration.zero,
+      maxSamples: 2,
+      runtimePackageNameForTesting: 'com.mrweeds.cloudkingdom.qa',
+      log: (message, {wrapWidth}) {
+        if (message?.startsWith('CK_FRAME_TIMING ') ?? false) {
+          output = message;
+        }
+      },
+    );
+
+    await collector.start();
+    await tester.pump(const Duration(milliseconds: 1));
+    collector.markRenderFrameAtForTesting(900, 'board_idle');
+    collector.ingestTimingBatch([_frame(0)]);
+    collector.finish(levelEnded: false);
+
+    final report = jsonDecode(output!.substring('CK_FRAME_TIMING '.length))
+        as Map<String, dynamic>;
+    final attribution = report['renderFrameAttribution'] as Map;
+    expect(attribution['matchedFrames'], 0);
+    expect(attribution['nearTimestampFrames'], 1);
+    expect(attribution['unmatchedFrames'], 0);
+    final offsets = attribution['signedClockOffsetMs'] as Map;
+    expect(offsets['p50'], .8);
+  });
+
   testWidgets('collector remains disabled without the QA profiling opt-in',
       (tester) async {
     String? output;
