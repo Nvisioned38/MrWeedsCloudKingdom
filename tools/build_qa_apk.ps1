@@ -199,7 +199,14 @@ Push-Location $repoRoot
 try {
     if ($Action -in @('Build', 'InstallQa', 'BuildProfileQa', 'InstallProfileQa')) {
         $flutterCommand = Get-FlutterCommand
-        & $flutterCommand build apk "--$buildMode" --target-platform android-arm64 --split-per-abi --android-project-arg cloudKingdomQa=true
+        $flutterArguments = @(
+            'build', 'apk', "--$buildMode", '--target-platform', 'android-arm64',
+            '--split-per-abi', '--android-project-arg', 'cloudKingdomQa=true'
+        )
+        if ($buildMode -eq 'profile') {
+            $flutterArguments += @('--dart-define=CLOUD_KINGDOM_QA_FRAME_TIMING=true')
+        }
+        & $flutterCommand @flutterArguments
         if ($LASTEXITCODE -ne 0) { throw "Flutter QA $buildMode APK build failed with exit code $LASTEXITCODE." }
 
         $identity = Get-ApkIdentity $flutterApk

@@ -68,6 +68,19 @@ jobs:
       - name: Build Android debug APK
         run: flutter build apk --debug
 
+      - name: Build and verify isolated QA profile APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          flutter build apk --profile --target-platform android-arm64 --split-per-abi \
+            --android-project-arg cloudKingdomQa=true \
+            --dart-define=CLOUD_KINGDOM_QA_FRAME_TIMING=true
+          build_tools=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)
+          apk=build/app/outputs/flutter-apk/app-arm64-v8a-profile.apk
+          "$build_tools/aapt" dump badging "$apk" | \
+            grep -F "package: name='com.mrweeds.cloudkingdom.qa' "
+          echo 'Isolated QA profile APK package identity verified; profiling is opt-in.' >> "$GITHUB_STEP_SUMMARY"
+
       - name: Record APK checksum and commit
         shell: bash
         run: |
