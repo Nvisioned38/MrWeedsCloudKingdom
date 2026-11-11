@@ -55,8 +55,6 @@ class QaFrameTimingCollector {
   int _renderFramesNearMatched = 0;
   int _renderFramesUnmatched = 0;
   final List<int> _renderClockOffsetsMicros = [];
-  int? _firstRenderTimestamp;
-  int? _firstFrameTimingBuildStart;
 
   int get sampleCount => _samples.length;
   bool get isCapturing => _callbackAttached;
@@ -97,7 +95,6 @@ class QaFrameTimingCollector {
   void _markRenderFrameAt(int timestamp, String scene) {
     if (!isCapturing || _samples.length >= maxSamples) return;
     if (timestamp <= 0) return;
-    _firstRenderTimestamp ??= timestamp;
     final mark = _renderFrameMarks.putIfAbsent(
       timestamp,
       () => _RenderFrameMark(scene),
@@ -357,15 +354,6 @@ class QaFrameTimingCollector {
         'unmatchedFrames': _renderFramesUnmatched,
         'signedClockOffsetMs': statisticsFromMicros(_renderClockOffsetsMicros),
       },
-      'clockJoinDiagnostics': {
-        'firstRenderTimestamp': _firstRenderTimestamp,
-        'firstFrameTimingBuildStart': _firstFrameTimingBuildStart,
-        'firstOffsetMicros':
-            _firstRenderTimestamp == null || _firstFrameTimingBuildStart == null
-                ? null
-                : _firstRenderTimestamp! - _firstFrameTimingBuildStart!,
-        'remainingRenderMarks': _renderFrameMarks.length,
-      },
     };
     final write = log ?? debugPrint;
     write('CK_FRAME_TIMING ${jsonEncode(summary)}');
@@ -416,7 +404,6 @@ class QaFrameTimingCollector {
     for (final timing in batch) {
       if (_samples.length >= maxSamples) break;
       final start = timing.timestampInMicroseconds(FramePhase.buildStart);
-      _firstFrameTimingBuildStart ??= start;
       if (_lastStartMicros != null && start > _lastStartMicros!) {
         _activeMicros += start - _lastStartMicros!;
       }

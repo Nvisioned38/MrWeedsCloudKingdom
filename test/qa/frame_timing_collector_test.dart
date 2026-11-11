@@ -65,6 +65,7 @@ void main() {
     expect(collector.isCapturing, isFalse);
     expect(collector.sampleCount, 0);
     expect(output, startsWith('CK_FRAME_TIMING '));
+    expect(output!.length, lessThan(1000));
     final report = jsonDecode(output!.substring('CK_FRAME_TIMING '.length))
         as Map<String, dynamic>;
     expect(report['sampleCount'], 2);

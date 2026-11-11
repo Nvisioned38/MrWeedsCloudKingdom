@@ -360,14 +360,17 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
         );
         final blocker = snapshot.blockers[cell];
         if (blocker != null) {
-          canvas.saveLayer(
-            Rect.fromCenter(center: center, width: tileSize, height: tileSize),
-            Paint()..color = Color.fromRGBO(255, 255, 255, opacity),
-          );
-          QaFrameTimingCollector.recordCurrentCanvasWork(saveLayers: 1);
+          if (opacity < 1) {
+            canvas.saveLayer(
+              Rect.fromCenter(
+                  center: center, width: tileSize, height: tileSize),
+              Paint()..color = Color.fromRGBO(255, 255, 255, opacity),
+            );
+            QaFrameTimingCollector.recordCurrentCanvasWork(saveLayers: 1);
+          }
           spriteRenderer.drawBlocker(canvas, center, tileSize,
               BlockerState.visual(blocker.kind, blocker.hp));
-          canvas.restore();
+          if (opacity < 1) canvas.restore();
         } else if (!hidden.contains(cell)) {
           final piece = snapshot.at(cell);
           if (piece != null) {
@@ -414,15 +417,18 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     canvas.translate(center.dx, center.dy);
     canvas.scale(scale);
     canvas.translate(-center.dx, -center.dy);
-    canvas.saveLayer(
-      Rect.fromCenter(
-          center: center, width: tileSize * 1.3, height: tileSize * 1.3),
-      Paint()
-        ..color = Color.fromRGBO(255, 255, 255, opacity.clamp(0, 1).toDouble()),
-    );
-    QaFrameTimingCollector.recordCurrentCanvasWork(saveLayers: 1);
+    if (opacity < 1) {
+      canvas.saveLayer(
+        Rect.fromCenter(
+            center: center, width: tileSize * 1.3, height: tileSize * 1.3),
+        Paint()
+          ..color =
+              Color.fromRGBO(255, 255, 255, opacity.clamp(0, 1).toDouble()),
+      );
+      QaFrameTimingCollector.recordCurrentCanvasWork(saveLayers: 1);
+    }
     spriteRenderer.drawPiece(canvas, center, tileSize, piece);
-    canvas.restore();
+    if (opacity < 1) canvas.restore();
   }
 
   void _drawClearSparkle(Canvas canvas, Offset center, double tileSize,
