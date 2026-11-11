@@ -6,6 +6,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/painting.dart';
 
 import '../domain/match3.dart';
+import '../qa/frame_timing_collector.dart';
 import 'board_sprite_renderer.dart';
 import 'match3_png_board_renderer.dart';
 
@@ -95,6 +96,9 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
+    QaFrameTimingCollector.markCurrentRenderFrame(
+      _resolving ? 'board_transition' : 'board_idle',
+    );
     final cellSize = size.x / session.board.cols;
     final tileSize = cellSize * .88;
     if (_resolving && _trace != null) {
@@ -356,13 +360,17 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
         );
         final blocker = snapshot.blockers[cell];
         if (blocker != null) {
-          canvas.saveLayer(
-            Rect.fromCenter(center: center, width: tileSize, height: tileSize),
-            Paint()..color = Color.fromRGBO(255, 255, 255, opacity),
-          );
+          if (opacity < 1) {
+            canvas.saveLayer(
+              Rect.fromCenter(
+                  center: center, width: tileSize, height: tileSize),
+              Paint()..color = Color.fromRGBO(255, 255, 255, opacity),
+            );
+            QaFrameTimingCollector.recordCurrentCanvasWork(saveLayers: 1);
+          }
           spriteRenderer.drawBlocker(canvas, center, tileSize,
               BlockerState.visual(blocker.kind, blocker.hp));
-          canvas.restore();
+          if (opacity < 1) canvas.restore();
         } else if (!hidden.contains(cell)) {
           final piece = snapshot.at(cell);
           if (piece != null) {
@@ -409,14 +417,18 @@ class CloudBoardGame extends FlameGame with TapCallbacks {
     canvas.translate(center.dx, center.dy);
     canvas.scale(scale);
     canvas.translate(-center.dx, -center.dy);
-    canvas.saveLayer(
-      Rect.fromCenter(
-          center: center, width: tileSize * 1.3, height: tileSize * 1.3),
-      Paint()
-        ..color = Color.fromRGBO(255, 255, 255, opacity.clamp(0, 1).toDouble()),
-    );
+    if (opacity < 1) {
+      canvas.saveLayer(
+        Rect.fromCenter(
+            center: center, width: tileSize * 1.3, height: tileSize * 1.3),
+        Paint()
+          ..color =
+              Color.fromRGBO(255, 255, 255, opacity.clamp(0, 1).toDouble()),
+      );
+      QaFrameTimingCollector.recordCurrentCanvasWork(saveLayers: 1);
+    }
     spriteRenderer.drawPiece(canvas, center, tileSize, piece);
-    canvas.restore();
+    if (opacity < 1) canvas.restore();
   }
 
   void _drawClearSparkle(Canvas canvas, Offset center, double tileSize,

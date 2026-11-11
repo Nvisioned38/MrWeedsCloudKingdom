@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:math' as math;
 import 'dart:ui' show FramePhase, FrameTiming;
@@ -25,6 +26,7 @@ class QaFrameTimingCollector {
     defaultValue: false,
   );
   static const _identityChannel = MethodChannel('cloud_kingdom/qa_profile');
+  static QaFrameTimingCollector? _renderCollector;
   static const int minimumSamples = 300;
   static bool get isProfilingBuild => _profilingBuild && !kReleaseMode;
 
@@ -35,6 +37,10 @@ class QaFrameTimingCollector {
   @visibleForTesting
   final String? runtimePackageNameForTesting;
   final List<_FrameSample> _samples = [];
+  final SplayTreeMap<int, _RenderFrameMark> _renderFrameMarks =
+      SplayTreeMap<int, _RenderFrameMark>();
+  final Map<String, List<_FrameSample>> _renderSamples = {};
+  final Map<String, Map<String, int>> _renderComposition = {};
   final Map<String, int> _eventCounts = {};
   Timer? _warmupTimer;
   bool _enabled = false;
@@ -45,10 +51,125 @@ class QaFrameTimingCollector {
   int? _lastStartMicros;
   String _scenario = 'board_session';
   DateTime? _startedAt;
+  int _renderFramesMatched = 0;
+  int _renderFramesNearMatched = 0;
+  int _renderFramesUnmatched = 0;
+  final List<int> _renderClockOffsetsMicros = [];
 
   int get sampleCount => _samples.length;
   bool get isCapturing => _callbackAttached;
   bool get isEnabled => _enabled && !_disposed;
+
+  /// Labels the current Flutter frame with its board scene. Marks are joined
+  /// to delivered FrameTiming records by their nearest build-start timestamp.
+  static void markCurrentRenderFrame(String scene) =>
+      _renderCollector?._markCurrentRenderFrame(scene);
+
+  /// Records code-path draw/compositing work on the current QA board frame.
+  static void recordCurrentCanvasWork({
+    int imageDraws = 0,
+    int translucentImageDraws = 0,
+    int cloudBombSmokeDraws = 0,
+    int vectorDraws = 0,
+    int saveLayers = 0,
+  }) =>
+      _renderCollector?._recordCurrentCanvasWork(
+        imageDraws: imageDraws,
+        translucentImageDraws: translucentImageDraws,
+        cloudBombSmokeDraws: cloudBombSmokeDraws,
+        vectorDraws: vectorDraws,
+        saveLayers: saveLayers,
+      );
+
+  void _markCurrentRenderFrame(String scene) {
+    if (!isCapturing || _samples.length >= maxSamples) return;
+    final timestamp =
+        SchedulerBinding.instance.currentSystemFrameTimeStamp.inMicroseconds;
+    _markRenderFrameAt(timestamp, scene);
+  }
+
+  @visibleForTesting
+  void markRenderFrameAtForTesting(int timestamp, String scene) =>
+      _markRenderFrameAt(timestamp, scene);
+
+  void _markRenderFrameAt(int timestamp, String scene) {
+    if (!isCapturing || _samples.length >= maxSamples) return;
+    if (timestamp <= 0) return;
+    final mark = _renderFrameMarks.putIfAbsent(
+      timestamp,
+      () => _RenderFrameMark(scene),
+    );
+    mark.scene = scene;
+    _trimRenderFrameMarks();
+  }
+
+  void _recordCurrentCanvasWork({
+    int imageDraws = 0,
+    int translucentImageDraws = 0,
+    int cloudBombSmokeDraws = 0,
+    int vectorDraws = 0,
+    int saveLayers = 0,
+  }) {
+    if (!isCapturing || _samples.length >= maxSamples) return;
+    final timestamp =
+        SchedulerBinding.instance.currentSystemFrameTimeStamp.inMicroseconds;
+    _recordCanvasWorkAt(
+      timestamp,
+      imageDraws: imageDraws,
+      translucentImageDraws: translucentImageDraws,
+      cloudBombSmokeDraws: cloudBombSmokeDraws,
+      vectorDraws: vectorDraws,
+      saveLayers: saveLayers,
+    );
+  }
+
+  @visibleForTesting
+  void recordCanvasWorkAtForTesting(
+    int timestamp, {
+    int imageDraws = 0,
+    int translucentImageDraws = 0,
+    int cloudBombSmokeDraws = 0,
+    int vectorDraws = 0,
+    int saveLayers = 0,
+  }) =>
+      _recordCanvasWorkAt(
+        timestamp,
+        imageDraws: imageDraws,
+        translucentImageDraws: translucentImageDraws,
+        cloudBombSmokeDraws: cloudBombSmokeDraws,
+        vectorDraws: vectorDraws,
+        saveLayers: saveLayers,
+      );
+
+  void _recordCanvasWorkAt(
+    int timestamp, {
+    int imageDraws = 0,
+    int translucentImageDraws = 0,
+    int cloudBombSmokeDraws = 0,
+    int vectorDraws = 0,
+    int saveLayers = 0,
+  }) {
+    if (!isCapturing || _samples.length >= maxSamples) return;
+    if (timestamp <= 0) return;
+    final mark = _renderFrameMarks.putIfAbsent(
+      timestamp,
+      () => _RenderFrameMark('board_unclassified'),
+    );
+    mark
+      ..imageDraws += imageDraws
+      ..translucentImageDraws += translucentImageDraws
+      ..cloudBombSmokeDraws += cloudBombSmokeDraws
+      ..vectorDraws += vectorDraws
+      ..saveLayers += saveLayers;
+    _trimRenderFrameMarks();
+  }
+
+  void _trimRenderFrameMarks() {
+    final limit = math.max(maxSamples, 1);
+    if (_renderFrameMarks.length <= limit) return;
+    final oldest = _renderFrameMarks.keys.reduce(math.min);
+    _renderFrameMarks.remove(oldest);
+  }
 
   /// Aggregates actual engine trace events without retaining cell positions,
   /// level identity, or any game/save identifiers.
@@ -144,6 +265,7 @@ class QaFrameTimingCollector {
       }
     }
     _enabled = true;
+    _renderCollector = this;
     _startedAt = DateTime.now().toUtc();
     resume();
   }
@@ -159,10 +281,10 @@ class QaFrameTimingCollector {
 
   /// Detaches while the app is backgrounded. The subsequent warmup is excluded
   /// from active time and sample collection.
-  void pause() {
+  void pause({bool clearRenderMarks = true}) {
     _warmupTimer?.cancel();
     _warmupTimer = null;
-    _detach();
+    _detach(clearRenderMarks: clearRenderMarks);
     _closeActiveWindow();
   }
 
@@ -186,7 +308,7 @@ class QaFrameTimingCollector {
   /// storage is involved, so measurements cannot enter save data.
   void finish({required bool levelEnded}) {
     if (_disposed) return;
-    pause();
+    pause(clearRenderMarks: false);
     _disposed = true;
     if (!_enabled) return;
     final budgetMicros = _refreshBudgetMicros;
@@ -226,9 +348,54 @@ class QaFrameTimingCollector {
       'buildMs': build,
       'rasterMs': raster,
       'totalSpanMs': total,
+      'renderFrameAttribution': {
+        'matchedFrames': _renderFramesMatched,
+        'nearTimestampFrames': _renderFramesNearMatched,
+        'unmatchedFrames': _renderFramesUnmatched,
+        'signedClockOffsetMs': statisticsFromMicros(_renderClockOffsetsMicros),
+      },
     };
-    (log ?? debugPrint)('CK_FRAME_TIMING ${jsonEncode(summary)}');
+    final write = log ?? debugPrint;
+    write('CK_FRAME_TIMING ${jsonEncode(summary)}');
+    for (final entry in _renderSamples.entries) {
+      write(
+        'CK_FRAME_TIMING_SCENE ${jsonEncode(_renderSegmentSummary(entry.key, entry.value, budgetMicros))}',
+      );
+    }
     _samples.clear();
+    _renderFrameMarks.clear();
+    _renderSamples.clear();
+    _renderComposition.clear();
+    if (identical(_renderCollector, this)) _renderCollector = null;
+  }
+
+  Map<String, Object?> _renderSegmentSummary(
+    String scene,
+    List<_FrameSample> samples,
+    int budgetMicros,
+  ) {
+    final composition = _renderComposition[scene] ?? const <String, int>{};
+    final count = samples.length;
+    return {
+      'scene': scene,
+      'sampleCount': count,
+      'buildMs':
+          statisticsFromMicros(samples.map((s) => s.buildMicros).toList()),
+      'rasterMs':
+          statisticsFromMicros(samples.map((s) => s.rasterMicros).toList()),
+      'totalSpanMs':
+          statisticsFromMicros(samples.map((s) => s.totalMicros).toList()),
+      'missesOverRefreshBudget':
+          countOverBudget(samples.map((s) => s.totalMicros), budgetMicros),
+      'missesOver16_67ms':
+          countOverBudget(samples.map((s) => s.totalMicros), 16670),
+      'averageCanvasWork': {
+        for (final entry in composition.entries)
+          entry.key: count == 0
+              ? 0
+              : double.parse((entry.value / count).toStringAsFixed(2)),
+      },
+    };
   }
 
   @visibleForTesting
@@ -241,6 +408,36 @@ class QaFrameTimingCollector {
         _activeMicros += start - _lastStartMicros!;
       }
       _lastStartMicros = start;
+      final match = _takeNearestRenderFrameMark(start);
+      final mark = match?.mark;
+      if (mark == null) {
+        _renderFramesUnmatched++;
+      } else {
+        if (match!.offsetMicros == 0) {
+          _renderFramesMatched++;
+        } else {
+          _renderFramesNearMatched++;
+          _renderClockOffsetsMicros.add(match.offsetMicros);
+        }
+        _renderSamples.putIfAbsent(mark.scene, () => []).add(_FrameSample(
+              buildMicros: timing.buildDuration.inMicroseconds,
+              rasterMicros: timing.rasterDuration.inMicroseconds,
+              totalMicros: timing.totalSpan.inMicroseconds,
+            ));
+        final counts = _renderComposition.putIfAbsent(mark.scene, () => {});
+        counts.update('imageDraws', (n) => n + mark.imageDraws,
+            ifAbsent: () => mark.imageDraws);
+        counts.update(
+            'translucentImageDraws', (n) => n + mark.translucentImageDraws,
+            ifAbsent: () => mark.translucentImageDraws);
+        counts.update(
+            'cloudBombSmokeDraws', (n) => n + mark.cloudBombSmokeDraws,
+            ifAbsent: () => mark.cloudBombSmokeDraws);
+        counts.update('vectorDraws', (n) => n + mark.vectorDraws,
+            ifAbsent: () => mark.vectorDraws);
+        counts.update('saveLayers', (n) => n + mark.saveLayers,
+            ifAbsent: () => mark.saveLayers);
+      }
       _samples.add(_FrameSample(
         buildMicros: timing.buildDuration.inMicroseconds,
         rasterMicros: timing.rasterDuration.inMicroseconds,
@@ -249,10 +446,34 @@ class QaFrameTimingCollector {
     }
   }
 
-  void _detach() {
+  _RenderFrameMatch? _takeNearestRenderFrameMark(int timestamp) {
+    if (_renderFrameMarks.isEmpty) return null;
+    if (_renderFrameMarks.containsKey(timestamp)) {
+      return _RenderFrameMatch(_renderFrameMarks.remove(timestamp)!, 0);
+    }
+    final before = _renderFrameMarks.lastKeyBefore(timestamp);
+    final after = _renderFrameMarks.firstKeyAfter(timestamp);
+    final candidate = before == null
+        ? after
+        : after == null
+            ? before
+            : timestamp - before <= after - timestamp
+                ? before
+                : after;
+    if (candidate == null || (candidate - timestamp).abs() > 100000) {
+      return null;
+    }
+    return _RenderFrameMatch(
+      _renderFrameMarks.remove(candidate)!,
+      candidate - timestamp,
+    );
+  }
+
+  void _detach({bool clearRenderMarks = true}) {
     if (!_callbackAttached) return;
     SchedulerBinding.instance.removeTimingsCallback(ingestTimingBatch);
     _callbackAttached = false;
+    if (clearRenderMarks) _renderFrameMarks.clear();
   }
 
   void _closeActiveWindow() {
@@ -306,4 +527,22 @@ class _FrameSample {
   final int buildMicros;
   final int rasterMicros;
   final int totalMicros;
+}
+
+class _RenderFrameMark {
+  _RenderFrameMark(this.scene);
+
+  String scene;
+  int imageDraws = 0;
+  int translucentImageDraws = 0;
+  int cloudBombSmokeDraws = 0;
+  int vectorDraws = 0;
+  int saveLayers = 0;
+}
+
+class _RenderFrameMatch {
+  const _RenderFrameMatch(this.mark, this.offsetMicros);
+
+  final _RenderFrameMark mark;
+  final int offsetMicros;
 }

@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 
 import '../domain/match3.dart';
+import '../qa/frame_timing_collector.dart';
 import 'board_sprite_renderer.dart';
 
 typedef Match3PngAssetResolver = Future<ByteData> Function(String assetPath);
@@ -76,9 +77,14 @@ class CloudKingdomPngBoardRenderer
   }
 
   void _draw(Canvas canvas, Offset center, double size, String key,
-      {double rotation = 0, double opacity = 1}) {
+      {double rotation = 0, double opacity = 1, bool cloudBombSmoke = false}) {
     final image = _images[key];
     if (image == null) return;
+    QaFrameTimingCollector.recordCurrentCanvasWork(
+      imageDraws: 1,
+      translucentImageDraws: opacity < 1 ? 1 : 0,
+      cloudBombSmokeDraws: cloudBombSmoke ? 1 : 0,
+    );
     final half = size / 2;
     final rect = Rect.fromLTWH(-half, -half, size, size);
     canvas.save();
@@ -157,6 +163,25 @@ class CloudKingdomPngBoardRenderer
     required double cellSize,
   }) {
     final progress = event.progress.clamp(0.0, 1.0).toDouble();
+    final cloudBombs = event.activatedSpecials.values
+        .where((piece) => piece.special == SpecialKind.cloudBomb)
+        .length;
+    if (event.phase == BoardEffectPhase.gravity) {
+      QaFrameTimingCollector.markCurrentRenderFrame('gravity_effect');
+    } else if (cloudBombs > 0) {
+      final phase = progress < .25
+          ? 'onset'
+          : progress < .75
+              ? 'midpoint'
+              : 'fade';
+      QaFrameTimingCollector.markCurrentRenderFrame(
+        event.reducedMotion ? 'reduced_cloud_bomb' : 'cloud_bomb_$phase',
+      );
+    } else if (event.activatedSpecials.isNotEmpty) {
+      QaFrameTimingCollector.markCurrentRenderFrame('other_special_effect');
+    } else {
+      QaFrameTimingCollector.markCurrentRenderFrame('clear_effect');
+    }
     if (event.phase == BoardEffectPhase.gravity) {
       if (event.reducedMotion || event.waveIndex == 0) return;
       final movedCells = <Cell>{
@@ -305,9 +330,11 @@ class CloudKingdomPngBoardRenderer
                 ((progress - delay) / (1 - delay)).clamp(0.0, 1.0).toDouble();
             final fade = (1 - localProgress).clamp(0.0, 1.0).toDouble();
             final plumeSize = cellSize * (.72 + .4 * localProgress);
-            _draw(canvas, target, plumeSize, smokeKey, opacity: .52 * fade);
+            _draw(canvas, target, plumeSize, smokeKey,
+                opacity: .52 * fade, cloudBombSmoke: true);
           }
           final pulse = math.sin(math.pi * progress).clamp(0.0, 1.0);
+          QaFrameTimingCollector.recordCurrentCanvasWork(vectorDraws: 1);
           canvas.drawCircle(
             center,
             cellSize * (.46 + 1.12 * progress),
