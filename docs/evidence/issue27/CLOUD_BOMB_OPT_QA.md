@@ -63,6 +63,6 @@ The logger now keeps the aggregate `CK_FRAME_TIMING` JSON within the Android log
 - QA replace-install safety checks passed; APK package, signer and version verified before installation. No uninstall or data-clear fallback was used.
 - Isolated QA profile APK SHA-256: `02e41c868506597269cab309020a58478880e3ab5993a859a8d4d0b5fd3e2f1c`.
 - Isolated QA debug APK SHA-256: `fd16e339e2ba1c24b4ec33e6720eb1c29d9fd2b2a5214a60728e756a8af4c58d`.
-- The branch build/CI for this final code change is pending push and must pass before review. PR #28 remains draft.
+- GitHub Actions run 42949403043 for commit `6b19733a689e706f51e7ce6dfb889260ec5c2bcb` passed formatting, static analysis, Flutter tests, Android debug APK build, and isolated QA profile APK build/checksum verification. PR #28 remains draft.
 
 The measured improvement is consistent across idle and effect scenes and comes from removing fully opaque offscreen layers. The effect-specific additional translucent draws remain; their short phases still warrant caution in interpreting p90. No further renderer optimization is proposed without a new controlled comparison.
