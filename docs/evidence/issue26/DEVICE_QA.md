@@ -9,11 +9,16 @@
 | Installed isolated package identity | PASS | `pm path --user 0 com.mrweeds.cloudkingdom.qa` returned its installed base APK; package metadata is version code 2001 / version 0.1.0. |
 | Current foreground app | PASS | Read-only check showed Android USB Settings (`com.android.settings/.Settings$UsbDetailsActivity`). |
 | New QA build | PASS | Isolated arm64 APK built and verified as `com.mrweeds.cloudkingdom.qa`; final SHA-256 `f74e0634f1ee48bb86d8e60f514afbe915eb2c13511a91d6f933ea0bec704d89`. |
-| In-place install / launch | NOT TESTED | The phone remained in USB Settings; no app was launched or installed during this follow-up. |
-| Chef Blaze, Dr. Cloud, The Collector preview | NOT TESTED | No new S24 screenshot evidence was captured. |
-| QA save preservation | PASS | No package mutating command, save read, app launch, or installation was performed. |
+| In-place QA update | PASS | `tools/build_qa_apk.ps1 -Action InstallQa -DeviceSerial R5CX156CZNF`; verified QA identity/signature, installed with `-r --user 0`; no uninstall or data clear. |
+| Chef Blaze hero, icons, five expressions and story portrait | PASS | `s24_three_trolls_preview_entry.png`, `s24_three_trolls_preview_scroll1.png`. Original hero canvas, neutral/excited icons, all five labels, and existing story portrait render. |
+| Dr. Cloud hero, icons and five expressions | PASS | `s24_three_trolls_preview_scroll1.png`, `s24_three_trolls_preview_scroll2.png`. Open-mouth Cloud Glass with smoke and all five labels render. |
+| The Collector hero, icons, five expressions and story portrait | PASS | `s24_three_trolls_preview_scroll5.png`. Neutral and happy square gold-framed icons retain their corners; all five expressions and existing story portrait render. |
+| Artwork edges / proportions at normal portrait scale | PASS | Visual inspection of the six screenshots found no clipped hero art or apparent halo; all heroes, frames and expression images remain legible against the dark preview. |
+| Preview safe areas at normal scale | PASS | Status bar and Android navigation are visible; the Collector story card is fully within the app viewport. |
+| QA save preservation | PASS | `FlutterSharedPreferences.xml` SHA-256 remained `687d0c95680855530c13f0a320990feca04f6bb7ce68a43713546ca3767cac03` before install, after install, and after visual preview. |
+| Physical 2× text / landscape | NOT TESTED | Automated layout tests cover Riff/Mona; no S24 font-scale or rotation setting was changed. |
 
-The exact approved ZIP matched SHA-256 `15e1a83c0695be8a3781bc6e2ea69783e2a3abd9ac412c58846f0d7dbb4d2292`; its included verifier passed 24/24 exports and all three source-sheet hashes. Runtime verification also passed 24/24 new exports. On the latest device check, the notification shade/lock screen was visible and `KeyguardShowing=true`; physical visual QA remains open until the isolated QA app can be safely foregrounded. The original Riff/Mona physical QA below is historical evidence and is unchanged.
+The exact approved ZIP matched SHA-256 `15e1a83c0695be8a3781bc6e2ea69783e2a3abd9ac412c58846f0d7dbb4d2292`; its included verifier passed 24/24 exports and all three source-sheet hashes. Runtime verification also passed 24/24 new exports. Physical S24 visual QA is now **PASS** for the three newly integrated characters at normal portrait scale. Captures are listed above. No gameplay, story fixture, reward flow or persistent progress was exercised or changed in this visual-only session.
 
 **Date:** 2026-11-11  
 **Device:** Samsung Galaxy S24 Ultra, model SM-S928U, serial `R5CX156CZNF`  

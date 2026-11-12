@@ -65,7 +65,7 @@ void main() {
         (record) =>
             record.state == ArtAssetState.integrated &&
             record.approvalRecord != null &&
-            record.approvalStatus.contains('S24 visual QA pending'),
+            record.approvalStatus.contains('S24 visual QA passed'),
       ),
       isTrue,
     );
