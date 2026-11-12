@@ -44,7 +44,7 @@ void main() {
       manifest.records.where(
         (record) => record.state == ArtAssetState.integrated,
       ),
-      hasLength(70), // Previous 11 + Issue #4's 37 + Issue #26's 22.
+      hasLength(94), // Previous 11 + Issue #4's 37 + Issue #26's 46.
     );
     expect(
       manifest.records.where(
@@ -59,7 +59,7 @@ void main() {
     final characterAssets = manifest.records.where(
       (record) => record.approvalRecord != null,
     );
-    expect(characterAssets, hasLength(22));
+    expect(characterAssets, hasLength(46));
     expect(
       characterAssets.every(
         (record) =>

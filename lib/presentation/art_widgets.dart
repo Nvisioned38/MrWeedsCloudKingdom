@@ -137,16 +137,22 @@ class CharacterPortrait extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final squareIcon = character.uiAssetKeys['neutral'];
     final path = showArtwork
         ? ArtRegistry.pathFor(
             assetKeyOverride ??
                 character.roundUiAssetKey ??
+                squareIcon ??
+                character.squareUiAssetKey ??
                 character.portraitAssetKey,
           )
         : null;
+    final useSquareFrame = character.roundUiAssetKey == null &&
+        (squareIcon != null || character.squareUiAssetKey != null);
     return SizedBox.square(
       dimension: size,
-      child: ClipOval(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(useSquareFrame ? 0 : size / 2),
         child: DecoratedBox(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -157,7 +163,7 @@ class CharacterPortrait extends StatelessWidget {
               ? const Icon(Icons.person, color: Colors.white, size: 38)
               : Image.asset(
                   path,
-                  fit: BoxFit.cover,
+                  fit: useSquareFrame ? BoxFit.contain : BoxFit.cover,
                   errorBuilder: (_, __, ___) =>
                       const Icon(Icons.person, color: Colors.white, size: 38),
                 ),

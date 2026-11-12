@@ -46,3 +46,6 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Owner-provided binaries stay local; the locked PNG exports are versioned individually.
+art_production/characters/batch_g_three_trolls_2026_11_11/intake/*.zip

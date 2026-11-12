@@ -222,6 +222,7 @@ class CharacterRef {
     this.roundUiAssetKey,
     this.squareUiAssetKey,
     this.expressionAssetKeys = const {},
+    this.uiAssetKeys = const {},
   });
 
   final String id;
@@ -234,6 +235,7 @@ class CharacterRef {
   final String? roundUiAssetKey;
   final String? squareUiAssetKey;
   final Map<String, String> expressionAssetKeys;
+  final Map<String, String> uiAssetKeys;
 
   factory CharacterRef.fromJson(Map<String, dynamic> json) => CharacterRef(
         id: json['id'] as String,
@@ -246,6 +248,10 @@ class CharacterRef {
         roundUiAssetKey: json['roundUiAssetKey'] as String?,
         squareUiAssetKey: json['squareUiAssetKey'] as String?,
         expressionAssetKeys: (json['expressionAssetKeys'] as Map?)?.map(
+              (key, value) => MapEntry(key as String, value as String),
+            ) ??
+            const {},
+        uiAssetKeys: (json['uiAssetKeys'] as Map?)?.map(
               (key, value) => MapEntry(key as String, value as String),
             ) ??
             const {},

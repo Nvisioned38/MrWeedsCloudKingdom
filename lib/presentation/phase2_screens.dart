@@ -5,6 +5,20 @@ import '../domain/phase2_models.dart';
 import 'art_registry.dart';
 import 'art_widgets.dart';
 
+String _expressionAssetFor(
+  CharacterRef character,
+  String? expressionKey,
+  String? fallbackAssetKey,
+) =>
+    (expressionKey == null
+        ? null
+        : character.expressionAssetKeys[expressionKey]) ??
+    fallbackAssetKey ??
+    character.uiAssetKeys['neutral'] ??
+    character.roundUiAssetKey ??
+    character.squareUiAssetKey ??
+    character.portraitAssetKey;
+
 /// Read-only visual inspection surface present only in the isolated QA build.
 class Issue26CharacterPreviewScreen extends StatelessWidget {
   const Issue26CharacterPreviewScreen({
@@ -19,7 +33,13 @@ class Issue26CharacterPreviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final featured = characters.characters.where(
-      (character) => character.id == 'riff' || character.id == 'mona_chromatic',
+      (character) => const {
+        'chef_blaze',
+        'dr_cloud',
+        'the_collector',
+        'riff',
+        'mona_chromatic',
+      }.contains(character.id),
     );
     return Scaffold(
       appBar: AppBar(title: const Text('Character Art QA Preview')),
@@ -73,17 +93,20 @@ class Issue26CharacterPreviewScreen extends StatelessWidget {
                   Expanded(
                     child: Column(
                       children: [
-                        Image.asset(
-                          ArtRegistry.pathFor(character.roundUiAssetKey!)!,
-                          height: 96,
-                          fit: BoxFit.contain,
-                        ),
-                        const SizedBox(height: 8),
-                        Image.asset(
-                          ArtRegistry.pathFor(character.squareUiAssetKey!)!,
-                          height: 96,
-                          fit: BoxFit.contain,
-                        ),
+                        for (final entry in _uiAssets(character).entries)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  ArtRegistry.pathFor(entry.value)!,
+                                  height: 84,
+                                  fit: BoxFit.contain,
+                                ),
+                                Text(entry.key),
+                              ],
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -112,6 +135,16 @@ class Issue26CharacterPreviewScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Map<String, String> _uiAssets(CharacterRef character) {
+    if (character.uiAssetKeys.isNotEmpty) return character.uiAssetKeys;
+    return {
+      if (character.roundUiAssetKey != null)
+        'round': character.roundUiAssetKey!,
+      if (character.squareUiAssetKey != null)
+        'square': character.squareUiAssetKey!,
+    };
   }
 
   void _openStoryFixture(
@@ -201,10 +234,11 @@ class _StoryPortraitCheck extends StatelessWidget {
         .where((line) => line.speakerId == character.id);
     if (lines.isEmpty) return const SizedBox.shrink();
     final line = lines.first;
-    final expression = line.expressionKey == null
-        ? character.portraitAssetKey
-        : character.expressionAssetKeys[line.expressionKey] ??
-            character.portraitAssetKey;
+    final expression = _expressionAssetFor(
+      character,
+      line.expressionKey,
+      line.portraitAssetKey,
+    );
     return Card(
       child: ListTile(
         leading: DialogueCharacterPortrait(
@@ -762,11 +796,15 @@ class _DialogueOverlayState extends State<DialogueOverlay> {
             roundUiAssetKey: speaker.roundUiAssetKey,
             squareUiAssetKey: speaker.squareUiAssetKey,
             expressionAssetKeys: speaker.expressionAssetKeys,
+            uiAssetKeys: speaker.uiAssetKeys,
           );
-    final expressionAssetKey = line.expressionKey == null || speaker == null
+    final expressionAssetKey = speaker == null
         ? line.portraitAssetKey
-        : speaker.expressionAssetKeys[line.expressionKey] ??
-            line.portraitAssetKey;
+        : _expressionAssetFor(
+            speaker,
+            line.expressionKey,
+            line.portraitAssetKey,
+          );
     return LayoutBuilder(
       builder: (context, constraints) {
         final compact = constraints.maxHeight < 520;

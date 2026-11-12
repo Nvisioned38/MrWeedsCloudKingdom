@@ -45,9 +45,37 @@ void main() {
         }
       }
 
-      for (final id in ['chef_blaze', 'dr_cloud', 'the_collector']) {
+      const expectedExpressions = {
+        'chef_blaze': ['happy', 'excited', 'thinking', 'determined', 'playful'],
+        'dr_cloud': ['happy', 'surprised', 'thinking', 'curious', 'determined'],
+        'the_collector': [
+          'excited',
+          'surprised',
+          'thinking',
+          'determined',
+          'satisfied',
+        ],
+      };
+      const expectedUiStates = {
+        'chef_blaze': ['neutral', 'excited'],
+        'dr_cloud': ['neutral', 'excited'],
+        'the_collector': ['neutral', 'happy'],
+      };
+      for (final id in expectedExpressions.keys) {
         final character = catalog.byId(id)!;
         expect(character.knownByDefault, isFalse);
+        expect(character.expressionAssetKeys.keys.toSet(),
+            expectedExpressions[id]!.toSet());
+        expect(
+            character.uiAssetKeys.keys.toSet(), expectedUiStates[id]!.toSet());
+        for (final key in [
+          character.portraitAssetKey,
+          character.fullBodyAssetKey,
+          ...character.expressionAssetKeys.values,
+          ...character.uiAssetKeys.values,
+        ]) {
+          expect(ArtRegistry.pathFor(key), isNotNull, reason: '$id: $key');
+        }
       }
       expect(
         ArtRegistry.paths.keys.where(

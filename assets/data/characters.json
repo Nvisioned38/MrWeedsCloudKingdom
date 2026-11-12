@@ -17,7 +17,18 @@
       "fullBodyAssetKey": "character_chef_blaze",
       "role": "A bold chef with a knack for kitchen experiments",
       "dialogueStyleKey": "energetic_culinary",
-      "knownByDefault": false
+      "knownByDefault": false,
+      "expressionAssetKeys": {
+        "determined": "character_chef_blaze_determined",
+        "playful": "character_chef_blaze_playful",
+        "happy": "portrait_chef_blaze",
+        "excited": "character_chef_blaze_excited",
+        "thinking": "character_chef_blaze_thinking"
+      },
+      "uiAssetKeys": {
+        "neutral": "character_chef_blaze_icon_neutral",
+        "excited": "character_chef_blaze_icon_excited"
+      }
     },
     {
       "id": "dr_cloud",
@@ -26,7 +37,18 @@
       "fullBodyAssetKey": "character_dr_cloud",
       "role": "Kingdom researcher and cloud-weather expert",
       "dialogueStyleKey": "curious_precise",
-      "knownByDefault": false
+      "knownByDefault": false,
+      "expressionAssetKeys": {
+        "determined": "character_dr_cloud_determined",
+        "curious": "character_dr_cloud_curious",
+        "happy": "portrait_dr_cloud",
+        "surprised": "character_dr_cloud_surprised",
+        "thinking": "character_dr_cloud_thinking"
+      },
+      "uiAssetKeys": {
+        "neutral": "character_dr_cloud_icon_neutral",
+        "excited": "character_dr_cloud_icon_excited"
+      }
     },
     {
       "id": "mona_chromatic",
@@ -77,7 +99,18 @@
       "fullBodyAssetKey": "character_collector",
       "role": "A careful archivist of rare finds",
       "dialogueStyleKey": "measured_mysterious",
-      "knownByDefault": false
+      "knownByDefault": false,
+      "expressionAssetKeys": {
+        "surprised": "character_collector_surprised",
+        "determined": "character_collector_determined",
+        "excited": "portrait_collector",
+        "satisfied": "character_collector_satisfied",
+        "thinking": "character_collector_thinking"
+      },
+      "uiAssetKeys": {
+        "happy": "character_collector_icon_happy",
+        "neutral": "character_collector_icon_neutral"
+      }
     }
   ]
 }

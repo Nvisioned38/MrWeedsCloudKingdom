@@ -9,7 +9,7 @@
 - SHA-256: `15e1a83c0695be8a3781bc6e2ea69783e2a3abd9ac412c58846f0d7dbb4d2292`
 - 24 approved RGBA PNGs: **3** hero portraits (896×1152), **15** emotion busts (512×512), **6** UI portraits (256×256).
 - Also in ZIP: **3 original unchanged approved RGBA master sheets**, review contact sheet/JPEG previews, full approved export manifest, source hashes, `codex_asset_mapping.json`, `verify_locked_exports.py`, `README.md`.
-- Exact individual PNG hashes: [Approved export manifest](../art_production/characters/batch_g_three_trolls_2026_11_11/approved_export_manifest.csv). The **ZIP is available from the owner's artwork chat**, but **the PNG binary files are not yet uploaded to this GitHub repository**. Codex must receive/copy the actual ZIP before importing; a manifest or chat download link alone is insufficient.
+- Exact individual PNG hashes: [Approved export manifest](../art_production/characters/batch_g_three_trolls_2026_11_11/approved_export_manifest.csv). **Local receipt verified 2026-11-12:** the exact ZIP is in the ignored development intake folder; its archive SHA-256 and included verifier passed. The PNG binaries are integrated in the Issue #26 branch and individually checked against this manifest. The source ZIP remains local and is not committed. Physical S24 visual QA and owner visual review of the integrated presentation remain pending.
 
 ## Canonical character identity / actual game keys
 

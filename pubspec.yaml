@@ -33,4 +33,7 @@ flutter:
     - assets/art/rooms/
     - assets/art/brand/
     - assets/art/characters/
+    - assets/art/characters/batch_g_three_trolls_2026_11_11/chef_blaze/
+    - assets/art/characters/batch_g_three_trolls_2026_11_11/dr_cloud/
+    - assets/art/characters/batch_g_three_trolls_2026_11_11/the_collector/
     - assets/art/match3/

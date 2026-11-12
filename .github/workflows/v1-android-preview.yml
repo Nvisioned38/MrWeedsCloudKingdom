@@ -25,6 +25,9 @@ jobs:
       - name: Verify owner-approved Issue #4 Match-3 sprites
         run: python3 tools/verify_issue4_art.py
 
+      - name: Verify owner-approved Issue #26 character exports
+        run: python3 tools/verify_issue26_batchg_three_trolls.py
+
       - name: Java 17
         uses: actions/setup-java@v4
         with:

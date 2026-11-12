@@ -1,5 +1,20 @@
 # Issue #26 — Samsung S24 Ultra QA
 
+## 2026-11-12 — Three-Troll approved art import follow-up
+
+| Check | Result | Evidence / notes |
+|---|---|---|
+| ADB authorization | PASS | `R5CX156CZNF` returned `device`. |
+| Active Android user | PASS | `am get-current-user` returned `0`. |
+| Installed isolated package identity | PASS | `pm path --user 0 com.mrweeds.cloudkingdom.qa` returned its installed base APK; package metadata is version code 2001 / version 0.1.0. |
+| Current foreground app | PASS | Read-only check showed Android USB Settings (`com.android.settings/.Settings$UsbDetailsActivity`). |
+| New QA build | PASS | Isolated arm64 APK built and verified as `com.mrweeds.cloudkingdom.qa`; final SHA-256 `f74e0634f1ee48bb86d8e60f514afbe915eb2c13511a91d6f933ea0bec704d89`. |
+| In-place install / launch | NOT TESTED | The phone remained in USB Settings; no app was launched or installed during this follow-up. |
+| Chef Blaze, Dr. Cloud, The Collector preview | NOT TESTED | No new S24 screenshot evidence was captured. |
+| QA save preservation | PASS | No package mutating command, save read, app launch, or installation was performed. |
+
+The exact approved ZIP matched SHA-256 `15e1a83c0695be8a3781bc6e2ea69783e2a3abd9ac412c58846f0d7dbb4d2292`; its included verifier passed 24/24 exports and all three source-sheet hashes. Runtime verification also passed 24/24 new exports. On the latest device check, the notification shade/lock screen was visible and `KeyguardShowing=true`; physical visual QA remains open until the isolated QA app can be safely foregrounded. The original Riff/Mona physical QA below is historical evidence and is unchanged.
+
 **Date:** 2026-11-11  
 **Device:** Samsung Galaxy S24 Ultra, model SM-S928U, serial `R5CX156CZNF`  
 **Android user:** 0  
