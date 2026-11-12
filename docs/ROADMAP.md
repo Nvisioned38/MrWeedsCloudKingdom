@@ -70,6 +70,14 @@ Phase 2B remains the latest verified game implementation. Phase 2C was explicitl
 
 ## Current owner-authorized work
 
+### Issue #26 — Batch G character artwork
+**Status: Track A integration in progress; Track B review package prepared; S24 visual gate pending.**
+
+- Riff and Mona Chromatic: use only the 22 `APPROVED_LOCKED_2026-11-09` exports, preserve hero/UI/expression mappings and render approved gold-frame dialogue portraits without cropping.
+- Chef Blaze, Dr. Cloud and The Collector: candidates under `art_production/issue26/track_b_review/` are crop proposals only. Keep them outside runtime assets until character-specific standalone exports are approved and their hashes are recorded.
+- Keep design approval, file export approval, runtime readiness and device visual QA as separate statuses in the character status matrix.
+- Preserve existing Match-3 behavior and FX, Cloud Bomb optimization, schema-3 saves, the 30 authored levels, saved progress, branding and Chapter 1–3 story restrictions. Keep iOS, spoken TalkBack, Batch 5 runtime import and Phase 3 paused.
+
 ### Phase 2C — First Polished Android Playable V1
 **Status: IN PROGRESS / V10 BRANDING INTEGRATED / DEVICE SMOKE PASSED / P0 GAME ART OPEN**
 

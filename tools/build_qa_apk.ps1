@@ -201,7 +201,8 @@ try {
         $flutterCommand = Get-FlutterCommand
         $flutterArguments = @(
             'build', 'apk', "--$buildMode", '--target-platform', 'android-arm64',
-            '--split-per-abi', '--android-project-arg', 'cloudKingdomQa=true'
+            '--split-per-abi', '--android-project-arg', 'cloudKingdomQa=true',
+            '--dart-define=CLOUD_KINGDOM_QA_BUILD=true'
         )
         if ($buildMode -eq 'profile') {
             $flutterArguments += @('--dart-define=CLOUD_KINGDOM_QA_FRAME_TIMING=true')

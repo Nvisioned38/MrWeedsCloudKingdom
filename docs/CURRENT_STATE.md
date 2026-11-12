@@ -1,5 +1,15 @@
 # Current State
 
+## 2026-11-11 — Issue #26 character artwork intake and Track A integration
+
+This work is based on verified `main` commit `43aaa303076e76c35869d73c26ff03f311d7233a`; main CI run #87 passed before implementation. The active feature branch is `codex/issue-26-character-art`.
+
+Track A revalidated all 22 Riff and Mona Chromatic standalone exports against the original locked ZIP. The archive SHA-256 recomputed to `23e0a0e1f92d1717344c6ba6d73baf7d266234a83c0903aa8155f5c451adc085`; all 22 archive members and runtime copies match the approved per-file manifest. Manifest, approval README and lock-record bytes also match the originals inside that ZIP. Dimensions, PNG IHDR and RGBA type passed 22/22. These exact assets are integrated into the character registry, full-body/portrait/UI mappings, expression-aware dialogue rendering, and brief friendly appearances in the existing Chapter 2 kitchen-progress and Chapter 3 collection-clue beats. Portraits render uncropped so the approved gold frame and retained interior background are preserved. Automated verification passes; physical S24 visual QA remains pending, so Track A is not yet device-verified or owner-visually approved.
+
+Track B is review-only. The three canonical source sheets remain byte-identical. Thirty rectangular crops (hero, eight expression proposals and one UI proposal each) are included solely in `art_production/issue26/track_b_review/`. They retain composite backgrounds and have no fully transparent pixels; they are excluded from runtime assets. Chef Blaze's hero crop is clipped at the lower edge and includes a partial title-area edge; all three candidates need approved standalone transparent exports and character-specific export hashes before integration. See the side-by-side review page and candidate audit in that folder.
+
+The artwork and implementation states for all five characters are tracked separately. `flutter analyze` passes, all 87 Flutter tests pass, Issue #4 art hashes pass 37/37, Issue #26 locked exports pass 22/22, and the isolated QA Android debug APK builds with package `com.mrweeds.cloudkingdom.qa` (SHA-256 recorded in the build log). S24 QA is **NOT TESTED**: read-only ADB preflight reported the device `unauthorized`, so no install, launch or save interaction was attempted. No Match-3 timing, Cloud Bomb optimization, save schema, authored level, gameplay rule, branding, or existing save was changed. iOS, spoken TalkBack, Batch 5 runtime import, and Phase 3 remain paused.
+
 ## 2026-11-09 — Issue #24 FrameTiming instrumentation checkpoint (superseded)
 
 The original implementation checkpoint recorded the instrumentation and automated gates before the phone was available. Its “physical capture pending” statements are superseded by the completed 2026-11-10 S24 profiles below. The QA-only collector implementation and APK identity details remain valid; see `docs/evidence/issue24/FRAME_TIMING_QA.md` for the final device results.

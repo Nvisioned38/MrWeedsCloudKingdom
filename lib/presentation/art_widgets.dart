@@ -41,39 +41,52 @@ class ArtAssetSlot extends StatelessWidget {
       width: width,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
-        child: Stack(fit: StackFit.expand, children: [
-          DecoratedBox(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Color(0xff437f90), Color(0xff242c53)],
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            DecoratedBox(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Color(0xff437f90), Color(0xff242c53)],
+                ),
+              ),
+              child: Center(
+                child: Icon(
+                  icon,
+                  size: height * .34,
+                  color: const Color(0xffffd36e),
+                ),
               ),
             ),
-            child: Center(
-                child: Icon(icon,
-                    size: height * .34, color: const Color(0xffffd36e))),
-          ),
-          if (path == null && showArt) _missingArt(context, height),
-          if (path != null && showArt)
-            Image.asset(path,
+            if (path == null && showArt) _missingArt(context, height),
+            if (path != null && showArt)
+              Image.asset(
+                path,
                 fit: fit,
-                errorBuilder: (_, __, ___) => _missingArt(context, height)),
-          if (label != null)
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                color: Colors.black.withValues(alpha: .48),
-                child: Text(label!,
+                errorBuilder: (_, __, ___) => _missingArt(context, height),
+              ),
+            if (label != null)
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 7,
+                  ),
+                  color: Colors.black.withValues(alpha: .48),
+                  child: Text(
+                    label!,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
-            ),
-        ]),
+          ],
+        ),
       ),
     );
   }
@@ -85,46 +98,104 @@ class ArtAssetSlot extends StatelessWidget {
           child: Center(
             child: height < 72
                 ? Icon(icon, size: height * .42, color: const Color(0xffffd36e))
-                : Column(mainAxisSize: MainAxisSize.min, children: [
-                    Icon(icon,
-                        size: height * .28, color: const Color(0xffffd36e)),
-                    const SizedBox(height: 4),
-                    Text(
-                      kDebugMode ? 'ART PENDING' : 'ART UNAVAILABLE',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: Colors.white70,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: .5,
-                          ),
-                    ),
-                  ]),
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        icon,
+                        size: height * .28,
+                        color: const Color(0xffffd36e),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        kDebugMode ? 'ART PENDING' : 'ART UNAVAILABLE',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Colors.white70,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: .5,
+                            ),
+                      ),
+                    ],
+                  ),
           ),
         ),
       );
 }
 
 class CharacterPortrait extends StatelessWidget {
-  const CharacterPortrait({super.key, required this.character, this.size = 76});
+  const CharacterPortrait({
+    super.key,
+    required this.character,
+    this.size = 76,
+    this.showArtwork = true,
+    this.assetKeyOverride,
+  });
   final CharacterRef character;
   final double size;
+  final bool showArtwork;
+  final String? assetKeyOverride;
 
   @override
   Widget build(BuildContext context) {
-    final path = ArtRegistry.pathFor(character.portraitAssetKey);
+    final path = showArtwork
+        ? ArtRegistry.pathFor(
+            assetKeyOverride ??
+                character.roundUiAssetKey ??
+                character.portraitAssetKey,
+          )
+        : null;
     return SizedBox.square(
       dimension: size,
       child: ClipOval(
         child: DecoratedBox(
           decoration: const BoxDecoration(
-            gradient:
-                LinearGradient(colors: [Color(0xff6db8c3), Color(0xff7253a4)]),
+            gradient: LinearGradient(
+              colors: [Color(0xff6db8c3), Color(0xff7253a4)],
+            ),
           ),
           child: path == null
               ? const Icon(Icons.person, color: Colors.white, size: 38)
-              : Image.asset(path,
+              : Image.asset(
+                  path,
                   fit: BoxFit.cover,
                   errorBuilder: (_, __, ___) =>
-                      const Icon(Icons.person, color: Colors.white, size: 38)),
+                      const Icon(Icons.person, color: Colors.white, size: 38),
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A dialogue portrait is rendered uncropped so the approved gold frame and
+/// the intentionally retained background inside it remain intact.
+class DialogueCharacterPortrait extends StatelessWidget {
+  const DialogueCharacterPortrait({
+    super.key,
+    required this.character,
+    required this.assetKey,
+    this.size = 150,
+  });
+
+  final CharacterRef character;
+  final String? assetKey;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final path = assetKey == null ? null : ArtRegistry.pathFor(assetKey!);
+    if (path == null) {
+      return CharacterPortrait(character: character, size: size);
+    }
+    return SizedBox.square(
+      dimension: size,
+      child: Image.asset(
+        path,
+        fit: BoxFit.contain,
+        errorBuilder: (_, __, ___) => CharacterPortrait(
+          character: character,
+          size: size,
+          showArtwork: false,
         ),
       ),
     );
@@ -132,8 +203,11 @@ class CharacterPortrait extends StatelessWidget {
 }
 
 class CollectibleCardView extends StatelessWidget {
-  const CollectibleCardView(
-      {super.key, required this.card, required this.onTap});
+  const CollectibleCardView({
+    super.key,
+    required this.card,
+    required this.onTap,
+  });
   final CollectibleCard card;
   final VoidCallback onTap;
 
@@ -143,57 +217,74 @@ class CollectibleCardView extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
-          side: BorderSide(color: accent, width: 2),
-          borderRadius: BorderRadius.circular(18)),
+        side: BorderSide(color: accent, width: 2),
+        borderRadius: BorderRadius.circular(18),
+      ),
       child: InkWell(
         onTap: onTap,
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Expanded(
-            child: Stack(fit: StackFit.expand, children: [
-              ArtAssetSlot(
-                  assetKey: card.artAssetKey,
-                  height: 170,
-                  icon: card.unlocked ? Icons.auto_awesome : Icons.lock,
-                  borderRadius: 0),
-              if (!card.unlocked)
-                Container(
-                    color: Colors.black.withValues(alpha: .48),
-                    child: const Icon(Icons.lock_outline, size: 36)),
-              if (card.favorite)
-                const Positioned(
-                    right: 8,
-                    top: 8,
-                    child: Icon(Icons.favorite, color: Colors.pinkAccent)),
-              if (card.equipped)
-                const Positioned(
-                  left: 6,
-                  top: 6,
-                  child: Chip(
-                    avatar: Icon(Icons.bolt, size: 14),
-                    label: Text('EQUIPPED'),
-                    visualDensity: VisualDensity.compact,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  ArtAssetSlot(
+                    assetKey: card.artAssetKey,
+                    height: 170,
+                    icon: card.unlocked ? Icons.auto_awesome : Icons.lock,
+                    borderRadius: 0,
                   ),
-                ),
-            ]),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(card.unlocked ? card.displayName : 'Undiscovered',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 3),
-              Text(card.rarity.label,
-                  style: TextStyle(color: accent, fontSize: 12)),
-              if (card.unlocked)
-                Text('${card.evolutionStage.label} · ${card.evolutionXp} XP',
-                    style: const TextStyle(fontSize: 11)),
-            ]),
-          ),
-        ]),
+                  if (!card.unlocked)
+                    Container(
+                      color: Colors.black.withValues(alpha: .48),
+                      child: const Icon(Icons.lock_outline, size: 36),
+                    ),
+                  if (card.favorite)
+                    const Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Icon(Icons.favorite, color: Colors.pinkAccent),
+                    ),
+                  if (card.equipped)
+                    const Positioned(
+                      left: 6,
+                      top: 6,
+                      child: Chip(
+                        avatar: Icon(Icons.bolt, size: 14),
+                        label: Text('EQUIPPED'),
+                        visualDensity: VisualDensity.compact,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    card.unlocked ? card.displayName : 'Undiscovered',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    card.rarity.label,
+                    style: TextStyle(color: accent, fontSize: 12),
+                  ),
+                  if (card.unlocked)
+                    Text(
+                      '${card.evolutionStage.label} · ${card.evolutionXp} XP',
+                      style: const TextStyle(fontSize: 11),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -221,8 +312,10 @@ class WorldNodeView extends StatelessWidget {
         onTap: enabled ? onTap : null,
         child: Padding(
           padding: const EdgeInsets.all(8),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            ArtAssetSlot(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ArtAssetSlot(
                 assetKey: displayAssetKey ?? node.assetKey,
                 height: 68,
                 icon: state == WorldNodeState.locked
@@ -233,20 +326,27 @@ class WorldNodeView extends StatelessWidget {
                 showArt: state != WorldNodeState.locked,
                 fit: state == WorldNodeState.preview
                     ? BoxFit.contain
-                    : BoxFit.cover),
-            const SizedBox(height: 4),
-            Text(node.title,
+                    : BoxFit.cover,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                node.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            Text(state.label,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                state.label,
                 style: TextStyle(
-                    fontSize: 11,
-                    color: state == WorldNodeState.locked
-                        ? Colors.white54
-                        : const Color(0xffffd36e))),
-          ]),
+                  fontSize: 11,
+                  color: state == WorldNodeState.locked
+                      ? Colors.white54
+                      : const Color(0xffffd36e),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -265,53 +365,73 @@ class CollectionShelf extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           child: Padding(
             padding: const EdgeInsets.all(12),
-            child: Row(children: [
-              Icon(Icons.shelves,
-                  size: 35, color: Theme.of(context).colorScheme.primary),
-              const SizedBox(width: 12),
-              Expanded(
+            child: Row(
+              children: [
+                Icon(
+                  Icons.shelves,
+                  size: 35,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                    const Text('COLLECTION SHELF',
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'COLLECTION SHELF',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, letterSpacing: 1)),
-                    Text(
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                      Text(
                         card?.displayName ??
                             'Choose a discovered card to display',
                         maxLines: 1,
-                        overflow: TextOverflow.ellipsis),
-                  ])),
-              if (card != null) ...[
-                const SizedBox(width: 10),
-                ArtAssetSlot(
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+                if (card != null) ...[
+                  const SizedBox(width: 10),
+                  ArtAssetSlot(
                     assetKey: card!.artAssetKey,
                     height: 54,
                     width: 48,
                     icon: Icons.auto_awesome,
-                    borderRadius: 10),
-              ] else
-                const Icon(Icons.add_circle_outline),
-            ]),
+                    borderRadius: 10,
+                  ),
+                ] else
+                  const Icon(Icons.add_circle_outline),
+              ],
+            ),
           ),
         ),
       );
 }
 
 class RoomBackgroundSlot extends StatelessWidget {
-  const RoomBackgroundSlot(
-      {super.key, required this.assetKey, required this.child});
+  const RoomBackgroundSlot({
+    super.key,
+    required this.assetKey,
+    required this.child,
+  });
   final String assetKey;
   final Widget child;
 
   @override
-  Widget build(BuildContext context) => Stack(fit: StackFit.expand, children: [
-        ArtAssetSlot(
+  Widget build(BuildContext context) => Stack(
+        fit: StackFit.expand,
+        children: [
+          ArtAssetSlot(
             assetKey: assetKey,
             height: 300,
             icon: Icons.weekend,
-            borderRadius: 0),
-        Container(color: Colors.black.withValues(alpha: .28)),
-        child,
-      ]);
+            borderRadius: 0,
+          ),
+          Container(color: Colors.black.withValues(alpha: .28)),
+          child,
+        ],
+      );
 }

@@ -5,7 +5,7 @@ enum ArtAssetState {
   originalReceived,
   exportValidated,
   integrated,
-  qaApproved
+  qaApproved,
 }
 
 enum ArtVariantType {
@@ -33,6 +33,7 @@ class ArtAssetRecord {
     this.sourceSha256,
     this.sourceArchiveSha256,
     this.approvalRowId,
+    this.approvalRecord,
     this.designApprovalRowId,
     this.expectedWidth,
     this.expectedHeight,
@@ -50,6 +51,7 @@ class ArtAssetRecord {
   final String? sourceSha256;
   final String? sourceArchiveSha256;
   final String? approvalRowId;
+  final String? approvalRecord;
   final String? designApprovalRowId;
   final int? expectedWidth;
   final int? expectedHeight;
@@ -62,15 +64,15 @@ class ArtAssetRecord {
   factory ArtAssetRecord.fromJson(Map<String, dynamic> json) => ArtAssetRecord(
         key: json['key'] as String,
         targetPath: json['targetPath'] as String,
-        variantType: ArtVariantType.values.byName(
-          json['variantType'] as String,
-        ),
+        variantType:
+            ArtVariantType.values.byName(json['variantType'] as String),
         state: ArtAssetState.values.byName(json['state'] as String),
         approvalStatus: json['approvalStatus'] as String,
         sourceFile: json['sourceFile'] as String?,
         sourceSha256: json['sourceSha256'] as String?,
         sourceArchiveSha256: json['sourceArchiveSha256'] as String?,
         approvalRowId: json['approvalRowId'] as String?,
+        approvalRecord: json['approvalRecord'] as String?,
         designApprovalRowId: json['designApprovalRowId'] as String?,
         expectedWidth: json['expectedWidth'] as int?,
         expectedHeight: json['expectedHeight'] as int?,
@@ -92,14 +94,15 @@ class ArtManifest {
             .toList(growable: false),
       );
 
-  factory ArtManifest.decode(String source) => ArtManifest.fromJson(
-        jsonDecode(source) as Map<String, dynamic>,
-      );
+  factory ArtManifest.decode(String source) =>
+      ArtManifest.fromJson(jsonDecode(source) as Map<String, dynamic>);
 
   List<ArtAssetRecord> get unavailableRuntimeArt => records
-      .where((record) =>
-          record.state != ArtAssetState.integrated &&
-          record.state != ArtAssetState.qaApproved)
+      .where(
+        (record) =>
+            record.state != ArtAssetState.integrated &&
+            record.state != ArtAssetState.qaApproved,
+      )
       .toList(growable: false);
 
   /// Returns invariant violations for registry coverage and release readiness.
@@ -131,35 +134,42 @@ class ArtManifest {
       }
       if (record.productionReady) {
         if (record.approvalStatus != 'verified') {
-          problems
-              .add('${record.key} is QA approved without verified approval.');
+          problems.add(
+            '${record.key} is QA approved without verified approval.',
+          );
         }
         if (!availableAssets.contains(record.targetPath)) {
           problems.add('${record.key} is QA approved but its file is missing.');
         }
         if (!declaredAssets.contains(record.targetPath)) {
-          problems
-              .add('${record.key} is QA approved but undeclared in pubspec.');
+          problems.add(
+            '${record.key} is QA approved but undeclared in pubspec.',
+          );
         }
       }
       if (record.state == ArtAssetState.integrated) {
         if (record.sourceFile == null || record.sourceSha256 == null) {
-          problems
-              .add('${record.key} is integrated without source traceability.');
+          problems.add(
+            '${record.key} is integrated without source traceability.',
+          );
         }
-        if (record.approvalRowId == null) {
-          problems.add('${record.key} is integrated without an audit row.');
+        if (record.approvalRowId == null && record.approvalRecord == null) {
+          problems.add(
+            '${record.key} is integrated without an approval record.',
+          );
         }
         if (record.expectedWidth == null || record.expectedHeight == null) {
-          problems
-              .add('${record.key} is integrated without validated dimensions.');
+          problems.add(
+            '${record.key} is integrated without validated dimensions.',
+          );
         }
         if (!availableAssets.contains(record.targetPath)) {
           problems.add('${record.key} is integrated but its file is missing.');
         }
         if (!declaredAssets.contains(record.targetPath)) {
-          problems
-              .add('${record.key} is integrated but undeclared in pubspec.');
+          problems.add(
+            '${record.key} is integrated but undeclared in pubspec.',
+          );
         }
       }
     }
