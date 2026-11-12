@@ -23,69 +23,72 @@ class Issue26CharacterPreviewScreen extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppBar(title: const Text('Character Art QA Preview')),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          const Text(
-            'Read-only preview. This screen does not update saved progress.',
-          ),
-          for (final character in featured) ...[
-            const SizedBox(height: 20),
-            Text(character.displayName,
-                style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 8),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Image.asset(
-                    ArtRegistry.pathFor(character.fullBodyAssetKey)!,
-                    height: 280,
-                    fit: BoxFit.contain,
-                    errorBuilder: (_, __, ___) => const Icon(Icons.person_off),
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            const Text(
+              'Read-only preview. This screen does not update saved progress.',
+            ),
+            for (final character in featured) ...[
+              const SizedBox(height: 20),
+              Text(character.displayName,
+                  style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(height: 8),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Image.asset(
+                      ArtRegistry.pathFor(character.fullBodyAssetKey)!,
+                      height: 280,
+                      fit: BoxFit.contain,
+                      errorBuilder: (_, __, ___) =>
+                          const Icon(Icons.person_off),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          ArtRegistry.pathFor(character.roundUiAssetKey!)!,
+                          height: 96,
+                          fit: BoxFit.contain,
+                        ),
+                        const SizedBox(height: 8),
+                        Image.asset(
+                          ArtRegistry.pathFor(character.squareUiAssetKey!)!,
+                          height: 96,
+                          fit: BoxFit.contain,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Text('Dialogue expressions',
+                  style: Theme.of(context).textTheme.titleMedium),
+              GridView.count(
+                crossAxisCount: 4,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                childAspectRatio: 1,
+                children: character.expressionAssetKeys.entries.map((entry) {
+                  final path = ArtRegistry.pathFor(entry.value)!;
+                  return Column(
                     children: [
-                      Image.asset(
-                        ArtRegistry.pathFor(character.roundUiAssetKey!)!,
-                        height: 96,
-                        fit: BoxFit.contain,
-                      ),
-                      const SizedBox(height: 8),
-                      Image.asset(
-                        ArtRegistry.pathFor(character.squareUiAssetKey!)!,
-                        height: 96,
-                        fit: BoxFit.contain,
-                      ),
+                      Expanded(child: Image.asset(path, fit: BoxFit.contain)),
+                      Text(entry.key, maxLines: 1),
                     ],
-                  ),
-                ),
-              ],
-            ),
-            Text('Dialogue expressions',
-                style: Theme.of(context).textTheme.titleMedium),
-            GridView.count(
-              crossAxisCount: 4,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              childAspectRatio: 1,
-              children: character.expressionAssetKeys.entries.map((entry) {
-                final path = ArtRegistry.pathFor(entry.value)!;
-                return Column(
-                  children: [
-                    Expanded(child: Image.asset(path, fit: BoxFit.contain)),
-                    Text(entry.key, maxLines: 1),
-                  ],
-                );
-              }).toList(growable: false),
-            ),
-            _StoryPortraitCheck(character: character, story: story),
+                  );
+                }).toList(growable: false),
+              ),
+              _StoryPortraitCheck(character: character, story: story),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
