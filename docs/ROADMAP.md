@@ -71,10 +71,11 @@ Phase 2B remains the latest verified game implementation. Phase 2C was explicitl
 ## Current owner-authorized work
 
 ### Issue #26 — Batch G character artwork
-**Status: Track A integration in progress; Track B review package prepared; S24 visual gate pending.**
+**Status: Track A integration and S24 story-fixture verification complete; owner visual approval pending. Track B review package prepared; export approvals pending.**
 
 - Riff and Mona Chromatic: use only the 22 `APPROVED_LOCKED_2026-11-09` exports, preserve hero/UI/expression mappings and render approved gold-frame dialogue portraits without cropping.
 - Chef Blaze, Dr. Cloud and The Collector: candidates under `art_production/issue26/track_b_review/` are crop proposals only. Keep them outside runtime assets until character-specific standalone exports are approved and their hashes are recorded.
+- Physical S24 user-0 disposable fixtures verified the Riff beat boundary at Levels 15/16 and Mona beat boundary at Levels 25/26, including portrait switching and Close Story navigation. Automated regression tests cover full chapter flag completion, persistence callbacks and 1×/2× portrait/landscape safe areas; physical large-text/orientation checks remain NOT TESTED. See `docs/evidence/issue26/DEVICE_QA.md`.
 - Keep design approval, file export approval, runtime readiness and device visual QA as separate statuses in the character status matrix.
 - Preserve existing Match-3 behavior and FX, Cloud Bomb optimization, schema-3 saves, the 30 authored levels, saved progress, branding and Chapter 1–3 story restrictions. Keep iOS, spoken TalkBack, Batch 5 runtime import and Phase 3 paused.
 

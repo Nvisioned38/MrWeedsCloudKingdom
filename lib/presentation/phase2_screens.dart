@@ -28,7 +28,28 @@ class Issue26CharacterPreviewScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           children: [
             const Text(
-              'Read-only preview. This screen does not update saved progress.',
+              'Read-only preview. These story fixtures use temporary in-memory progress and never update the game save.',
+            ),
+            const SizedBox(height: 12),
+            OutlinedButton.icon(
+              onPressed: () => _openStoryFixture(context, completedThrough: 14),
+              icon: const Icon(Icons.lock_outline),
+              label: const Text('Chapter 2 before Riff — Level 15 preview'),
+            ),
+            OutlinedButton.icon(
+              onPressed: () => _openStoryFixture(context, completedThrough: 15),
+              icon: const Icon(Icons.science_outlined),
+              label: const Text('Riff story fixture — Level 16 unlocked'),
+            ),
+            OutlinedButton.icon(
+              onPressed: () => _openStoryFixture(context, completedThrough: 24),
+              icon: const Icon(Icons.lock_outline),
+              label: const Text('Chapter 3 before Mona — Level 25 preview'),
+            ),
+            OutlinedButton.icon(
+              onPressed: () => _openStoryFixture(context, completedThrough: 25),
+              icon: const Icon(Icons.science_outlined),
+              label: const Text('Mona story fixture — Level 26 unlocked'),
             ),
             for (final character in featured) ...[
               const SizedBox(height: 20),
@@ -92,6 +113,78 @@ class Issue26CharacterPreviewScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _openStoryFixture(
+    BuildContext context, {
+    required int completedThrough,
+  }) {
+    Navigator.push<void>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => _Issue26StoryFixturePage(
+          catalog: story,
+          characters: characters,
+          completedThrough: completedThrough,
+        ),
+      ),
+    );
+  }
+}
+
+class _Issue26StoryFixturePage extends StatefulWidget {
+  const _Issue26StoryFixturePage({
+    required this.catalog,
+    required this.characters,
+    required this.completedThrough,
+  });
+
+  final StoryCatalog catalog;
+  final CharacterCatalog characters;
+  final int completedThrough;
+
+  @override
+  State<_Issue26StoryFixturePage> createState() =>
+      _Issue26StoryFixturePageState();
+}
+
+class _Issue26StoryFixturePageState extends State<_Issue26StoryFixturePage> {
+  late final ProgressState _fixtureProgress = ProgressState()
+    ..completedLevels.addAll(
+      List<int>.generate(widget.completedThrough, (index) => index + 1),
+    );
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text('Story Fixture · Level ${widget.completedThrough + 1}'),
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                color: const Color(0xffffe8a8),
+                child: Text(
+                  'TEMPORARY QA FIXTURE — progress seeded through Level ${widget.completedThrough}. Any flags created here stay in memory and are discarded when this screen closes.',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: const Color(0xff322743),
+                      ),
+                ),
+              ),
+              Expanded(
+                child: StoryScreen(
+                  catalog: widget.catalog,
+                  characters: widget.characters,
+                  progress: _fixtureProgress,
+                  persist: () async {},
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
 }
 
 class _StoryPortraitCheck extends StatelessWidget {
@@ -610,6 +703,45 @@ class _DialogueOverlayState extends State<DialogueOverlay> {
     }
   }
 
+  Widget _dialogueCard(BuildContext context, DialogueLine line) => Container(
+        width: double.infinity,
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          color: const Color(0xff172638).withValues(alpha: .96),
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: const Color(0xff71c2cc)),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(line.text, style: Theme.of(context).textTheme.bodyLarge),
+              const SizedBox(height: 14),
+              Align(
+                alignment: Alignment.centerRight,
+                child: FilledButton.icon(
+                  onPressed: _advance,
+                  icon: Icon(
+                    _lineIndex + 1 == _lines.length
+                        ? Icons.check
+                        : Icons.arrow_forward,
+                  ),
+                  label: Text(
+                    _lineIndex + 1 == _lines.length
+                        ? (widget.canComplete
+                            ? 'Complete Chapter'
+                            : 'Close Story')
+                        : 'Continue',
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     if (_lines.isEmpty) {
@@ -635,92 +767,123 @@ class _DialogueOverlayState extends State<DialogueOverlay> {
         ? line.portraitAssetKey
         : speaker.expressionAssetKeys[line.expressionKey] ??
             line.portraitAssetKey;
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        if (line.backgroundAssetKey != null)
-          ArtAssetSlot(
-            assetKey: line.backgroundAssetKey!,
-            height: 800,
-            icon: Icons.cloud,
-          )
-        else
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0xff39788e), Color(0xff192845)],
-              ),
-            ),
-            child: Center(
-              child: Icon(
-                Icons.cloud,
-                size: 170,
-                color: Colors.white.withValues(alpha: .07),
-              ),
-            ),
-          ),
-        Container(color: Colors.black.withValues(alpha: .24)),
-        Align(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final compact = constraints.maxHeight < 520;
+        final portraitSize = compact ? 48.0 : 150.0;
+        final portraitRegion = constraints.maxHeight * (compact ? .4 : .46);
+        final dialogueMaxHeight = constraints.maxHeight * (compact ? .5 : .55);
+        if (compact) {
+          return Stack(
+            fit: StackFit.expand,
             children: [
-              if (portrait != null)
-                DialogueCharacterPortrait(
-                  character: portrait,
-                  assetKey: expressionAssetKey,
-                  size: 150,
-                ),
-              const SizedBox(height: 14),
-              Text(
-                speaker?.displayName ?? 'Unknown voice',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            ],
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.all(18),
-            decoration: BoxDecoration(
-              color: const Color(0xff172638).withValues(alpha: .96),
-              borderRadius: BorderRadius.circular(22),
-              border: Border.all(color: const Color(0xff71c2cc)),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(line.text, style: Theme.of(context).textTheme.bodyLarge),
-                const SizedBox(height: 14),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: FilledButton.icon(
-                    onPressed: _advance,
-                    icon: Icon(
-                      _lineIndex + 1 == _lines.length
-                          ? Icons.check
-                          : Icons.arrow_forward,
-                    ),
-                    label: Text(
-                      _lineIndex + 1 == _lines.length
-                          ? (widget.canComplete
-                              ? 'Complete Chapter'
-                              : 'Close Story')
-                          : 'Continue',
+              if (line.backgroundAssetKey != null)
+                ArtAssetSlot(
+                  assetKey: line.backgroundAssetKey!,
+                  height: 800,
+                  icon: Icons.cloud,
+                )
+              else
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0xff39788e), Color(0xff192845)],
                     ),
                   ),
                 ),
-              ],
+              Container(color: Colors.black.withValues(alpha: .24)),
+              Column(
+                children: [
+                  SizedBox(
+                    height: portraitRegion,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (portrait != null)
+                          DialogueCharacterPortrait(
+                            character: portrait,
+                            assetKey: expressionAssetKey,
+                            size: portraitSize,
+                          ),
+                        const SizedBox(height: 4),
+                        Text(
+                          speaker?.displayName ?? 'Unknown voice',
+                          style: Theme.of(context).textTheme.titleLarge,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(child: _dialogueCard(context, line)),
+                ],
+              ),
+            ],
+          );
+        }
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            if (line.backgroundAssetKey != null)
+              ArtAssetSlot(
+                assetKey: line.backgroundAssetKey!,
+                height: 800,
+                icon: Icons.cloud,
+              )
+            else
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Color(0xff39788e), Color(0xff192845)],
+                  ),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.cloud,
+                    size: 170,
+                    color: Colors.white.withValues(alpha: .07),
+                  ),
+                ),
+              ),
+            Container(color: Colors.black.withValues(alpha: .24)),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: portraitRegion,
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (portrait != null)
+                      DialogueCharacterPortrait(
+                        character: portrait,
+                        assetKey: expressionAssetKey,
+                        size: portraitSize,
+                      ),
+                    SizedBox(height: compact ? 4 : 14),
+                    Text(
+                      speaker?.displayName ?? 'Unknown voice',
+                      style: Theme.of(context).textTheme.titleLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
-      ],
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: dialogueMaxHeight),
+                child: _dialogueCard(context, line),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

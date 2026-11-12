@@ -1,6 +1,16 @@
 # Current State
 
-## 2026-11-11 — Issue #26 character artwork intake and Track A integration
+## 2026-11-11 — Issue #26 Riff/Mona story fixtures and Track B review package
+
+The active branch `codex/issue-26-character-art` was verified against PR #29: head `37e04389258f916ce6dc9beae5850401884cc763`, base `main` at `43aaa303076e76c35869d73c26ff03f311d7233a`, open, mergeable, and draft. Main CI passed before this work. A local `git fetch` attempt failed because the environment could not start its DNS resolver; GitHub PR metadata confirmed the branch head/base remain current and mergeable.
+
+Added QA-only buttons for disposable Level 15/16 and 25/26 story fixtures. Each uses in-memory `ProgressState` and a no-op persistence callback; closing the fixture discards all test flags. On the authorized Samsung S24 Ultra, user 0, only `com.mrweeds.cloudkingdom.qa` was foregrounded. Physical fixture checks passed: Chapter 2 shows 1/3 beats at Level 15 and 2/3 at 16; Riff's playful framed portrait and dialogue render and Close Story returns to the chapter. Chapter 3 shows 1/3 at Level 25 and 2/3 at 26; the Collector remains the only newly unlocked character before the threshold, Mona's thinking portrait and dialogue render after it, and Close Story returns to the chapter. Evidence and per-check statuses are in `docs/evidence/issue26/DEVICE_QA.md`.
+
+The QA preferences file hash was identical after the fixture run: `687d0c95680855530c13f0a320990feca04f6bb7ce68a43713546ca3767cac03`. The physical device was tested in normal-text portrait orientation; physical 2× text and rotation remain NOT TESTED. Automated regression coverage verifies both gates, portrait/expression mapping, navigation, transient and completion flags at Levels 20/30, and 1×/2× portrait/landscape safe areas. Full tests now pass 93/93; format and analyzer are clean; approved art remains 37/37 and 22/22. QA arm64 APK SHA-256: `be111d028caa4cf1cd922ad2b4eb775afa768ac72cdc3895f5fee0c9d3098239`; production-ID Android debug APK built and package identity checked, not installed. Track B remains review-only and its candidate hashes identify review crops, not approved runtime files.
+
+No gameplay rule, authored level, save schema, Match-3 timing/effect, Cloud Bomb optimization, approved artwork or owner save was changed. Owner visual approval for Riff/Mona remains pending. All three Track B characters still require new standalone exports, explicit approval and frozen export hashes before runtime integration. iOS, spoken TalkBack, Batch 5 runtime import and Phase 3 remain paused.
+
+## 2026-11-11 — Issue #26 character artwork intake and Track A integration (prior checkpoint)
 
 This work is based on verified `main` commit `43aaa303076e76c35869d73c26ff03f311d7233a`; main CI run #87 passed before implementation. The active feature branch is `codex/issue-26-character-art`.
 
