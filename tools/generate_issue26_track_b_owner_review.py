@@ -55,7 +55,7 @@ def main() -> None:
     sections: list[str] = [
         "# Issue #26 — Track B owner visual review (review only)",
         "",
-        "**Decision requested:** review the exact 30 crop proposals listed below as composition references for Chef Blaze, Dr. Cloud and The Collector. These PNGs are not final standalone exports and must not be approved for runtime use. Their hashes identify the review files only; any eventual clean export requires a separate explicit approval and frozen SHA-256 record.",
+        "**Superseded package:** the exact 30 crop proposals listed below are old composition references only and are not the approved deliverables. Latest main now records the owner's lock for 24 standalone exports with per-file hashes in `docs/BATCH_G_THREE_TROLLS_STANDALONE_LOCK_2026-11-11.md` and `art_production/characters/batch_g_three_trolls_2026_11_11/approved_export_manifest.csv`. No new artwork approval or redesign is needed. Codex must receive and verify the exact approved ZIP before runtime import; do not substitute these crop proposals.",
         "",
         "## Status and safety",
         "",
@@ -63,11 +63,11 @@ def main() -> None:
         "|---|---|---|---|---|",
         "| Riff | Approved/locked | 11 exports approved and hash-verified | Imported | PASS — S24 in-memory Level 15/16 fixtures; Riff playful portrait and Close Story navigation |",
         "| Mona Chromatic | Approved/locked | 11 exports approved and hash-verified | Imported | PASS — S24 in-memory Level 25/26 fixtures; Mona thinking portrait and Close Story navigation |",
-        "| Chef Blaze | Canonical source direction approved | No standalone exports approved | NOT IMPORTED | NOT TESTED |",
-        "| Dr. Cloud | Canonical source direction approved | No standalone exports approved | NOT IMPORTED | NOT TESTED |",
-        "| The Collector | Canonical source direction approved | No standalone exports approved | NOT IMPORTED | NOT TESTED |",
+        "| Chef Blaze | Approved/locked | 8 standalone exports approved and hash-locked | NOT IMPORTED — exact approved ZIP not found locally | NOT TESTED |",
+        "| Dr. Cloud | Approved/locked | 8 standalone exports approved and hash-locked | NOT IMPORTED — exact approved ZIP not found locally | NOT TESTED |",
+        "| The Collector | Approved/locked | 8 standalone exports approved and hash-locked | NOT IMPORTED — exact approved ZIP not found locally | NOT TESTED |",
         "",
-        "Riff and Mona statuses reflect the current Issue #26 branch and S24 story-fixture record. This review-only Track B package contains no Track B runtime assets. No production app, Secure Folder, saved game, level, Match-3 rule, animation, Cloud Bomb optimization, branding or schema was changed for this package.",
+        "Riff and Mona statuses reflect the current Issue #26 branch and S24 story-fixture record. Chef Blaze, Dr. Cloud and The Collector have approved standalone exports per latest main, but their exact ZIP is absent from the searched local Downloads and Batch G handoff/intake folders; none is in runtime yet. This older review-only Track B package is not a substitute. No production app, Secure Folder, saved game, level, Match-3 rule, animation, Cloud Bomb optimization, branding or schema was changed for this package.",
         "",
         "## File-level visual and alpha findings",
         "",
@@ -83,7 +83,7 @@ def main() -> None:
         "",
         "## Exact review images",
         "",
-        "The hashes below are for these review-only crop images. **Each role needs a new owner-approved standalone PNG** with an approved canvas, clean exterior alpha, complete silhouette/props, no adjacent text/panel and an individually recorded final-export hash before runtime import.",
+        "The hashes below identify only these superseded review-crop references; they are not the approved files and must not be imported. The approved standalone exports and exact per-file hashes are defined by the latest main manifest. Runtime import is blocked only until the exact approved ZIP bytes are received and verified.",
         "",
     ]
 
@@ -129,15 +129,15 @@ def main() -> None:
 
     sections.extend(
         [
-            "## Approval required before runtime",
+            "## Approved archive receipt required before runtime",
             "",
-            "Please review the three source-versus-crop sections in the HTML page and provide approved standalone transparent exports for these exact 30 roles:",
+        "Do not approve or use these 30 crop references for runtime. The separately approved standalone exports are listed in the latest main manifest; no reapproval is requested:",
             "",
             "- Chef Blaze: `hero_candidate.png`, `expression_01_candidate.png` through `expression_08_candidate.png`, and `ui_candidate.png`.",
             "- Dr. Cloud: `hero_candidate.png`, `expression_01_candidate.png` through `expression_08_candidate.png`, and `ui_candidate.png`.",
             "- The Collector: `hero_candidate.png`, `expression_01_candidate.png` through `expression_08_candidate.png`, and `ui_candidate.png`.",
             "",
-            "The filenames above describe role placeholders only. The current hashes in this report belong to composite crop proposals and do not satisfy export approval. Final files need distinct approved names/paths and new locked hashes. Do not import any Track B candidate until those exact standalone outputs are explicitly approved.",
+        "The 30 filenames above describe old crop proposals, not the approved filenames. Use the 24 entries in the authoritative latest-main export manifest only after the owner-approved ZIP is received and its expected archive SHA-256 and included verifier both pass.",
             "",
             "## Package contents",
             "",

@@ -1,5 +1,13 @@
 # Current State
 
+## 2026-11-12 — Issue #26 latest-main reconciliation and approved-art intake blocker
+
+Fetched and merged authoritative `main` commit `b12478c120159be851efb2b10bacfabbf9f918b3` into `codex/issue-26-character-art`, preserving the Riff/Mona implementation and the prior story-fixture tests/evidence. The new main files confirm **24 approved, individually SHA-locked standalone PNG exports** for Chef Blaze, Dr. Cloud and The Collector; all artwork approval is complete. Their source archive is `Cloud_Kingdom_Batch_G_Chef_Dr_Collector_24_EXPORTS_APPROVED_LOCKED.zip`, expected archive SHA-256 `15e1a83c0695be8a3781bc6e2ea69783e2a3abd9ac412c58846f0d7dbb4d2292`.
+
+Searched Windows Downloads recursively and the existing workspace Batch G handoff/intake folders, including `artwork_review/issue26_batch_g_intake`; the exact approved ZIP was not found. No crop/reference package was substituted. Track B PNG binary receipt, archive/hash verification, Flutter integration and S24 visual QA remain BLOCKED only on receipt of the approved ZIP. Prepared the intake destination at `art_production/characters/batch_g_three_trolls_2026_11_11/intake/`; copy the original ZIP there unchanged. Exact local destination: `C:\Users\LifeN\OneDrive\Documents\Excel Automation\CloudKingdomIssue26Work\art_production\characters\batch_g_three_trolls_2026_11_11\intake\Cloud_Kingdom_Batch_G_Chef_Dr_Collector_24_EXPORTS_APPROVED_LOCKED.zip`.
+
+The previous crop-review package is retained only as historical reference and its statuses now point to the official lock. It is not an approval source or runtime input. Riff/Mona code and 16/26 S24 fixture results remain unchanged. No Track B PNG was imported; no save, game rule, approved art, animation or performance code was modified. Further asset-integrity tests/build/device visual checks await receipt and verification of the expected archive.
+
 ## 2026-11-11 — Issue #26 Riff/Mona story fixtures and Track B review package
 
 The active branch `codex/issue-26-character-art` was verified against PR #29: head `37e04389258f916ce6dc9beae5850401884cc763`, base `main` at `43aaa303076e76c35869d73c26ff03f311d7233a`, open, mergeable, and draft. Main CI passed before this work. A local `git fetch` attempt failed because the environment could not start its DNS resolver; GitHub PR metadata confirmed the branch head/base remain current and mergeable.
@@ -8,7 +16,7 @@ Added QA-only buttons for disposable Level 15/16 and 25/26 story fixtures. Each 
 
 The QA preferences file hash was identical after the fixture run: `687d0c95680855530c13f0a320990feca04f6bb7ce68a43713546ca3767cac03`. The physical device was tested in normal-text portrait orientation; physical 2× text and rotation remain NOT TESTED. Automated regression coverage verifies both gates, portrait/expression mapping, navigation, transient and completion flags at Levels 20/30, and 1×/2× portrait/landscape safe areas. Full tests now pass 93/93; format and analyzer are clean; approved art remains 37/37 and 22/22. QA arm64 APK SHA-256: `be111d028caa4cf1cd922ad2b4eb775afa768ac72cdc3895f5fee0c9d3098239`; production-ID Android debug APK built and package identity checked, not installed. Track B remains review-only and its candidate hashes identify review crops, not approved runtime files.
 
-No gameplay rule, authored level, save schema, Match-3 timing/effect, Cloud Bomb optimization, approved artwork or owner save was changed. Owner visual approval for Riff/Mona remains pending. All three Track B characters still require new standalone exports, explicit approval and frozen export hashes before runtime integration. iOS, spoken TalkBack, Batch 5 runtime import and Phase 3 remain paused.
+No gameplay rule, authored level, save schema, Match-3 timing/effect, Cloud Bomb optimization, approved artwork or owner save was changed. Owner visual approval for Riff/Mona remains pending. The three Track B characters have all 24 approved/hash-locked standalone exports; only delivery of the exact source ZIP blocks integration. iOS, spoken TalkBack, Batch 5 runtime import and Phase 3 remain paused.
 
 ## 2026-11-11 — Issue #26 character artwork intake and Track A integration (prior checkpoint)
 

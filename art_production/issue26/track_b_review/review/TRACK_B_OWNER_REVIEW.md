@@ -1,6 +1,6 @@
-# Issue #26 — Track B owner visual review (review only)
+# Issue #26 — Historical Track B crop review (superseded)
 
-**Decision requested:** review the exact 30 crop proposals listed below as composition references for Chef Blaze, Dr. Cloud and The Collector. These PNGs are not final standalone exports and must not be approved for runtime use. Their hashes identify the review files only; any eventual clean export requires a separate explicit approval and frozen SHA-256 record.
+**Superseded by latest main:** Chef Blaze, Dr. Cloud and The Collector already have 24 owner-approved, individually hash-locked standalone PNG exports. See `docs/BATCH_G_THREE_TROLLS_STANDALONE_LOCK_2026-11-11.md` and `art_production/characters/batch_g_three_trolls_2026_11_11/approved_export_manifest.csv`. No artwork redesign or reapproval is needed. This report describes older crop proposals only; they are not the approved files and must not be imported. Runtime intake is pending receipt and verification of the exact approved ZIP (`Cloud_Kingdom_Batch_G_Chef_Dr_Collector_24_EXPORTS_APPROVED_LOCKED.zip`, SHA-256 `15e1a83c0695be8a3781bc6e2ea69783e2a3abd9ac412c58846f0d7dbb4d2292`).
 
 ## Status and safety
 
@@ -8,11 +8,11 @@
 |---|---|---|---|---|
 | Riff | Approved/locked | 11 exports approved and hash-verified | Imported | PASS — S24 in-memory Level 15/16 fixtures; Riff playful portrait and Close Story navigation |
 | Mona Chromatic | Approved/locked | 11 exports approved and hash-verified | Imported | PASS — S24 in-memory Level 25/26 fixtures; Mona thinking portrait and Close Story navigation |
-| Chef Blaze | Canonical source direction approved | No standalone exports approved | NOT IMPORTED | NOT TESTED |
-| Dr. Cloud | Canonical source direction approved | No standalone exports approved | NOT IMPORTED | NOT TESTED |
-| The Collector | Canonical source direction approved | No standalone exports approved | NOT IMPORTED | NOT TESTED |
+| Chef Blaze | Approved/locked | 8 standalone exports approved and hash-locked | NOT IMPORTED — exact ZIP absent locally | NOT TESTED |
+| Dr. Cloud | Approved/locked | 8 standalone exports approved and hash-locked | NOT IMPORTED — exact ZIP absent locally | NOT TESTED |
+| The Collector | Approved/locked | 8 standalone exports approved and hash-locked | NOT IMPORTED — exact ZIP absent locally | NOT TESTED |
 
-Riff and Mona statuses reflect the current Issue #26 branch and S24 story-fixture record. This review-only Track B package contains no Track B runtime assets. No production app, Secure Folder, saved game, level, Match-3 rule, animation, Cloud Bomb optimization, branding or schema was changed for this package.
+Riff and Mona statuses reflect the current Issue #26 branch and S24 story-fixture record. This old review-only Track B package contains no approved Track B runtime assets. The exact owner-approved archive was not found in the searched Downloads and existing handoff/intake folders. No production app, Secure Folder, saved game, level, Match-3 rule, animation, Cloud Bomb optimization, branding or schema was changed for this package.
 
 ## File-level visual and alpha findings
 
@@ -28,7 +28,7 @@ These checks establish visual correspondence only. The crop files are not suitab
 
 ## Exact review images
 
-The hashes below are for these review-only crop images. **Each role needs a new owner-approved standalone PNG** with an approved canvas, clean exterior alpha, complete silhouette/props, no adjacent text/panel and an individually recorded final-export hash before runtime import.
+The hashes below are for these superseded review-only crop images and do not identify the owner-approved exports. Do not approve or import these crops. The authoritative approved standalone filenames, dimensions and hashes are in the latest main manifest; verify their original ZIP and included script before runtime import.
 
 ### Chef Blaze
 
@@ -93,15 +93,15 @@ Visual review: The hero crop visibly matches the locked spectacles, hair, plum/g
 | `hero_candidate.png` | 358 × 725 | 0 / 0 / 259550 | `c0f805a86ea7200b6bea345822d66826df5cb58706f916c6b324bf020908ab5b` | REVIEW ONLY; not a final export |
 | `ui_candidate.png` | 190 × 190 | 0 / 0 / 36100 | `f6048d7bf49de79f87bbfc7ec08a2eac867b6a5a558d0a150ddb33764d0f077e` | REVIEW ONLY; not a final export |
 
-## Approval required before runtime
+## Binary receipt required before runtime
 
-Please review the three source-versus-crop sections in the HTML page and provide approved standalone transparent exports for these exact 30 roles:
+The 24 standalone exports are already owner-approved. The exact archive binary is not present locally; copy the original into `art_production/characters/batch_g_three_trolls_2026_11_11/intake/` and verify its locked SHA before use. These 30 older crop roles are references only:
 
 - Chef Blaze: `hero_candidate.png`, `expression_01_candidate.png` through `expression_08_candidate.png`, and `ui_candidate.png`.
 - Dr. Cloud: `hero_candidate.png`, `expression_01_candidate.png` through `expression_08_candidate.png`, and `ui_candidate.png`.
 - The Collector: `hero_candidate.png`, `expression_01_candidate.png` through `expression_08_candidate.png`, and `ui_candidate.png`.
 
-The filenames above describe role placeholders only. The current hashes in this report belong to composite crop proposals and do not satisfy export approval. Final files need distinct approved names/paths and new locked hashes. Do not import any Track B candidate until those exact standalone outputs are explicitly approved.
+Do not substitute any of these historical crops for the 24 approved standalone exports.
 
 ## Package contents
 

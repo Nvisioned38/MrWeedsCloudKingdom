@@ -1,5 +1,9 @@
 # Cloud Kingdom Build Log
 
+## 2026-11-12 — Issue #26 approved three-Troll archive intake blocked
+
+Fetched latest `main` at `b12478c120159be851efb2b10bacfabbf9f918b3` and merged its three newer commits into `codex/issue-26-character-art`, preserving all prior Riff/Mona work. The latest lock document and manifest establish owner approval for 24 standalone Chef Blaze, Dr. Cloud and The Collector PNGs with exact per-file hashes. Recursively searched Windows Downloads and existing Batch G handoff/intake folders; the named source ZIP was not present. No old crop package was substituted and no Track B image was imported. Prepared `art_production/characters/batch_g_three_trolls_2026_11_11/intake/README.md` with the required filename and expected archive checksum. Further binary verification, runtime integration, S24 art QA and art-dependent tests/builds are waiting on receipt of the exact archive.
+
 ## 2026-11-07 — GitHub Issue #5 isolated Android QA
 
 Added per-cell accessibility semantics/actions to the Flame Match-3 board and regression tests for semantic gameplay, victory rewards, persisted save round-trip, Home return, and large-text Settings. Board semantics report canonical tile names, specials/conditions, and row/column; blocker cells are announced but disabled. Existing Flame touch behavior remains active.
