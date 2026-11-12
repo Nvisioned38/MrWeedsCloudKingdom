@@ -1,0 +1,9 @@
+{
+  "character": "chef_blaze",
+  "canonicalSource": "chef_blaze_LOCKED_SOURCE.png",
+  "sourceSha256": "7baf0bc31bc4b6e298a2bf028c557c4fb209d28385cc46dbea31026682ecdad6",
+  "candidateFiles": 10,
+  "approvalStatus": "REVIEW ONLY - derived crops; no standalone owner approval",
+  "runtimeStatus": "NOT IMPORTED",
+  "visualNotes": "Hero crop is cut by the expression panel and retains painted city background. Expression crops retain gold frames, labels and backgrounds. UI crop retains title panel."
+}

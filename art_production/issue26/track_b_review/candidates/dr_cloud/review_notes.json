@@ -1,0 +1,9 @@
+{
+  "character": "dr_cloud",
+  "canonicalSource": "dr_cloud_LOCKED_SOURCE.png",
+  "sourceSha256": "c9d0660519eb47a78d538e3628955427a97d44996282211c111ec89716213043",
+  "candidateFiles": 10,
+  "approvalStatus": "REVIEW ONLY - derived crops; no standalone owner approval",
+  "runtimeStatus": "NOT IMPORTED",
+  "visualNotes": "Hero and UI crops retain painted cloud/panel backgrounds. Expression crops retain framing/text. No standalone transparent exports are approved."
+}

@@ -75,14 +75,16 @@ class CollectibleCard {
         displayName: json['displayName'] as String,
         collectionId: json['collectionId'] as String,
         collectionName: json['collectionName'] as String,
-        rarity: CollectibleRarity.values
-            .byName((json['rarity'] as String).toLowerCase()),
+        rarity: CollectibleRarity.values.byName(
+          (json['rarity'] as String).toLowerCase(),
+        ),
         strainClass: json['class'] as String? ?? 'Hybrid',
         category: json['category'] as String,
         lore: json['lore'] as String,
         puzzleAbilityText: json['puzzleAbilityText'] as String,
-        evolutionStage: EvolutionStage.values
-            .byName((json['evolutionStage'] as String).toLowerCase()),
+        evolutionStage: EvolutionStage.values.byName(
+          (json['evolutionStage'] as String).toLowerCase(),
+        ),
         discovered: json['discovered'] as bool? ?? false,
         unlocked: json['unlocked'] as bool? ?? false,
         favorite: json['favorite'] as bool? ?? false,
@@ -123,10 +125,12 @@ class CollectionCatalog {
   final List<CollectibleCard> cards;
 
   factory CollectionCatalog.fromJson(Map<String, dynamic> json) =>
-      CollectionCatalog((json['cards'] as List)
-          .cast<Map<String, dynamic>>()
-          .map(CollectibleCard.fromJson)
-          .toList(growable: false));
+      CollectionCatalog(
+        (json['cards'] as List)
+            .cast<Map<String, dynamic>>()
+            .map(CollectibleCard.fromJson)
+            .toList(growable: false),
+      );
 
   List<CollectibleCard> query({
     CollectibleRarity? rarity,
@@ -136,12 +140,14 @@ class CollectionCatalog {
     final result = cards
         .where((card) => rarity == null || card.rarity == rarity)
         .where(
-            (card) => collectionId == null || card.collectionId == collectionId)
+          (card) => collectionId == null || card.collectionId == collectionId,
+        )
         .toList();
     if (sortByName) {
-      result.sort((a, b) => a.displayName.toLowerCase().compareTo(
-            b.displayName.toLowerCase(),
-          ));
+      result.sort(
+        (a, b) =>
+            a.displayName.toLowerCase().compareTo(b.displayName.toLowerCase()),
+      );
     }
     return result;
   }
@@ -181,8 +187,9 @@ class WorldNodeDefinition {
         title: json['title'] as String,
         description: json['description'] as String,
         assetKey: json['assetKey'] as String,
-        defaultState: WorldNodeState.values
-            .byName((json['defaultState'] as String).toLowerCase()),
+        defaultState: WorldNodeState.values.byName(
+          (json['defaultState'] as String).toLowerCase(),
+        ),
         unlockAtLevel: json['unlockAtLevel'] as int?,
         previewAtLevel: json['previewAtLevel'] as int?,
         restoredWhen: json['restoredWhen'] as String?,
@@ -212,6 +219,10 @@ class CharacterRef {
     required this.role,
     required this.dialogueStyleKey,
     required this.knownByDefault,
+    this.roundUiAssetKey,
+    this.squareUiAssetKey,
+    this.expressionAssetKeys = const {},
+    this.uiAssetKeys = const {},
   });
 
   final String id;
@@ -221,6 +232,10 @@ class CharacterRef {
   final String role;
   final String dialogueStyleKey;
   final bool knownByDefault;
+  final String? roundUiAssetKey;
+  final String? squareUiAssetKey;
+  final Map<String, String> expressionAssetKeys;
+  final Map<String, String> uiAssetKeys;
 
   factory CharacterRef.fromJson(Map<String, dynamic> json) => CharacterRef(
         id: json['id'] as String,
@@ -230,6 +245,16 @@ class CharacterRef {
         role: json['role'] as String,
         dialogueStyleKey: json['dialogueStyleKey'] as String,
         knownByDefault: json['knownByDefault'] as bool? ?? false,
+        roundUiAssetKey: json['roundUiAssetKey'] as String?,
+        squareUiAssetKey: json['squareUiAssetKey'] as String?,
+        expressionAssetKeys: (json['expressionAssetKeys'] as Map?)?.map(
+              (key, value) => MapEntry(key as String, value as String),
+            ) ??
+            const {},
+        uiAssetKeys: (json['uiAssetKeys'] as Map?)?.map(
+              (key, value) => MapEntry(key as String, value as String),
+            ) ??
+            const {},
       );
 }
 
@@ -238,10 +263,12 @@ class CharacterCatalog {
   final List<CharacterRef> characters;
 
   factory CharacterCatalog.fromJson(Map<String, dynamic> json) =>
-      CharacterCatalog((json['characters'] as List)
-          .cast<Map<String, dynamic>>()
-          .map(CharacterRef.fromJson)
-          .toList(growable: false));
+      CharacterCatalog(
+        (json['characters'] as List)
+            .cast<Map<String, dynamic>>()
+            .map(CharacterRef.fromJson)
+            .toList(growable: false),
+      );
 
   CharacterRef? byId(String id) {
     for (final character in characters) {
@@ -268,24 +295,30 @@ class DialogueLine {
     required this.text,
     this.portraitAssetKey,
     this.backgroundAssetKey,
+    this.expressionKey,
   });
 
   final String speakerId;
   final String text;
   final String? portraitAssetKey;
   final String? backgroundAssetKey;
+  final String? expressionKey;
 
   factory DialogueLine.fromJson(Map<String, dynamic> json) => DialogueLine(
         speakerId: json['speakerId'] as String,
         text: json['text'] as String,
         portraitAssetKey: json['portraitAssetKey'] as String?,
         backgroundAssetKey: json['backgroundAssetKey'] as String?,
+        expressionKey: json['expressionKey'] as String?,
       );
 }
 
 class StoryBeat {
-  const StoryBeat(
-      {required this.id, required this.lines, this.unlockAtLevel = 1});
+  const StoryBeat({
+    required this.id,
+    required this.lines,
+    this.unlockAtLevel = 1,
+  });
   final String id;
   final List<DialogueLine> lines;
   final int unlockAtLevel;
@@ -299,6 +332,13 @@ class StoryBeat {
             .toList(growable: false),
       );
 }
+
+Set<String> characterKnownFlagsForBeats(Iterable<StoryBeat> beats) => beats
+    .expand((beat) => beat.lines)
+    .map((line) => line.speakerId)
+    .where((speakerId) => speakerId != 'mr_weed')
+    .map((speakerId) => 'character_${speakerId}_known')
+    .toSet();
 
 class StoryChapter {
   const StoryChapter({

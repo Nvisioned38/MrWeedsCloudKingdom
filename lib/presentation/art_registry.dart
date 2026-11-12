@@ -18,17 +18,92 @@ class ArtRegistry {
     'symbol_unknown_workshop': 'assets/art/props/unmarked_workshop.png',
     'portrait_mr_weed': 'assets/art/characters/mr_weed_portrait.png',
     'character_mr_weed': 'assets/art/characters/mr_weed_full.png',
-    'portrait_chef_blaze': 'assets/art/characters/chef_blaze_portrait.png',
-    'character_chef_blaze': 'assets/art/characters/chef_blaze_full.png',
-    'portrait_dr_cloud': 'assets/art/characters/dr_cloud_portrait.png',
-    'character_dr_cloud': 'assets/art/characters/dr_cloud_full.png',
+    'portrait_chef_blaze':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/chef_blaze/chef_blaze_expression_happy.png',
+    'character_chef_blaze':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/chef_blaze/chef_blaze_hero.png',
+    'character_chef_blaze_excited':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/chef_blaze/chef_blaze_expression_excited.png',
+    'character_chef_blaze_thinking':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/chef_blaze/chef_blaze_expression_thinking.png',
+    'character_chef_blaze_determined':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/chef_blaze/chef_blaze_expression_determined.png',
+    'character_chef_blaze_playful':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/chef_blaze/chef_blaze_expression_playful.png',
+    'character_chef_blaze_icon_neutral':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/chef_blaze/chef_blaze_icon_neutral.png',
+    'character_chef_blaze_icon_excited':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/chef_blaze/chef_blaze_icon_excited.png',
+    'portrait_dr_cloud':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/dr_cloud/dr_cloud_expression_happy.png',
+    'character_dr_cloud':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/dr_cloud/dr_cloud_hero.png',
+    'character_dr_cloud_surprised':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/dr_cloud/dr_cloud_expression_surprised.png',
+    'character_dr_cloud_thinking':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/dr_cloud/dr_cloud_expression_thinking.png',
+    'character_dr_cloud_curious':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/dr_cloud/dr_cloud_expression_curious.png',
+    'character_dr_cloud_determined':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/dr_cloud/dr_cloud_expression_determined.png',
+    'character_dr_cloud_icon_neutral':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/dr_cloud/dr_cloud_icon_neutral.png',
+    'character_dr_cloud_icon_excited':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/dr_cloud/dr_cloud_icon_excited.png',
     'portrait_mona_chromatic':
-        'assets/art/characters/mona_chromatic_portrait.png',
-    'character_mona_chromatic': 'assets/art/characters/mona_chromatic_full.png',
-    'portrait_riff': 'assets/art/characters/riff_portrait.png',
-    'character_riff': 'assets/art/characters/riff_full.png',
-    'portrait_collector': 'assets/art/characters/collector_portrait.png',
-    'character_collector': 'assets/art/characters/collector_full.png',
+        'assets/art/characters/mona_chromatic_dialogue_01_happy.png',
+    'character_mona_chromatic':
+        'assets/art/characters/mona_chromatic_hero_transparent.png',
+    'portrait_riff': 'assets/art/characters/riff_dialogue_01_happy.png',
+    'character_riff': 'assets/art/characters/riff_hero_transparent.png',
+    'character_riff_ui_round': 'assets/art/characters/riff_ui_round.png',
+    'character_riff_ui_square': 'assets/art/characters/riff_ui_square.png',
+    'character_riff_excited':
+        'assets/art/characters/riff_dialogue_02_excited.png',
+    'character_riff_clever':
+        'assets/art/characters/riff_dialogue_03_clever.png',
+    'character_riff_playful':
+        'assets/art/characters/riff_dialogue_04_playful.png',
+    'character_riff_thinking':
+        'assets/art/characters/riff_dialogue_05_thinking.png',
+    'character_riff_surprised':
+        'assets/art/characters/riff_dialogue_06_surprised.png',
+    'character_riff_proud': 'assets/art/characters/riff_dialogue_07_proud.png',
+    'character_riff_wink': 'assets/art/characters/riff_dialogue_08_wink.png',
+    'character_mona_chromatic_ui_round':
+        'assets/art/characters/mona_chromatic_ui_round.png',
+    'character_mona_chromatic_ui_square':
+        'assets/art/characters/mona_chromatic_ui_square.png',
+    'character_mona_chromatic_excited':
+        'assets/art/characters/mona_chromatic_dialogue_02_excited.png',
+    'character_mona_chromatic_clever':
+        'assets/art/characters/mona_chromatic_dialogue_03_clever.png',
+    'character_mona_chromatic_playful':
+        'assets/art/characters/mona_chromatic_dialogue_04_playful.png',
+    'character_mona_chromatic_thinking':
+        'assets/art/characters/mona_chromatic_dialogue_05_thinking.png',
+    'character_mona_chromatic_surprised':
+        'assets/art/characters/mona_chromatic_dialogue_06_surprised.png',
+    'character_mona_chromatic_proud':
+        'assets/art/characters/mona_chromatic_dialogue_07_proud.png',
+    'character_mona_chromatic_wink':
+        'assets/art/characters/mona_chromatic_dialogue_08_wink.png',
+    'portrait_collector':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/the_collector/the_collector_expression_excited.png',
+    'character_collector':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/the_collector/the_collector_hero.png',
+    'character_collector_surprised':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/the_collector/the_collector_expression_surprised.png',
+    'character_collector_thinking':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/the_collector/the_collector_expression_thinking.png',
+    'character_collector_determined':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/the_collector/the_collector_expression_determined.png',
+    'character_collector_satisfied':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/the_collector/the_collector_expression_satisfied.png',
+    'character_collector_icon_neutral':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/the_collector/the_collector_icon_neutral.png',
+    'character_collector_icon_happy':
+        'assets/art/characters/batch_g_three_trolls_2026_11_11/the_collector/the_collector_icon_happy.png',
     'brand_mr_weeds_logo': 'assets/art/brand/mr_weeds_logo.png',
     'brand_cloud_cup_logo': 'assets/art/brand/cloud_cup_logo.png',
     'brand_cloud_kingdom_title': 'assets/art/brand/cloud_kingdom_title.png',

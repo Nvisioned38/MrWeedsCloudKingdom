@@ -41,9 +41,10 @@ void main() {
     );
     expect(manifest.records, hasLength(ArtRegistry.paths.length));
     expect(
-      manifest.records
-          .where((record) => record.state == ArtAssetState.integrated),
-      hasLength(48), // 11 prior integrated + all 37 approved Issue #4 exports.
+      manifest.records.where(
+        (record) => record.state == ArtAssetState.integrated,
+      ),
+      hasLength(94), // Previous 11 + Issue #4's 37 + Issue #26's 46.
     );
     expect(
       manifest.records.where(
@@ -55,8 +56,23 @@ void main() {
     );
     expect(manifest.records.where((record) => record.productionReady), isEmpty);
 
-    final portrait = manifest.records
-        .singleWhere((record) => record.key == 'portrait_mr_weed');
+    final characterAssets = manifest.records.where(
+      (record) => record.approvalRecord != null,
+    );
+    expect(characterAssets, hasLength(46));
+    expect(
+      characterAssets.every(
+        (record) =>
+            record.state == ArtAssetState.integrated &&
+            record.approvalRecord != null &&
+            record.approvalStatus.contains('S24 visual QA passed'),
+      ),
+      isTrue,
+    );
+
+    final portrait = manifest.records.singleWhere(
+      (record) => record.key == 'portrait_mr_weed',
+    );
     expect(portrait.state, ArtAssetState.integrated);
     expect(portrait.approvalRowId, 'CS-001');
     expect(portrait.designApprovalRowId, 'CH-001');
@@ -75,15 +91,17 @@ void main() {
   });
 
   test('QA-approved art cannot be absent or missing from pubspec', () {
-    const manifest = ArtManifest(records: [
-      ArtAssetRecord(
-        key: 'test_logo',
-        targetPath: 'assets/art/brand/test_logo.png',
-        variantType: ArtVariantType.logo,
-        state: ArtAssetState.qaApproved,
-        approvalStatus: 'verified',
-      ),
-    ]);
+    const manifest = ArtManifest(
+      records: [
+        ArtAssetRecord(
+          key: 'test_logo',
+          targetPath: 'assets/art/brand/test_logo.png',
+          variantType: ArtVariantType.logo,
+          state: ArtAssetState.qaApproved,
+          approvalStatus: 'verified',
+        ),
+      ],
+    );
 
     final issues = manifest.validate(
       registry: const {'test_logo': 'assets/art/brand/test_logo.png'},
@@ -92,7 +110,9 @@ void main() {
     );
 
     expect(
-        issues, contains('test_logo is QA approved but its file is missing.'));
+      issues,
+      contains('test_logo is QA approved but its file is missing.'),
+    );
     expect(
       issues,
       contains('test_logo is QA approved but undeclared in pubspec.'),

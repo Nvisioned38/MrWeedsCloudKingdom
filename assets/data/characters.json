@@ -1,11 +1,116 @@
 {
   "schemaVersion": 1,
   "characters": [
-    {"id":"mr_weed","displayName":"Mr. Weed","portraitAssetKey":"portrait_mr_weed","fullBodyAssetKey":"character_mr_weed","role":"Cloud House caretaker and guide","dialogueStyleKey":"warm_optimistic","knownByDefault":true},
-    {"id":"chef_blaze","displayName":"Chef Blaze","portraitAssetKey":"portrait_chef_blaze","fullBodyAssetKey":"character_chef_blaze","role":"A bold chef with a knack for kitchen experiments","dialogueStyleKey":"energetic_culinary","knownByDefault":false},
-    {"id":"dr_cloud","displayName":"Dr. Cloud","portraitAssetKey":"portrait_dr_cloud","fullBodyAssetKey":"character_dr_cloud","role":"Kingdom researcher and cloud-weather expert","dialogueStyleKey":"curious_precise","knownByDefault":false},
-    {"id":"mona_chromatic","displayName":"Mona Chromatic","portraitAssetKey":"portrait_mona_chromatic","fullBodyAssetKey":"character_mona_chromatic","role":"Color artist and keeper of the Higher Art Gallery","dialogueStyleKey":"expressive_visual","knownByDefault":false},
-    {"id":"riff","displayName":"Riff","portraitAssetKey":"portrait_riff","fullBodyAssetKey":"character_riff","role":"Traveling musician and festival organizer","dialogueStyleKey":"playful_rhythmic","knownByDefault":false},
-    {"id":"the_collector","displayName":"The Collector","portraitAssetKey":"portrait_collector","fullBodyAssetKey":"character_collector","role":"A careful archivist of rare finds","dialogueStyleKey":"measured_mysterious","knownByDefault":false}
+    {
+      "id": "mr_weed",
+      "displayName": "Mr. Weed",
+      "portraitAssetKey": "portrait_mr_weed",
+      "fullBodyAssetKey": "character_mr_weed",
+      "role": "Cloud House caretaker and guide",
+      "dialogueStyleKey": "warm_optimistic",
+      "knownByDefault": true
+    },
+    {
+      "id": "chef_blaze",
+      "displayName": "Chef Blaze",
+      "portraitAssetKey": "portrait_chef_blaze",
+      "fullBodyAssetKey": "character_chef_blaze",
+      "role": "A bold chef with a knack for kitchen experiments",
+      "dialogueStyleKey": "energetic_culinary",
+      "knownByDefault": false,
+      "expressionAssetKeys": {
+        "determined": "character_chef_blaze_determined",
+        "playful": "character_chef_blaze_playful",
+        "happy": "portrait_chef_blaze",
+        "excited": "character_chef_blaze_excited",
+        "thinking": "character_chef_blaze_thinking"
+      },
+      "uiAssetKeys": {
+        "neutral": "character_chef_blaze_icon_neutral",
+        "excited": "character_chef_blaze_icon_excited"
+      }
+    },
+    {
+      "id": "dr_cloud",
+      "displayName": "Dr. Cloud",
+      "portraitAssetKey": "portrait_dr_cloud",
+      "fullBodyAssetKey": "character_dr_cloud",
+      "role": "Kingdom researcher and cloud-weather expert",
+      "dialogueStyleKey": "curious_precise",
+      "knownByDefault": false,
+      "expressionAssetKeys": {
+        "determined": "character_dr_cloud_determined",
+        "curious": "character_dr_cloud_curious",
+        "happy": "portrait_dr_cloud",
+        "surprised": "character_dr_cloud_surprised",
+        "thinking": "character_dr_cloud_thinking"
+      },
+      "uiAssetKeys": {
+        "neutral": "character_dr_cloud_icon_neutral",
+        "excited": "character_dr_cloud_icon_excited"
+      }
+    },
+    {
+      "id": "mona_chromatic",
+      "displayName": "Mona Chromatic",
+      "portraitAssetKey": "portrait_mona_chromatic",
+      "fullBodyAssetKey": "character_mona_chromatic",
+      "role": "Color artist and keeper of the Higher Art Gallery",
+      "dialogueStyleKey": "expressive_visual",
+      "knownByDefault": false,
+      "roundUiAssetKey": "character_mona_chromatic_ui_round",
+      "squareUiAssetKey": "character_mona_chromatic_ui_square",
+      "expressionAssetKeys": {
+        "happy": "portrait_mona_chromatic",
+        "excited": "character_mona_chromatic_excited",
+        "clever": "character_mona_chromatic_clever",
+        "playful": "character_mona_chromatic_playful",
+        "thinking": "character_mona_chromatic_thinking",
+        "surprised": "character_mona_chromatic_surprised",
+        "proud": "character_mona_chromatic_proud",
+        "wink": "character_mona_chromatic_wink"
+      }
+    },
+    {
+      "id": "riff",
+      "displayName": "Riff",
+      "portraitAssetKey": "portrait_riff",
+      "fullBodyAssetKey": "character_riff",
+      "role": "Traveling musician and festival organizer",
+      "dialogueStyleKey": "playful_rhythmic",
+      "knownByDefault": false,
+      "roundUiAssetKey": "character_riff_ui_round",
+      "squareUiAssetKey": "character_riff_ui_square",
+      "expressionAssetKeys": {
+        "happy": "portrait_riff",
+        "excited": "character_riff_excited",
+        "clever": "character_riff_clever",
+        "playful": "character_riff_playful",
+        "thinking": "character_riff_thinking",
+        "surprised": "character_riff_surprised",
+        "proud": "character_riff_proud",
+        "wink": "character_riff_wink"
+      }
+    },
+    {
+      "id": "the_collector",
+      "displayName": "The Collector",
+      "portraitAssetKey": "portrait_collector",
+      "fullBodyAssetKey": "character_collector",
+      "role": "A careful archivist of rare finds",
+      "dialogueStyleKey": "measured_mysterious",
+      "knownByDefault": false,
+      "expressionAssetKeys": {
+        "surprised": "character_collector_surprised",
+        "determined": "character_collector_determined",
+        "excited": "portrait_collector",
+        "satisfied": "character_collector_satisfied",
+        "thinking": "character_collector_thinking"
+      },
+      "uiAssetKeys": {
+        "happy": "character_collector_icon_happy",
+        "neutral": "character_collector_icon_neutral"
+      }
+    }
   ]
 }

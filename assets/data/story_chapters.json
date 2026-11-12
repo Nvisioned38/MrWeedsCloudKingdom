@@ -77,7 +77,8 @@
       "synopsis": "Chef Blaze needs help getting the Cloud House kitchen ready. New story beats appear as you clear the chapter.",
       "completionFlag": "chapter_2_complete",
       "characterIds": [
-        "chef_blaze"
+        "chef_blaze",
+        "riff"
       ],
       "playable": true,
       "unlockAtLevel": 11,
@@ -112,6 +113,12 @@
               "speakerId": "mr_weed",
               "text": "Five more levels should bring the whole room back to life.",
               "portraitAssetKey": "portrait_mr_weed"
+            },
+            {
+              "speakerId": "riff",
+              "portraitAssetKey": "portrait_riff",
+              "expressionKey": "playful",
+              "text": "A good rhythm makes any bit of work feel lighter. I can keep the beat while you finish clearing the kitchen."
             }
           ]
         },
@@ -139,7 +146,8 @@
       "synopsis": "The Collector follows a trail of scattered keepsakes through the Kingdom. New story beats unlock as the pieces come together.",
       "completionFlag": "chapter_3_complete",
       "characterIds": [
-        "the_collector"
+        "the_collector",
+        "mona_chromatic"
       ],
       "playable": true,
       "unlockAtLevel": 21,
@@ -174,6 +182,12 @@
               "speakerId": "mr_weed",
               "text": "A trail is a start. We’ll keep the strange little workshop mark in mind, too.",
               "portraitAssetKey": "portrait_mr_weed"
+            },
+            {
+              "speakerId": "mona_chromatic",
+              "portraitAssetKey": "portrait_mona_chromatic",
+              "expressionKey": "thinking",
+              "text": "I can keep the archive colors in order while you follow the trail. Every piece deserves a place."
             }
           ]
         },

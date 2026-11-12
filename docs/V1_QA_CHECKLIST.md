@@ -1,5 +1,17 @@
 # V1 Android QA and Release Gate
 
+## Issue #26 character art checkpoint — 2026-11-11
+
+| Character/scope | Asset approval | Runtime | S24 visual QA | Evidence |
+|---|---|---|---|---|
+| Riff | 11/11 exports match original locked ZIP and per-file SHA manifest | Integrated | **PASS — preview visuals** | `docs/evidence/issue26/DEVICE_QA.md`; story progression itself not tested |
+| Mona Chromatic | 11/11 exports match original locked ZIP and per-file SHA manifest | Integrated; gold-framed dialogue PNGs render uncropped | **PASS — preview visuals** | Same evidence; story progression itself not tested |
+| Chef Blaze | Source direction only; standalone export not approved | Not imported | **NOT TESTED** | Review-only crop/contact sheet under `art_production/issue26/track_b_review/` |
+| Dr. Cloud | Source direction only; standalone export not approved | Not imported | **NOT TESTED** | Same as above |
+| The Collector | Source direction only; standalone export not approved | Not imported | **NOT TESTED** | Same as above |
+
+Automated gate: full Flutter tests 87/87 pass; analyzer clean; Issue #4 approved art 37/37 hashes, dimensions and RGBA checks pass; Issue #26 exports 22/22 pass locked archive/member/runtime-copy, SHA-256, dimensions and RGBA checks; isolated QA Android debug APK builds and verifies as `com.mrweeds.cloudkingdom.qa`. On S24 user 0 the QA-only preview was installed with replace-only semantics and visually checked. The QA save SHA-256 matched before and after; actual Chapter 2/3 progression remains untested because the saved Level 15 progress was preserved. See `docs/evidence/issue26/DEVICE_QA.md` and screenshots.
+
 This checklist records automated evidence and isolated S24 physical QA. Final visual and artwork sign-off remain open.
 
 ## Status legend

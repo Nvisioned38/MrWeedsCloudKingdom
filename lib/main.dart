@@ -20,6 +20,8 @@ import 'presentation/phase2_screens.dart';
 import 'presentation/progress_restore.dart';
 import 'qa/frame_timing_collector.dart';
 
+const _isIsolatedQaBuild = bool.fromEnvironment('CLOUD_KINGDOM_QA_BUILD');
+
 const _saveKey = progressSaveKey;
 
 void main() => runApp(const CloudKingdomApp());
@@ -241,6 +243,24 @@ class TitleScreen extends StatelessWidget {
                                     : 'Continue'),
                                 style: FilledButton.styleFrom(
                                     minimumSize: const Size.fromHeight(54))),
+                            if (_isIsolatedQaBuild) ...[
+                              const SizedBox(height: 8),
+                              OutlinedButton.icon(
+                                key: const ValueKey('issue26-art-preview'),
+                                onPressed: () => Navigator.push<void>(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        Issue26CharacterPreviewScreen(
+                                      characters: characterCatalog,
+                                      story: storyCatalog,
+                                    ),
+                                  ),
+                                ),
+                                icon: const Icon(Icons.palette_outlined),
+                                label: const Text('Character Art QA Preview'),
+                              ),
+                            ],
                             if (progress.completedLevels.isNotEmpty) ...[
                               TextButton(
                                   onPressed: () => _openWorld(context),

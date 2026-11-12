@@ -1,0 +1,9 @@
+{
+  "character": "the_collector",
+  "canonicalSource": "the_collector_LOCKED_SOURCE.png",
+  "sourceSha256": "f8bb255370ba6a2dd78df7d8d6c827f7dae0b2e7f90696a7ad2a191af7eb829b",
+  "candidateFiles": 10,
+  "approvalStatus": "REVIEW ONLY - derived crops; no standalone owner approval",
+  "runtimeStatus": "NOT IMPORTED",
+  "visualNotes": "Hero and UI crops retain painted cloud/panel backgrounds. Expression crops retain framing/text. No standalone transparent exports are approved."
+}

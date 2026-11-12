@@ -1,0 +1,1037 @@
+{
+  "title": "Issue #26 Batch G Character Asset Intake",
+  "createdLocalDate": "2026-11-11",
+  "sourceDirectory": "C:\\Users\\LifeN\\Downloads\\CloudKingdom_BatchG_Character_Handoff",
+  "approvalWorkbook": {
+    "filename": "Mr_Weeds_Cloud_Kingdom_Asset_Review_v15_Batch_F_UI_LOCKED.xlsx",
+    "sha256": "8c28aa959754b256aaa7b8675e31376fb972de2080d37254b5c93296134b6431",
+    "finding": "v15 predates Batch G export approvals; its CH-002/003/004/005/006 character direction rows are reference approvals only",
+    "copyPath": "source_approval_records/Mr_Weeds_Cloud_Kingdom_Asset_Review_v15_Batch_F_UI_LOCKED.xlsx"
+  },
+  "visualDirectionsHandoff": {
+    "standaloneLatestHandoffFileFound": false,
+    "finding": "A previously supplied owner handoff note states that the five character directions and Batch G artwork are approved/locked, but it contains no per-file export inventory or approval hashes. No separate Visual Directions binary handoff or five-character export manifest was found in the provided folder.",
+    "fileLevelExportManifestFound": false,
+    "referenceNote": "C:\\Users\\LifeN\\.codex\\attachments\\ea0f0744-af26-446e-a1a5-1eda1f02244e\\Pasted text.txt",
+    "referenceNoteSha256": "7f5814b92327b8ad916657a3fa7e5e4bb6f38bad667eb14d42dce272b7738611"
+  },
+  "summary": {
+    "imageOccurrences": 132,
+    "uniqueImageContent": 68,
+    "approvedStandaloneExportsCopied": 22,
+    "canonicalSourcesCopiedReferenceOnly": 5,
+    "unverifiedLooseCharacterSheetsCopiedForOwnerReview": 3,
+    "approvedExportCharacters": [
+      "Riff",
+      "Mona Chromatic"
+    ],
+    "charactersWithNoApprovedStandaloneExports": [
+      "Chef Blaze",
+      "Dr. Cloud",
+      "The Collector"
+    ]
+  },
+  "approvedExports": [
+    {
+      "character": "Riff",
+      "assetType": "hero",
+      "expression": "",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Riff/riff_hero_transparent.png",
+      "intakePath": "validated_exports/Riff/riff_hero_transparent.png",
+      "sha256": "03119ab1344914f346ad718bc67bcca20367bc2cd1757de462cae2f794938404",
+      "manifestSha256": "03119ab1344914f346ad718bc67bcca20367bc2cd1757de462cae2f794938404",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "562x1024",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Riff",
+      "assetType": "ui_round",
+      "expression": "",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Riff/riff_ui_round.png",
+      "intakePath": "validated_exports/Riff/riff_ui_round.png",
+      "sha256": "d2a120364f082fa71ae315684db1bca98cd184d1ae8e5dc6524a01c608efd54f",
+      "manifestSha256": "d2a120364f082fa71ae315684db1bca98cd184d1ae8e5dc6524a01c608efd54f",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Riff",
+      "assetType": "ui_square",
+      "expression": "",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Riff/riff_ui_square.png",
+      "intakePath": "validated_exports/Riff/riff_ui_square.png",
+      "sha256": "445769314c74df3ff3df3ba5f2bef8a0aa60792bdc42b4be7699ca87cbf95223",
+      "manifestSha256": "445769314c74df3ff3df3ba5f2bef8a0aa60792bdc42b4be7699ca87cbf95223",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Riff",
+      "assetType": "dialogue",
+      "expression": "happy",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Riff/riff_dialogue_01_happy.png",
+      "intakePath": "validated_exports/Riff/riff_dialogue_01_happy.png",
+      "sha256": "bb5bcb0689ef021fd8c772fe7e1a3dcb24234e6b642a48ca889427b7959bafd9",
+      "manifestSha256": "bb5bcb0689ef021fd8c772fe7e1a3dcb24234e6b642a48ca889427b7959bafd9",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Riff",
+      "assetType": "dialogue",
+      "expression": "excited",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Riff/riff_dialogue_02_excited.png",
+      "intakePath": "validated_exports/Riff/riff_dialogue_02_excited.png",
+      "sha256": "e493e553c2688d995ff19f621e12b9bb6c14216f0ddb4fb027034ad596d88a0d",
+      "manifestSha256": "e493e553c2688d995ff19f621e12b9bb6c14216f0ddb4fb027034ad596d88a0d",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Riff",
+      "assetType": "dialogue",
+      "expression": "clever",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Riff/riff_dialogue_03_clever.png",
+      "intakePath": "validated_exports/Riff/riff_dialogue_03_clever.png",
+      "sha256": "93450abe6c1f565281765fd3d4d8dfbf7682ee12eda38612e883accc3c699aaa",
+      "manifestSha256": "93450abe6c1f565281765fd3d4d8dfbf7682ee12eda38612e883accc3c699aaa",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Riff",
+      "assetType": "dialogue",
+      "expression": "playful",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Riff/riff_dialogue_04_playful.png",
+      "intakePath": "validated_exports/Riff/riff_dialogue_04_playful.png",
+      "sha256": "d5fd715e44c8fd7015ca24a28ddb19794a6e18d75aaaaf7da721644b8191fade",
+      "manifestSha256": "d5fd715e44c8fd7015ca24a28ddb19794a6e18d75aaaaf7da721644b8191fade",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Riff",
+      "assetType": "dialogue",
+      "expression": "thinking",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Riff/riff_dialogue_05_thinking.png",
+      "intakePath": "validated_exports/Riff/riff_dialogue_05_thinking.png",
+      "sha256": "381c94afb7d7fe230b8477c4bf2848b6f96b3d6d315d6a26759cdfb27b5ba1c2",
+      "manifestSha256": "381c94afb7d7fe230b8477c4bf2848b6f96b3d6d315d6a26759cdfb27b5ba1c2",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Riff",
+      "assetType": "dialogue",
+      "expression": "surprised",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Riff/riff_dialogue_06_surprised.png",
+      "intakePath": "validated_exports/Riff/riff_dialogue_06_surprised.png",
+      "sha256": "43a1424df08d00cc89bd0ba0abef52dd993b0f56a4abafadba4261171df5613a",
+      "manifestSha256": "43a1424df08d00cc89bd0ba0abef52dd993b0f56a4abafadba4261171df5613a",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Riff",
+      "assetType": "dialogue",
+      "expression": "proud",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Riff/riff_dialogue_07_proud.png",
+      "intakePath": "validated_exports/Riff/riff_dialogue_07_proud.png",
+      "sha256": "4b8f2a486655556374ab89962f8b932f6c1871fe10258195a439f1253191c364",
+      "manifestSha256": "4b8f2a486655556374ab89962f8b932f6c1871fe10258195a439f1253191c364",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Riff",
+      "assetType": "dialogue",
+      "expression": "wink",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Riff/riff_dialogue_08_wink.png",
+      "intakePath": "validated_exports/Riff/riff_dialogue_08_wink.png",
+      "sha256": "a07dcc6fc180b14f4172c89486f2927801cd6744215789acc519fa77ffd755f1",
+      "manifestSha256": "a07dcc6fc180b14f4172c89486f2927801cd6744215789acc519fa77ffd755f1",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Mona_Chromatic",
+      "assetType": "hero",
+      "expression": "",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Mona_Chromatic/mona_chromatic_hero_transparent.png",
+      "intakePath": "validated_exports/Mona_Chromatic/mona_chromatic_hero_transparent.png",
+      "sha256": "e49900c0229db858824da440fbf8f0f118f7ec73033b8175eb5d7355c5f250b7",
+      "manifestSha256": "e49900c0229db858824da440fbf8f0f118f7ec73033b8175eb5d7355c5f250b7",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "612x1024",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Mona_Chromatic",
+      "assetType": "ui_round",
+      "expression": "",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Mona_Chromatic/mona_chromatic_ui_round.png",
+      "intakePath": "validated_exports/Mona_Chromatic/mona_chromatic_ui_round.png",
+      "sha256": "d74aca76a93b7a94395582a1335c3c65c35af30fedd4f522ca61930742ae73fa",
+      "manifestSha256": "d74aca76a93b7a94395582a1335c3c65c35af30fedd4f522ca61930742ae73fa",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Mona_Chromatic",
+      "assetType": "ui_square",
+      "expression": "",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Mona_Chromatic/mona_chromatic_ui_square.png",
+      "intakePath": "validated_exports/Mona_Chromatic/mona_chromatic_ui_square.png",
+      "sha256": "94e6cd8db72bc70838ff0c7169adc90ccc5ddd2e6bff365867ae5a983f23c78c",
+      "manifestSha256": "94e6cd8db72bc70838ff0c7169adc90ccc5ddd2e6bff365867ae5a983f23c78c",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Mona_Chromatic",
+      "assetType": "dialogue",
+      "expression": "happy",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Mona_Chromatic/mona_chromatic_dialogue_01_happy.png",
+      "intakePath": "validated_exports/Mona_Chromatic/mona_chromatic_dialogue_01_happy.png",
+      "sha256": "3ccb3c68efb41e82b57103d1b5b78dc0a1faf48754966b50c2a448c304aacf41",
+      "manifestSha256": "3ccb3c68efb41e82b57103d1b5b78dc0a1faf48754966b50c2a448c304aacf41",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Mona_Chromatic",
+      "assetType": "dialogue",
+      "expression": "excited",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Mona_Chromatic/mona_chromatic_dialogue_02_excited.png",
+      "intakePath": "validated_exports/Mona_Chromatic/mona_chromatic_dialogue_02_excited.png",
+      "sha256": "a930971e6bbe79a85dfce2168e4716875c25e30b7914887ebfd99da48b412fb6",
+      "manifestSha256": "a930971e6bbe79a85dfce2168e4716875c25e30b7914887ebfd99da48b412fb6",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Mona_Chromatic",
+      "assetType": "dialogue",
+      "expression": "clever",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Mona_Chromatic/mona_chromatic_dialogue_03_clever.png",
+      "intakePath": "validated_exports/Mona_Chromatic/mona_chromatic_dialogue_03_clever.png",
+      "sha256": "eea4cc57049063a429057723c09526270bd01e085392c94745ad8e316978dfde",
+      "manifestSha256": "eea4cc57049063a429057723c09526270bd01e085392c94745ad8e316978dfde",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Mona_Chromatic",
+      "assetType": "dialogue",
+      "expression": "playful",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Mona_Chromatic/mona_chromatic_dialogue_04_playful.png",
+      "intakePath": "validated_exports/Mona_Chromatic/mona_chromatic_dialogue_04_playful.png",
+      "sha256": "f1327dffe0344b5b9e044654d9677d98725aa91758e051295a1953d44aee9f8a",
+      "manifestSha256": "f1327dffe0344b5b9e044654d9677d98725aa91758e051295a1953d44aee9f8a",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Mona_Chromatic",
+      "assetType": "dialogue",
+      "expression": "thinking",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Mona_Chromatic/mona_chromatic_dialogue_05_thinking.png",
+      "intakePath": "validated_exports/Mona_Chromatic/mona_chromatic_dialogue_05_thinking.png",
+      "sha256": "a1ddff4138f294271d71b57c41207c7fba48b4712557f1ed9702f78a1c2a8d08",
+      "manifestSha256": "a1ddff4138f294271d71b57c41207c7fba48b4712557f1ed9702f78a1c2a8d08",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Mona_Chromatic",
+      "assetType": "dialogue",
+      "expression": "surprised",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Mona_Chromatic/mona_chromatic_dialogue_06_surprised.png",
+      "intakePath": "validated_exports/Mona_Chromatic/mona_chromatic_dialogue_06_surprised.png",
+      "sha256": "61d2f54e10ecbb8458bce60d3d91dae39a05f379a642ffb500ed2de6211af14f",
+      "manifestSha256": "61d2f54e10ecbb8458bce60d3d91dae39a05f379a642ffb500ed2de6211af14f",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Mona_Chromatic",
+      "assetType": "dialogue",
+      "expression": "proud",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Mona_Chromatic/mona_chromatic_dialogue_07_proud.png",
+      "intakePath": "validated_exports/Mona_Chromatic/mona_chromatic_dialogue_07_proud.png",
+      "sha256": "d8e528d4db8ca497f208984629035cef9055726d008071813f9a811d62cce1a6",
+      "manifestSha256": "d8e528d4db8ca497f208984629035cef9055726d008071813f9a811d62cce1a6",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    },
+    {
+      "character": "Mona_Chromatic",
+      "assetType": "dialogue",
+      "expression": "wink",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "Mona_Chromatic/mona_chromatic_dialogue_08_wink.png",
+      "intakePath": "validated_exports/Mona_Chromatic/mona_chromatic_dialogue_08_wink.png",
+      "sha256": "4f7b8e1efff96e1e1fdf8b4d815797565d6573efa1d2b9b3370bc6aebd517747",
+      "manifestSha256": "4f7b8e1efff96e1e1fdf8b4d815797565d6573efa1d2b9b3370bc6aebd517747",
+      "approval": "APPROVED_LOCKED_2026-11-09",
+      "dimensions": "320x320",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present"
+    }
+  ],
+  "canonicalSourceReferences": [
+    {
+      "character": "Chef Blaze",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_CANON_DIRECT_EXTRACTS_REVIEW.zip",
+      "sourceEntry": "originals/chef_blaze_LOCKED_SOURCE.png",
+      "intakePath": "canonical_sources_reference_only/Chef_Blaze/chef_blaze_LOCKED_SOURCE.png",
+      "sha256": "7baf0bc31bc4b6e298a2bf028c557c4fb209d28385cc46dbea31026682ecdad6",
+      "dimensions": "1536x1024",
+      "mode": "RGBA",
+      "hasAlphaChannel": true,
+      "alphaState": "partial alpha only",
+      "use": "Canonical identity reference only; not a Flutter-ready standalone export"
+    },
+    {
+      "character": "Dr. Cloud",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_CANON_DIRECT_EXTRACTS_REVIEW.zip",
+      "sourceEntry": "originals/dr_cloud_LOCKED_SOURCE.png",
+      "intakePath": "canonical_sources_reference_only/Dr._Cloud/dr_cloud_LOCKED_SOURCE.png",
+      "sha256": "c9d0660519eb47a78d538e3628955427a97d44996282211c111ec89716213043",
+      "dimensions": "1448x1086",
+      "mode": "RGB",
+      "hasAlphaChannel": false,
+      "alphaState": "fully opaque",
+      "use": "Canonical identity reference only; not a Flutter-ready standalone export"
+    },
+    {
+      "character": "The Collector",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_CANON_DIRECT_EXTRACTS_REVIEW.zip",
+      "sourceEntry": "originals/the_collector_LOCKED_SOURCE.png",
+      "intakePath": "canonical_sources_reference_only/The_Collector/the_collector_LOCKED_SOURCE.png",
+      "sha256": "f8bb255370ba6a2dd78df7d8d6c827f7dae0b2e7f90696a7ad2a191af7eb829b",
+      "dimensions": "1448x1086",
+      "mode": "RGB",
+      "hasAlphaChannel": false,
+      "alphaState": "fully opaque",
+      "use": "Canonical identity reference only; not a Flutter-ready standalone export"
+    },
+    {
+      "character": "Riff",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "original_locked_sources/riff_cloud_kingdom_character_bible.png",
+      "intakePath": "canonical_sources_reference_only/Riff/riff_cloud_kingdom_character_bible.png",
+      "sha256": "dc3d374d7950fc6985c82624bb78861ffecb092fc939e6572799353601fc0172",
+      "dimensions": "1448x1086",
+      "mode": "RGB",
+      "hasAlphaChannel": false,
+      "alphaState": "fully opaque",
+      "use": "Canonical identity reference only; not a Flutter-ready standalone export"
+    },
+    {
+      "character": "Mona Chromatic",
+      "sourceArchive": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+      "sourceEntry": "original_locked_sources/mona_chromatic_cloud_artist_character_sheet.png",
+      "intakePath": "canonical_sources_reference_only/Mona_Chromatic/mona_chromatic_cloud_artist_character_sheet.png",
+      "sha256": "c7b05549b210d3cb68c45aafc2c6ebb5664cda54f05f45cad0da96d842e82657",
+      "dimensions": "1448x1086",
+      "mode": "RGB",
+      "hasAlphaChannel": false,
+      "alphaState": "fully opaque",
+      "use": "Canonical identity reference only; not a Flutter-ready standalone export"
+    }
+  ],
+  "unverifiedCandidates": [
+    {
+      "filename": "ChatGPT Image Nov 11, 2026, 07_37_18 PM-1.png",
+      "character": "Chef Blaze (visual identification; filename generic)",
+      "intakePath": "owner_review_candidates_unverified/ChatGPT Image Nov 11, 2026, 07_37_18 PM-1.png",
+      "sha256": "7956377b3a785251c0b9dc1817272d2f8b09fe0d93398f1de303465e6b4897d1",
+      "dimensions": "1122x1402",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present",
+      "approval": "UNVERIFIED — not in a signed/locked per-file manifest"
+    },
+    {
+      "filename": "ChatGPT Image Nov 11, 2026, 07_37_20 PM-2.png",
+      "character": "Dr. Cloud (visual identification; filename generic)",
+      "intakePath": "owner_review_candidates_unverified/ChatGPT Image Nov 11, 2026, 07_37_20 PM-2.png",
+      "sha256": "f8062d2bbb699af8b6cf9c603c3c12c3aaf506f97444882475ac6a6ed09ac0e7",
+      "dimensions": "1122x1402",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present",
+      "approval": "UNVERIFIED — not in a signed/locked per-file manifest"
+    },
+    {
+      "filename": "ChatGPT Image Nov 11, 2026, 07_37_21 PM-3.png",
+      "character": "The Collector (visual identification; filename generic)",
+      "intakePath": "owner_review_candidates_unverified/ChatGPT Image Nov 11, 2026, 07_37_21 PM-3.png",
+      "sha256": "11afdae72246f740c72fd18339c70f6d2bbf62fda86be82ea5c4bb270e51ce5e",
+      "dimensions": "1122x1402",
+      "mode": "RGBA",
+      "alphaState": "transparent pixels present",
+      "approval": "UNVERIFIED — not in a signed/locked per-file manifest"
+    }
+  ],
+  "duplicateArchives": [
+    {
+      "sha256": "280d747b706d81f4b974299aff826211a664f92d91f5e899271ee24856a99bc7",
+      "filenames": [
+        "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW (1).zip",
+        "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW.zip"
+      ]
+    },
+    {
+      "sha256": "23e0a0e1f92d1717344c6ba6d73baf7d266234a83c0903aa8155f5c451adc085",
+      "filenames": [
+        "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+        "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip"
+      ]
+    }
+  ],
+  "duplicateImages": [
+    {
+      "sha256": "c9d0660519eb47a78d538e3628955427a97d44996282211c111ec89716213043",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_DIRECT_EXTRACTS_REVIEW.zip",
+          "entry": "originals/dr_cloud_LOCKED_SOURCE.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW (1).zip",
+          "entry": "original_approved_sheets/dr._cloud_cloud_glass_character_sheet.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW.zip",
+          "entry": "original_approved_sheets/dr._cloud_cloud_glass_character_sheet.png"
+        }
+      ]
+    },
+    {
+      "sha256": "7baf0bc31bc4b6e298a2bf028c557c4fb209d28385cc46dbea31026682ecdad6",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_DIRECT_EXTRACTS_REVIEW.zip",
+          "entry": "originals/chef_blaze_LOCKED_SOURCE.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW (1).zip",
+          "entry": "original_approved_sheets/a_high_detail_professional_character_design_sheet.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW.zip",
+          "entry": "original_approved_sheets/a_high_detail_professional_character_design_sheet.png"
+        }
+      ]
+    },
+    {
+      "sha256": "f8bb255370ba6a2dd78df7d8d6c827f7dae0b2e7f90696a7ad2a191af7eb829b",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_DIRECT_EXTRACTS_REVIEW.zip",
+          "entry": "originals/the_collector_LOCKED_SOURCE.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW (1).zip",
+          "entry": "original_approved_sheets/the_collector_curator_of_curiosities.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW.zip",
+          "entry": "original_approved_sheets/the_collector_curator_of_curiosities.png"
+        }
+      ]
+    },
+    {
+      "sha256": "d75bb3c563d5e4d73a95582e4f4c183dbd1fabd695300b166bc8ab15f8613ba4",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW (1).zip",
+          "entry": "canon_reference_crops/the_collector_approved_expression_strip.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW.zip",
+          "entry": "canon_reference_crops/the_collector_approved_expression_strip.png"
+        }
+      ]
+    },
+    {
+      "sha256": "8db292d7b847b59e590a66d1452bad505ceb2a2b302aba632d3011834e49346d",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW (1).zip",
+          "entry": "canon_reference_crops/the_collector_approved_hero_crop.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW.zip",
+          "entry": "canon_reference_crops/the_collector_approved_hero_crop.png"
+        }
+      ]
+    },
+    {
+      "sha256": "79c7f50c0b16333736c0117449742730d69390e2f25449be6616170430d260c0",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW (1).zip",
+          "entry": "canon_reference_crops/chef_blaze_approved_hero_crop.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW.zip",
+          "entry": "canon_reference_crops/chef_blaze_approved_hero_crop.png"
+        }
+      ]
+    },
+    {
+      "sha256": "80740723cc3173740f6ce959c1539a0900e2d84610ea3d28ebf7a5526d08ae63",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW (1).zip",
+          "entry": "canon_reference_crops/dr_cloud_approved_hero_crop.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW.zip",
+          "entry": "canon_reference_crops/dr_cloud_approved_hero_crop.png"
+        }
+      ]
+    },
+    {
+      "sha256": "49b06b2e56861af427536b0e173a4b38eb01f9c3e2fd5126840131362a8f39fb",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW (1).zip",
+          "entry": "canon_reference_crops/dr_cloud_approved_expression_strip.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW.zip",
+          "entry": "canon_reference_crops/dr_cloud_approved_expression_strip.png"
+        }
+      ]
+    },
+    {
+      "sha256": "8912c685b825d4744a2b7532e359dcdced0eec0861476c91634559f2cb5a8798",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW (1).zip",
+          "entry": "canon_reference_crops/chef_blaze_approved_expression_strip.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_CANON_Recovery_REVIEW.zip",
+          "entry": "canon_reference_crops/chef_blaze_approved_expression_strip.png"
+        }
+      ]
+    },
+    {
+      "sha256": "3ccb3c68efb41e82b57103d1b5b78dc0a1faf48754966b50c2a448c304aacf41",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_01_happy.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_01_happy.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_01_happy.png"
+        }
+      ]
+    },
+    {
+      "sha256": "a930971e6bbe79a85dfce2168e4716875c25e30b7914887ebfd99da48b412fb6",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_02_excited.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_02_excited.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_02_excited.png"
+        }
+      ]
+    },
+    {
+      "sha256": "eea4cc57049063a429057723c09526270bd01e085392c94745ad8e316978dfde",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_03_clever.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_03_clever.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_03_clever.png"
+        }
+      ]
+    },
+    {
+      "sha256": "f1327dffe0344b5b9e044654d9677d98725aa91758e051295a1953d44aee9f8a",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_04_playful.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_04_playful.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_04_playful.png"
+        }
+      ]
+    },
+    {
+      "sha256": "a1ddff4138f294271d71b57c41207c7fba48b4712557f1ed9702f78a1c2a8d08",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_05_thinking.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_05_thinking.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_05_thinking.png"
+        }
+      ]
+    },
+    {
+      "sha256": "61d2f54e10ecbb8458bce60d3d91dae39a05f379a642ffb500ed2de6211af14f",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_06_surprised.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_06_surprised.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_06_surprised.png"
+        }
+      ]
+    },
+    {
+      "sha256": "d8e528d4db8ca497f208984629035cef9055726d008071813f9a811d62cce1a6",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_07_proud.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_07_proud.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_07_proud.png"
+        }
+      ]
+    },
+    {
+      "sha256": "4f7b8e1efff96e1e1fdf8b4d815797565d6573efa1d2b9b3370bc6aebd517747",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_08_wink.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_08_wink.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_dialogue_08_wink.png"
+        }
+      ]
+    },
+    {
+      "sha256": "e49900c0229db858824da440fbf8f0f118f7ec73033b8175eb5d7355c5f250b7",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Mona_Chromatic/mona_chromatic_hero_transparent.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_hero_transparent.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_hero_transparent.png"
+        }
+      ]
+    },
+    {
+      "sha256": "d74aca76a93b7a94395582a1335c3c65c35af30fedd4f522ca61930742ae73fa",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Mona_Chromatic/mona_chromatic_ui_round.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_ui_round.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_ui_round.png"
+        }
+      ]
+    },
+    {
+      "sha256": "94e6cd8db72bc70838ff0c7169adc90ccc5ddd2e6bff365867ae5a983f23c78c",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Mona_Chromatic/mona_chromatic_ui_square.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_ui_square.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Mona_Chromatic/mona_chromatic_ui_square.png"
+        }
+      ]
+    },
+    {
+      "sha256": "bb5bcb0689ef021fd8c772fe7e1a3dcb24234e6b642a48ca889427b7959bafd9",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Riff/riff_dialogue_01_happy.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Riff/riff_dialogue_01_happy.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Riff/riff_dialogue_01_happy.png"
+        }
+      ]
+    },
+    {
+      "sha256": "e493e553c2688d995ff19f621e12b9bb6c14216f0ddb4fb027034ad596d88a0d",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Riff/riff_dialogue_02_excited.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Riff/riff_dialogue_02_excited.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Riff/riff_dialogue_02_excited.png"
+        }
+      ]
+    },
+    {
+      "sha256": "93450abe6c1f565281765fd3d4d8dfbf7682ee12eda38612e883accc3c699aaa",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Riff/riff_dialogue_03_clever.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Riff/riff_dialogue_03_clever.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Riff/riff_dialogue_03_clever.png"
+        }
+      ]
+    },
+    {
+      "sha256": "d5fd715e44c8fd7015ca24a28ddb19794a6e18d75aaaaf7da721644b8191fade",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Riff/riff_dialogue_04_playful.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Riff/riff_dialogue_04_playful.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Riff/riff_dialogue_04_playful.png"
+        }
+      ]
+    },
+    {
+      "sha256": "381c94afb7d7fe230b8477c4bf2848b6f96b3d6d315d6a26759cdfb27b5ba1c2",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Riff/riff_dialogue_05_thinking.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Riff/riff_dialogue_05_thinking.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Riff/riff_dialogue_05_thinking.png"
+        }
+      ]
+    },
+    {
+      "sha256": "43a1424df08d00cc89bd0ba0abef52dd993b0f56a4abafadba4261171df5613a",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Riff/riff_dialogue_06_surprised.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Riff/riff_dialogue_06_surprised.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Riff/riff_dialogue_06_surprised.png"
+        }
+      ]
+    },
+    {
+      "sha256": "4b8f2a486655556374ab89962f8b932f6c1871fe10258195a439f1253191c364",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Riff/riff_dialogue_07_proud.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Riff/riff_dialogue_07_proud.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Riff/riff_dialogue_07_proud.png"
+        }
+      ]
+    },
+    {
+      "sha256": "a07dcc6fc180b14f4172c89486f2927801cd6744215789acc519fa77ffd755f1",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Riff/riff_dialogue_08_wink.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Riff/riff_dialogue_08_wink.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Riff/riff_dialogue_08_wink.png"
+        }
+      ]
+    },
+    {
+      "sha256": "03119ab1344914f346ad718bc67bcca20367bc2cd1757de462cae2f794938404",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Riff/riff_hero_transparent.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Riff/riff_hero_transparent.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Riff/riff_hero_transparent.png"
+        }
+      ]
+    },
+    {
+      "sha256": "d2a120364f082fa71ae315684db1bca98cd184d1ae8e5dc6524a01c608efd54f",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Riff/riff_ui_round.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Riff/riff_ui_round.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Riff/riff_ui_round.png"
+        }
+      ]
+    },
+    {
+      "sha256": "445769314c74df3ff3df3ba5f2bef8a0aa60792bdc42b4be7699ca87cbf95223",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "Riff/riff_ui_square.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "Riff/riff_ui_square.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "Riff/riff_ui_square.png"
+        }
+      ]
+    },
+    {
+      "sha256": "c7b05549b210d3cb68c45aafc2c6ebb5664cda54f05f45cad0da96d842e82657",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "original_locked_sources/mona_chromatic_cloud_artist_character_sheet.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "original_locked_sources/mona_chromatic_cloud_artist_character_sheet.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "original_locked_sources/mona_chromatic_cloud_artist_character_sheet.png"
+        }
+      ]
+    },
+    {
+      "sha256": "dc3d374d7950fc6985c82624bb78861ffecb092fc939e6572799353601fc0172",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "original_locked_sources/riff_cloud_kingdom_character_bible.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "original_locked_sources/riff_cloud_kingdom_character_bible.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "original_locked_sources/riff_cloud_kingdom_character_bible.png"
+        }
+      ]
+    },
+    {
+      "sha256": "7caaca46e5a6055482da3b15bd4a6c1190607365714023915c965618be1587b9",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "previews/Mona_Chromatic_Approved_Canon_Expression_Layout_REVIEW.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "previews/Mona_Chromatic_Approved_Canon_Expression_Layout_REVIEW.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "previews/Mona_Chromatic_Approved_Canon_Expression_Layout_REVIEW.png"
+        }
+      ]
+    },
+    {
+      "sha256": "dd6c811bd879c17560eeb4a88b52499304ada47d93b786074dbfa883cf35f287",
+      "occurrences": [
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED (1).zip",
+          "entry": "previews/Riff_Approved_Canon_Expression_Layout_REVIEW.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_APPROVED_LOCKED.zip",
+          "entry": "previews/Riff_Approved_Canon_Expression_Layout_REVIEW.png"
+        },
+        {
+          "container": "Cloud_Kingdom_Batch_G_Riff_Mona_CANON_Transparent_REVIEW.zip",
+          "entry": "previews/Riff_Approved_Canon_Expression_Layout_REVIEW.png"
+        }
+      ]
+    }
+  ],
+  "inventoryCsv": "asset_inventory.csv",
+  "runtimeIntegration": "NOT STARTED",
+  "qaStatus": "NOT TESTED",
+  "notes": [
+    "Source ZIPs and loose originals were not modified. Intake copies were byte-for-byte verified by SHA-256.",
+    "Only the 22 standalone Riff and Mona exports whose per-file hashes match the APPROVED_LOCKED_2026-11-09 manifest are in validated_exports/.",
+    "No newly generated/loose image is promoted to approved.",
+    "No game code, manifest, pubspec, assets/art, saves, or runtime integration files were modified."
+  ],
+  "githubIssue": "https://github.com/Nvisioned38/MrWeedsCloudKingdom/issues/26"
+}
